@@ -1,4 +1,4 @@
-package khoa.example.test123;
+package khoa.example.mobileusersapp;
 
 import io.flutter.embedding.android.FlutterActivity;
 
