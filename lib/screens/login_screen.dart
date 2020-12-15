@@ -34,6 +34,7 @@ class LoginPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
+                        transform: Matrix4.translationValues(0.0, 55.0, 0.0),
                         child: Padding(
                           padding: const EdgeInsets.only(
                             top: 20.0,
@@ -49,6 +50,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       Container(
+                        transform: Matrix4.translationValues(0.0, 55.0, 0.0),
                         child: Text(
                           'Sign In',
                           style: TextStyle(
@@ -59,7 +61,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        transform: Matrix4.translationValues(0.0, 60.0, 0.0),
+                        transform: Matrix4.translationValues(0.0, 90.0, 0.0),
                         margin: const EdgeInsets.only(
                           left: 20.0,
                           right: 20.0,
