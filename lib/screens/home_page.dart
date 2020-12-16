@@ -92,6 +92,97 @@ class _HomeScreenState extends State<HomePage> {
     );
   }
 
+  Widget doctorCard() {
+    return Material(
+      color: const Color(0xFFFFFFFF),
+      child: Container(
+        margin: const EdgeInsets.only(
+          left: 20.0,
+          right: 20.0,
+          bottom: 10.0,
+        ),
+        child: Card(
+          elevation: 3.0,
+          child: new InkWell(
+            onTap: () {},
+            child: Container(
+              child: Align(
+                alignment: FractionalOffset.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                          right: 20.0,
+                        ),
+                        width: 70.0,
+                        height: 70.0,
+                        child: CircleAvatar(
+                          radius: 20,
+                          // backgroundImage: CachedNetworkImageProvider(imagePath),
+                        ),
+                      ),
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: FractionalOffset.centerLeft,
+                              child: Text(
+                                'Doctor A',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Color(0xFF6f6f6f),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: FractionalOffset.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 5.0,
+                                ),
+                                child: Text(
+                                  'Doctor A',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xFF9f9f9f),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: FractionalOffset.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 5.0,
+                                ),
+                                child: Text(
+                                  'Rank' + "  ⭐ ⭐ ⭐ ⭐ ⭐",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    color: Color(0xFF6f6f6f),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -227,9 +318,65 @@ class _HomeScreenState extends State<HomePage> {
                               ),
                             ],
                           ),
+                          Column(
+                            children: [
+                              MaterialButton(
+                                onPressed: () {},
+                                color: Color(0xFF4894e9),
+                                highlightColor: Color(0xFF89b9f0),
+                                textColor: Colors.white,
+                                child: Container(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  decoration: new BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: new DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: new NetworkImage(
+                                        ImagesLinks.medicationScheduleLogo,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                shape: CircleBorder(),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                  top: 10.0,
+                                ),
+                                child: Text(
+                                  'Schedule',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Color(0xFF6f6f6f),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
+                    // sectionTitle("Our Top Doctors"),
+                    // Container(
+                    //   margin: const EdgeInsets.only(
+                    //     left: 20.0,
+                    //     right: 15.0,
+                    //     bottom: 15.0,
+                    //   ),
+                    //   child: Align(
+                    //     alignment: Alignment.centerLeft,
+                    //     child: Text(
+                    //       'ABCDEFGH',
+                    //       style: TextStyle(
+                    //         color: Color(0xFF9f9f9f),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

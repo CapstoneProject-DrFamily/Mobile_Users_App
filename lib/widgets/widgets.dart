@@ -107,18 +107,59 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
             title: Text('Home'),
             onTap: () {},
           ),
-          ListTile(
-            leading: Icon(Icons.favorite_border),
-            title: Text('My Health'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: Icon(Icons.star),
-            title: Text('Top Doctors'),
-            onTap: () {},
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.favorite_border),
+          //   title: Text('My Health'),
+          //   onTap: () {},
+          // ),
+          // ListTile(
+          //   leading: Icon(Icons.star),
+          //   title: Text('Top Doctors'),
+          //   onTap: () {},
+          // ),
         ],
       ),
     );
   }
+}
+
+Widget sectionTitle(String title) {
+  return Container(
+    margin: const EdgeInsets.only(
+      top: 20.0,
+      left: 20.0,
+      right: 20.0,
+      bottom: 20.0,
+    ),
+    child: Column(
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 10,
+            ),
+            child: Text(
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Color(0xFF4894e9),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            top: 10,
+          ),
+          child: Divider(
+            color: Colors.black12,
+            height: 1,
+            thickness: 1,
+          ),
+        ),
+      ],
+    ),
+  );
 }
