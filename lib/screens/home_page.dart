@@ -156,11 +156,59 @@ class _HomeScreenState extends State<HomePage> {
                                 color: Color(0xFF4894e9),
                                 highlightColor: Color(0xFF89b9f0),
                                 textColor: Colors.white,
-                                child: Icon(
-                                  Icons.people,
-                                  size: 30,
+                                child: Container(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  decoration: new BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: new DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: new NetworkImage(
+                                        ImagesLinks.medicalReportLogo,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                padding: EdgeInsets.all(16),
+                                padding: EdgeInsets.all(5),
+                                shape: CircleBorder(),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                  top: 10.0,
+                                ),
+                                child: Text(
+                                  'Medical Report',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Color(0xFF6f6f6f),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              MaterialButton(
+                                onPressed: () {},
+                                color: Color(0xFF4894e9),
+                                highlightColor: Color(0xFF89b9f0),
+                                textColor: Colors.white,
+                                child: Container(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  decoration: new BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: new DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: new NetworkImage(
+                                        ImagesLinks.findDrLogo,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                padding: EdgeInsets.all(5),
                                 shape: CircleBorder(),
                               ),
                               Container(
