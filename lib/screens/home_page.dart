@@ -255,7 +255,7 @@ class _HomeScreenState extends State<HomePage> {
                                     image: new DecorationImage(
                                       fit: BoxFit.fill,
                                       image: new NetworkImage(
-                                        ImagesLinks.medicalReportLogo,
+                                        ImagesLinks.findDrLogo,
                                       ),
                                     ),
                                   ),
@@ -268,7 +268,7 @@ class _HomeScreenState extends State<HomePage> {
                                   top: 10.0,
                                 ),
                                 child: Text(
-                                  'Medical Report',
+                                  'Doctor Lookup',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -294,7 +294,7 @@ class _HomeScreenState extends State<HomePage> {
                                     image: new DecorationImage(
                                       fit: BoxFit.fill,
                                       image: new NetworkImage(
-                                        ImagesLinks.findDrLogo,
+                                        ImagesLinks.medicalReportLogo,
                                       ),
                                     ),
                                   ),
@@ -307,7 +307,7 @@ class _HomeScreenState extends State<HomePage> {
                                   top: 10.0,
                                 ),
                                 child: Text(
-                                  'Doctor Lookup',
+                                  'Medical Report',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
