@@ -1,4 +1,5 @@
 import 'package:drFamily_app/links/links.dart';
+import 'package:drFamily_app/widgets/fancy_bottom_navigation.dart';
 import 'package:drFamily_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomePage> {
+  int currentPage = 0;
+
   Widget loadUserInfo() {
     return Container(
       height: MediaQuery.of(context).size.height,
@@ -192,7 +195,6 @@ class _HomeScreenState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GlobalAppBar(),
-      drawer: GlobalDrawer(),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width * 1.0,
@@ -360,23 +362,6 @@ class _HomeScreenState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    // sectionTitle("Our Top Doctors"),
-                    // Container(
-                    //   margin: const EdgeInsets.only(
-                    //     left: 20.0,
-                    //     right: 15.0,
-                    //     bottom: 15.0,
-                    //   ),
-                    //   child: Align(
-                    //     alignment: Alignment.centerLeft,
-                    //     child: Text(
-                    //       'ABCDEFGH',
-                    //       style: TextStyle(
-                    //         color: Color(0xFF9f9f9f),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -384,6 +369,16 @@ class _HomeScreenState extends State<HomePage> {
           ),
         ),
       ),
+      bottomNavigationBar: FancyBottomNavigation(
+          tabs: [
+            TabData(iconData: Icons.home, title: "Home"),
+            TabData(iconData: Icons.settings, title: "Search")
+          ],
+          onTabChangedListener: (position) {
+            setState(() {
+              currentPage = position;
+            });
+          }),
     );
   }
 }
