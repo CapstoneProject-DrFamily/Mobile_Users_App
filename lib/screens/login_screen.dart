@@ -10,9 +10,9 @@ class LoginPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: MainColors.kMainBody,
       body: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (overscroll) {
-          overscroll.disallowGlow();
-        },
+        // onNotification: (overscroll) {
+        //   overscroll.disallowGlow();
+        // },
         child: SingleChildScrollView(
           child: Container(
             child: Column(
@@ -34,34 +34,23 @@ class LoginPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        transform: Matrix4.translationValues(0.0, 55.0, 0.0),
+                        // transform:
+                        //     Matrix4.translationValues(0.0, 20.0, 0.0),
                         child: Padding(
                           padding: const EdgeInsets.only(
                             top: 20.0,
-                            left: 40.0,
-                            right: 40.0,
+                            right: 30.0,
                           ),
                           child: Image.network(
-                            ImagesLinks.logoLink,
-                            width: 150.0,
+                            ImagesLinks.wordLogoLink,
+                            width: 250.0,
                             height: 150.0,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
                       Container(
-                        transform: Matrix4.translationValues(0.0, 55.0, 0.0),
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 40,
-                            color: Color(0xFFFFFFFF),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        transform: Matrix4.translationValues(0.0, 90.0, 0.0),
+                        transform: Matrix4.translationValues(0.0, 40.0, 0.0),
                         margin: const EdgeInsets.only(
                           left: 20.0,
                           right: 20.0,
@@ -127,7 +116,6 @@ class LoginPage extends StatelessWidget {
                                       color: Color(0xFF6aa6f8),
                                     ),
                                   ),
-                                  //
                                 ),
                               ),
                             ),
@@ -148,7 +136,7 @@ class LoginPage extends StatelessWidget {
                                 // controller: passwordTextEditingController,
                                 textCapitalization: TextCapitalization.none,
                                 decoration: InputDecoration(
-                                  hintText: 'password',
+                                  hintText: 'Password',
                                   hintStyle: TextStyle(
                                     color: Color(0xFFb1b2c4),
                                   ),
@@ -178,6 +166,54 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 90.0,
+                    left: 20.0,
+                    right: 20.0,
+                  ),
+                  child: RaisedButton(
+                    color: Color(0xFF4894e9),
+                    padding: EdgeInsets.all(15),
+                    onPressed: () {},
+                    textColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Sign In',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 20.0,
+                    left: 20.0,
+                    right: 20.0,
+                  ),
+                  child: RaisedButton(
+                    color: Color(0xFFE53935),
+                    padding: EdgeInsets.all(15),
+                    onPressed: () {},
+                    textColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Login with Phone',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                 ),
               ],
