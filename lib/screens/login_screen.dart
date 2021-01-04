@@ -1,4 +1,5 @@
 import 'package:drFamily_app/links/links.dart';
+import 'package:drFamily_app/screens/home_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,10 +24,7 @@ class LoginPage extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment(-1.0, 0.0),
                       end: Alignment(1.0, 0.0),
-                      colors: [
-                        const Color(0xFF6aa6f8),
-                        const Color(0xFF1a60be)
-                      ],
+                      colors: [MainColors.blueBegin, MainColors.blueEnd],
                     ),
                   ),
                   child: Column(
@@ -63,7 +61,7 @@ class LoginPage extends StatelessWidget {
                             bottomLeft: Radius.circular(25),
                             bottomRight: Radius.circular(25),
                           ),
-                          color: Color(0xFFFFFFFF),
+                          color: MainColors.white,
                           boxShadow: [
                             new BoxShadow(
                               color: Colors.black12,
@@ -95,7 +93,7 @@ class LoginPage extends StatelessWidget {
                                 decoration: InputDecoration(
                                   hintText: 'email@emailaddress.com',
                                   hintStyle: TextStyle(
-                                    color: Color(0xFFb1b2c4),
+                                    color: MainColors.hintTextColor,
                                   ),
                                   enabledBorder: const OutlineInputBorder(
                                     borderSide: const BorderSide(
@@ -103,7 +101,8 @@ class LoginPage extends StatelessWidget {
                                   ),
                                   focusedBorder: const OutlineInputBorder(
                                     borderSide: const BorderSide(
-                                        color: Color(0xFF6aa6f8), width: 0.0),
+                                        color: MainColors.iconLoginColor,
+                                        width: 0.0),
                                   ),
                                   prefixIcon: Padding(
                                     padding: const EdgeInsets.only(
@@ -113,7 +112,7 @@ class LoginPage extends StatelessWidget {
                                     ),
                                     child: Icon(
                                       Icons.person,
-                                      color: Color(0xFF6aa6f8),
+                                      color: MainColors.iconLoginColor,
                                     ),
                                   ),
                                 ),
@@ -138,7 +137,7 @@ class LoginPage extends StatelessWidget {
                                 decoration: InputDecoration(
                                   hintText: 'Password',
                                   hintStyle: TextStyle(
-                                    color: Color(0xFFb1b2c4),
+                                    color: MainColors.hintTextColor,
                                   ),
                                   enabledBorder: const OutlineInputBorder(
                                     borderSide: const BorderSide(
@@ -146,7 +145,8 @@ class LoginPage extends StatelessWidget {
                                   ),
                                   focusedBorder: const OutlineInputBorder(
                                     borderSide: const BorderSide(
-                                        color: Color(0xFF6aa6f8), width: 0.0),
+                                        color: MainColors.iconLoginColor,
+                                        width: 0.0),
                                   ),
                                   prefixIcon: Padding(
                                     padding: const EdgeInsets.only(
@@ -156,7 +156,7 @@ class LoginPage extends StatelessWidget {
                                     ),
                                     child: Icon(
                                       Icons.lock_outline,
-                                      color: Color(0xFF6aa6f8),
+                                      color: MainColors.iconLoginColor,
                                     ),
                                   ),
                                 ),
@@ -175,9 +175,14 @@ class LoginPage extends StatelessWidget {
                     right: 20.0,
                   ),
                   child: RaisedButton(
-                    color: Color(0xFF4894e9),
+                    color: MainColors.riseButtonBlue,
                     padding: EdgeInsets.all(15),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    },
                     textColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
@@ -199,7 +204,7 @@ class LoginPage extends StatelessWidget {
                     right: 20.0,
                   ),
                   child: RaisedButton(
-                    color: Color(0xFFE53935),
+                    color: MainColors.riseButtonRed,
                     padding: EdgeInsets.all(15),
                     onPressed: () {},
                     textColor: Colors.white,

@@ -1,7 +1,11 @@
 import 'package:drFamily_app/links/links.dart';
+import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/widgets/fancy_bottom_navigation.dart';
 import 'package:drFamily_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+enum BestTutorSite { javatpoint, w3schools, tutorialandexample }
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,6 +14,15 @@ class HomePage extends StatefulWidget {
 
 class _HomeScreenState extends State<HomePage> {
   int currentPage = 0;
+  BestTutorSite _site = BestTutorSite.javatpoint;
+  List<String> ringTone = [
+    'Luna',
+    'Oberon',
+    'Phobos',
+    'Rose',
+    'Sunset',
+    'Wood'
+  ];
 
   Widget loadUserInfo() {
     return Container(
@@ -95,97 +108,6 @@ class _HomeScreenState extends State<HomePage> {
     );
   }
 
-  Widget doctorCard() {
-    return Material(
-      color: const Color(0xFFFFFFFF),
-      child: Container(
-        margin: const EdgeInsets.only(
-          left: 20.0,
-          right: 20.0,
-          bottom: 10.0,
-        ),
-        child: Card(
-          elevation: 3.0,
-          child: new InkWell(
-            onTap: () {},
-            child: Container(
-              child: Align(
-                alignment: FractionalOffset.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(
-                          right: 20.0,
-                        ),
-                        width: 70.0,
-                        height: 70.0,
-                        child: CircleAvatar(
-                          radius: 20,
-                          // backgroundImage: CachedNetworkImageProvider(imagePath),
-                        ),
-                      ),
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: FractionalOffset.centerLeft,
-                              child: Text(
-                                'Doctor A',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Color(0xFF6f6f6f),
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: FractionalOffset.centerLeft,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  top: 5.0,
-                                ),
-                                child: Text(
-                                  'Doctor A',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFF9f9f9f),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: FractionalOffset.centerLeft,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  top: 5.0,
-                                ),
-                                child: Text(
-                                  'Rank' + "  ⭐ ⭐ ⭐ ⭐ ⭐",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13,
-                                    color: Color(0xFF6f6f6f),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -203,8 +125,8 @@ class _HomeScreenState extends State<HomePage> {
               begin: Alignment(-1.0, 0.0),
               end: Alignment(1.0, 0.0),
               colors: [
-                const Color(0xFF6aa6f8),
-                const Color(0xFF1a60be)
+                MainColors.blueBegin,
+                MainColors.blueEnd,
               ], // whitish to gray
             ),
           ),
@@ -222,7 +144,7 @@ class _HomeScreenState extends State<HomePage> {
                     topLeft: Radius.circular(25),
                     topRight: Radius.circular(25),
                   ),
-                  color: Color(0xFFFFFFFF),
+                  color: MainColors.white,
                   boxShadow: [
                     new BoxShadow(
                       color: Colors.black12,
@@ -245,9 +167,103 @@ class _HomeScreenState extends State<HomePage> {
                           Column(
                             children: [
                               MaterialButton(
-                                onPressed: () {},
-                                color: Color(0xFF4894e9),
-                                highlightColor: Color(0xFF89b9f0),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext buildContext) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          "Choose patient?",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                        ),
+                                        content: Container(
+                                          width: 250,
+                                          height: 200,
+                                          child: Column(
+                                            children: <Widget>[
+                                              ListTile(
+                                                title: const Text(
+                                                    'www.javatpoint.com'),
+                                                leading: Radio(
+                                                  value:
+                                                      BestTutorSite.javatpoint,
+                                                  groupValue: _site,
+                                                  onChanged:
+                                                      (BestTutorSite value) {
+                                                    setState(() {
+                                                      _site = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              ListTile(
+                                                title: const Text(
+                                                    'www.w3school.com'),
+                                                leading: Radio(
+                                                  value:
+                                                      BestTutorSite.w3schools,
+                                                  groupValue: _site,
+                                                  onChanged:
+                                                      (BestTutorSite value) {
+                                                    setState(() {
+                                                      _site = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              ListTile(
+                                                title: const Text(
+                                                    'www.tutorialandexample.com'),
+                                                leading: Radio(
+                                                  value: BestTutorSite
+                                                      .tutorialandexample,
+                                                  groupValue: _site,
+                                                  onChanged:
+                                                      (BestTutorSite value) {
+                                                    setState(() {
+                                                      _site = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: [
+                                          Container(
+                                            child: Row(
+                                              children: [
+                                                FlatButton(
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                    'OK',
+                                                    style:
+                                                        TextStyle(fontSize: 20),
+                                                  ),
+                                                ),
+                                                FlatButton(
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                    'CANCEL',
+                                                    style:
+                                                        TextStyle(fontSize: 20),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                color: MainColors.riseButtonBlue,
+                                highlightColor: MainColors.highlightColorBule,
                                 textColor: Colors.white,
                                 child: Container(
                                   width: 50.0,
@@ -285,8 +301,8 @@ class _HomeScreenState extends State<HomePage> {
                             children: [
                               MaterialButton(
                                 onPressed: () {},
-                                color: Color(0xFF4894e9),
-                                highlightColor: Color(0xFF89b9f0),
+                                color: MainColors.riseButtonBlue,
+                                highlightColor: MainColors.highlightColorBule,
                                 textColor: Colors.white,
                                 child: Container(
                                   width: 50.0,
@@ -324,8 +340,8 @@ class _HomeScreenState extends State<HomePage> {
                             children: [
                               MaterialButton(
                                 onPressed: () {},
-                                color: Color(0xFF4894e9),
-                                highlightColor: Color(0xFF89b9f0),
+                                color: MainColors.riseButtonBlue,
+                                highlightColor: MainColors.highlightColorBule,
                                 textColor: Colors.white,
                                 child: Container(
                                   width: 50.0,
