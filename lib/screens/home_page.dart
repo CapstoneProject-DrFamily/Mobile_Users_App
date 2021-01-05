@@ -1,4 +1,5 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
+import 'package:drFamily_app/screens/add_dependent_profile.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +99,13 @@ class HomePage extends StatelessWidget {
               child: Row(
                 children: [
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddDependentProfilePage()),
+                      );
+                    },
                     child: Text(
                       'OK',
                       style: TextStyle(fontSize: 20),

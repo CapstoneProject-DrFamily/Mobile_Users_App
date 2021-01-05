@@ -70,29 +70,7 @@ class AddDependentProfilePage extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                      top: 10.0,
-                      left: 30.0,
-                      right: 20.0,
-                      // right: 270.0,
-                    ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      textCapitalization: TextCapitalization.none,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Enter full name...',
-                        hintStyle: TextStyle(
-                          color: MainColors.hintTextColor,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                  ),
+                  _fullNameField(),
                   Container(
                     margin: const EdgeInsets.only(
                       top: 20.0,
@@ -104,29 +82,7 @@ class AddDependentProfilePage extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                      top: 10.0,
-                      left: 30.0,
-                      right: 20.0,
-                      // right: 270.0,
-                    ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.phone,
-                      textCapitalization: TextCapitalization.none,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Enter phone..',
-                        hintStyle: TextStyle(
-                          color: MainColors.hintTextColor,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                  ),
+                  _phoneField(),
                   Container(
                     margin: const EdgeInsets.only(
                       top: 20.0,
@@ -138,28 +94,7 @@ class AddDependentProfilePage extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                      top: 10.0,
-                      left: 30.0,
-                      right: 20.0,
-                    ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.phone,
-                      textCapitalization: TextCapitalization.none,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Choose relationship',
-                        hintStyle: TextStyle(
-                          color: MainColors.hintTextColor,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                  ),
+                  _relationshipField(),
                 ],
               ),
             ),
@@ -192,15 +127,80 @@ class AddDependentProfilePage extends StatelessWidget {
     );
   }
 
-  // Widget _bodyWidget() {
-  //   return Container(
-  //     child: Column(
-  //       children: [
-  //         Container(
-  //           height: MediaQuery.of(context).
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Widget _fullNameField() {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 10.0,
+        left: 30.0,
+        right: 20.0,
+        // right: 270.0,
+      ),
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        textCapitalization: TextCapitalization.none,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          hintText: 'Enter full name...',
+          hintStyle: TextStyle(
+            color: MainColors.hintTextColor,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _phoneField() {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 10.0,
+        left: 30.0,
+        right: 20.0,
+        // right: 270.0,
+      ),
+      child: TextFormField(
+        keyboardType: TextInputType.phone,
+        textCapitalization: TextCapitalization.none,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          hintText: 'Enter phone..',
+          hintStyle: TextStyle(
+            color: MainColors.hintTextColor,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _relationshipField() {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 10.0,
+        left: 30.0,
+        right: 20.0,
+      ),
+      child: TextFormField(
+        keyboardType: TextInputType.phone,
+        textCapitalization: TextCapitalization.none,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          hintText: 'Choose relationship',
+          hintStyle: TextStyle(
+            color: MainColors.hintTextColor,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
 }
