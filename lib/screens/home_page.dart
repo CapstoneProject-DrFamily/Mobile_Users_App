@@ -1,11 +1,11 @@
 import 'package:drFamily_app/links/links.dart';
+import 'package:drFamily_app/screens/add_dependent_profile.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/widgets/fancy_bottom_navigation.dart';
 import 'package:drFamily_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
-enum BestTutorSite { javatpoint, w3schools, tutorialandexample }
+enum BestTutorSite { javatpoint, w3schools, tutorialandexample, test }
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,6 +23,351 @@ class _HomeScreenState extends State<HomePage> {
     'Sunset',
     'Wood'
   ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: GlobalAppBar(),
+      body: _bodyWidget(),
+      bottomNavigationBar: FancyBottomNavigation(
+          tabs: [
+            TabData(iconData: Icons.home, title: "Home"),
+            TabData(iconData: Icons.settings, title: "Search")
+          ],
+          onTabChangedListener: (position) {
+            setState(() {
+              currentPage = position;
+            });
+          }),
+    );
+  }
+
+  Widget _bodyWidget() {
+    return SingleChildScrollView(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 1.0,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(-1.0, 0.0),
+            end: Alignment(1.0, 0.0),
+            colors: [
+              MainColors.blueBegin,
+              MainColors.blueEnd,
+            ], // whitish to gray
+          ),
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          children: [
+            userHeader(),
+            Container(
+              margin: const EdgeInsets.only(
+                top: 40.0,
+              ),
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                ),
+                color: MainColors.white,
+                boxShadow: [
+                  new BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 20.0,
+                    offset: Offset(0, 0),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 15.0,
+                    ),
+                    transform: Matrix4.translationValues(0.0, -30.0, 0.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            MaterialButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext buildContext) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        "Who is it for?",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      content: Container(
+                                        width: 300,
+                                        height: 200,
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: <Widget>[
+                                              ListTile(
+                                                title: const Text(
+                                                  'Khoa',
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                                // selected: true,
+                                                subtitle: const Text(
+                                                  'You',
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                ),
+                                                leading: Radio(
+                                                  value:
+                                                      BestTutorSite.javatpoint,
+                                                  groupValue: _site,
+                                                  onChanged:
+                                                      (BestTutorSite value) {
+                                                    setState(() {
+                                                      _site = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              ListTile(
+                                                title: const Text(
+                                                  'Jack',
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                                subtitle: const Text(
+                                                  'Your Dad',
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                ),
+                                                leading: Radio(
+                                                  value:
+                                                      BestTutorSite.w3schools,
+                                                  groupValue: _site,
+                                                  onChanged:
+                                                      (BestTutorSite value) {
+                                                    setState(() {
+                                                      _site = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              ListTile(
+                                                title: const Text(
+                                                  'Ben',
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                                subtitle: const Text(
+                                                  'Your Brother',
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                ),
+                                                leading: Radio(
+                                                  value: BestTutorSite
+                                                      .tutorialandexample,
+                                                  groupValue: _site,
+                                                  onChanged:
+                                                      (BestTutorSite value) {
+                                                    setState(() {
+                                                      _site = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              ListTile(
+                                                title: const Text(
+                                                  'Add new relationship',
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                                leading: Radio(
+                                                  value: BestTutorSite.test,
+                                                  groupValue: _site,
+                                                  onChanged:
+                                                      (BestTutorSite value) {
+                                                    setState(() {
+                                                      _site = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      actions: [
+                                        Container(
+                                          child: Row(
+                                            children: [
+                                              FlatButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            AddDependentProfilePage()),
+                                                  );
+                                                },
+                                                child: Text(
+                                                  'OK',
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                ),
+                                              ),
+                                              FlatButton(
+                                                onPressed: () {},
+                                                child: Text(
+                                                  'CANCEL',
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              color: MainColors.riseButtonBlue,
+                              highlightColor: MainColors.highlightColorBule,
+                              textColor: Colors.white,
+                              child: Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: new DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: new NetworkImage(
+                                      ImagesLinks.findDrLogo,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              padding: EdgeInsets.all(5),
+                              shape: CircleBorder(),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 10.0,
+                              ),
+                              child: Text(
+                                'Doctor Lookup',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Color(0xFF6f6f6f),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            MaterialButton(
+                              onPressed: () {},
+                              color: MainColors.riseButtonBlue,
+                              highlightColor: MainColors.highlightColorBule,
+                              textColor: Colors.white,
+                              child: Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: new DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: new NetworkImage(
+                                      ImagesLinks.medicalReportLogo,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              padding: EdgeInsets.all(5),
+                              shape: CircleBorder(),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 10.0,
+                              ),
+                              child: Text(
+                                'Medical Report',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Color(0xFF6f6f6f),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            MaterialButton(
+                              onPressed: () {},
+                              color: MainColors.riseButtonBlue,
+                              highlightColor: MainColors.highlightColorBule,
+                              textColor: Colors.white,
+                              child: Container(
+                                width: 50.0,
+                                height: 50.0,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: new DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: new NetworkImage(
+                                      ImagesLinks.medicationScheduleLogo,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              padding: EdgeInsets.all(5),
+                              shape: CircleBorder(),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 10.0,
+                              ),
+                              child: Text(
+                                'Schedule',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Color(0xFF6f6f6f),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget loadUserInfo() {
     return Container(
@@ -105,296 +450,6 @@ class _HomeScreenState extends State<HomePage> {
           ),
         ],
       ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: GlobalAppBar(),
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 1.0,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(-1.0, 0.0),
-              end: Alignment(1.0, 0.0),
-              colors: [
-                MainColors.blueBegin,
-                MainColors.blueEnd,
-              ], // whitish to gray
-            ),
-          ),
-          alignment: Alignment.center,
-          child: Column(
-            children: [
-              userHeader(),
-              // loadUserInfo(),
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 40.0,
-                ),
-                decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25),
-                  ),
-                  color: MainColors.white,
-                  boxShadow: [
-                    new BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 20.0,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 15.0,
-                      ),
-                      transform: Matrix4.translationValues(0.0, -30.0, 0.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              MaterialButton(
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext buildContext) {
-                                      return AlertDialog(
-                                        title: Text(
-                                          "Choose patient?",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                        ),
-                                        content: Container(
-                                          width: 250,
-                                          height: 200,
-                                          child: Column(
-                                            children: <Widget>[
-                                              ListTile(
-                                                title: const Text(
-                                                    'www.javatpoint.com'),
-                                                leading: Radio(
-                                                  value:
-                                                      BestTutorSite.javatpoint,
-                                                  groupValue: _site,
-                                                  onChanged:
-                                                      (BestTutorSite value) {
-                                                    setState(() {
-                                                      _site = value;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                              ListTile(
-                                                title: const Text(
-                                                    'www.w3school.com'),
-                                                leading: Radio(
-                                                  value:
-                                                      BestTutorSite.w3schools,
-                                                  groupValue: _site,
-                                                  onChanged:
-                                                      (BestTutorSite value) {
-                                                    setState(() {
-                                                      _site = value;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                              ListTile(
-                                                title: const Text(
-                                                    'www.tutorialandexample.com'),
-                                                leading: Radio(
-                                                  value: BestTutorSite
-                                                      .tutorialandexample,
-                                                  groupValue: _site,
-                                                  onChanged:
-                                                      (BestTutorSite value) {
-                                                    setState(() {
-                                                      _site = value;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        actions: [
-                                          Container(
-                                            child: Row(
-                                              children: [
-                                                FlatButton(
-                                                  onPressed: () {},
-                                                  child: Text(
-                                                    'OK',
-                                                    style:
-                                                        TextStyle(fontSize: 20),
-                                                  ),
-                                                ),
-                                                FlatButton(
-                                                  onPressed: () {},
-                                                  child: Text(
-                                                    'CANCEL',
-                                                    style:
-                                                        TextStyle(fontSize: 20),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                                color: MainColors.riseButtonBlue,
-                                highlightColor: MainColors.highlightColorBule,
-                                textColor: Colors.white,
-                                child: Container(
-                                  width: 50.0,
-                                  height: 50.0,
-                                  decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: new DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: new NetworkImage(
-                                        ImagesLinks.findDrLogo,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                shape: CircleBorder(),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 10.0,
-                                ),
-                                child: Text(
-                                  'Doctor Lookup',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    color: Color(0xFF6f6f6f),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              MaterialButton(
-                                onPressed: () {},
-                                color: MainColors.riseButtonBlue,
-                                highlightColor: MainColors.highlightColorBule,
-                                textColor: Colors.white,
-                                child: Container(
-                                  width: 50.0,
-                                  height: 50.0,
-                                  decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: new DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: new NetworkImage(
-                                        ImagesLinks.medicalReportLogo,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                shape: CircleBorder(),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 10.0,
-                                ),
-                                child: Text(
-                                  'Medical Report',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    color: Color(0xFF6f6f6f),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              MaterialButton(
-                                onPressed: () {},
-                                color: MainColors.riseButtonBlue,
-                                highlightColor: MainColors.highlightColorBule,
-                                textColor: Colors.white,
-                                child: Container(
-                                  width: 50.0,
-                                  height: 50.0,
-                                  decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: new DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: new NetworkImage(
-                                        ImagesLinks.medicationScheduleLogo,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                shape: CircleBorder(),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 10.0,
-                                ),
-                                child: Text(
-                                  'Schedule',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    color: Color(0xFF6f6f6f),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: FancyBottomNavigation(
-          tabs: [
-            TabData(iconData: Icons.home, title: "Home"),
-            TabData(iconData: Icons.settings, title: "Search")
-          ],
-          onTabChangedListener: (position) {
-            setState(() {
-              currentPage = position;
-            });
-          }),
     );
   }
 }
