@@ -1,5 +1,4 @@
 import 'package:drFamily_app/widgets/paint/half_painter.dart';
-import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:fancy_bottom_navigation/internal/tab_item.dart';
 import 'package:fancy_bottom_navigation/paint/half_clipper.dart';
 import 'package:flutter/material.dart';

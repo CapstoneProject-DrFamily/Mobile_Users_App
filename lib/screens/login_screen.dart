@@ -1,5 +1,7 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
 import 'package:drFamily_app/screens/home_page.dart';
+import 'package:drFamily_app/screens/home_waiting_page.dart';
+import 'package:drFamily_app/screens/landing_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,8 +34,6 @@ class LoginPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        // transform:
-                        //     Matrix4.translationValues(0.0, 20.0, 0.0),
                         child: Padding(
                           padding: const EdgeInsets.only(
                             top: 20.0,
@@ -180,7 +180,7 @@ class LoginPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => LandingPage()),
                       );
                     },
                     textColor: Colors.white,
@@ -206,7 +206,13 @@ class LoginPage extends StatelessWidget {
                   child: RaisedButton(
                     color: MainColors.riseButtonRed,
                     padding: EdgeInsets.all(15),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeWaitingPage()),
+                      );
+                    },
                     textColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
