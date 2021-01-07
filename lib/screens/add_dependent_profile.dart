@@ -3,6 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddDependentProfilePage extends StatelessWidget {
+  List<String> _relationshipList = [
+    'Father',
+    'Mother',
+    'Grandmother',
+    'Grandfather',
+    'Sister',
+    'Brother'
+  ];
+  String _selectedRelationship;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,11 +109,10 @@ class AddDependentProfilePage extends StatelessWidget {
               ),
             ),
             Container(
-              height: 50,
+              height: 50.0,
+              width: 300.0,
               margin: const EdgeInsets.only(
                 top: 8.0,
-                left: 70.0,
-                right: 70.0,
               ),
               child: RaisedButton(
                 color: MainColors.riseButtonBlue,
@@ -186,19 +195,35 @@ class AddDependentProfilePage extends StatelessWidget {
         left: 30.0,
         right: 20.0,
       ),
-      child: TextFormField(
-        keyboardType: TextInputType.phone,
-        textCapitalization: TextCapitalization.none,
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          hintText: 'Choose relationship',
-          hintStyle: TextStyle(
-            color: MainColors.hintTextColor,
+      width: 340.0,
+      height: 55.0,
+      decoration: new BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: MainColors.white,
+      ),
+      child: Container(
+        margin: const EdgeInsets.only(
+          left: 12.0,
+          top: 2.0,
+        ),
+        child: DropdownButton(
+          elevation: 16,
+          iconSize: 28,
+          hint: Text(
+            'Please choose relationship',
+            style: TextStyle(fontSize: 16),
           ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
+          isExpanded: true,
+          value: _selectedRelationship,
+          items: _relationshipList.map((relationship) {
+            return DropdownMenuItem(
+              child: new Text(relationship),
+              value: relationship,
+            );
+          }).toList(),
+          onChanged: (String newValue) {
+            _selectedRelationship = newValue;
+          },
         ),
       ),
     );
