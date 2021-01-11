@@ -1,47 +1,55 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
+import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
+import 'package:drFamily_app/view_model/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: MainColors.kMainBody,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _topField(context),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 90,
-                left: 20,
-                right: 20,
-              ),
-              child: RaisedButton(
-                color: MainColors.riseButtonBlue,
-                padding: EdgeInsets.all(15),
-                onPressed: () {},
-                textColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Next',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    return BaseView<SignUpViewModel>(
+      builder: (context, child, model) {
+        return Scaffold(
+          backgroundColor: MainColors.kMainBody,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                _topField(context, model),
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 90,
+                    left: 20,
+                    right: 20,
+                  ),
+                  child: RaisedButton(
+                    color: MainColors.riseButtonBlue,
+                    padding: EdgeInsets.all(15),
+                    onPressed: () {
+                      model.verifyPhone(context, model.phoneNum.value);
+                    },
+                    textColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Next',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
 
-Widget _topField(BuildContext context) {
+Widget _topField(BuildContext context, SignUpViewModel model) {
   return Container(
     height: MediaQuery.of(context).size.height / 1.75,
     decoration: BoxDecoration(
@@ -56,7 +64,7 @@ Widget _topField(BuildContext context) {
       children: [
         _logoField(),
         _textRegistField(),
-        _inputPhoneField(),
+        _inputPhoneField(model),
       ],
     ),
   );
@@ -89,7 +97,7 @@ Widget _textRegistField() {
   );
 }
 
-Widget _inputPhoneField() {
+Widget _inputPhoneField(SignUpViewModel model) {
   return Container(
     transform: Matrix4.translationValues(0, 50, 0),
     margin: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -118,11 +126,19 @@ Widget _inputPhoneField() {
         bottom: 20.0,
       ),
       child: TextFormField(
-        // controller: emailTextEditingController,
+        controller: model.phoneNo,
+        onChanged: (text) {
+          model.changePhoneNum(text);
+        },
         keyboardType: TextInputType.phone,
         textCapitalization: TextCapitalization.none,
         decoration: InputDecoration(
-          hintText: '+84123456789',
+          errorText: model.phoneNum.error,
+          prefix: Padding(
+            padding: EdgeInsets.all(4),
+            child: Text('(+84)'),
+          ),
+          hintText: '0123456789',
           hintStyle: TextStyle(
             color: MainColors.hintTextColor,
           ),
@@ -135,7 +151,7 @@ Widget _inputPhoneField() {
           ),
           prefixIcon: Padding(
             padding: const EdgeInsets.only(
-              right: 20.0,
+              right: 5.0,
               left: 10.0,
               bottom: 1.0,
             ),
