@@ -1,7 +1,7 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
-import 'package:drFamily_app/view_model/sign_up_view_model.dart';
+import 'package:drFamily_app/view_model/sign_up_vm/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatelessWidget {
