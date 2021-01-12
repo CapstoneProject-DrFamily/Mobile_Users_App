@@ -43,8 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0-nullsafety.1"
-<<<<<<< HEAD
-=======
   cloud_firestore:
     dependency: "direct main"
     description:
@@ -66,7 +64,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1+2"
->>>>>>> 94ffc2ddaaf9915d2e2d069ea299a9e70b17b4f1
   collection:
     dependency: transitive
     description:
@@ -187,7 +184,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< HEAD
+  fluttertoast:
+    dependency: "direct main"
+    description:
+      name: fluttertoast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.1.6"
   geolocator:
     dependency: "direct main"
     description:
@@ -202,15 +205,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.8"
-=======
-  fluttertoast:
-    dependency: "direct main"
-    description:
-      name: fluttertoast
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.1.6"
->>>>>>> 94ffc2ddaaf9915d2e2d069ea299a9e70b17b4f1
   get_it:
     dependency: "direct main"
     description:
@@ -302,8 +296,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0-nullsafety.1"
-<<<<<<< HEAD
-=======
   path_provider_linux:
     dependency: transitive
     description:
@@ -325,7 +317,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4+3"
->>>>>>> 94ffc2ddaaf9915d2e2d069ea299a9e70b17b4f1
   pedantic:
     dependency: transitive
     description:
@@ -457,7 +448,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0-nullsafety.1"
-<<<<<<< HEAD
   stream_transform:
     dependency: transitive
     description:
@@ -465,8 +455,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
-=======
->>>>>>> 94ffc2ddaaf9915d2e2d069ea299a9e70b17b4f1
   string_scanner:
     dependency: transitive
     description:
@@ -502,11 +490,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0-nullsafety.3"
-<<<<<<< HEAD
-sdks:
-  dart: ">=2.10.0-110 <2.11.0"
-  flutter: ">=1.22.0 <2.0.0"
-=======
   win32:
     dependency: transitive
     description:
@@ -523,5 +506,4 @@ sdks:
     version: "0.1.2"
 sdks:
   dart: ">=2.10.0-110 <2.11.0"
-  flutter: ">=1.16.0 <2.0.0"
->>>>>>> 94ffc2ddaaf9915d2e2d069ea299a9e70b17b4f1
+  flutter: ">=1.22.0 <2.0.0"
