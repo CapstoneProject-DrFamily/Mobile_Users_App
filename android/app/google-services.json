@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "73287330927-740d9t15lo3d5hgd0qvshnos4qddjdpn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.drFamily_app",
+            "certificate_hash": "d15e850cb93393f99e0bd3ab04fbad5f5398ef6e"
+          }
+        },
+        {
           "client_id": "73287330927-bc80402s3qp5u8esqv087pe6ahkufmh3.apps.googleusercontent.com",
           "client_type": 3
         }
