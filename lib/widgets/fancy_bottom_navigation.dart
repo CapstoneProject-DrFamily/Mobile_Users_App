@@ -94,7 +94,6 @@ class _FancyBottomNavigationState extends State<FancyBottomNavigation>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _setSelected(widget.tabs[widget.initialSelection].key);
   }

@@ -1,5 +1,4 @@
-import 'package:drFamily_app/screens/landing_page.dart';
-import 'package:drFamily_app/screens/login_screen.dart';
+import 'package:drFamily_app/screens/login/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

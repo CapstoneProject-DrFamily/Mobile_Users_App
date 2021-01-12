@@ -1,4 +1,3 @@
-import 'package:drFamily_app/enums/ViewState.dart';
 import 'package:drFamily_app/model/doctor.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 

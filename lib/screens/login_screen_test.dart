@@ -1,13 +1,11 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
-import 'package:drFamily_app/screens/home_page.dart';
-import 'package:drFamily_app/screens/home_waiting_page.dart';
 import 'package:drFamily_app/screens/landing_page.dart';
-import 'package:drFamily_app/screens/sign_up/sign_up_page.dart';
+import 'package:drFamily_app/screens/login/login_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPageTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -210,7 +208,7 @@ class LoginPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SignUpPage()),
+                        MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
                     textColor: Colors.white,

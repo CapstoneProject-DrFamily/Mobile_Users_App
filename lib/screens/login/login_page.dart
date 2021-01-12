@@ -1,13 +1,13 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
-import 'package:drFamily_app/view_model/sign_up_vm/sign_up_view_model.dart';
+import 'package:drFamily_app/view_model/sign_in_vm/sign_in_view_model.dart';
 import 'package:flutter/material.dart';
 
-class SignUpPage extends StatelessWidget {
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BaseView<SignUpViewModel>(
+    return BaseView<SignInViewModel>(
       builder: (context, child, model) {
         return Scaffold(
           backgroundColor: MainColors.kMainBody,
@@ -25,7 +25,7 @@ class SignUpPage extends StatelessWidget {
                     color: MainColors.riseButtonBlue,
                     padding: EdgeInsets.all(15),
                     onPressed: () {
-                      model.verifyPhone(context, model.phoneNum.value);
+                      model.storePhone(context);
                     },
                     textColor: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -49,7 +49,7 @@ class SignUpPage extends StatelessWidget {
   }
 }
 
-Widget _topField(BuildContext context, SignUpViewModel model) {
+Widget _topField(BuildContext context, SignInViewModel model) {
   return Container(
     height: MediaQuery.of(context).size.height / 1.75,
     decoration: BoxDecoration(
@@ -63,7 +63,6 @@ Widget _topField(BuildContext context, SignUpViewModel model) {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _logoField(),
-        _textRegistField(),
         _inputPhoneField(model),
       ],
     ),
@@ -84,22 +83,9 @@ Widget _logoField() {
   );
 }
 
-Widget _textRegistField() {
+Widget _inputPhoneField(SignInViewModel model) {
   return Container(
-    transform: Matrix4.translationValues(0.0, -20.0, 0.0),
-    alignment: Alignment.centerRight,
-    child: Padding(
-      padding: const EdgeInsets.only(top: 0, right: 100),
-      child: Text('Register',
-          style: TextStyle(
-              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)),
-    ),
-  );
-}
-
-Widget _inputPhoneField(SignUpViewModel model) {
-  return Container(
-    transform: Matrix4.translationValues(0, 50, 0),
+    transform: Matrix4.translationValues(0, 30, 0),
     margin: const EdgeInsets.only(left: 20.0, right: 20.0),
     width: double.infinity,
     decoration: new BoxDecoration(

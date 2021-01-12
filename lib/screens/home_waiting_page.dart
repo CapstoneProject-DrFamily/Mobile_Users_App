@@ -3,7 +3,7 @@ import 'package:drFamily_app/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeWaitingPage extends StatelessWidget {
-  List<Color> _colors = [
+  final List<Color> colors = [
     Colors.red,
     Colors.green,
     Colors.indigo,
