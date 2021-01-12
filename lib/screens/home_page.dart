@@ -1,5 +1,6 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
 import 'package:drFamily_app/screens/add_dependent_profile.dart';
+import 'package:drFamily_app/screens/type_of_book_dr_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +104,7 @@ class HomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AddDependentProfilePage()),
+                            builder: (context) => TypeOfBookDrPage()),
                       );
                     },
                     child: Text(
@@ -112,7 +113,13 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddDependentProfilePage()),
+                      );
+                    },
                     child: Text(
                       'CANCEL',
                       style: TextStyle(fontSize: 20),

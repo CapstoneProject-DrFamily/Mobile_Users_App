@@ -9,4 +9,8 @@ class ImagesLinks {
       "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2FmedicationScheduleLogo.png?alt=media&token=366f0d21-65ff-412c-a5c4-60c2f1debe24";
   static const String wordLogoLink =
       "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Flogo2.png?alt=media&token=4c3f5cc2-c71c-46c1-bb4c-613a71a464fa";
+  static const String symptomIconLink =
+      "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fsymptom.png?alt=media&token=80f9353e-ae11-4df3-bffc-6f55b0cf087b";
+  static const String specialistIconLink =
+      "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fspecialist.png?alt=media&token=b455a788-2f41-4a4c-9819-5ecad1b34418";
 }
