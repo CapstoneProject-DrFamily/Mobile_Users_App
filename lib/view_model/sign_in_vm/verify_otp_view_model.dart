@@ -52,8 +52,8 @@ class VerifyOTPViewModel extends BaseModel {
         } else {
           _start--;
           if (_start == 58) {
-            verifyPhone(_phoneNum);
-            // print(_phoneNum);
+            // verifyPhone(_phoneNum);
+            print(_phoneNum);
           }
           notifyListeners();
         }
@@ -179,13 +179,14 @@ class VerifyOTPViewModel extends BaseModel {
     try {
       final AuthCredential credential = PhoneAuthProvider.getCredential(
           verificationId: _verificationId, smsCode: _smsOTP);
-      await _auth.signInWithCredential(credential).then((value) async {
-        if (value.user != null)
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => LandingPage()),
-          );
-      });
+      await _auth.signInWithCredential(credential).then(
+        (value) async {
+          if (value.user != null)
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => LandingPage()),
+                (Route<dynamic> route) => false);
+        },
+      );
     } catch (e) {
       print("${e.toString()}");
       FocusScope.of(context).unfocus();

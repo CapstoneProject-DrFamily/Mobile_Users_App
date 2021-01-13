@@ -13,4 +13,8 @@ class ImagesLinks {
       "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fsymptom.png?alt=media&token=80f9353e-ae11-4df3-bffc-6f55b0cf087b";
   static const String specialistIconLink =
       "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fspecialist.png?alt=media&token=b455a788-2f41-4a4c-9819-5ecad1b34418";
+  static const String loginWave =
+      "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fwaves.png?alt=media&token=2267ebaa-31d9-4443-ae61-201e22068512";
+  static const String otpVerify =
+      "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fverify.png?alt=media&token=ab11afdd-ed18-4941-803f-68653224f0de";
 }
