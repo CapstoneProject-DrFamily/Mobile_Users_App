@@ -17,4 +17,10 @@ class ImagesLinks {
       "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fwaves.png?alt=media&token=2267ebaa-31d9-4443-ae61-201e22068512";
   static const String otpVerify =
       "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fverify.png?alt=media&token=ab11afdd-ed18-4941-803f-68653224f0de";
+  static const String yourDoctor =
+      "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fdoctor.png?alt=media&token=86bf9cac-2d5a-4a2f-b698-7f8f55bcc8f0";
+  static const String findDoctor =
+      "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fdoctor%20(1).png?alt=media&token=8e87531e-9b50-40a3-bbd2-9bd588f69517";
+  static const String yourMedicine =
+      "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fpills.png?alt=media&token=64580655-b389-4d58-af6d-343be63b6408";
 }

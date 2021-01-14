@@ -1,3 +1,5 @@
+import 'package:drFamily_app/screens/landing_page/home_page.dart';
+import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/login/login_demo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginDemo(),
+      home: LandingScreen(),
     );
   }
 }
