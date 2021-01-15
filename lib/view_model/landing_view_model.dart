@@ -1,5 +1,5 @@
 import 'package:drFamily_app/screens/home_page.dart';
-import 'package:drFamily_app/screens/setting.dart';
+import 'package:drFamily_app/screens/landing_page/setting.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:drFamily_app/screens/landing_page/home_page.dart';
-import 'package:drFamily_app/screens/setting.dart';
+import 'package:drFamily_app/screens/landing_page/setting.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
