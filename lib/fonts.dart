@@ -1,1 +1,2 @@
-const String AVENIR = "assets/fonts/avenir.ttf";
+const String AVENIR = "avenir";
+const String ROBOTO = "roboto";
