@@ -138,10 +138,10 @@ class HomeScreen extends StatelessWidget {
                                                                   'Friend'),
                                                             ),
                                                           ),
-                                                          Expanded(
-                                                              child: new Radio(
-                                                            value: 0,
-                                                          )),
+                                                          // Expanded(
+                                                          //     child: new Radio(
+                                                          //   value: 0,
+                                                          // )),
                                                         ],
                                                       )),
                                                     ),
