@@ -1,6 +1,6 @@
-import 'package:drFamily_app/Helper/fire_base_link.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/symptom_page_view_model.dart';
+import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -185,7 +185,7 @@ class SymptomScreen extends StatelessWidget {
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: Center(
-            child: Image.network(ImagesLinks.symptom),
+            child: Image.asset(ON_BOARD),
           ),
         ),
       ),
