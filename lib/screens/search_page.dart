@@ -1,7 +1,6 @@
 import 'package:drFamily_app/screens/doctor_detail_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/search_page_viewmodel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'share/base_view.dart';

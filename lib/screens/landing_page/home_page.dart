@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
 
   Padding _buildBody(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 10, top: 75),
+      padding: EdgeInsets.only(left: 20, right: 10, top: 45),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -58,8 +58,9 @@ class HomeScreen extends StatelessWidget {
               fontFamily: 'avenir',
               color: Color(0xff0d47a1),
             ),
+            textAlign: TextAlign.center,
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
           Container(
             child: Stack(
               children: [
