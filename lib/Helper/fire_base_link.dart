@@ -25,4 +25,6 @@ class ImagesLinks {
       "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fpills.png?alt=media&token=64580655-b389-4d58-af6d-343be63b6408";
   static const String symptom =
       "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2FonBoardDoc.png?alt=media&token=c2165179-f67b-4ed1-936f-0790123d0cee";
+  static const String bookAppointment =
+      "https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2Fcalendar.png?alt=media&token=78979a66-4e08-4a76-a3c3-fa8740d29b9c";
 }

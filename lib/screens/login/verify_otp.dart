@@ -1,5 +1,5 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
-import 'package:drFamily_app/screens/landing_page.dart';
+import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/verify_otp_view_model.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +113,7 @@ class VerifyOtpScreen extends StatelessWidget {
         onPressed: () {
           // model.submitOTP(context);
           Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => LandingPage()),
+              MaterialPageRoute(builder: (context) => LandingScreen()),
               (Route<dynamic> route) => false);
         },
         shape:

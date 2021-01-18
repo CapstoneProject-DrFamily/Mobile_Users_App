@@ -6,9 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
-import 'share/base_view.dart';
+import '../../share/base_view.dart';
 
-class SearchPage extends StatelessWidget {
+class ListDoctorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<SearchPageViewModel>(
       builder: (context, child, model) {

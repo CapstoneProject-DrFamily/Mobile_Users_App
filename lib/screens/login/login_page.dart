@@ -1,153 +1,200 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
-import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/sign_in_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<SignInViewModel>(
       builder: (context, child, model) {
         return Scaffold(
-          backgroundColor: MainColors.kMainBody,
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                _topField(context, model),
-                Container(
-                  margin: const EdgeInsets.only(
-                    top: 90,
-                    left: 20,
-                    right: 20,
+          backgroundColor: Colors.white,
+          body: LayoutBuilder(
+            builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: viewportConstraints.maxHeight,
                   ),
-                  child: RaisedButton(
-                    color: MainColors.riseButtonBlue,
-                    padding: EdgeInsets.all(15),
-                    onPressed: () {
-                      model.storePhone(context);
-                    },
-                    textColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Next',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
+                  child: IntrinsicHeight(
+                    child: Stack(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Container(
+                              color: Colors.white,
+                              height: 350.0,
+                              width: double.infinity,
+                              child: Image.network(
+                                ImagesLinks.loginWave,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Expanded(child: Container()),
+                            Container(
+                              alignment: Alignment.center,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "Verify Your Number",
+                                    style: TextStyle(
+                                        fontSize: (28 / 375.0) *
+                                            MediaQuery.of(context).size.width,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        height: 1.5),
+                                  ),
+                                  Text(
+                                    'Please enter Your mobile Number to',
+                                    style: TextStyle(color: Colors.grey[600]),
+                                  ),
+                                  Text(
+                                    'receive a verification code. message and data',
+                                    style: TextStyle(color: Colors.grey[600]),
+                                  ),
+                                  Text(
+                                    'rates may apply',
+                                    style: TextStyle(color: Colors.grey[600]),
+                                  ),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.1),
+                                  _buildPhoneField(model),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.1),
+                                  _buildContinueButton(context, model),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.1),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        _buildLogo(),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              );
+            },
           ),
         );
       },
     );
   }
-}
 
-Widget _topField(BuildContext context, SignInViewModel model) {
-  return Container(
-    height: MediaQuery.of(context).size.height / 1.75,
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-          begin: Alignment(-1.0, 0.0),
-          end: Alignment(1.0, 0.0),
-          colors: [MainColors.blueBegin, MainColors.blueEnd]),
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _logoField(),
-        _inputPhoneField(model),
-      ],
-    ),
-  );
-}
-
-Widget _logoField() {
-  return Container(
-    child: Padding(
-      padding: const EdgeInsets.only(top: 20, right: 30),
-      child: Image.network(
-        ImagesLinks.wordLogoLink,
-        width: 250,
-        height: 150,
-        fit: BoxFit.fill,
-      ),
-    ),
-  );
-}
-
-Widget _inputPhoneField(SignInViewModel model) {
-  return Container(
-    transform: Matrix4.translationValues(0, 30, 0),
-    margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-    width: double.infinity,
-    decoration: new BoxDecoration(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(25),
-        topRight: Radius.circular(25),
-        bottomLeft: Radius.circular(25),
-        bottomRight: Radius.circular(25),
-      ),
-      color: MainColors.white,
-      boxShadow: [
-        new BoxShadow(
-          color: Colors.black12,
-          blurRadius: 50,
-          offset: Offset(0, 0),
-        )
-      ],
-    ),
-    child: Container(
-      margin: const EdgeInsets.only(
-        top: 20.0,
-        left: 20.0,
-        right: 20.0,
-        bottom: 20.0,
-      ),
-      child: TextFormField(
-        controller: model.phoneNo,
-        onChanged: (text) {
-          model.changePhoneNum(text);
-        },
-        keyboardType: TextInputType.phone,
-        textCapitalization: TextCapitalization.none,
-        decoration: InputDecoration(
-          errorText: model.phoneNum.error,
-          prefix: Padding(
-            padding: EdgeInsets.all(4),
-            child: Text('(+84)'),
-          ),
-          hintText: '0123456789',
-          hintStyle: TextStyle(
-            color: MainColors.hintTextColor,
-          ),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide:
-                const BorderSide(color: MainColors.iconLoginColor, width: 0.0),
-          ),
-          prefixIcon: Padding(
-            padding: const EdgeInsets.only(
-              right: 5.0,
-              left: 10.0,
-              bottom: 1.0,
+  Padding _buildPhoneField(SignInViewModel model) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: new TextFormField(
+              initialValue: '+84',
+              enabled: false,
+              decoration: InputDecoration(
+                filled: false,
+                contentPadding: new EdgeInsets.symmetric(
+                  vertical: 14.2,
+                ),
+                disabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.lightBlue),
+                ),
+                prefixIcon: Icon(
+                  FontAwesomeIcons.globe,
+                  color: Colors.lightBlue,
+                ),
+              ),
             ),
-            child: Icon(
-              Icons.phone,
-              color: MainColors.iconLoginColor,
+            flex: 2,
+          ),
+          new SizedBox(
+            width: 10.0,
+          ),
+          new Expanded(
+            child: TextFormField(
+              controller: model.phoneNo,
+              onChanged: (value) => model.changePhoneNum(value),
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
+              style: TextStyle(fontSize: 20),
+              decoration: InputDecoration(
+                hintText: 'Enter your Number',
+                filled: false,
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.lightBlue),
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.lightBlue),
+                ),
+              ),
+            ),
+            flex: 5,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container _buildContinueButton(BuildContext context, SignInViewModel model) {
+    return Container(
+      height: (56 / 812.0) * MediaQuery.of(context).size.height,
+      child: RaisedButton(
+        onPressed: () {
+          model.storePhone(context);
+        },
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+        padding: EdgeInsets.all(0.0),
+        child: Ink(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [new Color(0xff374ABE), new Color(0xff64B6FF)],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+              borderRadius: BorderRadius.circular(30.0)),
+          child: Container(
+            constraints: BoxConstraints(
+                maxWidth: (300 / 375.0) * MediaQuery.of(context).size.width,
+                minHeight: (50 / 812.0) * MediaQuery.of(context).size.height),
+            alignment: Alignment.center,
+            child: Text(
+              "Continue",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: (18 / 375.0) * MediaQuery.of(context).size.width),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
+
+  Positioned _buildLogo() {
+    return Positioned(
+      left: 0,
+      top: 72,
+      right: 0,
+      child: Container(
+        width: 150,
+        height: 150,
+        child: Image.network(
+          ImagesLinks.wordLogoLink,
+          fit: BoxFit.contain,
+        ),
+      ),
+    );
+  }
 }

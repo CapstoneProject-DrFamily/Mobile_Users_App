@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:drFamily_app/screens/landing_page.dart';
+import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -183,7 +182,7 @@ class VerifyOTPViewModel extends BaseModel {
         (value) async {
           if (value.user != null)
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => LandingPage()),
+                MaterialPageRoute(builder: (context) => LandingScreen()),
                 (Route<dynamic> route) => false);
         },
       );

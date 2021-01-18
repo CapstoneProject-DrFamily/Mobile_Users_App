@@ -1,5 +1,6 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
-import 'package:drFamily_app/screens/search_page.dart';
+import 'package:drFamily_app/screens/home/find_doctor/list_doctor_page.dart';
+import 'package:drFamily_app/screens/home/find_doctor/symptom_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -70,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                   opacity: 0.6,
                   child: Container(
                     margin: EdgeInsets.only(top: 60),
-                    height: MediaQuery.of(context).size.height * 0.6,
+                    height: MediaQuery.of(context).size.height * 0.86,
                     decoration: BoxDecoration(
                       color: Color(0xFFF1EFF1),
                       borderRadius: BorderRadius.all(
@@ -82,8 +83,8 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   children: [
                     GestureDetector(
-                      child: _buildDoctorFunction(
-                          context, 'Find a Doctor', ImagesLinks.findDoctor),
+                      child: _buildDoctorFunction(context, 'Find a Doctor',
+                          ImagesLinks.findDoctor, 150, 190),
                       onTap: () {
                         showDialog(
                             context: context,
@@ -168,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            SearchPage()),
+                                                            ListDoctorPage()),
                                                   );
                                                 },
                                               ),
@@ -190,16 +191,25 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                     TextButton(
                                       child: Text('Next'),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SymptomScreen()),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ));
                       },
                     ),
-                    _buildDoctorFunction(
-                        context, 'Your own Doctor', ImagesLinks.yourDoctor),
-                    _buildDoctorFunction(
-                        context, 'Medicine Schedule', ImagesLinks.yourMedicine),
+                    _buildDoctorFunction(context, 'Book Appointment',
+                        ImagesLinks.bookAppointment, 130, 170),
+                    _buildDoctorFunction(context, 'Your own Doctor',
+                        ImagesLinks.yourDoctor, 140, 180),
+                    _buildDoctorFunction(context, 'Medicine Schedule',
+                        ImagesLinks.yourMedicine, 140, 180),
                   ],
                 ),
               ],
@@ -210,8 +220,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Container _buildDoctorFunction(
-      BuildContext context, String title, String icon) {
+  Container _buildDoctorFunction(BuildContext context, String title,
+      String icon, double height, double width) {
     return Container(
       height: 160,
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20 / 2),
@@ -246,8 +256,8 @@ class HomeScreen extends StatelessWidget {
             right: 0,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              height: 140,
-              width: 180,
+              height: height,
+              width: width,
               child: Image.network(
                 icon,
                 fit: BoxFit.cover,
@@ -269,7 +279,7 @@ class HomeScreen extends StatelessWidget {
                       title,
                       style: TextStyle(
                           fontFamily: 'avenir',
-                          fontSize: 23,
+                          fontSize: 22.5,
                           fontWeight: FontWeight.w600,
                           color: Color(0xff0d47a1)),
                     ),
