@@ -48,12 +48,12 @@ class HomeScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 20, right: 10, top: 45),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Welcome user \nyou health is our mission',
+            'Welcome user \nyour Health is our Mission',
             style: TextStyle(
-              fontSize: 31,
+              fontSize: 28,
               fontWeight: FontWeight.w800,
               fontFamily: 'avenir',
               color: Color(0xff0d47a1),
