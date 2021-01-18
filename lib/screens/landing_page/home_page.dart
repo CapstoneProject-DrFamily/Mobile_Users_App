@@ -1,6 +1,6 @@
-import 'package:drFamily_app/Helper/fire_base_link.dart';
 import 'package:drFamily_app/screens/home/find_doctor/list_doctor_page.dart';
 import 'package:drFamily_app/screens/home/find_doctor/symptom_page.dart';
+import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -83,8 +83,8 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   children: [
                     GestureDetector(
-                      child: _buildDoctorFunction(context, 'Find a Doctor',
-                          ImagesLinks.findDoctor, 150, 190),
+                      child: _buildDoctorFunction(
+                          context, 'Find a Doctor', FIND_DOCTOR, 150, 190),
                       onTap: () {
                         showDialog(
                             context: context,
@@ -205,11 +205,11 @@ class HomeScreen extends StatelessWidget {
                       },
                     ),
                     _buildDoctorFunction(context, 'Book Appointment',
-                        ImagesLinks.bookAppointment, 130, 170),
-                    _buildDoctorFunction(context, 'Your own Doctor',
-                        ImagesLinks.yourDoctor, 140, 180),
+                        BOOK_APPOINTMENT, 130, 170),
+                    _buildDoctorFunction(
+                        context, 'Your own Doctor', YOUR_DOCTOR, 140, 180),
                     _buildDoctorFunction(context, 'Medicine Schedule',
-                        ImagesLinks.yourMedicine, 140, 180),
+                        MEDICINE_SCHEDULE, 140, 180),
                   ],
                 ),
               ],
@@ -258,7 +258,7 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20),
               height: height,
               width: width,
-              child: Image.network(
+              child: Image.asset(
                 icon,
                 fit: BoxFit.cover,
               ),

@@ -1,6 +1,6 @@
-import 'package:drFamily_app/Helper/fire_base_link.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/sign_in_view_model.dart';
+import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -30,8 +30,8 @@ class LoginScreen extends StatelessWidget {
                               color: Colors.white,
                               height: 350.0,
                               width: double.infinity,
-                              child: Image.network(
-                                ImagesLinks.loginWave,
+                              child: Image.asset(
+                                LOGIN_WAVE,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -190,8 +190,8 @@ class LoginScreen extends StatelessWidget {
       child: Container(
         width: 150,
         height: 150,
-        child: Image.network(
-          ImagesLinks.wordLogoLink,
+        child: Image.asset(
+          LOGIN_LOGO,
           fit: BoxFit.contain,
         ),
       ),

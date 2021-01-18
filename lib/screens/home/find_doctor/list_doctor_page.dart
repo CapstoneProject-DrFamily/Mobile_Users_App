@@ -1,4 +1,3 @@
-import 'package:drFamily_app/screens/doctor_detail_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/search_page_viewmodel.dart';
 import 'package:drFamily_app/widgets/common/rating_bar.dart';
@@ -242,7 +241,7 @@ class CustomCardShapePainter extends CustomPainter {
   final Color startColor;
   final Color endColor;
 
-  CustomCardShapePainter(this.radius, this.startColor, this.endColor) {}
+  CustomCardShapePainter(this.radius, this.startColor, this.endColor);
 
   @override
   void paint(Canvas canvas, Size size) {
