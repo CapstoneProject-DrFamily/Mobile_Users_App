@@ -1,3 +1,4 @@
+import 'package:drFamily_app/screens/home/find_doctor/symptom_page.dart';
 import 'package:drFamily_app/screens/landing_page/home_page.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/login/login_demo.dart';
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LandingScreen(),
+      home: SymptomScreen(),
     );
   }
 }
