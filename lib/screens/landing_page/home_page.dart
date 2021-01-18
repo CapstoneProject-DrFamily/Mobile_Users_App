@@ -1,4 +1,6 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
+import 'package:drFamily_app/screens/search_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -78,8 +80,121 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    _buildDoctorFunction(
-                        context, 'Find a Doctor', ImagesLinks.findDoctor),
+                    GestureDetector(
+                      child: _buildDoctorFunction(
+                          context, 'Find a Doctor', ImagesLinks.findDoctor),
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (_) => new AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(30))),
+                                  title:
+                                      Center(child: new Text("Choose patient")),
+                                  content: new Container(
+                                    height:
+                                        300.0, // Change as per your requirement
+                                    width:
+                                        300.0, // Change as per your requirement
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          ListView.builder(
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            itemCount: 5,
+                                            itemBuilder: (context, index) =>
+                                                Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Card(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              40),
+                                                    ),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        print('Card tapped.');
+                                                      },
+                                                      child: Container(
+                                                          child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                            flex: 3,
+                                                            child: ListTile(
+                                                              leading: Icon(
+                                                                Icons
+                                                                    .account_circle,
+                                                                size: 50,
+                                                              ),
+                                                              title: Text(
+                                                                  'Anh Khoa'),
+                                                              subtitle: Text(
+                                                                  'Friend'),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                              child: new Radio(
+                                                            value: 0,
+                                                          )),
+                                                        ],
+                                                      )),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                          ClipOval(
+                                            child: Material(
+                                              color: Colors
+                                                  .grey[350], // button color
+                                              child: InkWell(
+                                                splashColor: Colors
+                                                    .cyan, // inkwell color
+                                                child: SizedBox(
+                                                    width: 56,
+                                                    height: 56,
+                                                    child: Icon(Icons.add)),
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            SearchPage()),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 15,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('Cancel'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text('Next'),
+                                      onPressed: () {},
+                                    ),
+                                  ],
+                                ));
+                      },
+                    ),
                     _buildDoctorFunction(
                         context, 'Your own Doctor', ImagesLinks.yourDoctor),
                     _buildDoctorFunction(
