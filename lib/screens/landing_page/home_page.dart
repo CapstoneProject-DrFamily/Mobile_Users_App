@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
 
   Padding _buildBody(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 10, top: 45),
+      padding: EdgeInsets.only(left: 20, right: 20, top: 45),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
