@@ -1,5 +1,5 @@
 import 'package:drFamily_app/Helper/fire_base_link.dart';
-import 'package:drFamily_app/screens/add_dependent_profile.dart';
+import 'package:drFamily_app/screens/home/add_dependent_profile.dart';
 import 'package:drFamily_app/screens/type_of_book_dr_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/widgets/widgets.dart';
