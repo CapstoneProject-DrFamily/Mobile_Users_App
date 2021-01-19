@@ -60,11 +60,10 @@ class SymptomScreen extends StatelessWidget {
                     child: Text(
                       model.symtoms[indexFather].headerValue,
                       style: TextStyle(
-                        color: Color(0xff0d47a1),
-                        fontFamily: 'avenir',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
+                          color: Color(0xff0d47a1),
+                          fontFamily: 'avenir',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
@@ -121,7 +120,7 @@ class SymptomScreen extends StatelessWidget {
                                       color: Color(0xff0d47a1),
                                       fontFamily: 'avenir',
                                       fontSize: 16,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),

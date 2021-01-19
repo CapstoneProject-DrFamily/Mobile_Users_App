@@ -6,3 +6,4 @@ const String BOOK_APPOINTMENT = 'assets/images/calendar.png';
 const String YOUR_DOCTOR = 'assets/images/your_doctor.png';
 const String MEDICINE_SCHEDULE = 'assets/images/pills.png';
 const String ON_BOARD = 'assets/images/onBoardDoc.png';
+const String TIME_LINE = 'assets/images/time_line_image.png';
