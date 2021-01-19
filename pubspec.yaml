@@ -34,7 +34,7 @@ dependencies:
   settings_ui: ^0.1.1
   scoped_model: ^1.1.0
   get_it: ^5.0.3
-  google_maps_flutter: ^1.0.10
+  google_maps_flutter: ^1.1.1
   geolocator: ^6.1.13
   firebase_auth: ^0.14.0+5
   firebase_core: ^0.4.0
@@ -44,7 +44,7 @@ dependencies:
   bottom_navy_bar: ^5.6.0
   eva_icons_flutter: ^2.0.1
   permission_handler: ^5.0.1+1
-  location: ^3.0.0
+  location: ^3.2.3
   google_fonts: ^1.1.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

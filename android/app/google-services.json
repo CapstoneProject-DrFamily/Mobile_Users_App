@@ -49,6 +49,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73287330927:android:9ede27910d6248cfedb19a",
+        "android_client_info": {
+          "package_name": "ducbth.example.mobile_doctors_apps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "73287330927-bc80402s3qp5u8esqv087pe6ahkufmh3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxOfGepucLVfeX2JgTD01buzId7757ZaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "73287330927-bc80402s3qp5u8esqv087pe6ahkufmh3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

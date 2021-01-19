@@ -1,4 +1,5 @@
 import 'package:drFamily_app/view_model/doctor_detail_view_model.dart';
+import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/map_page_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/symptom_page_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/time_line_examine_view_model.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/landing_page_view_model.dart';
@@ -23,4 +24,5 @@ void setupLocator() {
   locator.registerFactory<ProgressPageViewModel>(() => ProgressPageViewModel());
   locator.registerFactory<TimeLineExamineViewModel>(
       () => TimeLineExamineViewModel());
+  locator.registerFactory<MapPageViewModel>(() => MapPageViewModel());
 }
