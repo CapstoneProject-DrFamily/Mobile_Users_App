@@ -6,6 +6,7 @@ import 'package:drFamily_app/view_model/landing_page_vm/landing_page_view_model.
 import 'package:drFamily_app/view_model/landing_view_model.dart';
 import 'package:drFamily_app/view_model/progress_page_view_model.dart';
 import 'package:drFamily_app/view_model/search_page_viewmodel.dart';
+import 'package:drFamily_app/view_model/relationship_list_view_model.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/sign_in_view_model.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/verify_otp_view_model.dart';
 import 'package:get_it/get_it.dart';
@@ -25,4 +26,6 @@ void setupLocator() {
   locator.registerFactory<TimeLineExamineViewModel>(
       () => TimeLineExamineViewModel());
   locator.registerFactory<MapPageViewModel>(() => MapPageViewModel());
+  locator.registerFactory<RelationshipListViewModel>(
+      () => RelationshipListViewModel());
 }

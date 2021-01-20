@@ -127,8 +127,10 @@ class LoginScreen extends StatelessWidget {
               onChanged: (value) => model.changePhoneNum(value),
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
+              maxLength: 10,
               style: TextStyle(fontSize: 20),
               decoration: InputDecoration(
+                counterText: "",
                 hintText: 'Enter your Number',
                 filled: false,
                 focusedBorder: UnderlineInputBorder(

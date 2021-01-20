@@ -1,5 +1,6 @@
 import 'package:drFamily_app/screens/home/find_doctor/list_doctor_page.dart';
 import 'package:drFamily_app/screens/home/find_doctor/symptom_page.dart';
+import 'package:drFamily_app/screens/add_dependent_profile.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -169,7 +170,7 @@ class HomeScreen extends StatelessWidget {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            ListDoctorPage()),
+                                                            AddDependentProfilePage()),
                                                   );
                                                 },
                                               ),
@@ -184,12 +185,6 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   actions: <Widget>[
                                     TextButton(
-                                      child: Text('Cancel'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    TextButton(
                                       child: Text('Next'),
                                       onPressed: () {
                                         Navigator.push(
@@ -197,6 +192,17 @@ class HomeScreen extends StatelessWidget {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   SymptomScreen()),
+                                        );
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text('Cancel'),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ListDoctorPage()),
                                         );
                                       },
                                     ),
