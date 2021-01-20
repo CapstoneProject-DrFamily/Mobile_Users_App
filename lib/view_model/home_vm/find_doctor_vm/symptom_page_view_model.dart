@@ -1,5 +1,7 @@
 import 'package:drFamily_app/model/symptom_model.dart';
+import 'package:drFamily_app/screens/home/find_doctor/map_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:flutter/material.dart';
 
 class SymptomePageViewModel extends BaseModel {
   List<SymptomModel> symtoms = [
@@ -35,7 +37,13 @@ class SymptomePageViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void continuePage() {
+  void continuePage(BuildContext context) {
     print(_savedValue);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MapScreen(),
+      ),
+    );
   }
 }

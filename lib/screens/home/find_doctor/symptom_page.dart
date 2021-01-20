@@ -166,7 +166,7 @@ class SymptomScreen extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.arrow_forward_ios, color: Colors.black),
               onPressed: () {
-                model.continuePage();
+                model.continuePage(context);
               }),
         ],
         backgroundColor:

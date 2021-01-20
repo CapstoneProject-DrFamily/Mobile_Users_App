@@ -1,3 +1,4 @@
+import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/search_page_viewmodel.dart';
 import 'package:drFamily_app/widgets/common/rating_bar.dart';
@@ -15,7 +16,7 @@ class ListDoctorPage extends StatelessWidget {
           backgroundColor: MainColors.kMainBody,
           appBar: AppBar(
             iconTheme: IconThemeData(color: MainColors.blueBegin),
-            backgroundColor: Colors.blue.withOpacity(0), //
+            backgroundColor: Colors.blue.withOpacity(0),
             // flexibleSpace: Container(
             //   decoration: BoxDecoration(
             //     gradient: LinearGradient(
@@ -25,6 +26,18 @@ class ListDoctorPage extends StatelessWidget {
             //   ),
             // ),
             // backgroundColor: MainColors.blueBegin,
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.arrow_forward, color: MainColors.blueBegin),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TimeLineExamineScreen(),
+                      ),
+                    );
+                  }),
+            ],
             centerTitle: true,
             title: Text('List of Doctor',
                 style: TextStyle(color: MainColors.blueBegin)),
