@@ -1,3 +1,4 @@
+import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/doctor_detail_view_model.dart';
@@ -16,6 +17,18 @@ class DoctorDetailPage extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: MainColors.blueBegin,
             centerTitle: true,
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.arrow_forward, color: MainColors.white),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TimeLineExamineScreen(),
+                      ),
+                    );
+                  }),
+            ],
             title: Text('Detail'),
             elevation: 0,
           ),

@@ -7,3 +7,7 @@ const String YOUR_DOCTOR = 'assets/images/your_doctor.png';
 const String MEDICINE_SCHEDULE = 'assets/images/pills.png';
 const String ON_BOARD = 'assets/images/onBoardDoc.png';
 const String TIME_LINE = 'assets/images/time_line_image.png';
+const String TIME_LINE_1 = 'assets/images/time_line_1.png';
+const String TIME_LINE_2 = 'assets/images/time_line_2.png';
+const String TIME_LINE_3 = 'assets/images/time_line_3.png';
+const String TIME_LINE_4 = 'assets/images/time_line_4.png';

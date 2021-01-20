@@ -1,3 +1,4 @@
+import 'package:drFamily_app/screens/doctor_detail_page.dart';
 import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/search_page_viewmodel.dart';
@@ -26,18 +27,7 @@ class ListDoctorPage extends StatelessWidget {
             //   ),
             // ),
             // backgroundColor: MainColors.blueBegin,
-            actions: <Widget>[
-              IconButton(
-                  icon: Icon(Icons.arrow_forward, color: MainColors.blueBegin),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TimeLineExamineScreen(),
-                      ),
-                    );
-                  }),
-            ],
+
             centerTitle: true,
             title: Text('List of Doctor',
                 style: TextStyle(color: MainColors.blueBegin)),
@@ -75,114 +65,129 @@ class ListDoctorPage extends StatelessWidget {
                                     itemCount: model.listDoctor.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(24),
-                                                gradient: LinearGradient(
-                                                    colors: [
-                                                      MainColors.blueBegin,
-                                                      MainColors.blueEnd
-                                                    ],
-                                                    begin: Alignment.topLeft,
-                                                    end: Alignment.bottomRight),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color:
-                                                          MainColors.blueBegin,
-                                                      blurRadius: 12,
-                                                      offset: Offset(0, 6))
-                                                ],
-                                              ),
-                                            ),
-                                            Positioned(
-                                              right: 0,
-                                              bottom: 0,
-                                              top: 0,
-                                              child: CustomPaint(
-                                                size: Size(70, 100),
-                                                painter: CustomCardShapePainter(
-                                                    24,
-                                                    MainColors.blueBegin,
-                                                    MainColors.blueEnd),
-                                              ),
-                                            ),
-                                            Positioned.fill(
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: CircleAvatar(
-                                                      backgroundImage:
-                                                          NetworkImage(
-                                                        'https://www.doctor-4-u.co.uk/wp/wp-content/uploads/2020/02/485165_PR_130_SI_24_06_14_255-m-1.png',
-                                                      ),
-                                                      radius: 40,
-                                                      backgroundColor:
-                                                          Colors.white,
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 4,
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text('Dr Anh Khoa',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                        Text('Khoa nội',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 14,
-                                                                fontStyle:
-                                                                    FontStyle
-                                                                        .italic)),
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DoctorDetailPage(
+                                                        id: model
+                                                            .listDoctor[index]
+                                                            .id)),
+                                          );
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                height: 100,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
+                                                  gradient: LinearGradient(
+                                                      colors: [
+                                                        MainColors.blueBegin,
+                                                        MainColors.blueEnd
                                                       ],
+                                                      begin: Alignment.topLeft,
+                                                      end: Alignment
+                                                          .bottomRight),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: MainColors
+                                                            .blueBegin,
+                                                        blurRadius: 12,
+                                                        offset: Offset(0, 6))
+                                                  ],
+                                                ),
+                                              ),
+                                              Positioned(
+                                                right: 0,
+                                                bottom: 0,
+                                                top: 0,
+                                                child: CustomPaint(
+                                                  size: Size(70, 100),
+                                                  painter:
+                                                      CustomCardShapePainter(
+                                                          24,
+                                                          MainColors.blueBegin,
+                                                          MainColors.blueEnd),
+                                                ),
+                                              ),
+                                              Positioned.fill(
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: CircleAvatar(
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                          'https://www.doctor-4-u.co.uk/wp/wp-content/uploads/2020/02/485165_PR_130_SI_24_06_14_255-m-1.png',
+                                                        ),
+                                                        radius: 40,
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 1,
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Center(
-                                                          child: Text('4.8',
+                                                    Expanded(
+                                                      flex: 4,
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text('Dr Anh Khoa',
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .white,
-                                                                  fontSize:
-                                                                      14)),
-                                                        ),
-                                                        SizedBox(height: 5),
-                                                        Center(
-                                                            child: RatingBar(
-                                                                rating: 4))
-                                                      ],
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold)),
+                                                          Text('Khoa nội',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 14,
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .italic)),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  )
-                                                ],
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Center(
+                                                            child: Text('4.8',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        14)),
+                                                          ),
+                                                          SizedBox(height: 5),
+                                                          Center(
+                                                              child: RatingBar(
+                                                                  rating: 4))
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       );
 

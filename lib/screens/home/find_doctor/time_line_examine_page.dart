@@ -3,6 +3,7 @@ import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/time_line_examine
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 class TimeLineExamineScreen extends StatelessWidget {
   @override
@@ -23,8 +24,9 @@ class TimeLineExamineScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                  //set height of box continer
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.35,
+                    height: MediaQuery.of(context).size.height * 0.33,
                   ),
                   Container(
                     width: double.infinity,
@@ -39,124 +41,8 @@ class TimeLineExamineScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            'Doctor is checking',
-                            style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 32,
-                              color: Colors.blue[900],
-                            ),
-                          ),
-                          Stepper(
-                            type: StepperType.vertical,
-                            steps: [
-                              Step(
-                                title: Text(
-                                  "Analysis symptom",
-                                  style: GoogleFonts.varelaRound(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                content: Text("On process Analysis"),
-                                isActive: model.currentStep >= 0,
-                                state: model.currentStep >= 0
-                                    ? StepState.complete
-                                    : StepState.editing,
-                              ),
-                              Step(
-                                title: Text(
-                                  "Take sample",
-                                  style: GoogleFonts.varelaRound(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                content: Text("On process Sample"),
-                                isActive: model.currentStep >= 1,
-                                state: model.currentStep >= 1
-                                    ? StepState.complete
-                                    : StepState.editing,
-                              ),
-                              Step(
-                                title: Text(
-                                  "Make a diagnosis",
-                                  style: GoogleFonts.varelaRound(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                content: Text("On process Dianosis"),
-                                isActive: model.currentStep >= 2,
-                                state: model.currentStep >= 2
-                                    ? StepState.complete
-                                    : StepState.editing,
-                              ),
-                              Step(
-                                title: Text(
-                                  "Prescription",
-                                  style: GoogleFonts.varelaRound(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                content: Text("On Process Precription"),
-                                isActive: model.currentStep >= 3,
-                                state: model.currentStep >= 3
-                                    ? StepState.complete
-                                    : StepState.editing,
-                              ),
-                            ],
-                            currentStep: model.currentStep,
-                            onStepTapped: (int step) => print(step),
-                            onStepContinue: model.currentStep < 3
-                                ? () => model.continueStep()
-                                : null,
-                            onStepCancel: model.currentStep > 0
-                                ? () => model.backStep()
-                                : null,
-                            controlsBuilder: (context,
-                                    {onStepCancel, onStepContinue}) =>
-                                Container(
-                              height: 70,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  model.currentStep == 0
-                                      ? Text('')
-                                      : RaisedButton(
-                                          onPressed: onStepCancel,
-                                          textColor: Colors.grey,
-                                          textTheme: ButtonTextTheme.normal,
-                                          child: Row(
-                                            children: [
-                                              Icon(Icons.arrow_back_ios),
-                                              Text('PREV')
-                                            ],
-                                          ),
-                                        ),
-                                  RaisedButton(
-                                    onPressed: onStepContinue,
-                                    textColor: Colors.white,
-                                    color: Colors.indigoAccent,
-                                    textTheme: ButtonTextTheme.normal,
-                                    child: Row(
-                                      children: [
-                                        model.currentStep >= 3
-                                            ? Icon(Icons.done)
-                                            : Icon(Icons.arrow_forward_ios),
-                                        model.currentStep >= 3
-                                            ? Text('Done')
-                                            : Text('Next')
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
+                          _buildMainText(),
+                          _buildTimeLine(),
                         ],
                       ),
                     ),
@@ -167,6 +53,160 @@ class TimeLineExamineScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Text _buildMainText() {
+    return Text(
+      'Doctor is checking',
+      style: GoogleFonts.varelaRound(
+        fontWeight: FontWeight.bold,
+        fontSize: 32,
+        color: Color(0xff6c6cff),
+      ),
+    );
+  }
+
+  Center _buildTimeLine() {
+    return Center(
+      child: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          TimelineTile(
+            alignment: TimelineAlign.manual,
+            lineXY: 0.1,
+            isFirst: true,
+            indicatorStyle: const IndicatorStyle(
+              width: 20,
+              color: Color(0xFF27AA69),
+              padding: EdgeInsets.all(6),
+            ),
+            endChild: const _RightChild(
+              asset: TIME_LINE_1,
+              title: 'Analysis Symptom',
+              message: 'Doctor has done analysis.',
+            ),
+            beforeLineStyle: const LineStyle(
+              color: Color(0xFF27AA69),
+            ),
+          ),
+          TimelineTile(
+            alignment: TimelineAlign.manual,
+            lineXY: 0.1,
+            indicatorStyle: const IndicatorStyle(
+              width: 20,
+              color: Color(0xFF27AA69),
+              padding: EdgeInsets.all(6),
+            ),
+            endChild: const _RightChild(
+              asset: TIME_LINE_2,
+              title: 'Take Sample',
+              message: 'Your sample has been taken.',
+            ),
+            beforeLineStyle: const LineStyle(
+              color: Color(0xFF27AA69),
+            ),
+          ),
+          TimelineTile(
+            alignment: TimelineAlign.manual,
+            lineXY: 0.1,
+            indicatorStyle: const IndicatorStyle(
+              width: 20,
+              color: Color(0xFF2B619C),
+              padding: EdgeInsets.all(6),
+            ),
+            endChild: const _RightChild(
+              asset: TIME_LINE_3,
+              title: 'Diagnosis Processed',
+              message: 'Doctor has done diagnosis.',
+            ),
+            beforeLineStyle: const LineStyle(
+              color: Color(0xFF27AA69),
+            ),
+            afterLineStyle: const LineStyle(
+              color: Color(0xFFDADADA),
+            ),
+          ),
+          TimelineTile(
+            alignment: TimelineAlign.manual,
+            lineXY: 0.1,
+            isLast: true,
+            indicatorStyle: const IndicatorStyle(
+              width: 20,
+              color: Color(0xFFDADADA),
+              padding: EdgeInsets.all(6),
+            ),
+            endChild: const _RightChild(
+              disabled: true,
+              asset: TIME_LINE_4,
+              title: 'Prescription',
+              message: 'Your prescription is ready for pickup.',
+            ),
+            beforeLineStyle: const LineStyle(
+              color: Color(0xFFDADADA),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RightChild extends StatelessWidget {
+  const _RightChild({
+    Key key,
+    this.asset,
+    this.title,
+    this.message,
+    this.disabled = false,
+  }) : super(key: key);
+
+  final String asset;
+  final String title;
+  final String message;
+  final bool disabled;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        children: <Widget>[
+          Opacity(
+            child: Image.asset(asset, height: 50),
+            opacity: disabled ? 0.5 : 1,
+          ),
+          const SizedBox(width: 16),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: GoogleFonts.yantramanav(
+                    color: disabled
+                        ? const Color(0xFFBABABA)
+                        : const Color(0xFF636564),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  message,
+                  style: GoogleFonts.yantramanav(
+                    color: disabled
+                        ? const Color(0xFFD5D5D5)
+                        : const Color(0xFF636564),
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
