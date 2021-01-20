@@ -42,7 +42,7 @@ class SymptomScreen extends StatelessWidget {
               Stack(
                 children: [
                   Opacity(
-                    opacity: 0.5,
+                    opacity: 0.8,
                     child: Container(
                       margin: EdgeInsets.only(top: 20),
                       height: MediaQuery.of(context).size.height * 0.06,
@@ -95,7 +95,7 @@ class SymptomScreen extends StatelessWidget {
                             Stack(
                               children: [
                                 Opacity(
-                                  opacity: 0.5,
+                                  opacity: 0.7,
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.8,
@@ -223,6 +223,7 @@ class SymptomScreen extends StatelessWidget {
         fontFamily: 'avenir',
         color: Color(0xff0d47a1),
       ),
+      textAlign: TextAlign.center,
     );
   }
 }

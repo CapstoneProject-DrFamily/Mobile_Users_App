@@ -1,7 +1,6 @@
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/time_line_examine_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -41,7 +40,7 @@ class TimeLineExamineScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Doctor Is Checking',
+                            'Doctor is checking',
                             style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold,
                               fontSize: 32,
