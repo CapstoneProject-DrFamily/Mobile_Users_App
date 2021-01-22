@@ -11,3 +11,5 @@ const String TIME_LINE_1 = 'assets/images/time_line_1.png';
 const String TIME_LINE_2 = 'assets/images/time_line_2.png';
 const String TIME_LINE_3 = 'assets/images/time_line_3.png';
 const String TIME_LINE_4 = 'assets/images/time_line_4.png';
+const String SYMPTOMS = 'assets/images/fever.svg';
+const String SPECIALTY = 'assets/images/medical-doctor.svg';
