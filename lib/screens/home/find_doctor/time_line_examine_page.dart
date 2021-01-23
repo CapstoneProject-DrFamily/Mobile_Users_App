@@ -1,6 +1,7 @@
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/time_line_examine_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
+import 'package:drFamily_app/widgets/common/feed_back_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timeline_tile/timeline_tile.dart';
@@ -43,6 +44,23 @@ class TimeLineExamineScreen extends StatelessWidget {
                         children: [
                           _buildMainText(),
                           _buildTimeLine(),
+                          InkWell(
+                            onTap: () {
+                              print('oke');
+                              FeedBackDialog().showCustomDialog(context);
+                            },
+                            child: Container(
+                              width: 100,
+                              height: 50,
+                              color: Colors.blue,
+                              child: Center(
+                                child: Text(
+                                  'Done',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -71,6 +89,7 @@ class TimeLineExamineScreen extends StatelessWidget {
     return Center(
       child: ListView(
         shrinkWrap: true,
+        primary: false,
         children: <Widget>[
           TimelineTile(
             alignment: TimelineAlign.manual,
