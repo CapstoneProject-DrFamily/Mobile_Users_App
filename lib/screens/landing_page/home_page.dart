@@ -1,5 +1,6 @@
 import 'package:commons/commons.dart';
-import 'package:drFamily_app/screens/add_dependent_profile.dart';
+import 'package:drFamily_app/screens/landing_page/add_dependent_profile_page.dart';
+import 'package:drFamily_app/screens/home/find_doctor/specialty_screen.dart';
 import 'package:drFamily_app/screens/home/find_doctor/symptom_page.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -303,7 +304,11 @@ class HomeScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    print('oke 2');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SpecialtyScreen()),
+                    );
                   },
                   child: Stack(
                     children: [

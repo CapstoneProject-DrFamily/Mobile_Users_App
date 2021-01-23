@@ -28,12 +28,13 @@ class HomeWaitingPage extends StatelessWidget {
         ),
       ),
       child: Center(
-        child: Image.network(
-          ImagesLinks.wordLogoLink,
-          width: 250.0,
-          height: 150.0,
-          fit: BoxFit.fill,
-        ),
+        child: Container(),
+        // Image.network(
+        //   ImagesLinks.wordLogoLink,
+        //   width: 250.0,
+        //   height: 150.0,
+        //   fit: BoxFit.fill,
+        // ),
       ),
     );
   }
