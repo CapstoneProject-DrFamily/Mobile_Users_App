@@ -1,4 +1,4 @@
-import 'package:drFamily_app/screens/doctor_detail_page.dart';
+import 'package:drFamily_app/screens/doctor_detail_screen.dart';
 import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/search_page_viewmodel.dart';
@@ -71,7 +71,7 @@ class ListDoctorPage extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    DoctorDetailPage(
+                                                    DoctorDetailScreen(
                                                         id: model
                                                             .listDoctor[index]
                                                             .id)),

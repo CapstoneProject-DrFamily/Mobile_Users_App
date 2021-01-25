@@ -17,7 +17,7 @@ class DoctorDetailViewModel extends BaseModel {
           description:
               'Spending time at national parks can be an exciting adventure, but this wasnt the type of excitement she was hoping to experience.',
           degree: 'Bác sĩ Chuyên Khoa I',
-          schoolStudy: 'ĐH Y Dược TP. HCM');
+          schoolStudy: 'ĐH Y Dược TP.HCM');
       return doctor;
     } else if (id == 2) {
       doctor = Doctor.fullInfo(
