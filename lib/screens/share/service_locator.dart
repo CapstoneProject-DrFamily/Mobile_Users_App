@@ -5,7 +5,7 @@ import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/symptom_page_view
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/time_line_examine_view_model.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/landing_page_view_model.dart';
 import 'package:drFamily_app/view_model/landing_view_model.dart';
-import 'package:drFamily_app/view_model/precription_view_model.dart';
+import 'package:drFamily_app/view_model/prescription_view_model.dart';
 import 'package:drFamily_app/view_model/progress_page_view_model.dart';
 import 'package:drFamily_app/view_model/search_page_viewmodel.dart';
 import 'package:drFamily_app/view_model/relationship_list_view_model.dart';
