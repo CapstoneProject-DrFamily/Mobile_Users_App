@@ -2,7 +2,7 @@ import 'package:drFamily_app/model/doctor.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 
 class SearchPageViewModel extends BaseModel {
-  List<Doctor> listDoctor = new List<Doctor>();
+  List<Doctor> listDoctor;
 
   Future<List<Doctor>> loadDoctor() async {
     Doctor doctor1 = new Doctor(
