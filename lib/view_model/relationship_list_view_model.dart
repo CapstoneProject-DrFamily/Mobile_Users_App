@@ -1,5 +1,4 @@
 import 'package:drFamily_app/screens/share/base_model.dart';
-import 'package:drFamily_app/model/relationship.dart';
 
 class RelationshipListViewModel extends BaseModel {
   List<String> _relationshipList = [
