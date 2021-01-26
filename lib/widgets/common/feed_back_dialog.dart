@@ -1,3 +1,4 @@
+import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -80,7 +81,10 @@ class FeedBackDialog {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.of(context).pop();
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => LandingScreen()),
+                                (Route<dynamic> route) => false);
                           },
                           child: Container(
                             width: 100,

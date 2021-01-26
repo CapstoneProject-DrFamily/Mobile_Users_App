@@ -19,3 +19,4 @@ const String SPECIALTIES_ICON = 'assets/images/specialtiesIcon.png';
 const String DEGREE_ICON = 'assets/images/degreeIcon.png';
 const String DESCRIPTION_ICON = 'assets/images/descriptionIcon.png';
 const String PRESCRIPTION = 'assets/images/medicine.png';
+const String PROFILE_BACKGROUD = 'assets/images/virus.png';

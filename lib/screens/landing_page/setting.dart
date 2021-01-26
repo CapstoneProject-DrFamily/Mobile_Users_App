@@ -1,3 +1,4 @@
+import 'package:drFamily_app/screens/setting/profile_screen.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +88,12 @@ class SettingPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                print('Profile');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(),
+                  ),
+                );
               },
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.3,
