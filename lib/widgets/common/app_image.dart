@@ -21,3 +21,4 @@ const String DESCRIPTION_ICON = 'assets/images/descriptionIcon.png';
 const String PRESCRIPTION = 'assets/images/medicine.png';
 const String MEDICINES_ICON1 = 'assets/images/medicinesIcon.png';
 const String MEDICINES_ICON2 = 'assets/images/medicinesIcon2.png';
+const String PROFILE_BACKGROUD = 'assets/images/virus.png';

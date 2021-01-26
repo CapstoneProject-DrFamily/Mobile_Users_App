@@ -1,8 +1,8 @@
 import 'package:drFamily_app/model/doctor.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 
-class SearchPageViewModel extends BaseModel {
-  List<Doctor> listDoctor;
+class ListDoctorPageViewModel extends BaseModel {
+  List<Doctor> listDoctor = new List<Doctor>();
 
   Future<List<Doctor>> loadDoctor() async {
     Doctor doctor1 = new Doctor(
@@ -22,7 +22,6 @@ class SearchPageViewModel extends BaseModel {
         url:
             'https://taimuihongsg.com/wp-content/uploads/2018/05/Kim-Bun-ThuongE-01.jpg');
     listDoctor.add(doctor2);
-
     await Future.delayed(Duration(seconds: 1));
 
     return listDoctor;

@@ -1,3 +1,4 @@
+import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/doctor_detail_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
@@ -15,7 +16,39 @@ class DoctorDetailScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.grey.shade300,
           body: SingleChildScrollView(
-            child: _buildBody(context, model),
+            child: Stack(
+              children: [
+                _buildBody(context, model),
+                Positioned(
+                  top: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: AppBar(
+                    title: Text(''), // You can add title here
+                    leading: new IconButton(
+                      icon: new Icon(Icons.arrow_back_ios, color: Colors.white),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    actions: <Widget>[
+                      IconButton(
+                          icon: Icon(Icons.arrow_forward_ios,
+                              color: Colors.white),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TimeLineExamineScreen(),
+                              ),
+                            );
+                          }),
+                    ],
+                    backgroundColor: Colors.blue
+                        .withOpacity(0), //You can make this transparent
+                    elevation: 0.0, //No shadow
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
