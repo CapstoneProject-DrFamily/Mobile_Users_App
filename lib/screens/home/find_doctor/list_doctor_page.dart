@@ -1,5 +1,4 @@
 import 'package:drFamily_app/screens/doctor_detail_screen.dart';
-import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/search_page_viewmodel.dart';
 import 'package:drFamily_app/widgets/common/rating_bar.dart';
@@ -11,7 +10,7 @@ import '../../share/base_view.dart';
 
 class ListDoctorPage extends StatelessWidget {
   Widget build(BuildContext context) {
-    return BaseView<SearchPageViewModel>(
+    return BaseView<ListDoctorPageViewModel>(
       builder: (context, child, model) {
         return Scaffold(
           backgroundColor: MainColors.kMainBody,
@@ -36,8 +35,7 @@ class ListDoctorPage extends StatelessWidget {
           body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: NetworkImage(
-                      'https://i.pinimg.com/originals/f3/6a/f2/f36af2cd47e98121d5c1318a41a58004.jpg'),
+                  image: AssetImage('assets/images/backgroundhome.jpg'),
                   fit: BoxFit.fill),
             ),
             // decoration: BoxDecoration(
@@ -51,6 +49,7 @@ class ListDoctorPage extends StatelessWidget {
                 future: model.loadDoctor(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
+                    print(snapshot.data);
                     if (!snapshot.hasData) {
                       return Center(
                         child: Text("Don't have any doctor"),
@@ -88,8 +87,10 @@ class ListDoctorPage extends StatelessWidget {
                                                       BorderRadius.circular(24),
                                                   gradient: LinearGradient(
                                                       colors: [
-                                                        MainColors.blueBegin,
-                                                        MainColors.blueEnd
+                                                        Colors.lightBlue
+                                                            .withOpacity(0.2),
+                                                        Colors.lightBlue[100]
+                                                            .withOpacity(0.2)
                                                       ],
                                                       begin: Alignment.topLeft,
                                                       end: Alignment
@@ -112,8 +113,11 @@ class ListDoctorPage extends StatelessWidget {
                                                   painter:
                                                       CustomCardShapePainter(
                                                           24,
-                                                          MainColors.blueBegin,
-                                                          MainColors.blueEnd),
+                                                          Colors.lightBlue
+                                                              .withOpacity(0.2),
+                                                          Colors.lightBlue[100]
+                                                              .withOpacity(
+                                                                  0.2)),
                                                 ),
                                               ),
                                               Positioned.fill(
