@@ -36,13 +36,21 @@ class PrescriptionViewModel extends BaseModel {
       day: 2,
       note: "Sáng: 1 viên, Trưa: 1 viên, Chiều: 1 viên",
     ),
-    // Prescription(
-    //   id: 5,
-    //   name: "Efpharan",
-    //   unitPerDay: 2,
-    //   unitPerTimes: 3,
-    //   day: 2,
-    //   note: "Sáng: 1 viên, Trưa: 2 viên, Chiều: 2 viên",
-    // ),
+    Prescription(
+      id: 5,
+      name: "Efpharan",
+      unitPerDay: 2,
+      unitPerTimes: 3,
+      day: 2,
+      note: "Sáng: 1 viên, Trưa: 2 viên, Chiều: 2 viên",
+    ),
+    Prescription(
+      id: 5,
+      name: "Efpharan",
+      unitPerDay: 2,
+      unitPerTimes: 3,
+      day: 2,
+      note: "Sáng: 1 viên, Trưa: 2 viên, Chiều: 2 viên",
+    ),
   ];
 }
