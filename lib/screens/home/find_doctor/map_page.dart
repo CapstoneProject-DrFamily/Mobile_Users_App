@@ -128,7 +128,7 @@ class MapScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
       child: TextFormField(
         controller: model.addressController,
-        // onChanged: (value) => model.changePhoneNum(value),
+        onChanged: (value) => model.searchPlace(value),
         style: GoogleFonts.varelaRound(
           fontWeight: FontWeight.normal,
           fontSize: 16,
@@ -167,6 +167,8 @@ class MapScreen extends StatelessWidget {
       zoomGesturesEnabled: true,
       zoomControlsEnabled: false,
       onMapCreated: model.onMapCreated,
+      markers: model.markers,
+      onTap: model.handleTap,
     );
   }
 }
