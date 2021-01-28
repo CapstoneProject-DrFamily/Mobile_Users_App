@@ -6,6 +6,7 @@ import 'package:drFamily_app/repository/home/find_doctor/map_api/map_screen_repo
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,10 @@ class MapPageViewModel extends BaseModel {
 
   List<PlacePredictions> _listAddress = [];
 
+  UserCurrentAddress _pickUpInfo = UserCurrentAddress();
+
+  String _currentSearch = "";
+
   //getters
   CameraPosition get initPosition => _initPosition;
   Completer<GoogleMapController> get controllerGoogle => _controllerGoogle;
@@ -51,7 +56,16 @@ class MapPageViewModel extends BaseModel {
 
   List<PlacePredictions> get listAddress => _listAddress;
 
+  String get currentSearch => _currentSearch;
+
   MapPageViewModel() {
+    KeyboardVisibilityNotification().addNewListener(
+      onChange: (bool visible) {
+        _currentSearch = "";
+        notifyListeners();
+      },
+    );
+
     _addressController.addListener(() {
       _addressText = _addressController.text;
       notifyListeners();
@@ -81,12 +95,17 @@ class MapPageViewModel extends BaseModel {
   }
 
   void locatePosition() async {
+    _currentSearch = "";
+
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     this._currentPosition = position;
 
     LatLng latLngPosition = LatLng(position.latitude, position.longitude);
-
+    print("Position: " +
+        position.latitude.toString() +
+        " " +
+        position.longitude.toString());
     _markers = HashSet<Marker>();
     _markers.add(Marker(markerId: MarkerId("0"), position: latLngPosition));
 
@@ -94,19 +113,19 @@ class MapPageViewModel extends BaseModel {
         new CameraPosition(target: latLngPosition, zoom: 16);
     _controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
-    UserCurrentAddress pickUpInfo =
-        await _mapRepo.searchCoordinateAddress(latLngPosition);
-    print(pickUpInfo.placeName);
-    _addressController.text = pickUpInfo.placeName;
+    _pickUpInfo = await _mapRepo.searchCoordinateAddress(latLngPosition);
+
+    _addressController.text = _pickUpInfo.placeName;
 
     notifyListeners();
   }
 
   Future<void> handleTap(LatLng tappedPoint) async {
-    UserCurrentAddress pickUpInfo =
-        await _mapRepo.searchCoordinateAddress(tappedPoint);
+    _currentSearch = "";
 
-    _addressController.text = pickUpInfo.placeName;
+    _pickUpInfo = await _mapRepo.searchCoordinateAddress(tappedPoint);
+
+    _addressController.text = _pickUpInfo.placeName;
 
     _markers = new HashSet<Marker>();
     _markers.add(
@@ -119,8 +138,39 @@ class MapPageViewModel extends BaseModel {
   }
 
   Future<void> searchPlace(String searchValue) async {
+    _currentSearch = "";
     if (searchValue.length > 1) {
+      _currentSearch = searchValue;
       _listAddress = await _mapRepo.searchAddress(searchValue);
+      if (_listAddress == null) _listAddress = [];
+      // print("Address: " + _listAddress.length.toString());
+      notifyListeners();
     }
+  }
+
+  Future<void> chooseLocation(String placeId) async {
+    _currentSearch = "";
+
+    _pickUpInfo = await _mapRepo.getPlaceAddressDetails(placeId);
+
+    _addressController.text = _pickUpInfo.placeName;
+
+    LatLng latLngPosition =
+        LatLng(_pickUpInfo.latitude, _pickUpInfo.longtitude);
+
+    _markers = new HashSet<Marker>();
+
+    _markers.add(
+      Marker(
+        markerId: MarkerId("0"),
+        position: latLngPosition,
+      ),
+    );
+
+    CameraPosition cameraPosition =
+        new CameraPosition(target: latLngPosition, zoom: 16);
+    _controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+
+    notifyListeners();
   }
 }
