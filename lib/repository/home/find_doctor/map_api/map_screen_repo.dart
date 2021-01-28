@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 abstract class IMapScreenRepo {
   Future<UserCurrentAddress> searchCoordinateAddress(LatLng position);
   Future<List<PlacePredictions>> searchAddress(String searchValue);
+  Future<UserCurrentAddress> getPlaceAddressDetails(String placeId);
 }
 
 class MapScreenRepo implements IMapScreenRepo {
@@ -46,5 +47,30 @@ class MapScreenRepo implements IMapScreenRepo {
       return listPrediction;
     }
     return listPrediction;
+  }
+
+  @override
+  Future<UserCurrentAddress> getPlaceAddressDetails(String placeId) async {
+    String placeDetailsUrl =
+        "https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=AIzaSyDFd7ZNm2BL2JREvk32NZJ0wHzUn2fjw4A";
+    var response = await _map.getRequest(placeDetailsUrl);
+
+    UserCurrentAddress userPickUpAddress = new UserCurrentAddress();
+
+    if (response == "failed") {
+      return userPickUpAddress;
+    }
+
+    if (response["status"] == "OK") {
+      userPickUpAddress.placeName = response["result"]["formatted_address"];
+      userPickUpAddress.placeID = placeId;
+      userPickUpAddress.latitude =
+          response["result"]["geometry"]["location"]["lat"];
+      userPickUpAddress.longtitude =
+          response["result"]["geometry"]["location"]["lng"];
+      return userPickUpAddress;
+    }
+
+    return userPickUpAddress;
   }
 }

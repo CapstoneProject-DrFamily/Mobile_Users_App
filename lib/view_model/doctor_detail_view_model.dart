@@ -4,7 +4,7 @@ import 'package:drFamily_app/screens/share/base_model.dart';
 class DoctorDetailViewModel extends BaseModel {
   Doctor doctor = new Doctor.fullInfo();
 
-  DoctorDetailViewModel() {}
+  DoctorDetailViewModel();
 
   Future<Doctor> loadDoctor(id) async {
     if (id == 1) {

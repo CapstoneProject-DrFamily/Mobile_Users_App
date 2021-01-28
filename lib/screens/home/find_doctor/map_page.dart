@@ -16,16 +16,68 @@ class MapScreen extends StatelessWidget {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else
+          } else {
             return Stack(
               children: [
                 _buildGoogleMap(model),
                 _buildSearchAddressField(model),
                 _buildButtomMyLocation(model),
                 _buildImportantMessage(),
-                _buildContinueButtom(context)
+                _buildContinueButtom(context),
+                model.currentSearch.length > 1
+                    ? Container(
+                        margin: EdgeInsets.only(top: 80, left: 20, right: 20),
+                        child: MediaQuery.removePadding(
+                          context: context,
+                          removeTop: true,
+                          child: ListView.separated(
+                            separatorBuilder: (context, index) => Divider(
+                              height: 0.01,
+                            ),
+                            primary: false,
+                            shrinkWrap: true,
+                            itemCount: model.listAddress.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: ListTile(
+                                  leading: Transform.translate(
+                                    offset: Offset(-7, 0),
+                                    child: Icon(
+                                      Icons.location_on,
+                                      color: Colors.greenAccent[400],
+                                      size: 30,
+                                    ),
+                                  ),
+                                  title: Transform.translate(
+                                    offset: Offset(-7, 0),
+                                    child: Text(
+                                        model.listAddress[index].main_text),
+                                  ),
+                                  subtitle: Transform.translate(
+                                    offset: Offset(-7, 0),
+                                    child: Text(model
+                                        .listAddress[index].secondary_text),
+                                  ),
+                                  onTap: () {
+                                    model.chooseLocation(
+                                        model.listAddress[index].place_id);
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                    : Container(
+                        child: Text(""),
+                      ),
               ],
             );
+          }
         },
       ),
     );
