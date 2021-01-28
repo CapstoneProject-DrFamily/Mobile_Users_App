@@ -261,14 +261,14 @@ class TabView3 extends StatelessWidget {
     "Bị ngạt lúc đẻ"
   ];
 
-  List<String> buttonList(List<String> originalList) {
-    List<String> list;
-    for (var i = 0; i < originalList.length / 2; i++) {
-      String value = originalList.elementAt(i);
-      list.add(value);
-    }
-    return list;
-  }
+  // List<String> buttonList(List<String> originalList) {
+  //   List<String> list;
+  //   for (var i = 0; i < originalList.length / 2; i++) {
+  //     String value = originalList.elementAt(i);
+  //     list.add(value);
+  //   }
+  //   return list;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -461,8 +461,6 @@ class TabView3 extends StatelessWidget {
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: EdgeInsets.all(0.01),
-                              // contentPadding:
-                              //     const EdgeInsets.symmetric(vertical: 1.0),
                               border: InputBorder.none,
                               hintText: 'Ghi rõ nếu có',
                             ),
@@ -513,8 +511,6 @@ class TabView3 extends StatelessWidget {
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: EdgeInsets.all(0.01),
-                              // contentPadding:
-                              //     const EdgeInsets.symmetric(vertical: 1.0),
                               border: InputBorder.none,
                               hintText: 'Ghi rõ nếu có',
                             ),
@@ -529,11 +525,9 @@ class TabView3 extends StatelessWidget {
                       margin: EdgeInsets.only(top: 30),
                       width: MediaQuery.of(context).size.width * 0.8,
                       height: MediaQuery.of(context).size.height / 14,
-                      // color: Colors.black,
                       decoration: new BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(5),
-                        // border: Border.all(color: Colors.grey),
                       ),
                       child: Align(
                         alignment: Alignment.center,
@@ -564,8 +558,277 @@ class TabView3 extends StatelessWidget {
 class TabView4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(
+                top: 20,
+                left: 15,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Tiền sử bệnh tật, dị ứng",
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: 15,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Dị ứng",
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              // color: Colors.black,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Dị ứng thuốc",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Miêu tả rõ',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              // color: Colors.black,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Dị ứng hóa chất/mỹ phẩm",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Miêu tả rõ',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Dị ứng thực phẩm",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Miêu tả rõ',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Dị ứng khác",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Miêu tả rõ',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: EdgeInsets.only(top: 20),
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height / 14,
+                decoration: new BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Save",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -573,8 +836,407 @@ class TabView4 extends StatelessWidget {
 class TabView5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(
+                top: 20,
+                left: 15,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Khuyết tật",
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              // color: Colors.black,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Thính lực",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Mô tả',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              // color: Colors.black,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Thị lực",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Mô tả',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Tay",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Mô tả',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Chân",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Mô tả',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Cong vẹo cột sống",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Mô tả',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Khe hở môi, vòm miệng",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Mô tả',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Khác",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Mô tả',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: EdgeInsets.only(top: 20),
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height / 14,
+                decoration: new BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Save",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -582,8 +1244,106 @@ class TabView5 extends StatelessWidget {
 class TabView6 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(
+                top: 20,
+                left: 15,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Tiền sử phẩu thuật",
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 6,
+              // color: Colors.black,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Ghi rõ bộ phận cơ thể đã giải phẫu và năm phẫu thuật",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Miêu tả rõ',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: EdgeInsets.only(top: 20),
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height / 14,
+                decoration: new BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Save",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -591,8 +1351,256 @@ class TabView6 extends StatelessWidget {
 class TabView7 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(
+                top: 20,
+                left: 15,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Tiền sử gia đình",
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              // color: Colors.black,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Dị ứng thuốc - người mắc",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Mô tẻ rõ - ghi rõ mối quan hệ huyết thống',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              // color: Colors.black,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Dị ứng hóa chất/mỹ phẩm - người mắc",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Mô tẻ rõ - ghi rõ mối quan hệ huyết thống',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              // color: Colors.black,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Dị ứng thực phẩm - người mắc",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Mô tẻ rõ - ghi rõ mối quan hệ huyết thống',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              // color: Colors.black,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Dị ứng khác - người mắc",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Mô tẻ rõ - ghi rõ mối quan hệ huyết thống',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: EdgeInsets.only(top: 20),
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height / 14,
+                decoration: new BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Save",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
