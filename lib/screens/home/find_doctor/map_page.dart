@@ -10,10 +10,6 @@ class MapScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   title: Text(''),
-      //   backgroundColor: Colors.white,
-      // ),
       body: BaseView<MapPageViewModel>(
         builder: (context, child, model) {
           if (model.isLoading) {
