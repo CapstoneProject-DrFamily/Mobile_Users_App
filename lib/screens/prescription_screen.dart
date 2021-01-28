@@ -14,9 +14,9 @@ class PrescrptionScreen extends StatelessWidget {
           appBar: new AppBar(
             backgroundColor: Colors.grey.shade300,
             elevation: 0,
+            centerTitle: true,
             title: Text(
               "Presciption",
-              textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
               ),
@@ -56,7 +56,10 @@ class PrescrptionScreen extends StatelessWidget {
                             child: Text(
                               'Medicines for ',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue.shade800,
+                              ),
                             ),
                           ),
                         ],
