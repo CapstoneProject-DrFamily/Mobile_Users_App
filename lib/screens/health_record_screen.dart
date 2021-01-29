@@ -745,6 +745,388 @@ class HealthRecordScreen extends StatelessWidget {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 15.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    model.changeChoiceActivity(0);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(left: 8),
+                    width: MediaQuery.of(context).size.width / 2,
+                    margin: EdgeInsets.only(
+                      right: 40.0,
+                    ),
+                    child: Row(
+                      children: [
+                        model.choiceActivity == 0
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Không',
+                          style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    model.changeChoiceActivity(1);
+                  },
+                  child: Container(
+                    child: Row(
+                      children: [
+                        model.choiceActivity == 1
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Có',
+                          style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 15.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    model.changeChoiceActivity(2);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    padding: EdgeInsets.only(left: 8),
+                    margin: EdgeInsets.only(
+                      right: 12.0,
+                    ),
+                    child: Row(
+                      children: [
+                        model.choiceActivity == 2
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Thường xuyên',
+                          style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              height: 15.0,
+              color: Colors.grey.shade200,
+              margin: EdgeInsets.only(top: 20.0),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: 20,
+                left: 15,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Yếu tố tiếp xúc nghề nghiệp/ Môi trường sống (Hóa chất, bụi, ồn, virus,...)",
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Ghi rõ yếu tố tiếp xúc",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Ghi rõ',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Thời gian tiếp xúc",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Ghi rõ',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Loại hố xí của gia đình",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Ghi rõ',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 15.0,
+              color: Colors.grey.shade200,
+              margin: EdgeInsets.only(top: 20.0),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: 20,
+                left: 15,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Nguy cơ khác",
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Nguy cơ khác",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Ghi rõ',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            //Button save
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: 30,
+                  bottom: 15,
+                ),
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height / 14,
+                decoration: new BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Save",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -1007,7 +1389,10 @@ class HealthRecordScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {},
                     child: Container(
-                      margin: EdgeInsets.only(top: 30),
+                      margin: EdgeInsets.only(
+                        top: 30,
+                        bottom: 15,
+                      ),
                       width: MediaQuery.of(context).size.width * 0.8,
                       height: MediaQuery.of(context).size.height / 14,
                       decoration: new BoxDecoration(
@@ -1025,9 +1410,6 @@ class HealthRecordScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 15,
                   ),
                 ],
               ),
@@ -2086,7 +2468,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 15),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
