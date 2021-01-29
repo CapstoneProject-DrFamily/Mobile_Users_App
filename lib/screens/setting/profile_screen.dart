@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:drFamily_app/screens/share/base_view.dart';
+import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/setting_vm/profile_screen_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -78,47 +79,7 @@ class ProfileScreen extends StatelessWidget {
                               SizedBox(
                                 height: 5,
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, right: 8),
-                                child: TextFormField(
-                                  keyboardType: TextInputType.phone,
-                                  controller: model.phoneNumController,
-                                  // onChanged: (value) => model.changePhoneNum(value),
-                                  style: GoogleFonts.varelaRound(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter your phone number",
-                                    filled: true,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6),
-                                      borderSide: BorderSide(
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6),
-                                      borderSide: BorderSide(
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                    fillColor: Colors.white,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 15.0, horizontal: 15),
-                                    suffixIcon:
-                                        model.phoneNumController.text.isEmpty
-                                            ? null
-                                            : InkWell(
-                                                onTap: () => model
-                                                    .phoneNumController
-                                                    .clear(),
-                                                child: Icon(Icons.clear),
-                                              ),
-                                  ),
-                                ),
-                              ),
+                              _buildPhoneNumberField(model),
                               SizedBox(
                                 height: 15,
                               ),
@@ -126,46 +87,7 @@ class ProfileScreen extends StatelessWidget {
                               SizedBox(
                                 height: 5,
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, right: 8),
-                                child: TextFormField(
-                                  keyboardType: TextInputType.emailAddress,
-                                  controller: model.emailController,
-                                  // onChanged: (value) => model.changePhoneNum(value),
-                                  style: GoogleFonts.varelaRound(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter your email address",
-                                    filled: true,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6),
-                                      borderSide: BorderSide(
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6),
-                                      borderSide: BorderSide(
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                    fillColor: Colors.white,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 15.0, horizontal: 15),
-                                    suffixIcon: model
-                                            .emailController.text.isEmpty
-                                        ? null
-                                        : InkWell(
-                                            onTap: () =>
-                                                model.emailController.clear(),
-                                            child: Icon(Icons.clear),
-                                          ),
-                                  ),
-                                ),
-                              ),
+                              _buildEmailField(model),
                               SizedBox(
                                 height: 15,
                               ),
@@ -173,47 +95,7 @@ class ProfileScreen extends StatelessWidget {
                               SizedBox(
                                 height: 5,
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, right: 8),
-                                child: TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  controller: model.identityNumberController,
-                                  // onChanged: (value) => model.changePhoneNum(value),
-                                  style: GoogleFonts.varelaRound(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter your ID Card",
-                                    filled: true,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6),
-                                      borderSide: BorderSide(
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6),
-                                      borderSide: BorderSide(
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                    fillColor: Colors.white,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 15.0, horizontal: 15),
-                                    suffixIcon: model.identityNumberController
-                                            .text.isEmpty
-                                        ? null
-                                        : InkWell(
-                                            onTap: () => model
-                                                .identityNumberController
-                                                .clear(),
-                                            child: Icon(Icons.clear),
-                                          ),
-                                  ),
-                                ),
-                              ),
+                              _buildIDCardField(model),
                               SizedBox(
                                 height: 20,
                               ),
@@ -253,66 +135,7 @@ class ProfileScreen extends StatelessWidget {
                               SizedBox(
                                 height: 5,
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, right: 8),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Picker(
-                                        adapter: PickerDataAdapter<String>(
-                                            pickerdata: model.listBloodType),
-                                        changeToFirst: false,
-                                        selecteds: [1],
-                                        hideHeader: false,
-                                        textAlign: TextAlign.center,
-                                        textStyle: const TextStyle(
-                                            color: Colors.black, fontSize: 22),
-                                        selectedTextStyle:
-                                            TextStyle(color: Colors.blue),
-                                        columnPadding:
-                                            const EdgeInsets.all(8.0),
-                                        onConfirm: (Picker picker, List value) {
-                                          print(value.toString());
-                                          print(picker.adapter.text);
-                                          model.changeBloodType(
-                                              picker.getSelectedValues().first);
-                                        }).showModal(context);
-                                  },
-                                  child: TextFormField(
-                                    controller: model.bloodTpeController,
-                                    // onChanged: (value) => model.changePhoneNum(value),
-                                    style: GoogleFonts.varelaRound(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16,
-                                    ),
-                                    decoration: InputDecoration(
-                                      hintText: "Choose Your Blood Type",
-                                      filled: true,
-                                      enabled: false,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(6),
-                                        borderSide: BorderSide(
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                      disabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(6),
-                                        borderSide: BorderSide(
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                      fillColor: Colors.white,
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 15.0, horizontal: 15),
-                                      suffixIcon: Icon(
-                                        Icons.arrow_drop_down,
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              _buildBloodTypeField(model, context),
                               SizedBox(
                                 height: 15,
                               ),
@@ -330,66 +153,7 @@ class ProfileScreen extends StatelessWidget {
                                           SizedBox(
                                             height: 5,
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Picker(
-                                                  adapter: PickerDataAdapter<
-                                                          String>(
-                                                      pickerdata:
-                                                          new JsonDecoder()
-                                                              .convert(model
-                                                                  .listheight),
-                                                      isArray: true),
-                                                  hideHeader: false,
-                                                  onConfirm: (Picker picker,
-                                                      List value) {
-                                                    print(value.toString());
-                                                    print(picker
-                                                        .getSelectedValues());
-                                                    model.changeHeight(picker
-                                                        .getSelectedValues());
-                                                  }).showModal(context);
-                                            },
-                                            child: TextFormField(
-                                              controller:
-                                                  model.heightController,
-                                              // onChanged: (value) => model.changePhoneNum(value),
-                                              style: GoogleFonts.varelaRound(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 16,
-                                              ),
-                                              decoration: InputDecoration(
-                                                hintText: "Height",
-                                                filled: true,
-                                                enabled: false,
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                  borderSide: BorderSide(
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                                disabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                  borderSide: BorderSide(
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                                fillColor: Colors.white,
-                                                contentPadding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 15.0,
-                                                        horizontal: 15),
-                                                suffixIcon: Icon(
-                                                  Icons.arrow_drop_down,
-                                                  color: Colors.blue,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                          _buildHeightField(model, context),
                                         ],
                                       ),
                                     ),
@@ -403,66 +167,7 @@ class ProfileScreen extends StatelessWidget {
                                           SizedBox(
                                             height: 5,
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Picker(
-                                                  adapter: PickerDataAdapter<
-                                                          String>(
-                                                      pickerdata:
-                                                          new JsonDecoder()
-                                                              .convert(model
-                                                                  .listWeight),
-                                                      isArray: true),
-                                                  hideHeader: false,
-                                                  onConfirm: (Picker picker,
-                                                      List value) {
-                                                    print(value.toString());
-                                                    print(picker
-                                                        .getSelectedValues());
-                                                    model.changeWeight(picker
-                                                        .getSelectedValues());
-                                                  }).showModal(context);
-                                            },
-                                            child: TextFormField(
-                                              controller:
-                                                  model.weightController,
-                                              // onChanged: (value) => model.changePhoneNum(value),
-                                              style: GoogleFonts.varelaRound(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 16,
-                                              ),
-                                              decoration: InputDecoration(
-                                                hintText: "Weight",
-                                                filled: true,
-                                                enabled: false,
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                  borderSide: BorderSide(
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                                disabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                  borderSide: BorderSide(
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                                fillColor: Colors.white,
-                                                contentPadding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 15.0,
-                                                        horizontal: 15),
-                                                suffixIcon: Icon(
-                                                  Icons.arrow_drop_down,
-                                                  color: Colors.blue,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                          _buildWeightField(model, context),
                                         ],
                                       ),
                                     ),
@@ -489,6 +194,302 @@ class ProfileScreen extends StatelessWidget {
           },
         ),
         bottomNavigationBar: _buildSaveButtom(),
+      ),
+    );
+  }
+
+  GestureDetector _buildWeightField(
+      ProfileScreenViewModel model, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Picker(
+            adapter: PickerDataAdapter<String>(
+                pickerdata: new JsonDecoder().convert(model.listWeight),
+                isArray: true),
+            hideHeader: false,
+            onConfirm: (Picker picker, List value) {
+              print(value.toString());
+              print(picker.getSelectedValues());
+              model.changeWeight(picker.getSelectedValues());
+            }).showModal(context);
+      },
+      child: TextFormField(
+        controller: model.weightController,
+        // onChanged: (value) => model.changePhoneNum(value),
+        style: GoogleFonts.varelaRound(
+          fontWeight: FontWeight.normal,
+          fontSize: 16,
+        ),
+        decoration: InputDecoration(
+          hintStyle: TextStyle(
+            color: MainColors.hintTextColor,
+          ),
+          hintText: "Weight",
+          filled: true,
+          enabled: false,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+          fillColor: Colors.white,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+          suffixIcon: Icon(
+            Icons.arrow_drop_down,
+            color: Colors.blue,
+          ),
+        ),
+      ),
+    );
+  }
+
+  GestureDetector _buildHeightField(
+      ProfileScreenViewModel model, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Picker(
+            adapter: PickerDataAdapter<String>(
+                pickerdata: new JsonDecoder().convert(model.listheight),
+                isArray: true),
+            hideHeader: false,
+            onConfirm: (Picker picker, List value) {
+              print(value.toString());
+              print(picker.getSelectedValues());
+              model.changeHeight(picker.getSelectedValues());
+            }).showModal(context);
+      },
+      child: TextFormField(
+        controller: model.heightController,
+        // onChanged: (value) => model.changePhoneNum(value),
+        style: GoogleFonts.varelaRound(
+          fontWeight: FontWeight.normal,
+          fontSize: 16,
+        ),
+        decoration: InputDecoration(
+          hintStyle: TextStyle(
+            color: MainColors.hintTextColor,
+          ),
+          hintText: "Height",
+          filled: true,
+          enabled: false,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+          fillColor: Colors.white,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+          suffixIcon: Icon(
+            Icons.arrow_drop_down,
+            color: Colors.blue,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding _buildBloodTypeField(
+      ProfileScreenViewModel model, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0, right: 8),
+      child: GestureDetector(
+        onTap: () {
+          Picker(
+              adapter:
+                  PickerDataAdapter<String>(pickerdata: model.listBloodType),
+              changeToFirst: false,
+              selecteds: [0],
+              hideHeader: false,
+              textAlign: TextAlign.center,
+              textStyle: const TextStyle(color: Colors.black, fontSize: 22),
+              selectedTextStyle: TextStyle(color: Colors.blue),
+              columnPadding: const EdgeInsets.all(8.0),
+              onConfirm: (Picker picker, List value) {
+                print(value.toString());
+                print(picker.adapter.text);
+                model.changeBloodType(picker.getSelectedValues().first);
+              }).showModal(context);
+        },
+        child: TextFormField(
+          controller: model.bloodTpeController,
+          // onChanged: (value) => model.changePhoneNum(value),
+          style: GoogleFonts.varelaRound(
+            fontWeight: FontWeight.normal,
+            fontSize: 16,
+          ),
+          decoration: InputDecoration(
+            hintText: "Choose Your Blood Type",
+            filled: true,
+            enabled: false,
+            hintStyle: TextStyle(
+              color: MainColors.hintTextColor,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: BorderSide(
+                color: Colors.blue,
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: BorderSide(
+                color: Colors.blue,
+              ),
+            ),
+            fillColor: Colors.white,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+            suffixIcon: Icon(
+              Icons.arrow_drop_down,
+              color: Colors.blue,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding _buildIDCardField(ProfileScreenViewModel model) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0, right: 8),
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: model.identityNumberController,
+        // onChanged: (value) => model.changePhoneNum(value),
+        style: GoogleFonts.varelaRound(
+          fontWeight: FontWeight.normal,
+          fontSize: 16,
+        ),
+        decoration: InputDecoration(
+          hintStyle: TextStyle(
+            color: MainColors.hintTextColor,
+          ),
+          hintText: "Enter your ID Card",
+          filled: true,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+          fillColor: Colors.white,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+          suffixIcon: model.identityNumberController.text.isEmpty
+              ? null
+              : InkWell(
+                  onTap: () => model.identityNumberController.clear(),
+                  child: Icon(Icons.clear),
+                ),
+        ),
+      ),
+    );
+  }
+
+  Padding _buildEmailField(ProfileScreenViewModel model) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0, right: 8),
+      child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        controller: model.emailController,
+        // onChanged: (value) => model.changePhoneNum(value),
+        style: GoogleFonts.varelaRound(
+          fontWeight: FontWeight.normal,
+          fontSize: 16,
+        ),
+        decoration: InputDecoration(
+          hintStyle: TextStyle(
+            color: MainColors.hintTextColor,
+          ),
+          hintText: "Enter your email address",
+          filled: true,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+          fillColor: Colors.white,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+          suffixIcon: model.emailController.text.isEmpty
+              ? null
+              : InkWell(
+                  onTap: () => model.emailController.clear(),
+                  child: Icon(Icons.clear),
+                ),
+        ),
+      ),
+    );
+  }
+
+  Padding _buildPhoneNumberField(ProfileScreenViewModel model) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0, right: 8),
+      child: TextFormField(
+        keyboardType: TextInputType.phone,
+        controller: model.phoneNumController,
+        // onChanged: (value) => model.changePhoneNum(value),
+        style: GoogleFonts.varelaRound(
+          fontWeight: FontWeight.normal,
+          fontSize: 16,
+        ),
+        decoration: InputDecoration(
+          hintStyle: TextStyle(
+            color: MainColors.hintTextColor,
+          ),
+          hintText: "Enter your phone number",
+          filled: true,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(
+              color: Colors.blue,
+            ),
+          ),
+          fillColor: Colors.white,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+          suffixIcon: model.phoneNumController.text.isEmpty
+              ? null
+              : InkWell(
+                  onTap: () => model.phoneNumController.clear(),
+                  child: Icon(Icons.clear),
+                ),
+        ),
       ),
     );
   }
@@ -526,6 +527,9 @@ class ProfileScreen extends StatelessWidget {
             fontSize: 16,
           ),
           decoration: InputDecoration(
+            hintStyle: TextStyle(
+              color: MainColors.hintTextColor,
+            ),
             hintText: "Choose Your Birthday",
             filled: true,
             enabled: false,
@@ -567,6 +571,9 @@ class ProfileScreen extends StatelessWidget {
         decoration: InputDecoration(
           hintText: "Enter your full name",
           filled: true,
+          hintStyle: TextStyle(
+            color: MainColors.hintTextColor,
+          ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
             borderSide: BorderSide(
