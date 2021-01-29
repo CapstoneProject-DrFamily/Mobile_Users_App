@@ -1,7 +1,7 @@
 import 'package:drFamily_app/model/doctor.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 
-class ListDoctorPageViewModel extends BaseModel {
+class ListDoctorScreenViewModel extends BaseModel {
   List<Doctor> listDoctor = new List<Doctor>();
 
   Future<List<Doctor>> loadDoctor() async {

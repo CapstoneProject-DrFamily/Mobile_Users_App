@@ -1,6 +1,6 @@
 import 'package:drFamily_app/screens/doctor_detail_screen.dart';
 import 'package:drFamily_app/themes/colors.dart';
-import 'package:drFamily_app/view_model/search_page_viewmodel.dart';
+import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/list_doctor_screen_view_model.dart';
 import 'package:drFamily_app/widgets/common/rating_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ import '../../share/base_view.dart';
 
 class ListDoctorPage extends StatelessWidget {
   Widget build(BuildContext context) {
-    return BaseView<ListDoctorPageViewModel>(
+    return BaseView<ListDoctorScreenViewModel>(
       builder: (context, child, model) {
         return Scaffold(
           backgroundColor: MainColors.kMainBody,
