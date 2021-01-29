@@ -1,3 +1,4 @@
+import 'package:drFamily_app/screens/setting/health_record_screen.dart';
 import 'package:drFamily_app/screens/setting/profile_screen.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,6 +25,14 @@ class SettingPage extends StatelessWidget {
                       ),
                       SettingsTile(
                         title: 'HealthRecord',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HealthRecordScreen(),
+                            ),
+                          );
+                        },
                         leading: Icon(EvaIcons.activityOutline),
                       ),
                     ],

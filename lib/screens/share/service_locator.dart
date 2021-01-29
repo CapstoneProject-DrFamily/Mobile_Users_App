@@ -9,7 +9,7 @@ import 'package:drFamily_app/view_model/home_vm/pop_up_choose_patient_view_model
 import 'package:drFamily_app/view_model/landing_page_vm/landing_page_view_model.dart';
 import 'package:drFamily_app/view_model/prescription_view_model.dart';
 import 'package:drFamily_app/view_model/progress_page_view_model.dart';
-import 'package:drFamily_app/view_model/relationship_list_view_model.dart';
+import 'package:drFamily_app/view_model/setting_vm/add_dependent_profile_screen_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/list_doctor_screen_view_model.dart';
 import 'package:drFamily_app/view_model/setting_vm/profile_screen_view_model.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/sign_in_view_model.dart';
@@ -31,8 +31,8 @@ void setupLocator() {
   locator.registerFactory<TimeLineExamineViewModel>(
       () => TimeLineExamineViewModel());
   locator.registerFactory<MapPageViewModel>(() => MapPageViewModel());
-  locator.registerFactory<RelationshipListViewModel>(
-      () => RelationshipListViewModel());
+  locator.registerFactory<AddDependentProfileScreenViewModel>(
+      () => AddDependentProfileScreenViewModel());
   locator.registerFactory<PrescriptionViewModel>(() => PrescriptionViewModel());
   locator.registerFactory<SpecialtyScreenViewModel>(
       () => SpecialtyScreenViewModel());
