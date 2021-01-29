@@ -1,4 +1,3 @@
-import 'package:drFamily_app/screens/home/find_doctor/list_doctor_page.dart';
 import 'package:drFamily_app/view_model/doctor_detail_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/map_page_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/specialty_screen_view_model.dart';
