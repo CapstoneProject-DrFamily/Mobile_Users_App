@@ -1,4 +1,5 @@
 import 'package:drFamily_app/view_model/doctor_detail_view_model.dart';
+import 'package:drFamily_app/view_model/health_record_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/map_page_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/specialty_screen_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/symptom_page_view_model.dart';
@@ -37,4 +38,5 @@ void setupLocator() {
       () => SpecialtyScreenViewModel());
   locator
       .registerFactory<ProfileScreenViewModel>(() => ProfileScreenViewModel());
+  locator.registerFactory<HealthRecordViewModel>(() => HealthRecordViewModel());
 }
