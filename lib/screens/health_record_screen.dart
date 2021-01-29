@@ -1,72 +1,74 @@
 import 'dart:ui';
-
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
+import 'package:drFamily_app/screens/share/base_view.dart';
+import 'package:drFamily_app/view_model/health_record_view_model.dart';
 import 'package:drFamily_app/widgets/common/fonts.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HealthRecordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: new AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            "Personal Health Record",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: AVENIR,
+    return BaseView<HealthRecordViewModel>(builder: (context, child, model) {
+      return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: new AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            centerTitle: true,
+            title: Text(
+              "Personal Health Record",
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: AVENIR,
+              ),
+            ),
+            leading: new IconButton(
+              icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            bottom: TabBar(
+              unselectedLabelColor: Colors.black,
+              labelColor: Colors.blue[400],
+              tabs: [
+                Tab(
+                  child: Text(
+                    "Tiền sử & Dị ứng",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: AVENIR,
+                    ),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "Yếu tố tiếp xúc",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: AVENIR,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          bottom: TabBar(
-            unselectedLabelColor: Colors.black,
-            labelColor: Colors.blue[400],
-            tabs: [
-              Tab(
-                child: Text(
-                  "Tiền sử & Dị ứng",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: AVENIR,
-                  ),
-                ),
-              ),
-              Tab(
-                child: Text(
-                  "Yếu tố tiếp xúc",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: AVENIR,
-                  ),
-                ),
-              ),
+          body: TabBarView(
+            children: [
+              _tabView1(context, model),
+              _tabView2(context, model),
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            TabView1(),
-            Icon(Icons.movie),
-          ],
-        ),
-      ),
-    );
+      );
+    });
   }
-}
 
-//TabBarView for Tiền sử & Dị ứng
-class TabView1 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  //TabBarView for Tiền sử & Dị ứng
+  DefaultTabController _tabView1(
+      BuildContext context, HealthRecordViewModel model) {
     return DefaultTabController(
       length: 6,
       child: Scaffold(
@@ -81,6 +83,7 @@ class TabView1 extends StatelessWidget {
               color: Colors.blue.shade400,
             ),
             tabs: [
+              //Tab Tình trạng lúc sinh
               Tab(
                 child: Container(
                   decoration: BoxDecoration(
@@ -105,6 +108,7 @@ class TabView1 extends StatelessWidget {
                   ),
                 ),
               ),
+              //Tab tiền sự bệnh tật, dị ứng
               Tab(
                 child: Container(
                   decoration: BoxDecoration(
@@ -129,6 +133,7 @@ class TabView1 extends StatelessWidget {
                   ),
                 ),
               ),
+              //Tab khuyết tật
               Tab(
                 child: Container(
                   decoration: BoxDecoration(
@@ -153,6 +158,7 @@ class TabView1 extends StatelessWidget {
                   ),
                 ),
               ),
+              //Tab tiền sử phẩu thuật
               Tab(
                 child: Container(
                   decoration: BoxDecoration(
@@ -177,6 +183,7 @@ class TabView1 extends StatelessWidget {
                   ),
                 ),
               ),
+              //Tab tiền sử gia đình
               Tab(
                 child: Container(
                   decoration: BoxDecoration(
@@ -201,6 +208,7 @@ class TabView1 extends StatelessWidget {
                   ),
                 ),
               ),
+              //Tab vấn đề khác
               Tab(
                 child: Container(
                   decoration: BoxDecoration(
@@ -230,48 +238,528 @@ class TabView1 extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            TabView3(),
-            TabView4(),
-            TabView5(),
-            TabView6(),
-            TabView7(),
-            TabView8(),
+            _tabView3(context, model),
+            _tabView4(context, model),
+            _tabView5(context, model),
+            _tabView6(context, model),
+            _tabView7(context, model),
+            _tabView8(context, model),
           ],
         ),
       ),
     );
   }
-}
 
-//TabBarView for Yếu tố tiếp xúc
-class TabView2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+  //TabBarView for Yếu tố tiếp xúc
+  Widget _tabView2(BuildContext context, HealthRecordViewModel model) {
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(
+                top: 20,
+                left: 15,
+                bottom: 15,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Hút thuốc lá, lào",
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 15.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    model.changeChoiceCigarette(0);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(left: 8),
+                    width: MediaQuery.of(context).size.width / 2,
+                    margin: EdgeInsets.only(
+                      right: 40.0,
+                    ),
+                    child: Row(
+                      children: [
+                        model.choiceCigarette == 0
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Không',
+                          style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    model.changeChoiceCigarette(1);
+                  },
+                  child: Container(
+                    child: Row(
+                      children: [
+                        model.choiceCigarette == 1
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Có',
+                          style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 15.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    model.changeChoiceCigarette(2);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    padding: EdgeInsets.only(left: 8),
+                    margin: EdgeInsets.only(
+                      right: 40.0,
+                    ),
+                    child: Row(
+                      children: [
+                        model.choiceCigarette == 2
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Hút thường xuyên',
+                          style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    model.changeChoiceCigarette(3);
+                  },
+                  child: Container(
+                    child: Row(
+                      children: [
+                        model.choiceCigarette == 3
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Đã bỏ',
+                          style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              height: 15.0,
+              color: Colors.grey.shade200,
+              margin: EdgeInsets.only(top: 20.0),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: 20,
+                left: 15,
+                bottom: 15,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Uống rượu bia thường xuyên",
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Column(
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      model.changeChoiceWine(0);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 2,
+                      padding: EdgeInsets.only(left: 8),
+                      margin: EdgeInsets.only(
+                        left: 14.0,
+                        bottom: 15.0,
+                      ),
+                      child: Row(
+                        children: [
+                          model.choiceWine == 0
+                              ? Icon(
+                                  EvaIcons.radioButtonOn,
+                                  color: Colors.blue,
+                                  size: 25,
+                                )
+                              : Icon(
+                                  EvaIcons.radioButtonOffOutline,
+                                  size: 25,
+                                ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Có',
+                            style: GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      model.changeChoiceWine(1);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 2,
+                      padding: EdgeInsets.only(left: 8),
+                      margin: EdgeInsets.only(
+                        left: 14.0,
+                        bottom: 15.0,
+                      ),
+                      child: Row(
+                        children: [
+                          model.choiceWine == 1
+                              ? Icon(
+                                  EvaIcons.radioButtonOn,
+                                  color: Colors.blue,
+                                  size: 25,
+                                )
+                              : Icon(
+                                  EvaIcons.radioButtonOffOutline,
+                                  size: 25,
+                                ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Không',
+                            style: GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      model.changeChoiceWine(2);
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 2,
+                      padding: EdgeInsets.only(left: 8),
+                      margin: EdgeInsets.only(
+                        left: 14.0,
+                        bottom: 15.0,
+                      ),
+                      child: Row(
+                        children: [
+                          model.choiceWine == 2
+                              ? Icon(
+                                  EvaIcons.radioButtonOn,
+                                  color: Colors.blue,
+                                  size: 25,
+                                )
+                              : Icon(
+                                  EvaIcons.radioButtonOffOutline,
+                                  size: 25,
+                                ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Đã bỏ',
+                            style: GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 15.0,
+              color: Colors.grey.shade200,
+              margin: EdgeInsets.only(top: 20.0),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: 20,
+                left: 15,
+                bottom: 15,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Sử dụng ma túy",
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 15.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    model.changeChoiceDrug(0);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(left: 8),
+                    width: MediaQuery.of(context).size.width / 2,
+                    margin: EdgeInsets.only(
+                      right: 40.0,
+                    ),
+                    child: Row(
+                      children: [
+                        model.choiceDrug == 0
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Không',
+                          style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    model.changeChoiceDrug(1);
+                  },
+                  child: Container(
+                    child: Row(
+                      children: [
+                        model.choiceDrug == 1
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Có',
+                          style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: 15.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    model.changeChoiceDrug(2);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 1.75,
+                    padding: EdgeInsets.only(left: 8),
+                    margin: EdgeInsets.only(
+                      right: 12.0,
+                    ),
+                    child: Row(
+                      children: [
+                        model.choiceDrug == 2
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Sử dụng thường xuyên',
+                          style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    model.changeChoiceDrug(3);
+                  },
+                  child: Container(
+                    child: Row(
+                      children: [
+                        model.choiceDrug == 3
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Đã bỏ',
+                          style: GoogleFonts.varelaRound(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              height: 15.0,
+              color: Colors.grey.shade200,
+              margin: EdgeInsets.only(top: 20.0),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: 20,
+                left: 15,
+                bottom: 15,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Hoạt động thể lực",
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 20,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
-}
 
 //TabBarView for Tình trạng lúc sinh
-class TabView3 extends StatelessWidget {
-  List<String> buttonOriginalList = [
-    "Đẻ thường",
-    "Đẻ mổ",
-    "Đẻ thiếu tháng",
-    "Bị ngạt lúc đẻ"
-  ];
+  Widget _tabView3(BuildContext context, HealthRecordViewModel model) {
+    List<String> buttonOriginalList = [
+      "Đẻ thường",
+      "Đẻ mổ",
+      "Đẻ thiếu tháng",
+      "Bị ngạt lúc đẻ"
+    ];
 
-  // List<String> buttonList(List<String> originalList) {
-  //   List<String> list;
-  //   for (var i = 0; i < originalList.length / 2; i++) {
-  //     String value = originalList.elementAt(i);
-  //     list.add(value);
-  //   }
-  //   return list;
-  // }
-
-  @override
-  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -315,9 +803,6 @@ class TabView3 extends StatelessWidget {
                     },
                     selectedColor: Theme.of(context).accentColor,
                   ),
-                  // SizedBox(
-                  //   height: 10,
-                  // ),
                   Row(
                     children: <Widget>[
                       Expanded(
@@ -552,12 +1037,9 @@ class TabView3 extends StatelessWidget {
       ),
     );
   }
-}
 
 //TabBarView for Tiền sử bệnh tật, dị ứng
-class TabView4 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget _tabView4(BuildContext context, HealthRecordViewModel model) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -1047,12 +1529,9 @@ class TabView4 extends StatelessWidget {
       ),
     );
   }
-}
 
 //TabBarView for khuyết tật
-class TabView5 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget _tabView5(BuildContext context, HealthRecordViewModel model) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -1455,12 +1934,9 @@ class TabView5 extends StatelessWidget {
       ),
     );
   }
-}
 
 //TabBarView for Tiền sử phẫu thuật
-class TabView6 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget _tabView6(BuildContext context, HealthRecordViewModel model) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -1562,12 +2038,9 @@ class TabView6 extends StatelessWidget {
       ),
     );
   }
-}
 
 //TabBarView for Tiền sử gia đình
-class TabView7 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget _tabView7(BuildContext context, HealthRecordViewModel model) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -2059,12 +2532,9 @@ class TabView7 extends StatelessWidget {
       ),
     );
   }
-}
 
 //TabBarView for Vấn đề khác
-class TabView8 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget _tabView8(BuildContext context, HealthRecordViewModel model) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
