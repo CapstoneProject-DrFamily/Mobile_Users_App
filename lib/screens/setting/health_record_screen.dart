@@ -73,8 +73,11 @@ class HealthRecordScreen extends StatelessWidget {
       length: 6,
       child: Scaffold(
         appBar: new AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           elevation: 0,
+          centerTitle: false,
+          titleSpacing: 0.0,
           title: TabBar(
             isScrollable: true,
             unselectedLabelColor: Colors.black,
