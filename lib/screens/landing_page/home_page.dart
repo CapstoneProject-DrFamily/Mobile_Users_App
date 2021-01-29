@@ -2,7 +2,11 @@ import 'package:commons/commons.dart';
 import 'package:drFamily_app/screens/landing_page/add_dependent_profile_page.dart';
 import 'package:drFamily_app/screens/home/find_doctor/specialty_screen.dart';
 import 'package:drFamily_app/screens/home/find_doctor/symptom_page.dart';
+import 'package:drFamily_app/screens/share/base_view.dart';
+import 'package:drFamily_app/view_model/home_vm/home_view_model.dart';
+import 'package:drFamily_app/view_model/home_vm/pop_up_choose_patient_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
@@ -12,47 +16,51 @@ import 'package:flutter_svg/flutter_svg.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffF9F9F9),
-      body: Column(
-        children: [
-          Stack(
+    return BaseView<HomeViewModel>(
+      builder: (context, child, model) {
+        return Scaffold(
+          backgroundColor: Color(0xffF9F9F9),
+          body: Column(
             children: [
-              Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: CustomPaint(
-                  painter: PathPainterTop(),
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: CustomPaint(
-                  painter: PathPainterBottom(),
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: CustomPaint(
-                  painter: PathPainterRight(),
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.92,
-                child: SingleChildScrollView(
-                  child: _buildBody(context),
-                ),
+              Stack(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: CustomPaint(
+                      painter: PathPainterTop(),
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: CustomPaint(
+                      painter: PathPainterBottom(),
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: CustomPaint(
+                      painter: PathPainterRight(),
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.92,
+                    child: SingleChildScrollView(
+                      child: _buildBody(context, model),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Padding _buildBody(BuildContext context) {
+  Padding _buildBody(BuildContext context, HomeViewModel model) {
     return Padding(
       padding: EdgeInsets.only(left: 20, right: 20, top: 45),
       child: Column(
@@ -91,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                       child: _buildDoctorFunction(
                           context, 'Find a Doctor', FIND_DOCTOR, 150, 190),
                       onTap: () {
-                        _buildDialogListDependent(context);
+                        _buildDialogListDependent(context, model);
                       },
                     ),
                     _buildDoctorFunction(context, 'Book Appointment',
@@ -110,36 +118,38 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  _buildDialogListDependent(BuildContext context) {
+  _buildDialogListDependent(BuildContext context, HomeViewModel homeViewModel) {
     showDialog(
-        context: context,
-        builder: (_) => new AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30))),
-              title: Center(child: new Text("Choose patient")),
-              content: new Container(
-                height: 300.0, // Change as per your requirement
-                width: 300.0, // Change as per your requirement
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ListView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        itemCount: 5,
-                        itemBuilder: (context, index) => Row(
-                          children: [
-                            Expanded(
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    print('Card tapped.');
-                                  },
-                                  child: Container(
-                                      child: Row(
+      context: context,
+      builder: (dialogContex) => BaseView<PopUpChoosePatientViewModel>(
+        builder: (dialogContex, child, model) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30))),
+            title: Center(child: new Text("Choose patient")),
+            content: new Container(
+              height: 300.0, // Change as per your requirement
+              width: 300.0, // Change as per your requirement
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      itemCount: 5,
+                      itemBuilder: (dialogContex, index) => Row(
+                        children: [
+                          Expanded(
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  model.choosePatient(index);
+                                },
+                                child: Container(
+                                  child: Row(
                                     children: [
                                       Expanded(
                                         flex: 3,
@@ -152,67 +162,80 @@ class HomeScreen extends StatelessWidget {
                                           subtitle: Text('Friend'),
                                         ),
                                       ),
-                                      // Expanded(
-                                      //     child: new Radio(
-                                      //   value: 0,
-                                      // )),
+                                      index == model.patientChoose
+                                          ? Expanded(
+                                              child: Icon(
+                                                EvaIcons.radioButtonOn,
+                                                color: Colors.blue,
+                                              ),
+                                            )
+                                          : Expanded(
+                                              child: Icon(
+                                                EvaIcons.radioButtonOffOutline,
+                                              ),
+                                            ),
                                     ],
-                                  )),
+                                  ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      ClipOval(
-                        child: Material(
-                          color: Colors.grey[350], // button color
-                          child: InkWell(
-                            splashColor: Colors.cyan, // inkwell color
-                            child: SizedBox(
-                                width: 56, height: 56, child: Icon(Icons.add)),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        AddDependentProfilePage()),
-                              );
-                            },
                           ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    ClipOval(
+                      child: Material(
+                        color: Colors.grey[350], // button color
+                        child: InkWell(
+                          splashColor: Colors.cyan, // inkwell color
+                          child: SizedBox(
+                              width: 56, height: 56, child: Icon(Icons.add)),
+                          onTap: () {
+                            Navigator.push(
+                              dialogContex,
+                              MaterialPageRoute(
+                                  builder: (dialogContex) =>
+                                      AddDependentProfilePage()),
+                            );
+                          },
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                  ],
                 ),
               ),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('Next'),
-                  onPressed: () async {
-                    // pop out current popup
-                    Navigator.of(context).pop();
-                    // wait 0.5s to change popup
-                    waitDialog(context, duration: Duration(milliseconds: 500));
-                    await Future.delayed(Duration(milliseconds: 500));
-                    //new popup
-                    _buildDialogChooseType(context);
-                  },
-                ),
-                TextButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ));
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Next'),
+                onPressed: () async {
+                  // pop out current popup
+                  Navigator.of(dialogContex).pop();
+                  // wait 0.5s to change popup
+                  waitDialog(context, duration: Duration(milliseconds: 500));
+                  await Future.delayed(Duration(milliseconds: 500));
+                  //new popup
+                  homeViewModel.choosePatient(model.patientChoose);
+                  _buildDialogChooseType(context);
+                },
+              ),
+              TextButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   Future _buildDialogChooseType(BuildContext context) {
