@@ -13,40 +13,76 @@ class SettingPage extends StatelessWidget {
         body: Column(
           children: [
             _buildHeader(context),
-            Flexible(
-              child: SettingsList(
-                sections: [
-                  SettingsSection(
-                    title: 'Common',
-                    tiles: [
-                      SettingsTile(
-                        title: 'Dependent',
-                        leading: Icon(Icons.people),
-                      ),
-                      SettingsTile(
-                        title: 'HealthRecord',
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HealthRecordScreen(),
-                            ),
-                          );
-                        },
-                        leading: Icon(EvaIcons.activityOutline),
-                      ),
-                    ],
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  color: Colors.white,
+                  child: ListTile(
+                    leading: Icon(Icons.people),
+                    title: Text("Dependent"),
+                    trailing: Icon(Icons.keyboard_arrow_right),
                   ),
-                  SettingsSection(
-                    title: 'Account',
-                    tiles: [
-                      SettingsTile(
-                          title: 'Sign out', leading: Icon(Icons.exit_to_app)),
-                    ],
+                ),
+                Divider(
+                  height: 2,
+                ),
+                Container(
+                  color: Colors.white,
+                  child: ListTile(
+                    leading: Icon(EvaIcons.activityOutline),
+                    title: Text("Health Record"),
+                    trailing: Icon(Icons.keyboard_arrow_right),
                   ),
-                ],
-              ),
-            ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  color: Colors.white,
+                  child: ListTile(
+                    leading: Icon(Icons.people),
+                    title: Text("Dependent"),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                  ),
+                ),
+                Divider(
+                  height: 2,
+                ),
+                Container(
+                  color: Colors.white,
+                  child: ListTile(
+                    leading: Icon(Icons.people),
+                    title: Text("Dependent"),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            'Log out',
+                            style: TextStyle(color: Colors.red),
+                          )),
+                    ),
+                  ],
+                )
+              ],
+            )
           ],
         ),
       ),
