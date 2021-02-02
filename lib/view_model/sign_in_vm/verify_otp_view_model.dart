@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:commons/commons.dart';
+import 'package:drFamily_app/model/sign_in/user_model.dart';
+import 'package:drFamily_app/repository/sign_in/sign_in_repo.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +10,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VerifyOTPViewModel extends BaseModel {
+  final ISignInRepo _signInRepo = SignInRepo();
+  UserModel _userModel;
+
   FirebaseAuth _auth = FirebaseAuth.instance;
   String _smsOTP;
   String _verificationId;
@@ -51,8 +57,8 @@ class VerifyOTPViewModel extends BaseModel {
         } else {
           _start--;
           if (_start == 58) {
-            // verifyPhone(_phoneNum);
-            print(_phoneNum);
+            verifyPhone(_phoneNum);
+            // print(_phoneNum);
           }
           notifyListeners();
         }
@@ -173,17 +179,31 @@ class VerifyOTPViewModel extends BaseModel {
     notifyListeners();
   }
 
+  //verify OTP
   void submitOTP(BuildContext context) async {
     _smsOTP = _number1 + _number2 + _number3 + _number4 + _number5 + _number6;
     try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
       final AuthCredential credential = PhoneAuthProvider.getCredential(
           verificationId: _verificationId, smsCode: _smsOTP);
+      waitDialog(context);
       await _auth.signInWithCredential(credential).then(
         (value) async {
-          if (value.user != null)
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => LandingScreen()),
-                (Route<dynamic> route) => false);
+          if (value.user != null) {
+            print("verify Success");
+            _userModel = await _signInRepo.getLoginUser("84" + _phoneNum, "2");
+
+            if (_userModel != null) {
+              prefs.setInt("usProfileID", _userModel.profileId);
+              prefs.setString("usToken", _userModel.token);
+              prefs.setString("usRole", _userModel.role);
+
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => LandingScreen()),
+                  (Route<dynamic> route) => false);
+            }
+          }
         },
       );
     } catch (e) {
@@ -214,12 +234,14 @@ class VerifyOTPViewModel extends BaseModel {
     notifyListeners();
   }
 
+  //send OTP
   Future<void> verifyPhone(String number) async {
     final PhoneCodeSent smsOTPSent = (String verID, [int fourceCodeResend]) {
       this._verificationId = verID;
     };
     try {
-      if (number[0].endsWith('0')) number = number.substring(1, number.length);
+      print(number);
+      // if (number[0].endsWith('0')) number = number.substring(1, number.length);
       await _auth.verifyPhoneNumber(
           phoneNumber: '+84' + number.trim(),
           timeout: const Duration(seconds: 60),

@@ -4,6 +4,7 @@ import 'package:drFamily_app/screens/landing_page/setting.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingPageViewModel extends BaseModel {
   PageController _pageController = PageController();
@@ -16,6 +17,17 @@ class LandingPageViewModel extends BaseModel {
     HomeScreen(),
     SettingPage(),
   ];
+
+  LandingPageViewModel() {
+    init();
+  }
+
+  Future<void> init() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String phone = prefs.getString("usPhone");
+    int profileID = prefs.get("usProfileID");
+    print("Phone: " + phone + "ProfileID: " + profileID.toString());
+  }
 
   List<BottomNavyBarItem> _listItem = [
     BottomNavyBarItem(

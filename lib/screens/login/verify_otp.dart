@@ -84,21 +84,6 @@ class VerifyOtpScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              new Positioned(
-                top: 0.0,
-                left: 0.0,
-                right: 0.0,
-                child: AppBar(
-                  title: Text(''), // You can add title here
-                  leading: new IconButton(
-                    icon: new Icon(Icons.arrow_back_ios, color: Colors.grey),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  backgroundColor: Colors.blue
-                      .withOpacity(0), //You can make this transparent
-                  elevation: 0.0, //No shadow
-                ),
-              ),
             ],
           ),
         );
@@ -111,10 +96,11 @@ class VerifyOtpScreen extends StatelessWidget {
       height: (56 / 812.0) * MediaQuery.of(context).size.height,
       child: RaisedButton(
         onPressed: () {
-          // model.submitOTP(context);
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => LandingScreen()),
-              (Route<dynamic> route) => false);
+          model.submitOTP(context);
+
+          // Navigator.of(context).pushAndRemoveUntil(
+          //     MaterialPageRoute(builder: (context) => LandingScreen()),
+          //     (Route<dynamic> route) => false);
         },
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
