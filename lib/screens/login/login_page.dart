@@ -103,6 +103,7 @@ class LoginScreen extends StatelessWidget {
               initialValue: '+84',
               enabled: false,
               decoration: InputDecoration(
+                errorText: model.phoneNum.error,
                 filled: false,
                 contentPadding: new EdgeInsets.symmetric(
                   vertical: 14.2,
@@ -130,6 +131,7 @@ class LoginScreen extends StatelessWidget {
               maxLength: 10,
               style: TextStyle(fontSize: 20),
               decoration: InputDecoration(
+                errorText: model.phoneNum.error,
                 counterText: "",
                 hintText: 'Enter your Number',
                 filled: false,
