@@ -3,6 +3,7 @@ import 'package:commons/commons.dart';
 import 'package:drFamily_app/model/sign_in/user_model.dart';
 import 'package:drFamily_app/repository/sign_in/sign_in_repo.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
+import 'package:drFamily_app/screens/login/login_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -198,16 +199,44 @@ class VerifyOTPViewModel extends BaseModel {
               prefs.setInt("usProfileID", _userModel.profileId);
               prefs.setString("usToken", _userModel.token);
               prefs.setString("usRole", _userModel.role);
+              prefs.setInt("usAccountID", _userModel.userId);
+
+              var waiting = _userModel.waiting;
+
+              if (waiting == false && _userModel.profileId != null) {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LandingScreen()),
+                    (Route<dynamic> route) => false);
+              } else if (waiting == true && _userModel.profileId == null) {
+                Fluttertoast.showToast(
+                  msg: "Createing your account",
+                  textColor: Colors.red,
+                  toastLength: Toast.LENGTH_SHORT,
+                  backgroundColor: Colors.white,
+                  gravity: ToastGravity.CENTER,
+                );
+              }
+            } else {
+              await prefs.clear();
 
               Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => LandingScreen()),
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
                   (Route<dynamic> route) => false);
+
+              Fluttertoast.showToast(
+                msg: "Your account have been Block or try logged in Doctor app",
+                textColor: Colors.red,
+                toastLength: Toast.LENGTH_LONG,
+                backgroundColor: Colors.white,
+                gravity: ToastGravity.CENTER,
+              );
             }
           }
         },
       );
     } catch (e) {
       print("${e.toString()}");
+      Navigator.of(context).pop();
       FocusScope.of(context).unfocus();
       Fluttertoast.showToast(
         msg: "Invalid OTP",
@@ -259,6 +288,50 @@ class VerifyOTPViewModel extends BaseModel {
       handleError(e);
       errorMessage = e.toString();
       notifyListeners();
+    }
+  }
+
+  void checkLogin(BuildContext context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    waitDialog(context);
+
+    _userModel = await _signInRepo.getLoginUser("84" + _phoneNum, "2");
+
+    if (_userModel != null) {
+      prefs.setInt("usProfileID", _userModel.profileId);
+      prefs.setString("usToken", _userModel.token);
+      prefs.setString("usRole", _userModel.role);
+      prefs.setInt("usAccountID", _userModel.userId);
+
+      var waiting = _userModel.waiting;
+
+      if (waiting == false && _userModel.profileId != null) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LandingScreen()),
+            (Route<dynamic> route) => false);
+      } else if (waiting == true && _userModel.profileId == null) {
+        Fluttertoast.showToast(
+          msg: "Createing your account",
+          textColor: Colors.red,
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.white,
+          gravity: ToastGravity.CENTER,
+        );
+      }
+    } else {
+      await prefs.clear();
+
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+          (Route<dynamic> route) => false);
+
+      Fluttertoast.showToast(
+        msg: "Your account have been Block or try logged in Doctor app",
+        textColor: Colors.red,
+        toastLength: Toast.LENGTH_LONG,
+        backgroundColor: Colors.white,
+        gravity: ToastGravity.CENTER,
+      );
     }
   }
 }

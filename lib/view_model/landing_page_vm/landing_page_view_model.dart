@@ -25,8 +25,15 @@ class LandingPageViewModel extends BaseModel {
   Future<void> init() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String phone = prefs.getString("usPhone");
-    int profileID = prefs.get("usProfileID");
-    print("Phone: " + phone + "ProfileID: " + profileID.toString());
+    int profileID = prefs.getInt("usProfileID");
+    int userID = prefs.getInt("usAccountID");
+
+    print("Phone: " +
+        phone +
+        " ProfileID: " +
+        profileID.toString() +
+        " AccountID: " +
+        userID.toString());
   }
 
   List<BottomNavyBarItem> _listItem = [
