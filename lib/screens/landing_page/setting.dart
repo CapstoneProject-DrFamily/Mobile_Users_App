@@ -1,5 +1,7 @@
 import 'package:drFamily_app/screens/setting/health_record_screen.dart';
 import 'package:drFamily_app/screens/setting/profile_screen.dart';
+import 'package:drFamily_app/screens/share/base_view.dart';
+import 'package:drFamily_app/view_model/landing_page_vm/setting_view_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,94 +9,100 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            _buildHeader(context),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return BaseView<SettingViewModel>(
+      builder: (context, child, model) {
+        return SafeArea(
+          child: Scaffold(
+            body: Column(
               children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  color: Colors.white,
-                  child: ListTile(
-                    leading: Icon(Icons.people),
-                    title: Text("Dependent"),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                  ),
-                ),
-                Divider(
-                  height: 2,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HealthRecordScreen(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    color: Colors.white,
-                    child: ListTile(
-                      leading: Icon(EvaIcons.activityOutline),
-                      title: Text("Health Record"),
-                      trailing: Icon(Icons.keyboard_arrow_right),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  color: Colors.white,
-                  child: ListTile(
-                    leading: Icon(Icons.people),
-                    title: Text("Dependent"),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                  ),
-                ),
-                Divider(
-                  height: 2,
-                ),
-                Container(
-                  color: Colors.white,
-                  child: ListTile(
-                    leading: Icon(Icons.people),
-                    title: Text("Dependent"),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                _buildHeader(context),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.red),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            'Log out',
-                            style: TextStyle(color: Colors.red),
-                          )),
+                    SizedBox(
+                      height: 20,
                     ),
+                    Container(
+                      color: Colors.white,
+                      child: ListTile(
+                        leading: Icon(Icons.people),
+                        title: Text("Dependent"),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                      ),
+                    ),
+                    Divider(
+                      height: 2,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HealthRecordScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        color: Colors.white,
+                        child: ListTile(
+                          leading: Icon(EvaIcons.activityOutline),
+                          title: Text("Health Record"),
+                          trailing: Icon(Icons.keyboard_arrow_right),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      color: Colors.white,
+                      child: ListTile(
+                        leading: Icon(Icons.people),
+                        title: Text("Dependent"),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                      ),
+                    ),
+                    Divider(
+                      height: 2,
+                    ),
+                    Container(
+                      color: Colors.white,
+                      child: ListTile(
+                        leading: Icon(Icons.people),
+                        title: Text("Dependent"),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: FlatButton(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(color: Colors.red),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              onPressed: () {
+                                model.signOut(context);
+                              },
+                              child: Text(
+                                'Log out',
+                                style: TextStyle(color: Colors.red),
+                              )),
+                        ),
+                      ],
+                    )
                   ],
                 )
               ],
-            )
-          ],
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 

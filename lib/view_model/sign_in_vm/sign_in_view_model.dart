@@ -5,10 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInViewModel extends BaseModel {
-  TextEditingController phoneNo;
+  TextEditingController phoneNo = TextEditingController();
+  String phoneNoString;
 
   Validate _phoneNum = Validate(null, null);
   Validate get phoneNum => _phoneNum;
+
+  SignInViewModel() {
+    phoneNo.addListener(() {
+      phoneNoString = phoneNo.text;
+      notifyListeners();
+    });
+    // initApp();
+  }
+
+  Future<void> initApp() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    phoneNo.text = prefs.getString('usPhone');
+    print('phone: ' + phoneNo.text);
+  }
 
   Future storePhone(BuildContext context) async {
     if (_phoneNum.value != null) {

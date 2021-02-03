@@ -1,4 +1,3 @@
-import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/verify_otp_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
@@ -96,6 +95,7 @@ class VerifyOtpScreen extends StatelessWidget {
       height: (56 / 812.0) * MediaQuery.of(context).size.height,
       child: RaisedButton(
         onPressed: () {
+          // model.checkLogin(context);
           model.submitOTP(context);
 
           // Navigator.of(context).pushAndRemoveUntil(

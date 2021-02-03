@@ -1,6 +1,7 @@
 class UserModel {
   final String token, userName, expiration, role;
   final int userId, profileId;
+  final bool waiting;
 
   UserModel({
     this.expiration,
@@ -9,6 +10,7 @@ class UserModel {
     this.userId,
     this.userName,
     this.role,
+    this.waiting,
   });
 
   Map<String, dynamic> toJson() => {
@@ -24,6 +26,7 @@ class UserModel {
       userId: json['userId'] as int,
       role: json['role'] as String,
       userName: json['phone'] as String,
+      waiting: json['waiting'] as bool,
     );
   }
 }
