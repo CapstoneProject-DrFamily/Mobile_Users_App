@@ -1,6 +1,7 @@
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/symptom_page_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
+import 'package:drFamily_app/widgets/common/not_found_screen.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,25 @@ class SymptomScreen extends StatelessWidget {
                   _buildBackgroudColor(context),
                   _buildText(),
                   _buildBackgroudImage(context),
-                  _buildListSymptom(context, model),
+                  if (model.isLoading)
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.5),
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.white,
+                      ),
+                    )
+                  else if (model.isLoading == false && model.isNotHave == true)
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.5),
+                      child: NotFoundScreen(),
+                    )
+                  else
+                    _buildListSymptom(context, model),
                   _buildAppBar(context, model),
                 ],
               ),
@@ -35,7 +54,7 @@ class SymptomScreen extends StatelessWidget {
       padding: EdgeInsets.all(20),
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
       child: ListView.builder(
-        itemCount: model.symtoms.length,
+        itemCount: model.symptomsDisplay.length,
         itemBuilder: (context, indexFather) {
           return Column(
             children: [
@@ -58,7 +77,7 @@ class SymptomScreen extends StatelessWidget {
                     padding: EdgeInsets.only(left: 40),
                     margin: EdgeInsets.only(top: 33),
                     child: Text(
-                      model.symtoms[indexFather].headerValue,
+                      model.symptomsDisplay[indexFather].headerValue,
                       style: TextStyle(
                           color: Color(0xff0d47a1),
                           fontFamily: 'avenir',
@@ -82,13 +101,15 @@ class SymptomScreen extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
-                  itemCount: model.symtoms[indexFather].expandedValue.length,
+                  itemCount:
+                      model.symptomsDisplay[indexFather].expandedValue.length,
                   itemBuilder: (context, index) {
                     return Container(
                       child: GestureDetector(
                         onTap: () {
-                          model.changeChecked(
-                              model.symtoms[indexFather].expandedValue[index]);
+                          model.changeChecked(model
+                              .symptomsDisplay[indexFather].expandedValue.keys
+                              .toList()[index]);
                         },
                         child: Column(
                           children: [
@@ -114,8 +135,9 @@ class SymptomScreen extends StatelessWidget {
                                   padding: EdgeInsets.only(left: 40),
                                   margin: EdgeInsets.only(top: 33),
                                   child: Text(
-                                    model.symtoms[indexFather]
-                                        .expandedValue[index],
+                                    model.symptomsDisplay[indexFather]
+                                        .expandedValue.values
+                                        .toList()[index],
                                     style: TextStyle(
                                       color: Color(0xff0d47a1),
                                       fontFamily: 'avenir',
@@ -129,8 +151,10 @@ class SymptomScreen extends StatelessWidget {
                                   margin: EdgeInsets.only(top: 30),
                                   child: Icon(
                                       model.savedValue.contains(model
-                                              .symtoms[indexFather]
-                                              .expandedValue[index])
+                                              .symptomsDisplay[indexFather]
+                                              .expandedValue
+                                              .keys
+                                              .toList()[index])
                                           ? EvaIcons.checkmarkCircle2
                                           : EvaIcons.checkmarkCircle2Outline,
                                       color: Color(0xff0d47a1)),

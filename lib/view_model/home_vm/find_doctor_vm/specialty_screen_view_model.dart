@@ -1,14 +1,20 @@
-import 'package:drFamily_app/Helper/fire_base_link.dart';
 import 'package:drFamily_app/model/specialty_model.dart';
+import 'package:drFamily_app/repository/specialty_repo.dart';
+import 'package:drFamily_app/screens/home/find_doctor/map_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:flutter/material.dart';
 
 class SpecialtyScreenViewModel extends BaseModel {
-  List<SpecialtyModel> _listSpecialty = [];
-  bool _isLoading = false;
+  final ISpecialtyRepo _specialtyRepo = SpecialtyRepo();
 
-  //getters
+  List<SpecialtyModel> _listSpecialty = [];
   List<SpecialtyModel> get listSpecialty => _listSpecialty;
+
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+  bool _isNotHave = false;
+  bool get isNotHave => _isNotHave;
 
   SpecialtyScreenViewModel() {
     getListSpecialty();
@@ -18,31 +24,22 @@ class SpecialtyScreenViewModel extends BaseModel {
     this._isLoading = true;
     notifyListeners();
 
-    SpecialtyModel specialty1 = new SpecialtyModel(
-        image: ImagesLinks.INTERNAL_MEDICINE_SPECIALTY,
-        title: 'Internal medicine');
-    _listSpecialty.add(specialty1);
+    _listSpecialty = await _specialtyRepo.getAllSpecialty().whenComplete(() {
+      this._isLoading = false;
+      notifyListeners();
+    });
 
-    SpecialtyModel specialty2 = new SpecialtyModel(
-        image: ImagesLinks.ENDOCRINOLOGY_SPECIALTY, title: 'Endocrinology');
-    _listSpecialty.add(specialty2);
+    if (_listSpecialty == null) {
+      _isNotHave = true;
+      notifyListeners();
+    }
+  }
 
-    SpecialtyModel specialty3 = new SpecialtyModel(
-        image: ImagesLinks.CARDIOLOGY_SPECIALTY, title: 'Cardiology');
-    _listSpecialty.add(specialty3);
-
-    SpecialtyModel specialty4 = new SpecialtyModel(
-        image: ImagesLinks.OPHTHALMOLOGY_SPECIALTY, title: 'Ophthalmology');
-    _listSpecialty.add(specialty4);
-
-    SpecialtyModel specialty5 = new SpecialtyModel(
-        image: ImagesLinks.PEDIATRICS_SPECIALTY, title: 'Pediatrics');
-    _listSpecialty.add(specialty5);
-
-    await Future.delayed(
-      Duration(seconds: 1),
+  void chooseSpecialty(BuildContext context, int specialtyID) {
+    print(specialtyID);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapScreen()),
     );
-    this._isLoading = false;
-    notifyListeners();
   }
 }

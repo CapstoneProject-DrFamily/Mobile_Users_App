@@ -5,9 +5,9 @@ class HomeViewModel extends BaseModel {
 
   int get patientID => _patientID;
 
-  void choosePatient(int patient) {
-    print(patient);
-    _patientID = patient;
+  void choosePatient(int patientId) {
+    print(patientId);
+    _patientID = patientId;
     notifyListeners();
   }
 }
