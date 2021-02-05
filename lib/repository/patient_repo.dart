@@ -17,7 +17,7 @@ class PatientRepo extends IPatientRepo {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
-    var uri = Uri.http(urlAPI, "/api/Patients/$accountID/Depdent");
+    var uri = Uri.http(urlAPI, "/api/v1/Patients/$accountID/Depdent");
     var response = await http.get(uri, headers: header);
 
     List<DependentModel> listDependent;
