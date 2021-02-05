@@ -16,6 +16,7 @@ Future<void> main() async {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       home: profileID == null ? LoginScreen() : LandingScreen(),
+      // home: SymptomScreen(),
     ),
   );
 }

@@ -1,6 +1,6 @@
-import 'package:drFamily_app/screens/home/find_doctor/list_doctor_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/specialty_screen_view_model.dart';
+import 'package:drFamily_app/widgets/common/not_found_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -76,7 +76,9 @@ class SpecialtyScreen extends StatelessWidget {
                               backgroundColor: Colors.white,
                             ),
                           )
-                        : _buildListCard(model),
+                        : model.isNotHave
+                            ? NotFoundScreen()
+                            : _buildListCard(model),
                   ),
                 ),
               )
@@ -96,17 +98,15 @@ class SpecialtyScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ListDoctorPage()),
-              );
+              model.chooseSpecialty(
+                  context, model.listSpecialty[index].specialtyId);
             },
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
               elevation: 8.0,
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: InkWell(
                 child: Container(
                   decoration: BoxDecoration(
@@ -125,13 +125,13 @@ class SpecialtyScreen extends StatelessWidget {
                         ),
                       ),
                       child: SvgPicture.network(
-                        model.listSpecialty[index].image,
+                        model.listSpecialty[index].specialtyImage,
                         width: 60,
                         height: 60,
                       ),
                     ),
                     title: Text(
-                      model.listSpecialty[index].title,
+                      model.listSpecialty[index].specialtyTitle,
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),

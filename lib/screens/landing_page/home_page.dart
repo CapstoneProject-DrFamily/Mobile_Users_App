@@ -130,108 +130,126 @@ class HomeScreen extends StatelessWidget {
             content: new Container(
               height: 300.0, // Change as per your requirement
               width: 300.0, // Change as per your requirement
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ListView.builder(
-                      primary: false,
-                      shrinkWrap: true,
-                      itemCount: 5,
-                      itemBuilder: (dialogContex, index) => Row(
+              child: model.isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                    ))
+                  : SingleChildScrollView(
+                      child: Column(
                         children: [
-                          Expanded(
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  model.choosePatient(index);
-                                },
-                                child: Container(
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 3,
-                                        child: ListTile(
-                                          leading: Icon(
-                                            Icons.account_circle,
-                                            size: 50,
-                                          ),
-                                          title: Text('Anh Khoa'),
-                                          subtitle: Text('Friend'),
-                                        ),
-                                      ),
-                                      index == model.patientChoose
-                                          ? Expanded(
-                                              child: Icon(
-                                                EvaIcons.radioButtonOn,
-                                                color: Colors.blue,
-                                              ),
-                                            )
-                                          : Expanded(
-                                              child: Icon(
-                                                EvaIcons.radioButtonOffOutline,
+                          ListView.builder(
+                            primary: false,
+                            shrinkWrap: true,
+                            itemCount: model.listDependent.length,
+                            itemBuilder: (dialogContex, index) => Row(
+                              children: [
+                                Expanded(
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        model.choosePatient(index);
+                                      },
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 3,
+                                              child: ListTile(
+                                                leading: Icon(
+                                                  Icons.account_circle,
+                                                  size: 50,
+                                                ),
+                                                title: Text(model
+                                                    .listDependent[index]
+                                                    .dependentName),
+                                                subtitle: Text(model
+                                                    .listDependent[index]
+                                                    .dependentRelationShip),
                                               ),
                                             ),
-                                    ],
+                                            index == model.patientChoose
+                                                ? Expanded(
+                                                    child: Icon(
+                                                      EvaIcons.radioButtonOn,
+                                                      color: Colors.blue,
+                                                    ),
+                                                  )
+                                                : Expanded(
+                                                    child: Icon(
+                                                      EvaIcons
+                                                          .radioButtonOffOutline,
+                                                    ),
+                                                  ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          ClipOval(
+                            child: Material(
+                              color: Colors.grey[350], // button color
+                              child: InkWell(
+                                splashColor: Colors.cyan, // inkwell color
+                                child: SizedBox(
+                                    width: 56,
+                                    height: 56,
+                                    child: Icon(Icons.add)),
+                                onTap: () {
+                                  Navigator.push(
+                                    dialogContex,
+                                    MaterialPageRoute(
+                                        builder: (dialogContex) =>
+                                            AddDependentProfilePage()),
+                                  );
+                                },
                               ),
                             ),
+                          ),
+                          SizedBox(
+                            height: 15,
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 15,
+            ),
+            actions: model.isLoading
+                ? <Widget>[
+                    Container(),
+                  ]
+                : <Widget>[
+                    TextButton(
+                      child: Text('Next'),
+                      onPressed: () async {
+                        // pop out current popup
+                        Navigator.of(dialogContex).pop();
+                        // wait 0.5s to change popup
+                        waitDialog(context,
+                            duration: Duration(milliseconds: 500));
+                        await Future.delayed(Duration(milliseconds: 500));
+                        //new popup
+                        homeViewModel.choosePatient(
+                            model.listDependent[model.patientChoose].patientID);
+                        _buildDialogChooseType(context);
+                      },
                     ),
-                    ClipOval(
-                      child: Material(
-                        color: Colors.grey[350], // button color
-                        child: InkWell(
-                          splashColor: Colors.cyan, // inkwell color
-                          child: SizedBox(
-                              width: 56, height: 56, child: Icon(Icons.add)),
-                          onTap: () {
-                            Navigator.push(
-                              dialogContex,
-                              MaterialPageRoute(
-                                  builder: (dialogContex) =>
-                                      AddDependentProfilePage()),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
+                    TextButton(
+                      child: Text('Cancel'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ],
-                ),
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Next'),
-                onPressed: () async {
-                  // pop out current popup
-                  Navigator.of(dialogContex).pop();
-                  // wait 0.5s to change popup
-                  waitDialog(context, duration: Duration(milliseconds: 500));
-                  await Future.delayed(Duration(milliseconds: 500));
-                  //new popup
-                  homeViewModel.choosePatient(model.patientChoose);
-                  _buildDialogChooseType(context);
-                },
-              ),
-              TextButton(
-                child: Text('Cancel'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
           );
         },
       ),
