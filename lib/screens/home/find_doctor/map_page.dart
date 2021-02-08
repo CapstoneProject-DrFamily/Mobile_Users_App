@@ -23,7 +23,7 @@ class MapScreen extends StatelessWidget {
                 _buildSearchAddressField(model),
                 _buildButtomMyLocation(model),
                 _buildImportantMessage(),
-                _buildContinueButtom(context),
+                _buildContinueButtom(context, model),
                 model.currentSearch.length > 1
                     ? Container(
                         margin: EdgeInsets.only(top: 80, left: 20, right: 20),
@@ -83,7 +83,8 @@ class MapScreen extends StatelessWidget {
     );
   }
 
-  Positioned _buildContinueButtom(BuildContext context) {
+  Positioned _buildContinueButtom(
+      BuildContext context, MapPageViewModel model) {
     return Positioned(
       left: 0,
       bottom: 0,
@@ -95,12 +96,13 @@ class MapScreen extends StatelessWidget {
           margin: EdgeInsets.all(15),
           child: RaisedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ListDoctorPage(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => ListDoctorPage(),
+              //   ),
+              // );
+              model.doneMap();
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(80.0)),

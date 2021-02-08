@@ -173,4 +173,12 @@ class MapPageViewModel extends BaseModel {
 
     notifyListeners();
   }
+
+  Future<void> doneMap() {
+    print(_pickUpInfo.placeID);
+    print("latitude: " +
+        _pickUpInfo.latitude.toString() +
+        " longtitude: " +
+        _pickUpInfo.longtitude.toString());
+  }
 }

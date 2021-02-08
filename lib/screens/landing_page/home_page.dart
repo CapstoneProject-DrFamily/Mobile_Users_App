@@ -262,7 +262,7 @@ class HomeScreen extends StatelessWidget {
       builder: (_) => new AlertDialog(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(30))),
-        title: Center(child: new Text("Choose Type")),
+        title: Center(child: new Text("Find By")),
         content: new Container(
           height: 300.0, // Change as per your requirement
           width: 300.0, // Change as per your requirement
@@ -317,7 +317,7 @@ class HomeScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 15),
                                 child: Text(
-                                  'Choose by Symptoms',
+                                  'Symptoms',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w200,
@@ -395,7 +395,7 @@ class HomeScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 15),
                                 child: Text(
-                                  'Choose by Specialty',
+                                  'Specialty',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w200,

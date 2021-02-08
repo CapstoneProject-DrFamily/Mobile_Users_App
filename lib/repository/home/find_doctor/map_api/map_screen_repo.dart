@@ -23,6 +23,7 @@ class MapScreenRepo implements IMapScreenRepo {
     if (response != 'failed') {
       placeAddress = response["results"][0]["formatted_address"];
 
+      userPickUpAddress.placeID = response["results"][0]["place_id"];
       userPickUpAddress.longtitude = position.longitude;
       userPickUpAddress.latitude = position.latitude;
       userPickUpAddress.placeName = placeAddress;

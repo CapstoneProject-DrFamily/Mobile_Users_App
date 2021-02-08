@@ -13,12 +13,14 @@ class PatientRepo extends IPatientRepo {
   @override
   Future<List<DependentModel>> getDependent(int accountID) async {
     String urlAPI = APIHelper.URI_PREFIX_API;
+    print("in" + accountID.toString());
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
-    var uri = Uri.http(urlAPI, "/api/v1/Patients/$accountID/Depdent");
+    var uri = Uri.http(urlAPI, "/api/v1/Patients/$accountID/Dependents");
     var response = await http.get(uri, headers: header);
+    print(response.statusCode);
 
     List<DependentModel> listDependent;
 
