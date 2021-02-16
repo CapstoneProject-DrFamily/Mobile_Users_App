@@ -521,7 +521,6 @@ class ProfileScreen extends StatelessWidget {
         },
         child: TextFormField(
           controller: model.dobController,
-          // onChanged: (value) => model.changePhoneNum(value),
           style: GoogleFonts.varelaRound(
             fontWeight: FontWeight.normal,
             fontSize: 16,
