@@ -1,3 +1,4 @@
+import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/signup_view_model.dart';
@@ -36,8 +37,15 @@ class SignUpScreen extends StatelessWidget {
                   _dobField(context, model),
                   _emailField(context, model),
                   GestureDetector(
-                    onTap: () {
-                      model.createNewAccount();
+                    onTap: () async {
+                      bool check = await model.createNewAccount();
+                      print("Check: " + check.toString());
+                      if (check) {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => LandingScreen()),
+                            (Route<dynamic> route) => false);
+                      }
                     },
                     child: Container(
                       margin: EdgeInsets.only(

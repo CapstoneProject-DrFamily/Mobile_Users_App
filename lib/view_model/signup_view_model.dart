@@ -201,7 +201,12 @@ class SignUpViewModel extends BaseModel {
       String addProfileJson = jsonEncode(_signUpModel.toJson());
       print(addProfileJson + "\n");
 
-      return _signUpRepo.createProfile(addProfileJson);
+      bool check = await _signUpRepo.createProfile(addProfileJson);
+      if (check == true) check = await _signUpRepo.updateUser();
+
+      if (check == true) check = await _signUpRepo.createHealthRecord();
+
+      if (check == true) return _signUpRepo.createPatient();
     }
   }
 }
