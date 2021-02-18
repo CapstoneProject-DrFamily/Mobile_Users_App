@@ -172,7 +172,7 @@ class DoctorDetailScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                      model.doctor.url,
+                                      model.doctor.image,
                                     ),
                                     fit: BoxFit.cover,
                                   ),

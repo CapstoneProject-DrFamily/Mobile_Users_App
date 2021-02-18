@@ -96,13 +96,7 @@ class MapScreen extends StatelessWidget {
           margin: EdgeInsets.all(15),
           child: RaisedButton(
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => ListDoctorPage(),
-              //   ),
-              // );
-              model.doneMap();
+              model.doneMap(context);
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(80.0)),
