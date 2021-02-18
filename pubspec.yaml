@@ -54,6 +54,8 @@ dependencies:
   flutter_picker: ^1.1.5
   custom_radio_grouped_button: any
   keyboard_visibility: ^0.5.2
+  flutter_geofire: ^1.0.3
+  firebase_database: ^3.1.6
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0

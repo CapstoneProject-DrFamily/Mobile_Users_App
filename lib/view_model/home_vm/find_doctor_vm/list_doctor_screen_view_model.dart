@@ -1,29 +1,65 @@
+import 'dart:convert';
+
 import 'package:drFamily_app/model/doctor.dart';
+import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:geolocator/geolocator.dart';
 
 class ListDoctorScreenViewModel extends BaseModel {
-  List<Doctor> listDoctor = new List<Doctor>();
+  DatabaseReference _doctorRequest;
 
-  Future<List<Doctor>> loadDoctor() async {
-    Doctor doctor1 = new Doctor(
-        id: 1,
-        name: 'Dr Trần Anh Khoa',
-        speciality: 'Khoa Nhi',
-        year: 10,
-        url:
-            'https://taimuihongsg.com/wp-content/uploads/2018/05/Kim-Bun-ThuongE-01.jpg');
-    listDoctor.add(doctor1);
+  List<Doctor> _nearByDoctorList = [];
+  List<Doctor> get nearByDoctorList => _nearByDoctorList;
 
-    Doctor doctor2 = new Doctor(
-        id: 2,
-        name: 'Dr Jun',
-        speciality: 'Khoa Nội',
-        year: 10,
-        url:
-            'https://taimuihongsg.com/wp-content/uploads/2018/05/Kim-Bun-ThuongE-01.jpg');
-    listDoctor.add(doctor2);
-    await Future.delayed(Duration(seconds: 1));
+  UserCurrentAddress _pickUpInfo;
+  UserCurrentAddress get pickUpInfo => _pickUpInfo;
 
-    return listDoctor;
+  // List<NearbyDoctorModel> _nearByDoctorList = [];
+  // List<NearbyDoctorModel> get nearByDoctorList => _nearByDoctorList;
+
+  void init(UserCurrentAddress pickUpInfoRef) {
+    this._pickUpInfo = pickUpInfoRef;
+    print(_pickUpInfo.placeID);
+    print(_pickUpInfo.placeName);
+    print("latitude: " +
+        _pickUpInfo.latitude.toString() +
+        " longtitude: " +
+        _pickUpInfo.longtitude.toString());
+    getListDoctorNearby();
+  }
+
+  Future<List<Doctor>> getListDoctorNearby() async {
+    _doctorRequest = await FirebaseDatabase.instance
+        .reference()
+        .child("Doctor Request")
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+      Map<dynamic, dynamic> values = dataSnapshot.value;
+      values.forEach((key, values) async {
+        // print(values['pickup']['latitude']);
+        final double distance = await Geolocator.distanceBetween(
+            _pickUpInfo.latitude,
+            _pickUpInfo.longtitude,
+            double.parse(values['pickup']['latitude']),
+            double.parse(values['pickup']['longtitude']));
+        if ((distance / 1000) <= 5) {
+          Doctor tDoctor = Doctor(
+            id: int.parse(values['doctor_id']),
+            image: values['doctor_image'],
+            name: values['doctor_name'],
+            speciality: values['doctor_specialty'],
+            year: 0,
+            latitude: double.parse(values['pickup']['latitude']),
+            longitude: double.parse(values['pickup']['longtitude']),
+            distance: double.parse((distance / 1000).toStringAsFixed(1)),
+          );
+
+          print(distance / 1000);
+          _nearByDoctorList.add(tDoctor);
+        }
+      });
+    });
+    notifyListeners();
   }
 }

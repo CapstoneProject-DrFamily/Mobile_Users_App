@@ -3,12 +3,14 @@ import 'dart:collection';
 import 'package:drFamily_app/model/home/find_doctor/map/place_predictions.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
 import 'package:drFamily_app/repository/home/find_doctor/map_api/map_screen_repo.dart';
+import 'package:drFamily_app/screens/home/find_doctor/list_doctor_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MapPageViewModel extends BaseModel {
   final IMapScreenRepo _mapRepo = MapScreenRepo();
@@ -174,11 +176,16 @@ class MapPageViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future<void> doneMap() {
-    print(_pickUpInfo.placeID);
-    print("latitude: " +
-        _pickUpInfo.latitude.toString() +
-        " longtitude: " +
-        _pickUpInfo.longtitude.toString());
+  Future<void> doneMap(BuildContext context) async {
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ListDoctorPage(
+          pickUpInfo: _pickUpInfo,
+        ),
+      ),
+    );
   }
 }
