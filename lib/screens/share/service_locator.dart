@@ -15,6 +15,7 @@ import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/list_doctor_scree
 import 'package:drFamily_app/view_model/setting_vm/profile_screen_view_model.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/sign_in_view_model.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/verify_otp_view_model.dart';
+import 'package:drFamily_app/view_model/signup_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.asNewInstance();
@@ -44,4 +45,5 @@ void setupLocator() {
       () => PopUpChoosePatientViewModel());
   locator.registerFactory<HealthRecordViewModel>(() => HealthRecordViewModel());
   locator.registerFactory<SettingViewModel>(() => SettingViewModel());
+  locator.registerFactory<SignUpViewModel>(() => SignUpViewModel());
 }
