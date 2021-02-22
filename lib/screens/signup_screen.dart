@@ -85,7 +85,6 @@ class SignUpScreen extends StatelessWidget {
         alignment: Alignment.center,
         child: CircleAvatar(
           radius: 80.0,
-          //AssetImage(model.defaultImage)
           backgroundImage: (model.image != null
               ? FileImage(model.image)
               : AssetImage(model.defaultImage)),
@@ -117,7 +116,6 @@ class SignUpScreen extends StatelessWidget {
         top: 30.0,
         left: 30.0,
         right: 20.0,
-        // right: 270.0,
       ),
       child: TextFormField(
         controller: model.fullNameController,
@@ -135,7 +133,6 @@ class SignUpScreen extends StatelessWidget {
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            // borderSide: BorderSide.none,
           ),
         ),
       ),
@@ -148,7 +145,6 @@ class SignUpScreen extends StatelessWidget {
         top: 15.0,
         left: 30.0,
         right: 20.0,
-        // right: 270.0,
       ),
       child: TextFormField(
         controller: model.idCardController,
@@ -179,7 +175,6 @@ class SignUpScreen extends StatelessWidget {
         top: 15.0,
         left: 30.0,
         right: 20.0,
-        // right: 270.0,
       ),
       child: GestureDetector(
         onTap: () {
@@ -301,7 +296,6 @@ class SignUpScreen extends StatelessWidget {
         top: 15.0,
         left: 30.0,
         right: 20.0,
-        // right: 270.0,
       ),
       child: TextFormField(
         controller: model.emailController,
