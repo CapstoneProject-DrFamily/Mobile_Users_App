@@ -13,43 +13,43 @@ class DoctorDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<DoctorDetailViewModel>(
       builder: (context, child, model) {
-        return Scaffold(
-          backgroundColor: Colors.grey.shade300,
-          body: SingleChildScrollView(
-            child: Stack(
-              children: [
-                _buildBody(context, model),
-                Positioned(
-                  top: 0.0,
-                  left: 0.0,
-                  right: 0.0,
-                  child: AppBar(
-                    title: Text(''), // You can add title here
-                    leading: new IconButton(
-                      icon: new Icon(Icons.arrow_back_ios, color: Colors.white),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                    actions: <Widget>[
-                      IconButton(
-                          icon: Icon(Icons.arrow_forward_ios,
-                              color: Colors.white),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TimeLineExamineScreen(),
-                              ),
-                            );
-                          }),
+        return FutureBuilder(
+          future: model.getDoctorDetail(id),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Scaffold(
+                bottomNavigationBar: _buildSaveButtom(),
+                backgroundColor: Colors.grey.shade300,
+                body: SingleChildScrollView(
+                  child: Stack(
+                    children: [
+                      _buildBody(context, model),
+                      Positioned(
+                        top: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                        child: AppBar(
+                          title: Text(''), // You can add title here
+                          leading: new IconButton(
+                            icon: new Icon(Icons.arrow_back_ios,
+                                color: Colors.white),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                          backgroundColor: Colors.blue
+                              .withOpacity(0), //You can make this transparent
+                          elevation: 0.0, //No shadow
+                        ),
+                      ),
                     ],
-                    backgroundColor: Colors.blue
-                        .withOpacity(0), //You can make this transparent
-                    elevation: 0.0, //No shadow
                   ),
                 ),
-              ],
-            ),
-          ),
+              );
+            } else {
+              return Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+          },
         );
       },
     );
@@ -57,201 +57,210 @@ class DoctorDetailScreen extends StatelessWidget {
 
   Container _buildBody(BuildContext context, DoctorDetailViewModel model) {
     return Container(
-      child: FutureBuilder(
-          future: model.loadDoctor(id),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: Text("Error"),
-                );
-              } else {
-                return Stack(
+      child: Stack(
+        children: <Widget>[
+          SizedBox(
+            height: 250,
+            width: double.infinity,
+            child: Image.asset(
+              DR_DETAIL_BACKGROUND,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(15, 200, 15, 15),
+            child: Column(
+              children: <Widget>[
+                Stack(
                   children: <Widget>[
-                    SizedBox(
-                      height: 250,
-                      width: double.infinity,
-                      child: Image.asset(
-                        DR_DETAIL_BACKGROUND,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(15, 200, 15, 15),
+                      padding: EdgeInsets.all(15),
+                      margin: EdgeInsets.only(top: 15),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(0.5),
+                      ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Stack(
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.all(15),
-                                margin: EdgeInsets.only(top: 15),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(0.5),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(left: 95),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Center(
-                                            child: Text(
-                                              //Get dr name
-                                              model.doctor.name,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 18),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Center(
-                                            child: Text(
-                                              //Get dr name
-                                              model.doctor.speciality,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 16),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Column(
-                                            children: <Widget>[
-                                              Text(
-                                                  model.doctor.year.toString() +
-                                                      " years"),
-                                              Text("Experiences"),
-                                            ],
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            children: <Widget>[
-                                              Text("800"),
-                                              Text("Reviews"),
-                                            ],
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            children: <Widget>[
-                                              Text(model.doctor.rating
-                                                  .toString()),
-                                              Text("Rating"),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 80,
-                                height: 80,
-                                margin: EdgeInsets.only(left: 15),
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(0, 0),
-                                      blurRadius: 10,
-                                      color: Colors.black.withOpacity(0.15),
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      model.doctor.image,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
                           Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
+                            margin: EdgeInsets.only(left: 95),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                ListTile(
-                                  title: Text("Doctor Information"),
-                                ),
-                                ListTile(
-                                  title: Text("Specialties"),
-                                  subtitle: Text(model.doctor.speciality),
-                                  leading: SizedBox(
-                                    height: 40,
-                                    width: 30,
-                                    child: Image.asset(
-                                      SPECIALTIES_ICON,
-                                      fit: BoxFit.cover,
-                                    ),
+                                Center(
+                                  child: Text(
+                                    //Get dr name
+                                    model.doctor.doctorName,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 18),
                                   ),
                                 ),
-                                ListTile(
-                                  title: Text("Schools"),
-                                  subtitle: Text(model.doctor.schoolStudy),
-                                  leading: SizedBox(
-                                    height: 40,
-                                    width: 30,
-                                    child: Image.asset(
-                                      EDUCATION_ICON,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                                SizedBox(
+                                  height: 5,
                                 ),
-                                ListTile(
-                                  title: Text("Degrees"),
-                                  subtitle: Text(model.doctor.degree),
-                                  leading: SizedBox(
-                                    height: 40,
-                                    width: 30,
-                                    child: Image.asset(
-                                      DEGREE_ICON,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Text("Description"),
-                                  subtitle: Text(model.doctor.description),
-                                  leading: SizedBox(
-                                    height: 40,
-                                    width: 30,
-                                    child: Image.asset(
-                                      DESCRIPTION_ICON,
-                                      fit: BoxFit.cover,
-                                    ),
+                                Center(
+                                  child: Text(
+                                    //Get dr name
+                                    model.doctor.doctorSpecialty,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 16),
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(model.doctor.doctorExperience),
+                                    Text("Experiences"),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: <Widget>[
+                                    Text("800"),
+                                    Text("Reviews"),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: <Widget>[
+                                    Text("4.0"),
+                                    Text("Rating"),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
+                    Container(
+                      width: 80,
+                      height: 80,
+                      margin: EdgeInsets.only(left: 15),
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 0),
+                            blurRadius: 10,
+                            color: Colors.black.withOpacity(0.15),
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            model.doctor.doctorImage,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   ],
-                );
-              }
-            }
-          }),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text("Doctor Information"),
+                      ),
+                      ListTile(
+                        title: Text("Specialties"),
+                        subtitle: Text(model.doctor.doctorSpecialty),
+                        leading: SizedBox(
+                          height: 40,
+                          width: 30,
+                          child: Image.asset(
+                            SPECIALTIES_ICON,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        title: Text("Schools"),
+                        subtitle: Text(model.doctor.doctorSchool),
+                        leading: SizedBox(
+                          height: 40,
+                          width: 30,
+                          child: Image.asset(
+                            EDUCATION_ICON,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        title: Text("Degrees"),
+                        subtitle: Text(model.doctor.doctorDegree),
+                        leading: SizedBox(
+                          height: 40,
+                          width: 30,
+                          child: Image.asset(
+                            DEGREE_ICON,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        title: Text("Description"),
+                        subtitle: Text(model.doctor.doctorDescription),
+                        leading: SizedBox(
+                          height: 40,
+                          width: 30,
+                          child: Image.asset(
+                            DESCRIPTION_ICON,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  GestureDetector _buildSaveButtom() {
+    return GestureDetector(
+      onTap: () {
+        print('save');
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Container(
+          width: double.infinity,
+          height: 40,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            color: Colors.blue[400],
+          ),
+          child: Center(
+            child: Text(
+              "Confirm Booking",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

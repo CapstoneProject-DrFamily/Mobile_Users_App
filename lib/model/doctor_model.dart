@@ -1,6 +1,4 @@
-import 'package:firebase_database/firebase_database.dart';
-
-class Doctor {
+class DoctorModel {
   int id, year;
   String name, speciality, image;
   double latitude, longitude, distance;
@@ -8,7 +6,7 @@ class Doctor {
   double rating;
   String description, schoolStudy, degree;
 
-  Doctor(
+  DoctorModel(
       {this.id,
       this.name,
       this.speciality,
@@ -18,7 +16,7 @@ class Doctor {
       this.longitude,
       this.distance});
 
-  Doctor.fullInfo(
+  DoctorModel.fullInfo(
       {this.id,
       this.name,
       this.speciality,
