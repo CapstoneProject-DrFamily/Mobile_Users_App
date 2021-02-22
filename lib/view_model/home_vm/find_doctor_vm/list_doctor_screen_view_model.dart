@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:drFamily_app/model/doctor.dart';
+import 'package:drFamily_app/model/doctor_model.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -9,8 +9,8 @@ import 'package:geolocator/geolocator.dart';
 class ListDoctorScreenViewModel extends BaseModel {
   DatabaseReference _doctorRequest;
 
-  List<Doctor> _nearByDoctorList = [];
-  List<Doctor> get nearByDoctorList => _nearByDoctorList;
+  List<DoctorModel> _nearByDoctorList = [];
+  List<DoctorModel> get nearByDoctorList => _nearByDoctorList;
 
   UserCurrentAddress _pickUpInfo;
   UserCurrentAddress get pickUpInfo => _pickUpInfo;
@@ -29,7 +29,7 @@ class ListDoctorScreenViewModel extends BaseModel {
     getListDoctorNearby();
   }
 
-  Future<List<Doctor>> getListDoctorNearby() async {
+  Future<List<DoctorModel>> getListDoctorNearby() async {
     _doctorRequest = await FirebaseDatabase.instance
         .reference()
         .child("Doctor Request")
@@ -44,7 +44,7 @@ class ListDoctorScreenViewModel extends BaseModel {
             double.parse(values['pickup']['latitude']),
             double.parse(values['pickup']['longtitude']));
         if ((distance / 1000) <= 5) {
-          Doctor tDoctor = Doctor(
+          DoctorModel tDoctor = DoctorModel(
             id: int.parse(values['doctor_id']),
             image: values['doctor_image'],
             name: values['doctor_name'],

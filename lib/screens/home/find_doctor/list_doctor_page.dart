@@ -19,6 +19,7 @@ class ListDoctorPage extends StatelessWidget {
       builder: (context, child, model) {
         return StatefulWrapper(
           onInit: () {
+            print("create List");
             model.init(pickUpInfo);
           },
           child: Scaffold(
@@ -70,16 +71,16 @@ class ListDoctorPage extends StatelessWidget {
                                       (BuildContext context, int index) {
                                     return GestureDetector(
                                       onTap: () {
-                                        // Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) =>
-                                        //         DoctorDetailScreen(
-                                        //             id: model
-                                        //                 .nearByDoctorList[index]
-                                        //                 .id),
-                                        //   ),
-                                        // );
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DoctorDetailScreen(
+                                                    id: model
+                                                        .nearByDoctorList[index]
+                                                        .id),
+                                          ),
+                                        );
                                         print(model.nearByDoctorList[index].id);
                                       },
                                       child: Padding(

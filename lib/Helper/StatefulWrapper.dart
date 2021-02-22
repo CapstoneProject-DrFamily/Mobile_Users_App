@@ -18,6 +18,11 @@ class _StatefulWrapperState extends State<StatefulWrapper> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return widget.child;
   }
