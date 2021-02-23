@@ -14,7 +14,7 @@ class DoctorRepo extends IDoctorRepo {
   Future<DoctorDetailModel> getDoctor(int doctorId) async {
     print("in API Doctor");
     String urlAPI = APIHelper.URI_PREFIX_API;
-    print("in" + doctorId.toString());
+    print("in " + doctorId.toString());
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
@@ -26,10 +26,8 @@ class DoctorRepo extends IDoctorRepo {
     DoctorDetailModel doctorDetail;
 
     if (response.statusCode == 200) {
-      List<DoctorDetailModel> listDoctor = (json.decode(response.body) as List)
-          .map((data) => DoctorDetailModel.fromJson(data))
-          .toList();
-      doctorDetail = listDoctor[0];
+      Map<String, dynamic> sc = json.decode(response.body);
+      doctorDetail = DoctorDetailModel.fromJson(sc);
       return doctorDetail;
     } else
       return null;

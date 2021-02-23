@@ -1,12 +1,16 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
 import 'package:drFamily_app/screens/landing_page/home_page.dart';
 import 'package:drFamily_app/screens/landing_page/setting.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingPageViewModel extends BaseModel {
+  FirebaseUser _firebaseuser;
+
   PageController _pageController = PageController();
 
   int _currentIndex = 0;
@@ -27,6 +31,15 @@ class LandingPageViewModel extends BaseModel {
     String phone = prefs.getString("usPhone");
     int profileID = prefs.getInt("usProfileID");
     int userID = prefs.getInt("usAccountID");
+
+    _firebaseuser = await FirebaseAuth.instance.currentUser();
+    String userId = _firebaseuser.uid;
+    PushNotifycationService pushNotifycationService = PushNotifycationService();
+
+    await pushNotifycationService.initialize();
+    String tokenNotifycation = await pushNotifycationService.getToken();
+
+    prefs.setString("usNotiToken", tokenNotifycation);
 
     print("Phone: " +
         phone +

@@ -1,4 +1,3 @@
-import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/doctor_detail_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
@@ -6,19 +5,21 @@ import 'package:flutter/material.dart';
 
 class DoctorDetailScreen extends StatelessWidget {
   final int id;
+  final String token;
 
-  DoctorDetailScreen({Key key, @required this.id}) : super(key: key);
+  DoctorDetailScreen({Key key, @required this.id, @required this.token})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BaseView<DoctorDetailViewModel>(
       builder: (context, child, model) {
         return FutureBuilder(
-          future: model.getDoctorDetail(id),
+          future: model.getDoctorDetail(id, token),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Scaffold(
-                bottomNavigationBar: _buildSaveButtom(),
+                bottomNavigationBar: _buildSaveButtom(model),
                 backgroundColor: Colors.grey.shade300,
                 body: SingleChildScrollView(
                   child: Stack(
@@ -118,7 +119,8 @@ class DoctorDetailScreen extends StatelessWidget {
                               Expanded(
                                 child: Column(
                                   children: <Widget>[
-                                    Text(model.doctor.doctorExperience),
+                                    Text(model.doctor.doctorExperience +
+                                        " Year"),
                                     Text("Experiences"),
                                   ],
                                 ),
@@ -239,10 +241,10 @@ class DoctorDetailScreen extends StatelessWidget {
     );
   }
 
-  GestureDetector _buildSaveButtom() {
+  GestureDetector _buildSaveButtom(DoctorDetailViewModel model) {
     return GestureDetector(
       onTap: () {
-        print('save');
+        model.confirmBooking();
       },
       child: Padding(
         padding: const EdgeInsets.all(4.0),

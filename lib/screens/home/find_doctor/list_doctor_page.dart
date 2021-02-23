@@ -4,7 +4,6 @@ import 'package:drFamily_app/screens/doctor_detail_screen.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/list_doctor_screen_view_model.dart';
 import 'package:drFamily_app/widgets/common/not_found_screen.dart';
-import 'package:drFamily_app/widgets/common/rating_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
@@ -76,9 +75,12 @@ class ListDoctorPage extends StatelessWidget {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 DoctorDetailScreen(
-                                                    id: model
-                                                        .nearByDoctorList[index]
-                                                        .id),
+                                              id: model
+                                                  .nearByDoctorList[index].id,
+                                              token: model
+                                                  .nearByDoctorList[index]
+                                                  .notitoken,
+                                            ),
                                           ),
                                         );
                                         print(model.nearByDoctorList[index].id);
