@@ -45,6 +45,7 @@ class ListDoctorScreenViewModel extends BaseModel {
             double.parse(values['pickup']['longtitude']));
         if ((distance / 1000) <= 5) {
           DoctorModel tDoctor = DoctorModel(
+            notitoken: values['token'],
             id: int.parse(values['doctor_id']),
             image: values['doctor_image'],
             name: values['doctor_name'],

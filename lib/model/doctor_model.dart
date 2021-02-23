@@ -1,6 +1,6 @@
 class DoctorModel {
   int id, year;
-  String name, speciality, image;
+  String name, speciality, image, notitoken;
   double latitude, longitude, distance;
 
   double rating;
@@ -14,7 +14,8 @@ class DoctorModel {
       this.image,
       this.latitude,
       this.longitude,
-      this.distance});
+      this.distance,
+      this.notitoken});
 
   DoctorModel.fullInfo(
       {this.id,
