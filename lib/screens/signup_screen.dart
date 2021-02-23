@@ -85,10 +85,9 @@ class SignUpScreen extends StatelessWidget {
         alignment: Alignment.center,
         child: CircleAvatar(
           radius: 80.0,
-          //AssetImage(model.defaultImage)
           backgroundImage: (model.image != null
               ? FileImage(model.image)
-              : AssetImage(model.defaultImage)),
+              : NetworkImage(model.defaultImage)),
           child: Align(
             alignment: Alignment.bottomRight,
             child: CircleAvatar(
