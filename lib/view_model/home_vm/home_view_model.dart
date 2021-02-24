@@ -2,7 +2,6 @@ import 'dart:ffi';
 
 import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeViewModel extends BaseModel {
@@ -13,9 +12,12 @@ class HomeViewModel extends BaseModel {
     print("init home model");
   }
 
-  void choosePatient(int patientId) {
+  Future<void> choosePatient(int patientId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     print(patientId);
     _patientID = patientId;
+    prefs.setInt("usPatientID", _patientID);
     notifyListeners();
   }
 }
