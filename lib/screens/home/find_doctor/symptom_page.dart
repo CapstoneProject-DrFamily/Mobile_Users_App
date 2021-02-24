@@ -154,7 +154,8 @@ class SymptomScreen extends StatelessWidget {
                                               .symptomsDisplay[indexFather]
                                               .expandedValue
                                               .keys
-                                              .toList()[index])
+                                              .toList()[index]
+                                              .toString())
                                           ? EvaIcons.checkmarkCircle2
                                           : EvaIcons.checkmarkCircle2Outline,
                                       color: Color(0xff0d47a1)),

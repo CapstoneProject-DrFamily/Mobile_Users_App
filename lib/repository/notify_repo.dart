@@ -34,9 +34,9 @@ class NotifyRepo extends INotifyRepo {
           },
           'priority': 'high',
           'data': <String, dynamic>{
-            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
             'transactionId': transactionID,
-            'status': 'done'
+            'status': 'waiting',
+            'type': 'booking',
           },
           'to': tokenID,
         },

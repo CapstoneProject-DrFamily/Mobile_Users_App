@@ -10,4 +10,5 @@ class APIHelper {
   static const String CREATE_HEALTHRECORD_API =
       '$PREFIX_API/api/v1/HealthRecords';
   static const String CREATE_PATIENT_API = '$PREFIX_API/api/v1/Patients';
+  static const String TRANSACTION_API = '$PREFIX_API/api/v1/Transactions';
 }
