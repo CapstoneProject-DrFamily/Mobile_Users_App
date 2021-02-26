@@ -4,6 +4,7 @@ import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/map_page_view_mod
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/specialty_screen_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/symptom_page_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/time_line_examine_view_model.dart';
+import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/waiting_booking_doctor_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/home_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/pop_up_choose_patient_view_model.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/landing_page_view_model.dart';
@@ -46,4 +47,6 @@ void setupLocator() {
   locator.registerFactory<HealthRecordViewModel>(() => HealthRecordViewModel());
   locator.registerFactory<SettingViewModel>(() => SettingViewModel());
   locator.registerFactory<SignUpViewModel>(() => SignUpViewModel());
+  locator.registerFactory<WaitingBookingDoctorViewModel>(
+      () => WaitingBookingDoctorViewModel());
 }
