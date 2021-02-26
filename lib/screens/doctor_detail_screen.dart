@@ -19,7 +19,7 @@ class DoctorDetailScreen extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Scaffold(
-                bottomNavigationBar: _buildSaveButtom(model),
+                bottomNavigationBar: _buildSaveButtom(model, context),
                 backgroundColor: Colors.grey.shade300,
                 body: SingleChildScrollView(
                   child: Stack(
@@ -241,10 +241,11 @@ class DoctorDetailScreen extends StatelessWidget {
     );
   }
 
-  GestureDetector _buildSaveButtom(DoctorDetailViewModel model) {
+  GestureDetector _buildSaveButtom(
+      DoctorDetailViewModel model, BuildContext context) {
     return GestureDetector(
       onTap: () {
-        model.confirmBooking();
+        model.confirmBooking(context);
       },
       child: Padding(
         padding: const EdgeInsets.all(4.0),

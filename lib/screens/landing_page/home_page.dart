@@ -231,6 +231,7 @@ class HomeScreen extends StatelessWidget {
                     TextButton(
                       child: Text('Next'),
                       onPressed: () async {
+                        homeViewModel.initTransaction();
                         // pop out current popup
                         Navigator.of(dialogContex).pop();
                         // wait 0.5s to change popup

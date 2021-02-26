@@ -1,11 +1,13 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
+import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/landing_page/home_page.dart';
 import 'package:drFamily_app/screens/landing_page/setting.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingPageViewModel extends BaseModel {
@@ -23,7 +25,11 @@ class LandingPageViewModel extends BaseModel {
   ];
 
   LandingPageViewModel() {
-    init();
+    if (PushNotifycationService.usStatus == "Analysis Symptom Changing") {
+      changingPage();
+    } else {
+      init();
+    }
   }
 
   Future<void> init() async {
@@ -81,4 +87,9 @@ class LandingPageViewModel extends BaseModel {
   int get currentIndex => _currentIndex;
   PageController get pageController => _pageController;
   List<BottomNavyBarItem> get listItem => _listItem;
+
+  Future<void> changingPage() async {
+    await Future.delayed(Duration(milliseconds: 500));
+    Get.to(() => TimeLineExamineScreen());
+  }
 }

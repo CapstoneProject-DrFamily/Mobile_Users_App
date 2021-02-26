@@ -4,7 +4,10 @@ import 'package:drFamily_app/model/doctor_detail_model.dart';
 import 'package:drFamily_app/repository/doctor_repo.dart';
 import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
+import 'package:drFamily_app/screens/home/find_doctor/waiting_booking_doctor_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DoctorDetailViewModel extends BaseModel {
@@ -29,8 +32,41 @@ class DoctorDetailViewModel extends BaseModel {
     print(_tokenNotiDoctor);
   }
 
-  Future<void> confirmBooking() async {
+  Future<void> confirmBooking(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var usTransactionStatus = prefs.getString("usTransactionStatus");
+    var usNotiToken = prefs.getString("usNotiToken");
+    String transactionID;
+    print('transactionStatus $usTransactionStatus');
+
+    if (usTransactionStatus.endsWith("waiting")) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => WaitingBookingDoctorScreen(
+                  token: _tokenNotiDoctor,
+                )),
+      );
+      transactionID = prefs.getString("usTransaction");
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => WaitingBookingDoctorScreen(
+                  token: _tokenNotiDoctor,
+                )),
+      );
+      transactionID = await newTransaction(prefs);
+    }
+
+    print(transactionID);
+
+    await _notifyRepo.bookDoctor(_tokenNotiDoctor, transactionID, usNotiToken);
+  }
+
+  Future<String> newTransaction(SharedPreferences prefs) async {
+    prefs.setString("usTransactionStatus", "waiting");
+
     var usServiceID = prefs.getInt("usServiceID");
     var usListSymptomID = prefs.getStringList("usListSymptomID");
     var usPatientID = prefs.getInt("usPatientID");
@@ -55,11 +91,11 @@ class DoctorDetailViewModel extends BaseModel {
 
     print("transaction: " + transaction);
 
-    int transactionID = await _transactionRepo.addTransaction(transaction);
+    String transactionID = await _transactionRepo.addTransaction(transaction);
 
-    print(transactionID);
+    prefs.setString("usTransaction", transactionID);
 
-    await _notifyRepo.bookDoctor(_tokenNotiDoctor, transactionID);
+    return transactionID;
   }
 }
 

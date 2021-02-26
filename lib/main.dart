@@ -3,6 +3,7 @@ import 'package:drFamily_app/screens/login/login_page.dart';
 import 'package:drFamily_app/screens/share/service_locator.dart';
 import 'package:drFamily_app/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
@@ -14,7 +15,7 @@ Future<void> main() async {
   await setupLocator();
 
   runApp(
-    MaterialApp(
+    GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: profileID == null ? LoginScreen() : LandingScreen(),
       // home: SignUpScreen(),

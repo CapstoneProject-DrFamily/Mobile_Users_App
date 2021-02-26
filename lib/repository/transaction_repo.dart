@@ -5,13 +5,13 @@ import 'package:drFamily_app/Helper/api_helper.dart';
 import 'package:http/http.dart' as http;
 
 abstract class ITransactionRepo {
-  Future<int> addTransaction(String transaction);
+  Future<String> addTransaction(String transaction);
 }
 
 class TransactionRepo extends ITransactionRepo {
   @override
-  Future<int> addTransaction(String transaction) async {
-    int transactionID;
+  Future<String> addTransaction(String transaction) async {
+    String transactionID;
     String urlAPI = APIHelper.TRANSACTION_API;
 
     Map<String, String> header = {
@@ -23,7 +23,7 @@ class TransactionRepo extends ITransactionRepo {
 
     print(response.statusCode);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       String jSonData = response.body;
       var decodeData = jsonDecode(jSonData);
       transactionID = decodeData["transactionId"];

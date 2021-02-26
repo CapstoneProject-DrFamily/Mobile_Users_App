@@ -5,6 +5,7 @@ import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dar
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ListDoctorScreenViewModel extends BaseModel {
   DatabaseReference _doctorRequest;

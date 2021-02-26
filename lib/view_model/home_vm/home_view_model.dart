@@ -14,10 +14,14 @@ class HomeViewModel extends BaseModel {
 
   Future<void> choosePatient(int patientId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
     print(patientId);
     _patientID = patientId;
     prefs.setInt("usPatientID", _patientID);
     notifyListeners();
+  }
+
+  Future<void> initTransaction() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("usTransactionStatus", "init");
   }
 }
