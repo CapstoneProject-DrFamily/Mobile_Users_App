@@ -41,8 +41,6 @@ class ProfileScreenViewModel extends BaseModel {
   String _height = "";
   String _weight = "";
   String _selectGender;
-  String _selectHeight;
-  String _selectWeight;
 
   int _gender = 0;
   List _months = [
@@ -97,8 +95,6 @@ class ProfileScreenViewModel extends BaseModel {
   String get height => _height;
   String get weight => _weight;
   String get selectGender => _selectGender;
-  String get selectHeight => _selectHeight;
-  String get selectWeight => _selectWeight;
 
   int get gender => _gender;
 
@@ -273,14 +269,12 @@ class ProfileScreenViewModel extends BaseModel {
   void changeHeight(List<dynamic> value) {
     _heightController.text = value[0] + value[1] + value[2];
     _height = value[0] + value[1] + value[2];
-    _selectHeight = value[0] + value[1];
     notifyListeners();
   }
 
   void changeWeight(List<dynamic> value) {
     _weightController.text = value[0] + value[1] + value[2] + value[3];
-    _weight = value[0] + value[2];
-    _selectWeight = value[0] + value[1] + value[2];
+    _weight = value[0] + value[1] + value[2] + value[3];
     notifyListeners();
   }
 
@@ -329,10 +323,13 @@ class ProfileScreenViewModel extends BaseModel {
       _check = await _profileRepo.updateBasicInfo(updateBasicInfoJson);
 
       if (_check == true) {
+        print("height: " + height);
+        print("weight: " + weight);
+
         _additionInfoModel = new AdditionInfoModel(
             patientId: patientID,
-            height: double.parse(selectHeight),
-            weight: double.parse(selectWeight),
+            height: double.parse(height.substring(0, 3)),
+            weight: double.parse(weight.substring(0, 4)),
             bloodType: bloodTpeController.text,
             profileId: profileID,
             recordId: recordId,
