@@ -466,6 +466,7 @@ class ProfileScreen extends StatelessWidget {
       child: TextFormField(
         keyboardType: TextInputType.phone,
         controller: model.phoneNumController,
+        readOnly: true,
         // onChanged: (value) => model.changePhoneNum(value),
         style: GoogleFonts.varelaRound(
           fontWeight: FontWeight.normal,
@@ -492,12 +493,6 @@ class ProfileScreen extends StatelessWidget {
           fillColor: Colors.white,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-          suffixIcon: model.phoneNumController.text.isEmpty
-              ? null
-              : InkWell(
-                  onTap: () => model.phoneNumController.clear(),
-                  child: Icon(Icons.clear),
-                ),
         ),
       ),
     );
