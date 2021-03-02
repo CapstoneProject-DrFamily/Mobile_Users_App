@@ -1,8 +1,10 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
+import 'package:drFamily_app/model/home/landing_model.dart';
+import 'package:drFamily_app/repository/langding/landing_repo.dart';
 import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/landing_page/home_page.dart';
-import 'package:drFamily_app/screens/landing_page/setting.dart';
+import 'package:drFamily_app/screens/setting/setting.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +18,13 @@ class LandingPageViewModel extends BaseModel {
   PageController _pageController = PageController();
 
   int _currentIndex = 0;
+
+  final ILangdingRepo _langdingRepo = LangdingRepo();
+  LandingModel _landingModel;
+
+  String _fullName, _img;
+  String get fullName => _fullName;
+  String get img => _img;
 
   final List<Widget> page = [
     HomeScreen(),
@@ -46,6 +55,13 @@ class LandingPageViewModel extends BaseModel {
     String tokenNotifycation = await pushNotifycationService.getToken();
 
     prefs.setString("usNotiToken", tokenNotifycation);
+
+    _landingModel = await _langdingRepo.getPatientProfile(profileID.toString());
+    _fullName = _landingModel.fullName;
+    _img = _landingModel.image;
+
+    prefs.setString("usFullName", fullName);
+    prefs.setString("usImg", img);
 
     print("Phone: " +
         phone +

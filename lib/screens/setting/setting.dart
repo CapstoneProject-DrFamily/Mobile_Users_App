@@ -15,7 +15,13 @@ class SettingPage extends StatelessWidget {
           child: Scaffold(
             body: Column(
               children: [
-                _buildHeader(context),
+                model.isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                        ),
+                      )
+                    : _buildHeader(context, model),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -52,28 +58,6 @@ class SettingPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      color: Colors.white,
-                      child: ListTile(
-                        leading: Icon(Icons.people),
-                        title: Text("Dependent"),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                      ),
-                    ),
-                    Divider(
-                      height: 2,
-                    ),
-                    Container(
-                      color: Colors.white,
-                      child: ListTile(
-                        leading: Icon(Icons.people),
-                        title: Text("Dependent"),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                      ),
-                    ),
-                    SizedBox(
                       height: 50,
                     ),
                     Row(
@@ -106,7 +90,7 @@ class SettingPage extends StatelessWidget {
     );
   }
 
-  Container _buildHeader(BuildContext context) {
+  Container _buildHeader(BuildContext context, SettingViewModel model) {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.2,
@@ -126,14 +110,14 @@ class SettingPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          _buildLeftSideHeader(),
-          _buildRightSideHeader(context),
+          _buildLeftSideHeader(context, model),
+          _buildRightSideHeader(context, model),
         ],
       ),
     );
   }
 
-  Expanded _buildRightSideHeader(BuildContext context) {
+  Expanded _buildRightSideHeader(BuildContext context, SettingViewModel model) {
     return Expanded(
       flex: 4,
       child: Container(
@@ -142,7 +126,7 @@ class SettingPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Hoang Duc',
+              model.fullName,
               style: TextStyle(color: Colors.blue[900], fontSize: 28),
             ),
             SizedBox(
@@ -189,22 +173,13 @@ class SettingPage extends StatelessWidget {
     );
   }
 
-  Expanded _buildLeftSideHeader() {
+  Expanded _buildLeftSideHeader(BuildContext context, SettingViewModel model) {
     return Expanded(
-      child: CircleAvatar(
-        radius: 50,
-        backgroundColor: Colors.blue,
-        child: ClipOval(
-          child: SizedBox(
-            width: 180,
-            height: 180,
-            child: Center(
-              child: Text(
-                'HD',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
+      child: Align(
+        alignment: Alignment.center,
+        child: CircleAvatar(
+          radius: 50.0,
+          backgroundImage: NetworkImage(model.img),
         ),
       ),
       flex: 2,
