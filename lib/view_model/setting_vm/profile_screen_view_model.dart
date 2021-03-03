@@ -19,8 +19,8 @@ class ProfileScreenViewModel extends BaseModel {
   int profileID, patientID, recordId, accountId;
   String relationship;
 
-  File _newImage;
-  File get newImage => _newImage;
+  File _image;
+  File get image => _image;
 
   TextEditingController _fullNameController = TextEditingController();
   TextEditingController _dobController = TextEditingController();
@@ -280,16 +280,16 @@ class ProfileScreenViewModel extends BaseModel {
 
   Future getUserImage() async {
     var pickedImage = await ImagePicker().getImage(source: ImageSource.gallery);
-    _newImage = File(pickedImage.path);
+    _image = File(pickedImage.path);
     notifyListeners();
   }
 
   Future<String> upLoadImage() async {
-    String basename = path.basename(_newImage.path);
+    String basename = path.basename(_image.path);
     // StorageReference reference = FirebaseStorage.instance.ref().child(basename);
     StorageReference reference =
         FirebaseStorage.instance.ref().child("UserStorage/" + basename);
-    StorageUploadTask uploadTask = reference.putFile(_newImage);
+    StorageUploadTask uploadTask = reference.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     String url = await reference.getDownloadURL();
     return url;
@@ -300,12 +300,16 @@ class ProfileScreenViewModel extends BaseModel {
     if (_check = true) {
       String uploadImage;
 
-      if (_newImage != null) {
+      if (_image != null) {
         var url = await upLoadImage();
         uploadImage = url.toString();
       } else {
         uploadImage = currentImage;
       }
+
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("usFullName", fullNameController.text);
+      prefs.setString("usImg", uploadImage);
 
       _profileModel = new ProfileModel(
           profileId: profileID,

@@ -1,4 +1,5 @@
 import 'package:drFamily_app/screens/login/login_page.dart';
+import 'package:drFamily_app/screens/setting/profile_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,15 @@ class SettingViewModel extends BaseModel {
 
     this._isLoading = false;
     notifyListeners();
+  }
+
+  void seeDetail(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProfileScreen(),
+      ),
+    ).then((value) => getPatientProfile());
   }
 
   Future<void> signOut(BuildContext context) async {

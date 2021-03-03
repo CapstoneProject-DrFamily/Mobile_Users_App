@@ -193,7 +193,7 @@ class ProfileScreen extends StatelessWidget {
                               SizedBox(
                                 height: 30.0,
                               ),
-                              _buildSaveButtom(context, model),
+                              _buildSaveButton(context, model),
                             ],
                           ),
                         ),
@@ -780,9 +780,9 @@ class ProfileScreen extends StatelessWidget {
               child: CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.white,
-                backgroundImage: NetworkImage(model.currentImage == ""
-                    ? 'https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg'
-                    : model.currentImage),
+                backgroundImage: (model.image != null
+                    ? FileImage(model.image)
+                    : NetworkImage(model.currentImage)),
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: CircleAvatar(
@@ -808,7 +808,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  GestureDetector _buildSaveButtom(
+  GestureDetector _buildSaveButton(
       BuildContext context, ProfileScreenViewModel model) {
     return GestureDetector(
       onTap: () async {

@@ -134,12 +134,7 @@ class SettingPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfileScreen(),
-                  ),
-                );
+                model.seeDetail(context);
               },
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.3,
