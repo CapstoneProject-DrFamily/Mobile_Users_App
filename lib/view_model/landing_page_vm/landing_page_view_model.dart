@@ -1,11 +1,12 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
+import 'package:drFamily_app/screens/landing_page/home_page.dart';
+import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
 import 'package:drFamily_app/model/home/landing_model.dart';
 import 'package:drFamily_app/repository/langding/landing_repo.dart';
-import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
-import 'package:drFamily_app/screens/landing_page/home_page.dart';
 import 'package:drFamily_app/screens/setting/setting.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/view_model/landing_page_vm/map_tracking_screen_view_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class LandingPageViewModel extends BaseModel {
   ];
 
   LandingPageViewModel() {
-    if (PushNotifycationService.usStatus == "Analysis Symptom Changing") {
+    if (PushNotifycationService.usStatus.contains("Changing")) {
       changingPage();
     } else {
       init();
@@ -42,6 +43,7 @@ class LandingPageViewModel extends BaseModel {
   }
 
   Future<void> init() async {
+    DateTime.now().add(Duration(seconds: 1689));
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String phone = prefs.getString("usPhone");
     int profileID = prefs.getInt("usProfileID");
@@ -105,7 +107,12 @@ class LandingPageViewModel extends BaseModel {
   List<BottomNavyBarItem> get listItem => _listItem;
 
   Future<void> changingPage() async {
+    String transactionId = PushNotifycationService.usTransactionID;
     await Future.delayed(Duration(milliseconds: 500));
-    Get.to(() => TimeLineExamineScreen());
+    Get.to(() => MapTrackingScreen(
+          model: MapTrackingScreenViewModel(transactionId),
+        )).then((value) {
+      notifyListeners();
+    });
   }
 }
