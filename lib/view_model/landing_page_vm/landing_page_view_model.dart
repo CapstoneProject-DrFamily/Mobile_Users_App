@@ -1,16 +1,10 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
-<<<<<<< HEAD
 import 'package:drFamily_app/screens/landing_page/home_page.dart';
 import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
-import 'package:drFamily_app/screens/landing_page/setting.dart';
-=======
 import 'package:drFamily_app/model/home/landing_model.dart';
 import 'package:drFamily_app/repository/langding/landing_repo.dart';
-import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
-import 'package:drFamily_app/screens/landing_page/home_page.dart';
 import 'package:drFamily_app/screens/setting/setting.dart';
->>>>>>> 3da949fd69079ec69f98143ed85c905aa0637746
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/map_tracking_screen_view_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
