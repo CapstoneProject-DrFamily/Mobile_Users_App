@@ -3,9 +3,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PushNotifycationService {
-  static String usStatus;
+  static String usStatus = "";
+  static String usTransactionID = "";
 
   final FirebaseMessaging fcm = FirebaseMessaging();
 
@@ -20,8 +22,10 @@ class PushNotifycationService {
           if (status.endsWith('cancel')) {
             await cancelBooking();
           } else if (status.endsWith("accept")) {
-            usStatus = "Analysis Symptom Changing";
-            await acceptBooking();
+            usStatus = "Map Changing";
+            usTransactionID = transactionId;
+            String doctorFBId = message['data']['doctorFBId'];
+            await acceptBooking(doctorFBId);
             //accept
           }
           print('booking');
@@ -58,7 +62,10 @@ class PushNotifycationService {
     Get.back();
   }
 
-  Future<void> acceptBooking() async {
+  Future<void> acceptBooking(String doctorFBId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("doctorFBId", doctorFBId);
+
     Fluttertoast.showToast(
       msg: "Doctor have Accept your request",
       textColor: Colors.green,

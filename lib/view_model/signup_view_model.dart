@@ -54,9 +54,6 @@ class SignUpViewModel extends BaseModel {
   Validate _fullName = Validate(null, null);
   Validate _email = Validate(null, null);
   Validate _idCard = Validate(null, null);
-  // String _fullName;
-  // String _email;
-  // String _idCard;
   String _dob;
   String _gender;
   String _defaultImage = DEFAULT_IMG;
@@ -64,9 +61,6 @@ class SignUpViewModel extends BaseModel {
   Validate get fullName => _fullName;
   Validate get email => _email;
   Validate get idCard => _idCard;
-  // String get fullName => _fullName;
-  // String get email => _email;
-  // String get idCard => _idCard;
   String get dob => _dob;
   String get gender => _gender;
   String get defaultImage => _defaultImage;

@@ -44,7 +44,9 @@ class ListDoctorScreenViewModel extends BaseModel {
             _pickUpInfo.longtitude,
             double.parse(values['pickup']['latitude']),
             double.parse(values['pickup']['longtitude']));
-        if ((distance / 1000) <= 5) {
+        var doctorStatus = values['doctor_status'];
+
+        if ((distance / 1000) <= 5 && doctorStatus == "waiting") {
           DoctorModel tDoctor = DoctorModel(
             notitoken: values['token'],
             id: int.parse(values['doctor_id']),

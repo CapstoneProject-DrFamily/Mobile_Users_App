@@ -9,7 +9,7 @@ class LandingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<LandingPageViewModel>(
       builder: (context, child, model) {
-        if (PushNotifycationService.usStatus == "Analysis Symptom Changing") {
+        if (PushNotifycationService.usStatus.contains("Changing")) {
           return Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
