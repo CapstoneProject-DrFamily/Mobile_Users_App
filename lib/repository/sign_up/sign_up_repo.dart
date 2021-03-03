@@ -63,7 +63,7 @@ class SignUpRepo extends ISignUpRepo {
     formatPhone = phone.replaceFirst("0", "84");
 
     _userUpdateModel = new UserUpdateModel(
-        disable: 1,
+        disable: 0,
         updBy: phone,
         updDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
         accountId: accountId,
@@ -71,7 +71,7 @@ class SignUpRepo extends ISignUpRepo {
         password: null,
         roleId: 2,
         profileId: profileId,
-        waiting: 1);
+        waiting: 0);
     String updateUserJson = jsonEncode(_userUpdateModel.toJson());
     print("UpdUserJson: " + updateUserJson);
 
