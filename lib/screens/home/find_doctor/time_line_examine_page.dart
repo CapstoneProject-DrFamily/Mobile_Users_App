@@ -12,6 +12,17 @@ class TimeLineExamineScreen extends StatelessWidget {
     return BaseView<TimeLineExamineViewModel>(
       builder: (context, child, model) {
         return Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            centerTitle: true,
+            elevation: 0,
+            title: Text(''), // You can add title here
+            leading: new IconButton(
+              icon: new Icon(Icons.arrow_back_ios, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
           backgroundColor: Color(0xffF9F9F9),
           body: SingleChildScrollView(
             child: Container(
@@ -43,11 +54,13 @@ class TimeLineExamineScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           _buildMainText(),
-                          _buildTimeLine(),
+                          SizedBox(height: 20),
+                          _buildTimeLine(context, model),
                           InkWell(
                             onTap: () {
                               print('oke');
-                              FeedBackDialog().showCustomDialog(context);
+                              model.continueStep();
+                              // FeedBackDialog().showCustomDialog(context);
                             },
                             child: Container(
                               width: 100,
@@ -55,7 +68,7 @@ class TimeLineExamineScreen extends StatelessWidget {
                               color: Colors.blue,
                               child: Center(
                                 child: Text(
-                                  'Done',
+                                  'Next',
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
@@ -85,87 +98,97 @@ class TimeLineExamineScreen extends StatelessWidget {
     );
   }
 
-  Center _buildTimeLine() {
+  Center _buildTimeLine(BuildContext context, TimeLineExamineViewModel model) {
     return Center(
-      child: ListView(
-        shrinkWrap: true,
-        primary: false,
-        children: <Widget>[
-          TimelineTile(
-            alignment: TimelineAlign.manual,
-            lineXY: 0.1,
-            isFirst: true,
-            indicatorStyle: const IndicatorStyle(
-              width: 20,
-              color: Color(0xFF27AA69),
-              padding: EdgeInsets.all(6),
+      child: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView(
+          shrinkWrap: true,
+          primary: false,
+          children: <Widget>[
+            TimelineTile(
+              alignment: TimelineAlign.manual,
+              lineXY: 0.1,
+              isFirst: true,
+              indicatorStyle: IndicatorStyle(
+                width: 20,
+                color: model.firstStep,
+                padding: EdgeInsets.all(6),
+              ),
+              endChild: _RightChild(
+                disabled: model.firstStatus,
+                asset: TIME_LINE_1,
+                title: 'Analysis Symptom',
+                message: model.firstStepSubText,
+              ),
+              beforeLineStyle: LineStyle(
+                color: model.firstStepBeforeLine,
+              ),
             ),
-            endChild: const _RightChild(
-              asset: TIME_LINE_1,
-              title: 'Analysis Symptom',
-              message: 'Doctor has done analysis.',
+            TimelineTile(
+              alignment: TimelineAlign.manual,
+              lineXY: 0.1,
+              indicatorStyle: IndicatorStyle(
+                width: 20,
+                color: model.secondStep,
+                padding: EdgeInsets.all(6),
+              ),
+              endChild: _RightChild(
+                disabled: model.secondStatus,
+                asset: TIME_LINE_2,
+                title: 'Take Sample',
+                message: model.secondStepSubText,
+              ),
+              beforeLineStyle: LineStyle(
+                color: model.secondStepBeforeLine,
+              ),
+              afterLineStyle: LineStyle(
+                color: model.secondStepAfterLine,
+              ),
             ),
-            beforeLineStyle: const LineStyle(
-              color: Color(0xFF27AA69),
+            TimelineTile(
+              alignment: TimelineAlign.manual,
+              lineXY: 0.1,
+              indicatorStyle: IndicatorStyle(
+                width: 20,
+                color: model.thirdStep,
+                padding: EdgeInsets.all(6),
+              ),
+              endChild: _RightChild(
+                disabled: model.thirdStatus,
+                asset: TIME_LINE_3,
+                title: 'Diagnosis Processed',
+                message: model.thirdStepSubText,
+              ),
+              beforeLineStyle: LineStyle(
+                color: model.thirdStepBeforeLine,
+              ),
+              afterLineStyle: LineStyle(
+                color: model.thirdStepAfterLine,
+              ),
             ),
-          ),
-          TimelineTile(
-            alignment: TimelineAlign.manual,
-            lineXY: 0.1,
-            indicatorStyle: const IndicatorStyle(
-              width: 20,
-              color: Color(0xFF27AA69),
-              padding: EdgeInsets.all(6),
+            TimelineTile(
+              alignment: TimelineAlign.manual,
+              lineXY: 0.1,
+              isLast: true,
+              indicatorStyle: IndicatorStyle(
+                width: 20,
+                color: model.fourthStep,
+                padding: EdgeInsets.all(6),
+              ),
+              endChild: _RightChild(
+                disabled: model.fourthStatus,
+                asset: TIME_LINE_4,
+                title: 'Prescription',
+                message: model.fourthStepSubText,
+              ),
+              beforeLineStyle: LineStyle(
+                color: model.fourthStepBeforeLine,
+              ),
             ),
-            endChild: const _RightChild(
-              asset: TIME_LINE_2,
-              title: 'Take Sample',
-              message: 'Your sample has been taken.',
-            ),
-            beforeLineStyle: const LineStyle(
-              color: Color(0xFF27AA69),
-            ),
-          ),
-          TimelineTile(
-            alignment: TimelineAlign.manual,
-            lineXY: 0.1,
-            indicatorStyle: const IndicatorStyle(
-              width: 20,
-              color: Color(0xFF2B619C),
-              padding: EdgeInsets.all(6),
-            ),
-            endChild: const _RightChild(
-              asset: TIME_LINE_3,
-              title: 'Diagnosis Processed',
-              message: 'Doctor has done diagnosis.',
-            ),
-            beforeLineStyle: const LineStyle(
-              color: Color(0xFF27AA69),
-            ),
-            afterLineStyle: const LineStyle(
-              color: Color(0xFFDADADA),
-            ),
-          ),
-          TimelineTile(
-            alignment: TimelineAlign.manual,
-            lineXY: 0.1,
-            isLast: true,
-            indicatorStyle: const IndicatorStyle(
-              width: 20,
-              color: Color(0xFFDADADA),
-              padding: EdgeInsets.all(6),
-            ),
-            endChild: const _RightChild(
-              disabled: true,
-              asset: TIME_LINE_4,
-              title: 'Prescription',
-              message: 'Your prescription is ready for pickup.',
-            ),
-            beforeLineStyle: const LineStyle(
-              color: Color(0xFFDADADA),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
