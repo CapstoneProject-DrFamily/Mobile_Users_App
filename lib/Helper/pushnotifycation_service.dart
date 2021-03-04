@@ -1,3 +1,4 @@
+import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,9 @@ class PushNotifycationService {
             String doctorFBId = message['data']['doctorFBId'];
             await acceptBooking(doctorFBId);
             //accept
+          } else if (status.endsWith("arrived")) {
+            usTransactionID = transactionId;
+            await arrivedBooking();
           }
           print('booking');
         }
@@ -74,5 +78,16 @@ class PushNotifycationService {
       gravity: ToastGravity.CENTER,
     );
     Get.offAll(LandingScreen());
+  }
+
+  Future<void> arrivedBooking() async {
+    Fluttertoast.showToast(
+      msg: "Doctor have Arrived",
+      textColor: Colors.green,
+      toastLength: Toast.LENGTH_LONG,
+      backgroundColor: Colors.white,
+      gravity: ToastGravity.CENTER,
+    );
+    Get.off(TimeLineExamineScreen());
   }
 }
