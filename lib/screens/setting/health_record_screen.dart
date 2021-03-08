@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
-import 'package:drFamily_app/view_model/health_record_view_model.dart';
+import 'package:drFamily_app/view_model/setting_vm/health_record_view_model.dart';
 import 'package:drFamily_app/widgets/common/fonts.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -14,54 +14,97 @@ class HealthRecordScreen extends StatelessWidget {
     return BaseView<HealthRecordViewModel>(builder: (context, child, model) {
       return DefaultTabController(
         length: 2,
-        child: Scaffold(
-          appBar: new AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            centerTitle: true,
-            title: Text(
-              "Personal Health Record",
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: AVENIR,
+        child: model.isLoading
+            ? Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              )
+            : Scaffold(
+                appBar: new AppBar(
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  centerTitle: true,
+                  title: Text(
+                    "Personal Health Record",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: AVENIR,
+                    ),
+                  ),
+                  leading: new IconButton(
+                    icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  bottom: TabBar(
+                    unselectedLabelColor: Colors.black,
+                    labelColor: Colors.blue[400],
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          "History & Allergy",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: AVENIR,
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          "Exposure",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: AVENIR,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                body: TabBarView(
+                  children: [
+                    _tabView1(context, model),
+                    _tabView2(context, model),
+                  ],
+                ),
+                bottomNavigationBar: GestureDetector(
+                  onTap: () async {
+                    // model.printCheck();
+                    bool check = await model.updateHealthRecord();
+                    print("Check: " + check.toString());
+
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            HealthRecordScreen()));
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(
+                      30.0,
+                      15.0,
+                      30.0,
+                      15.0,
+                    ),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height / 14,
+                    decoration: new BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Save",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            leading: new IconButton(
-              icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            bottom: TabBar(
-              unselectedLabelColor: Colors.black,
-              labelColor: Colors.blue[400],
-              tabs: [
-                Tab(
-                  child: Text(
-                    "Tiền sử & Dị ứng",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: AVENIR,
-                    ),
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    "Yếu tố tiếp xúc",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: AVENIR,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              _tabView1(context, model),
-              _tabView2(context, model),
-            ],
-          ),
-        ),
       );
     });
   }
@@ -101,7 +144,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Tình trạng lúc sinh",
+                        "Condition at birth",
                         style: TextStyle(
                           fontFamily: AVENIR,
                           fontSize: 14,
@@ -126,7 +169,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Tiền sử bệnh tật, dị ứng",
+                        "History, Allergy",
                         style: TextStyle(
                           fontFamily: AVENIR,
                           fontSize: 14,
@@ -151,7 +194,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Khuyết tật",
+                        "Disabilities",
                         style: TextStyle(
                           fontFamily: AVENIR,
                           fontSize: 14,
@@ -176,7 +219,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Tiền sử phẫu thuật",
+                        "Surgical biography",
                         style: TextStyle(
                           fontFamily: AVENIR,
                           fontSize: 14,
@@ -201,7 +244,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Tiền sử gia đình",
+                        "Family history",
                         style: TextStyle(
                           fontFamily: AVENIR,
                           fontSize: 14,
@@ -226,7 +269,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Vấn đề khác",
+                        "Other",
                         style: TextStyle(
                           fontFamily: AVENIR,
                           fontSize: 14,
@@ -268,7 +311,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Hút thuốc lá, lào",
+                  "Smoking cigarettes, waterpipe",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -309,7 +352,7 @@ class HealthRecordScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Không',
+                          'No',
                           style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -338,7 +381,7 @@ class HealthRecordScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Có',
+                          'Yes',
                           style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -383,7 +426,7 @@ class HealthRecordScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Hút thường xuyên',
+                          'Smoke often',
                           style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -412,7 +455,7 @@ class HealthRecordScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Đã bỏ',
+                          'Quit',
                           style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -436,7 +479,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Uống rượu bia thường xuyên",
+                  "Drink alcohol regularly",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -476,7 +519,7 @@ class HealthRecordScreen extends StatelessWidget {
                             width: 10,
                           ),
                           Text(
-                            'Có',
+                            'Yes',
                             style: GoogleFonts.varelaRound(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
@@ -511,7 +554,7 @@ class HealthRecordScreen extends StatelessWidget {
                             width: 10,
                           ),
                           Text(
-                            'Không',
+                            'No',
                             style: GoogleFonts.varelaRound(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
@@ -546,7 +589,7 @@ class HealthRecordScreen extends StatelessWidget {
                             width: 10,
                           ),
                           Text(
-                            'Đã bỏ',
+                            'Quit',
                             style: GoogleFonts.varelaRound(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
@@ -571,7 +614,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Sử dụng ma túy",
+                  "Drug use",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -612,7 +655,7 @@ class HealthRecordScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Không',
+                          'No',
                           style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -641,7 +684,7 @@ class HealthRecordScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Có',
+                          'Yes',
                           style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -686,7 +729,7 @@ class HealthRecordScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Sử dụng thường xuyên',
+                          'Usually use',
                           style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -715,7 +758,7 @@ class HealthRecordScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Đã bỏ',
+                          'Quit',
                           style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -739,7 +782,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Hoạt động thể lực",
+                  "Physical activity",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -780,7 +823,7 @@ class HealthRecordScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Không',
+                          'No',
                           style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -809,7 +852,7 @@ class HealthRecordScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Có',
+                          'Yes',
                           style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -854,7 +897,7 @@ class HealthRecordScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Thường xuyên',
+                          'Regularly',
                           style: GoogleFonts.varelaRound(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -877,7 +920,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Yếu tố tiếp xúc nghề nghiệp/ Môi trường sống (Hóa chất, bụi, ồn, virus,...)",
+                  "Occupational exposure factors / Habitat (chemiscals, dust, noise, viruses,..)",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -904,7 +947,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Ghi rõ yếu tố tiếp xúc",
+                        "Indicatie the exposure element",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -924,11 +967,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.exposureElementController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Ghi rõ',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -953,7 +997,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Thời gian tiếp xúc",
+                        "Contact time",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -973,11 +1017,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.contactTimeController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Ghi rõ',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -1002,7 +1047,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Loại hố xí của gia đình",
+                        "Type of household toilet",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1022,11 +1067,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.toiletTypeController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Ghi rõ',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -1046,7 +1092,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Nguy cơ khác",
+                  "Other risk",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -1073,7 +1119,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Nguy cơ khác",
+                        "Other risk",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1093,41 +1139,16 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.otherRisksController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Ghi rõ',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            //Button save
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                margin: EdgeInsets.only(
-                  top: 30,
-                  bottom: 15,
-                ),
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height / 14,
-                decoration: new BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Save",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
               ),
             ),
           ],
@@ -1139,10 +1160,10 @@ class HealthRecordScreen extends StatelessWidget {
 //TabBarView for Tình trạng lúc sinh
   Widget _tabView3(BuildContext context, HealthRecordViewModel model) {
     List<String> buttonOriginalList = [
-      "Đẻ thường",
-      "Đẻ mổ",
-      "Đẻ thiếu tháng",
-      "Bị ngạt lúc đẻ"
+      "Spontaneous delivery",
+      "Abdominal delivery",
+      "Premature labour",
+      "Suffocation"
     ];
 
     return SingleChildScrollView(
@@ -1157,7 +1178,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Tình trạng lúc sinh",
+                  "Condition at birth",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -1169,36 +1190,41 @@ class HealthRecordScreen extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
+            CustomRadioButton(
+              defaultSelected: model.conditionAtBirth,
+              horizontal: true,
+              enableShape: true,
+              unSelectedColor: Theme.of(context).canvasColor,
+              buttonLables: buttonOriginalList,
+              buttonValues: buttonOriginalList,
+              buttonTextStyle: ButtonTextStyle(
+                selectedColor: Colors.white,
+                unSelectedColor: Colors.black,
+                textStyle: TextStyle(fontSize: 16),
+              ),
+              radioButtonValue: (value) {
+                model.changeConditionAtBirth(value);
+              },
+              selectedColor: Theme.of(context).accentColor,
+            ),
             Container(
               child: Column(
                 children: <Widget>[
-                  CustomRadioButton(
-                    horizontal: true,
-                    enableShape: true,
-                    unSelectedColor: Theme.of(context).canvasColor,
-                    buttonLables: buttonOriginalList,
-                    buttonValues: buttonOriginalList,
-                    buttonTextStyle: ButtonTextStyle(
-                      selectedColor: Colors.white,
-                      unSelectedColor: Colors.black,
-                      textStyle: TextStyle(fontSize: 16),
-                    ),
-                    radioButtonValue: (value) {
-                      print(value);
-                    },
-                    selectedColor: Theme.of(context).accentColor,
-                  ),
                   Row(
                     children: <Widget>[
                       Expanded(
                         flex: 3,
                         child: Container(
-                          margin: EdgeInsets.only(left: 40, right: 40),
-                          child: Text(
-                            "Cân nặng lúc đẻ",
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
+                          margin: EdgeInsets.only(left: 20, right: 60),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Birth weight",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -1206,7 +1232,7 @@ class HealthRecordScreen extends StatelessWidget {
                         flex: 2,
                         child: Container(
                           child: Text(
-                            "Chiều dài lúc đẻ",
+                            "Baby length",
                             style: TextStyle(
                               fontSize: 16,
                             ),
@@ -1218,12 +1244,13 @@ class HealthRecordScreen extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       SizedBox(
-                        width: 40.0,
+                        width: 80.0,
                       ),
                       SizedBox(
-                        width: 80,
+                        width: 40,
                         child: TextFormField(
-                          keyboardType: TextInputType.number,
+                          controller: model.birthWeightController,
+                          keyboardType: TextInputType.text,
                           maxLength: 3,
                           decoration: InputDecoration(
                             counterText: "",
@@ -1253,12 +1280,13 @@ class HealthRecordScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        width: 80.0,
+                        width: 100.0,
                       ),
                       SizedBox(
-                        width: 80,
+                        width: 40,
                         child: TextFormField(
-                          keyboardType: TextInputType.number,
+                          controller: model.birthHeightController,
+                          keyboardType: TextInputType.text,
                           maxLength: 3,
                           decoration: InputDecoration(
                             counterText: "",
@@ -1293,7 +1321,6 @@ class HealthRecordScreen extends StatelessWidget {
                     margin: EdgeInsets.only(top: 15),
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: MediaQuery.of(context).size.height / 8,
-                    // color: Colors.black,
                     decoration: new BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.grey),
@@ -1308,7 +1335,7 @@ class HealthRecordScreen extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Dị tật bẩm sinh (ghi rõ nếu có)",
+                              "Congenital Disorder (describe if any)",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -1328,11 +1355,12 @@ class HealthRecordScreen extends StatelessWidget {
                             left: 15.0,
                           ),
                           child: TextField(
+                            controller: model.birthDefectsController,
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: EdgeInsets.all(0.01),
                               border: InputBorder.none,
-                              hintText: 'Ghi rõ nếu có',
+                              hintText: 'Describe if any',
                             ),
                           ),
                         ),
@@ -1343,7 +1371,6 @@ class HealthRecordScreen extends StatelessWidget {
                     margin: EdgeInsets.only(top: 20),
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: MediaQuery.of(context).size.height / 8,
-                    // color: Colors.black,
                     decoration: new BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.grey),
@@ -1358,7 +1385,7 @@ class HealthRecordScreen extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Vấn đề khác",
+                              "Other",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -1378,40 +1405,16 @@ class HealthRecordScreen extends StatelessWidget {
                             left: 15.0,
                           ),
                           child: TextField(
+                            controller: model.otherDefectsController,
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: EdgeInsets.all(0.01),
                               border: InputBorder.none,
-                              hintText: 'Ghi rõ nếu có',
+                              hintText: 'Describe if any',
                             ),
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        top: 30,
-                        bottom: 15,
-                      ),
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height / 14,
-                      decoration: new BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Save",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
                     ),
                   ),
                 ],
@@ -1437,7 +1440,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Tiền sử bệnh tật, dị ứng",
+                  "History, Allergy",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -1456,7 +1459,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Dị ứng",
+                  "Allergy",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 18,
@@ -1470,7 +1473,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -1485,7 +1487,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Dị ứng thuốc",
+                        "Medicines allergy",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1505,61 +1507,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.medicineAllergyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Miêu tả rõ',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              width: MediaQuery.of(context).size.width * 0.925,
-              height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
-              decoration: new BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey),
-              ),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 10.0,
-                      left: 15.0,
-                    ),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Dị ứng hóa chất/mỹ phẩm",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.825,
-                    child: Divider(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 10.0,
-                      left: 15.0,
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: EdgeInsets.all(0.01),
-                        border: InputBorder.none,
-                        hintText: 'Miêu tả rõ',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -1584,7 +1537,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Dị ứng thực phẩm",
+                        "Comestic Allergy",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1604,11 +1557,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.chemicalAllergyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Miêu tả rõ',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -1633,7 +1587,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Dị ứng khác",
+                        "Food Allergies",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1653,11 +1607,62 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.foodAllergyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Miêu tả rõ',
+                        hintText: 'Describe',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Other Allergies",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      controller: model.otherAllergyController,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -1674,7 +1679,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Bệnh tật",
+                  "Pathology",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 18,
@@ -1688,7 +1693,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -1703,7 +1707,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Bệnh",
+                        "Pathology",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1723,11 +1727,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.diseaseController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Ghi rõ loại bệnh',
+                        hintText: 'Describe type of Pathology',
                       ),
                     ),
                   ),
@@ -1738,7 +1743,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -1753,7 +1757,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Ung thư",
+                        "Cancer",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1773,11 +1777,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.cancerController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Ghi rõ loại ung thư',
+                        hintText: 'Describe type of Cancer',
                       ),
                     ),
                   ),
@@ -1788,7 +1793,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -1803,7 +1807,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Lao",
+                        "Tuberculosis",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1823,11 +1827,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.tuberculosisController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Ghi rõ loại lao',
+                        hintText: 'Describe type of Tuberculosis',
                       ),
                     ),
                   ),
@@ -1838,7 +1843,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -1853,7 +1857,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Khác",
+                        "Other",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1873,37 +1877,16 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.otherDiseasesController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Nêu rõ',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                margin: EdgeInsets.only(top: 20),
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height / 14,
-                decoration: new BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Save",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
               ),
             ),
             SizedBox(
@@ -1929,7 +1912,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Khuyết tật",
+                  "Disabilities",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -1945,7 +1928,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -1960,7 +1942,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Thính lực",
+                        "Hearing",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -1980,61 +1962,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.hearingController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Mô tả',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              width: MediaQuery.of(context).size.width * 0.925,
-              height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
-              decoration: new BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey),
-              ),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 10.0,
-                      left: 15.0,
-                    ),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Thị lực",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.825,
-                    child: Divider(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 10.0,
-                      left: 15.0,
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: EdgeInsets.all(0.01),
-                        border: InputBorder.none,
-                        hintText: 'Mô tả',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -2059,7 +1992,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Tay",
+                        "Eyesight",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2079,11 +2012,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.eyesightController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Mô tả',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -2108,7 +2042,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Chân",
+                        "Hand",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2128,11 +2062,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.handController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Mô tả',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -2157,7 +2092,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Cong vẹo cột sống",
+                        "Leg",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2177,11 +2112,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.legController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Mô tả',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -2206,7 +2142,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Khe hở môi, vòm miệng",
+                        "Scoliosis",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2226,11 +2162,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.scoliosisController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Mô tả',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -2255,7 +2192,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Khác",
+                        "Cleft palate",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2275,11 +2212,62 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.cleftLipController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Mô tả',
+                        hintText: 'Describe',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: MediaQuery.of(context).size.width * 0.925,
+              height: MediaQuery.of(context).size.height / 8,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Other",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.825,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                    ),
+                    child: TextField(
+                      controller: model.otherDisabilitiesController,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(0.01),
+                        border: InputBorder.none,
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
@@ -2288,28 +2276,6 @@ class HealthRecordScreen extends StatelessWidget {
             ),
             SizedBox(
               height: 10,
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                margin: EdgeInsets.only(top: 20),
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height / 14,
-                decoration: new BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Save",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-              ),
             ),
             SizedBox(
               height: 15,
@@ -2334,7 +2300,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Tiền sử phẩu thuật",
+                  "Surgical biography",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -2347,7 +2313,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 20),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 6,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -2362,7 +2327,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Ghi rõ bộ phận cơ thể đã giải phẫu và năm phẫu thuật",
+                        "Describe the anatomical part of the body and the year of surgery",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2382,37 +2347,16 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.surgeryHistoryController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Miêu tả rõ',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                margin: EdgeInsets.only(top: 20),
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height / 14,
-                decoration: new BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Save",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
               ),
             ),
             SizedBox(
@@ -2438,7 +2382,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Tiền sử gia đình",
+                  "Family history",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -2457,7 +2401,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Dị ứng",
+                  "Allergy",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 18,
@@ -2485,7 +2429,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Dị ứng thuốc - người mắc",
+                        "Drug allergy - patient",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2505,11 +2449,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.medicineAllergyFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Mô tẻ rõ - ghi rõ mối quan hệ huyết thống',
+                        hintText: 'Describe allergy and relationship',
                       ),
                     ),
                   ),
@@ -2520,7 +2465,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 20),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -2535,7 +2479,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Dị ứng hóa chất/mỹ phẩm - người mắc",
+                        "Comestic allergy - patient",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2555,11 +2499,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.chemicalAllergyFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Mô tẻ rõ - ghi rõ mối quan hệ huyết thống',
+                        hintText: 'Describe allergy and relationship',
                       ),
                     ),
                   ),
@@ -2570,7 +2515,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 20),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -2585,7 +2529,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Dị ứng thực phẩm - người mắc",
+                        "Food allergies - patient",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2605,11 +2549,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.foodAllergyFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Mô tẻ rõ - ghi rõ mối quan hệ huyết thống',
+                        hintText: 'Describe allergy and relationship',
                       ),
                     ),
                   ),
@@ -2620,7 +2565,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 20),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -2635,7 +2579,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Dị ứng khác - người mắc",
+                        "Other allergy",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2655,11 +2599,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.otherAllergyFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Mô tẻ rõ - ghi rõ mối quan hệ huyết thống',
+                        hintText: 'Describe allergy and relationship',
                       ),
                     ),
                   ),
@@ -2676,7 +2621,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Bệnh tật",
+                  "Pathology",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 18,
@@ -2690,7 +2635,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -2705,7 +2649,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Bệnh",
+                        "Pathology",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2725,11 +2669,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.diseaseFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Ghi rõ loại bệnh, người mắc, quan hệ',
+                        hintText: 'Describe pathology, patient, relationship',
                       ),
                     ),
                   ),
@@ -2740,7 +2685,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -2755,7 +2699,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Ung thư",
+                        "Cancer",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2775,11 +2719,12 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.cancerFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Ghi rõ loại ung thư, người mắc, quan hệ',
+                        hintText: 'Describe cancer, patient, relationship',
                       ),
                     ),
                   ),
@@ -2790,7 +2735,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -2805,7 +2749,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Lao",
+                        "Tuberculosis",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2825,11 +2769,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.tuberculosisFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Ghi rõ loại lao, người mắc, quan hệ',
+                        hintText:
+                            'Describe tuberculosis, patient, relationship',
                       ),
                     ),
                   ),
@@ -2840,7 +2786,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 8,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -2855,7 +2800,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Khác",
+                        "Other",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2875,37 +2820,16 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.otherDiseasesFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Ghi rõ, người mắc, quan hệ',
+                        hintText: 'Describe, patient, relationship',
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                margin: EdgeInsets.only(top: 20),
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height / 14,
-                decoration: new BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Save",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
               ),
             ),
             SizedBox(
@@ -2931,7 +2855,7 @@ class HealthRecordScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Vấn đề khác",
+                  "Other",
                   style: TextStyle(
                     fontFamily: AVENIR,
                     fontSize: 20,
@@ -2944,7 +2868,6 @@ class HealthRecordScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 20),
               width: MediaQuery.of(context).size.width * 0.925,
               height: MediaQuery.of(context).size.height / 6,
-              // color: Colors.black,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
@@ -2959,7 +2882,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Ghi rõ vấn đề khác (nếu có)",
+                        "Describe (if any)",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2979,37 +2902,16 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      controller: model.otherController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Miêu tả rõ',
+                        hintText: 'Describe',
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                margin: EdgeInsets.only(top: 20),
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height / 14,
-                decoration: new BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Save",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
               ),
             ),
             SizedBox(

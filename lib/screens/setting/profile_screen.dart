@@ -343,7 +343,7 @@ class ProfileScreen extends StatelessWidget {
             fontSize: 16,
           ),
           decoration: InputDecoration(
-            hintText: "Choose Your Blood Type",
+            hintText: "Choose Your Blood group",
             filled: true,
             enabled: false,
             hintStyle: TextStyle(

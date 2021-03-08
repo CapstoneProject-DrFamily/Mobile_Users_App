@@ -41,12 +41,7 @@ class SettingPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HealthRecordScreen(),
-                          ),
-                        );
+                        model.seeHealthRecord(context);
                       },
                       child: Container(
                         color: Colors.white,

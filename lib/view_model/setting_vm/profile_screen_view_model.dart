@@ -198,7 +198,6 @@ class ProfileScreenViewModel extends BaseModel {
     this._isLoading = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     profileID = prefs.getInt("usProfileID");
-    patientID = prefs.getInt("usPatientID");
 
     //Get user profile
     _profileModel = await _profileRepo.getBasicInfo(profileID.toString());
@@ -221,10 +220,11 @@ class ProfileScreenViewModel extends BaseModel {
     idCardController.text = _profileModel.idCard;
 
     //Get user additional infomation
-    _additionInfoModel =
-        await _profileRepo.getAdditionInfo(patientID.toString());
+    _additionInfoModel = _profileModel.additionInfoModel;
 
     recordId = _additionInfoModel.recordId;
+    prefs.setInt("usHealthRecordID", recordId);
+
     relationship = _additionInfoModel.relationship;
     accountId = _additionInfoModel.accountId;
 
