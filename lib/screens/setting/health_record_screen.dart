@@ -6,6 +6,7 @@ import 'package:drFamily_app/widgets/common/fonts.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HealthRecordScreen extends StatelessWidget {
@@ -78,6 +79,14 @@ class HealthRecordScreen extends StatelessWidget {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (BuildContext context) =>
                             HealthRecordScreen()));
+
+                    Fluttertoast.showToast(
+                      msg: "Update success",
+                      textColor: Colors.red,
+                      toastLength: Toast.LENGTH_SHORT,
+                      backgroundColor: Colors.white,
+                      gravity: ToastGravity.CENTER,
+                    );
                   },
                   child: Container(
                     margin: EdgeInsets.fromLTRB(
