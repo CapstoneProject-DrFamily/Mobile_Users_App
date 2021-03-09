@@ -63,6 +63,7 @@ class ListDoctorScreenViewModel extends BaseModel {
           _nearByDoctorList.add(tDoctor);
         }
       });
+      return;
     });
     notifyListeners();
   }

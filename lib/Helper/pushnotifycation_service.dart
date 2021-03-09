@@ -30,7 +30,7 @@ class PushNotifycationService {
             //accept
           } else if (status.endsWith("arrived")) {
             usTransactionID = transactionId;
-            await arrivedBooking();
+            await arrivedBooking(usTransactionID);
           }
           print('booking');
         }
@@ -80,7 +80,7 @@ class PushNotifycationService {
     Get.offAll(LandingScreen());
   }
 
-  Future<void> arrivedBooking() async {
+  Future<void> arrivedBooking(String transactionID) async {
     Fluttertoast.showToast(
       msg: "Doctor have Arrived",
       textColor: Colors.green,
@@ -88,6 +88,7 @@ class PushNotifycationService {
       backgroundColor: Colors.white,
       gravity: ToastGravity.CENTER,
     );
+    TimeLineExamineScreen.transactionID = transactionID;
     Get.off(TimeLineExamineScreen());
   }
 }

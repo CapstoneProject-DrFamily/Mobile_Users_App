@@ -8,4 +8,12 @@ class HelperMethod {
   static void enableUpdateDoctorLocation() {
     updateDoctorLocation.resume();
   }
+
+  static void disabltransactionStatusUpdate() {
+    transactionStatusUpdate.pause();
+  }
+
+  static void enabletransactionStatusUpdate() {
+    transactionStatusUpdate.resume();
+  }
 }

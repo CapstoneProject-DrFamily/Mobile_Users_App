@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class TimeLineExamineScreen extends StatelessWidget {
+  static String transactionID;
   @override
   Widget build(BuildContext context) {
     return BaseView<TimeLineExamineViewModel>(
