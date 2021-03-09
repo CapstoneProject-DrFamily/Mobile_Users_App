@@ -6,6 +6,7 @@ import 'package:drFamily_app/global_variable.dart';
 import 'package:drFamily_app/model/transaction_map_model.dart';
 import 'package:drFamily_app/model/transaction_map_update_model.dart';
 import 'package:drFamily_app/repository/home/find_doctor/map_api/map_screen_repo.dart';
+import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MapTrackingScreenViewModel extends BaseModel {
   final IMapScreenRepo _mapRepo = MapScreenRepo();
   final ITransactionRepo _transactionRepo = TransactionRepo();
+  final INotifyRepo _notifyRepo = NotifyRepo();
 
   final double _initFabHeight = 260.0;
   double _fabHeight;
@@ -67,6 +69,8 @@ class MapTrackingScreenViewModel extends BaseModel {
 
   String doctorFBid;
 
+  String notiToken;
+
   MapTrackingScreenViewModel(String transactionId) {
     _transactionID = transactionId;
     PushNotifycationService.usStatus = "Map";
@@ -85,6 +89,17 @@ class MapTrackingScreenViewModel extends BaseModel {
 
     _doctorRequest =
         FirebaseDatabase.instance.reference().child("Doctor Request");
+
+    await _doctorRequest
+        .child(doctorFBid)
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+      Map<dynamic, dynamic> values = dataSnapshot.value;
+      values.forEach((key, values) async {
+        notiToken = values['token'];
+      });
+    });
+
     updateDoctorLocation =
         _doctorRequest.child(doctorFBid).onChildChanged.listen((event) {
       if (event.snapshot.value.toString().contains("latitude")) {
@@ -224,7 +239,10 @@ class MapTrackingScreenViewModel extends BaseModel {
         transactionId: _transactionMapModel.transactionId);
     String transactionJson = jsonEncode(transaction.toJson());
     bool cancel = await _transactionRepo.updateTransaction(transactionJson);
+
     if (cancel) {
+      _notifyRepo.cancelTransaction(
+          _transactionMapModel.transactionId, notiToken);
       Fluttertoast.showToast(
         msg: "You have Canceled",
         textColor: Colors.red,
