@@ -1,6 +1,9 @@
+import 'package:drFamily_app/model/setting/addition_info_model.dart';
+
 class ProfileModel {
   int profileId;
   String fullName, dob, gender, phone, image, email, idCard;
+  AdditionInfoModel additionInfoModel;
 
   ProfileModel(
       {this.profileId,

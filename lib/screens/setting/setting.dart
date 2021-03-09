@@ -1,3 +1,4 @@
+import 'package:drFamily_app/screens/setting/dependent_screen.dart';
 import 'package:drFamily_app/screens/setting/health_record_screen.dart';
 import 'package:drFamily_app/screens/setting/profile_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
@@ -28,31 +29,20 @@ class SettingPage extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      color: Colors.white,
-                      child: ListTile(
-                        leading: Icon(Icons.people),
-                        title: Text("Dependent"),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                      ),
-                    ),
-                    Divider(
-                      height: 2,
-                    ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => HealthRecordScreen(),
+                            builder: (context) => DependentScreen(),
                           ),
                         );
                       },
                       child: Container(
                         color: Colors.white,
                         child: ListTile(
-                          leading: Icon(EvaIcons.activityOutline),
-                          title: Text("Health Record"),
+                          leading: Icon(Icons.people),
+                          title: Text("Dependent"),
                           trailing: Icon(Icons.keyboard_arrow_right),
                         ),
                       ),
@@ -132,35 +122,70 @@ class SettingPage extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            GestureDetector(
-              onTap: () {
-                model.seeDetail(context);
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.3,
-                height: MediaQuery.of(context).size.width * 0.08,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 1,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    model.seeDetail(context);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.width * 0.08,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: Center(
-                  child: Text(
-                    'See Profile',
-                    style: GoogleFonts.varelaRound(
-                      fontWeight: FontWeight.normal,
-                      color: Colors.blue,
+                    child: Center(
+                      child: Text(
+                        'See Profile',
+                        style: GoogleFonts.varelaRound(
+                          fontWeight: FontWeight.normal,
+                          color: Colors.blue,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                GestureDetector(
+                  onTap: () {
+                    model.seeHealthRecord(context);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(left: 10.0),
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.width * 0.08,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Health Record',
+                        style: GoogleFonts.varelaRound(
+                          fontWeight: FontWeight.normal,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

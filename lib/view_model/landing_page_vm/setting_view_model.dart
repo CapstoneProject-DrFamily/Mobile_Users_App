@@ -1,4 +1,5 @@
 import 'package:drFamily_app/screens/login/login_page.dart';
+import 'package:drFamily_app/screens/setting/health_record_screen.dart';
 import 'package:drFamily_app/screens/setting/profile_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingViewModel extends BaseModel {
+  int profileID, healthRecordID;
+
   String _fullName, _img;
   String get fullName => _fullName;
   String get img => _img;
@@ -32,6 +35,15 @@ class SettingViewModel extends BaseModel {
       context,
       MaterialPageRoute(
         builder: (context) => ProfileScreen(),
+      ),
+    ).then((value) => getPatientProfile());
+  }
+
+  void seeHealthRecord(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HealthRecordScreen(),
       ),
     ).then((value) => getPatientProfile());
   }
