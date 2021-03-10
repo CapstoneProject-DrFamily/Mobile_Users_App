@@ -348,45 +348,87 @@ class MapTrackingScreen extends StatelessWidget {
                 SizedBox(
                   height: 12.0,
                 ),
-                ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: model.symptomsDisplay.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Text(
-                            model.symptomsDisplay[index].symptomtype,
-                            style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: Colors.black,
-                            ),
-                          ),
+                model.symptomsDisplay.length != 0
+                    ? ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: model.symptomsDisplay.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: Text(
+                                  model.symptomsDisplay[index].symptomtype,
+                                  style: GoogleFonts.varelaRound(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 25),
+                                child: Text(
+                                  model.symptomsDisplay[index].symptomName,
+                                  softWrap: true,
+                                  style: GoogleFonts.varelaRound(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 12.0,
+                              ),
+                            ],
+                          );
+                        },
+                      )
+                    : Text(
+                        "Nothing",
+                        style: GoogleFonts.varelaRound(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14,
+                          color: Colors.black,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 25),
-                          child: Text(
-                            model.symptomsDisplay[index].symptomName,
-                            softWrap: true,
-                            style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 14,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 12.0,
-                        ),
-                      ],
-                    );
-                  },
+                      )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 36,
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Service",
+                  style: GoogleFonts.varelaRound(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
                 ),
+                SizedBox(
+                  height: 12.0,
+                ),
+                Container(
+                  child: Text(
+                    '${model.transactionMapModel.serviceName} - ${model.transactionMapModel.servicePrice}',
+                    softWrap: true,
+                    style: GoogleFonts.varelaRound(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                )
               ],
             ),
           ),

@@ -96,7 +96,10 @@ class MapScreen extends StatelessWidget {
           margin: EdgeInsets.all(15),
           child: RaisedButton(
             onPressed: () {
-              model.doneMap(context);
+              if (!model.isEnable) {
+              } else {
+                model.doneMap(context);
+              }
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(80.0)),
@@ -104,7 +107,14 @@ class MapScreen extends StatelessWidget {
             child: Ink(
               decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xff374ABE), Color(0xff64B6FF)],
+                    colors: [
+                      !model.isEnable
+                          ? Color(0xff374ABE).withOpacity(0.4)
+                          : Color(0xff374ABE),
+                      !model.isEnable
+                          ? Color(0xff64B6FF).withOpacity(0.4)
+                          : Color(0xff64B6FF)
+                    ],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                   ),

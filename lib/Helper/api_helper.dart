@@ -25,7 +25,7 @@ class APIHelper {
   static const String SYMPTOM_API = '$PREFIX_API/api/v1/Symptoms';
 
   //API Specialty
-  static const String SPECIALTY_API = '$PREFIX_API/api/v1/Specialty';
+  static const String SPECIALTY_API = '$PREFIX_API/api/v1/Specialties';
 
   //API Health Record
   static const String CREATE_HEALTHRECORD_API =

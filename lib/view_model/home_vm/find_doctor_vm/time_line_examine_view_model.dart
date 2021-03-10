@@ -45,6 +45,7 @@ class TimeLineExamineViewModel extends BaseModel {
 
   TimeLineExamineViewModel() {
     _transactionId = TimeLineExamineScreen.transactionID;
+    print('transactionId: $_transactionId');
 
     PushNotifycationService.usStatus = "Analysis Symptom";
     firstStep = colorInprocess;
@@ -70,16 +71,18 @@ class TimeLineExamineViewModel extends BaseModel {
     fourthStepSubText = "Waiting for doctor.";
     fourthStatus = true;
     initTimeLine();
+
+    listenStatusTransaction();
   }
 
   void initTimeLine() async {
-    _transactionRequest = await FirebaseDatabase.instance
-        .reference()
-        .child("Transaction")
-        .child(_transactionId)
-        .once()
-        .then(
+    _transactionRequest =
+        FirebaseDatabase.instance.reference().child("Transaction");
+
+    await _transactionRequest.child(_transactionId).once().then(
       (DataSnapshot dataSnapshot) {
+        print("init transaction");
+        print(dataSnapshot.value);
         if (dataSnapshot.value == null) {
           return;
         } else {
@@ -111,6 +114,8 @@ class TimeLineExamineViewModel extends BaseModel {
                 firstStatus = false;
 
                 secondStep = colorDone;
+                secondStepBeforeLine = colorDone;
+
                 secondStepAfterLine = colorDone;
                 secondStepSubText = "Your sample has been taken.";
                 secondStatus = false;
@@ -130,6 +135,8 @@ class TimeLineExamineViewModel extends BaseModel {
                 firstStatus = false;
 
                 secondStep = colorDone;
+                secondStepBeforeLine = colorDone;
+
                 secondStepAfterLine = colorDone;
                 secondStepSubText = "Your sample has been taken.";
                 secondStatus = false;
@@ -141,6 +148,7 @@ class TimeLineExamineViewModel extends BaseModel {
                 thirdStatus = false;
 
                 fourthStep = colorInprocess;
+
                 fourthStepBeforeLine = colorDone;
                 fourthStepSubText = "Doctor is preparing prescription.";
                 fourthStatus = false;
@@ -157,11 +165,12 @@ class TimeLineExamineViewModel extends BaseModel {
 
   void listenStatusTransaction() {
     transactionStatusUpdate = _transactionRequest
-        .child("Transaction")
         .child(_transactionId)
         .onChildChanged
         .listen((event) {
-      String transactionStatus = event.snapshot.value['transaction_status'];
+      print("change");
+      print("event value: " + event.snapshot.value);
+      var transactionStatus = event.snapshot.value;
       switch (transactionStatus) {
         case "Take Sample":
           {
@@ -175,6 +184,7 @@ class TimeLineExamineViewModel extends BaseModel {
             secondStepAfterLine = colorInprocess;
             secondStepSubText = "Doctor is taking sample.";
             secondStatus = false;
+            notifyListeners();
           }
           break;
         case "Diagnose":
@@ -188,6 +198,8 @@ class TimeLineExamineViewModel extends BaseModel {
           thirdStepAfterLine = colorInprocess;
           thirdStepSubText = "Doctor is diagnosing.";
           thirdStatus = false;
+          notifyListeners();
+
           break;
         case "Prescription":
           {
@@ -201,6 +213,7 @@ class TimeLineExamineViewModel extends BaseModel {
             fourthStepBeforeLine = colorDone;
             fourthStepSubText = "Doctor is preparing prescription.";
             fourthStatus = false;
+            notifyListeners();
           }
           break;
         default:

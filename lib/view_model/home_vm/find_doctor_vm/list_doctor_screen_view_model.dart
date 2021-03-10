@@ -30,7 +30,9 @@ class ListDoctorScreenViewModel extends BaseModel {
     getListDoctorNearby();
   }
 
-  Future<List<DoctorModel>> getListDoctorNearby() async {
+  Future<void> getListDoctorNearby() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    int serviceID = prefs.getInt("usServiceID");
     _doctorRequest = await FirebaseDatabase.instance
         .reference()
         .child("Doctor Request")
@@ -45,22 +47,45 @@ class ListDoctorScreenViewModel extends BaseModel {
             double.parse(values['pickup']['latitude']),
             double.parse(values['pickup']['longtitude']));
         var doctorStatus = values['doctor_status'];
+        var doctorSpecialty = values['doctor_specialty'];
 
-        if ((distance / 1000) <= 5 && doctorStatus == "waiting") {
-          DoctorModel tDoctor = DoctorModel(
-            notitoken: values['token'],
-            id: int.parse(values['doctor_id']),
-            image: values['doctor_image'],
-            name: values['doctor_name'],
-            speciality: values['doctor_specialty'],
-            year: 0,
-            latitude: double.parse(values['pickup']['latitude']),
-            longitude: double.parse(values['pickup']['longtitude']),
-            distance: double.parse((distance / 1000).toStringAsFixed(1)),
-          );
+        if (serviceID == 1) {
+          if ((distance / 1000) <= 5 && doctorStatus == "waiting") {
+            DoctorModel tDoctor = DoctorModel(
+              notitoken: values['token'],
+              id: int.parse(values['doctor_id']),
+              image: values['doctor_image'],
+              name: values['doctor_name'],
+              speciality: doctorSpecialty,
+              year: 0,
+              latitude: double.parse(values['pickup']['latitude']),
+              longitude: double.parse(values['pickup']['longtitude']),
+              distance: double.parse((distance / 1000).toStringAsFixed(1)),
+            );
 
-          print(distance / 1000);
-          _nearByDoctorList.add(tDoctor);
+            print(distance / 1000);
+            _nearByDoctorList.add(tDoctor);
+          }
+        } else {
+          var specialtyName = prefs.getString("chooseSpecialty");
+          if ((distance / 1000) <= 5 &&
+              doctorStatus == "waiting" &&
+              doctorSpecialty == specialtyName) {
+            DoctorModel tDoctor = DoctorModel(
+              notitoken: values['token'],
+              id: int.parse(values['doctor_id']),
+              image: values['doctor_image'],
+              name: values['doctor_name'],
+              speciality: values['doctor_specialty'],
+              year: 0,
+              latitude: double.parse(values['pickup']['latitude']),
+              longitude: double.parse(values['pickup']['longtitude']),
+              distance: double.parse((distance / 1000).toStringAsFixed(1)),
+            );
+
+            print(distance / 1000);
+            _nearByDoctorList.add(tDoctor);
+          }
         }
       });
       return;
