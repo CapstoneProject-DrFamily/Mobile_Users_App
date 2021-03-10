@@ -201,8 +201,19 @@ class DependentScreen extends StatelessWidget {
                                                       width: 10.0,
                                                     ),
                                                     GestureDetector(
-                                                      onTap: () {
-                                                        // model.seeDetail(context);
+                                                      onTap: () async {
+                                                        final SharedPreferences
+                                                            prefs =
+                                                            await SharedPreferences
+                                                                .getInstance();
+                                                        prefs.setInt(
+                                                            "dependentProfileID",
+                                                            model
+                                                                .listDependent[
+                                                                    index]
+                                                                .profileID);
+                                                        model.seeHealthRecord(
+                                                            context);
                                                       },
                                                       child: Container(
                                                         width: MediaQuery.of(

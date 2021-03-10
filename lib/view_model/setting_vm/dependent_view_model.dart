@@ -1,5 +1,6 @@
 import 'package:drFamily_app/model/dependent_model.dart';
 import 'package:drFamily_app/repository/setting/dependent_repo.dart';
+import 'package:drFamily_app/screens/setting/dependent_health_record_screen.dart';
 import 'package:drFamily_app/screens/setting/dependent_profile_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,15 @@ class DependentViewModel extends BaseModel {
       context,
       MaterialPageRoute(
         builder: (context) => DependentProfileScreen(),
+      ),
+    ).then((value) => getListDependent());
+  }
+
+  void seeHealthRecord(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DependentHealthRecordScreen(),
       ),
     ).then((value) => getListDependent());
   }
