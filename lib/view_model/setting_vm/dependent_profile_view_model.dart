@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:drFamily_app/screens/setting/dependent_profile_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
 import 'package:drFamily_app/model/setting/addition_info_model.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfileScreenViewModel extends BaseModel {
+class DependentProfileViewModel extends BaseModel {
   final IProfileRepo _profileRepo = ProfileRepo();
   ProfileModel _profileModel;
   AdditionInfoModel _additionInfoModel;
@@ -30,15 +31,9 @@ class ProfileScreenViewModel extends BaseModel {
   TextEditingController _heightController = TextEditingController();
   TextEditingController _weightController = TextEditingController();
 
-  String _dob = "";
-  String _fullName = "";
-  String _phoneNum = "";
-  String _currentImage = "";
-  String _email = "";
-  String _idCard = "";
-  String _bloodType = "";
   String _height = "";
   String _weight = "";
+  String _currentImage = "";
   String _selectGender;
 
   int _gender = 0;
@@ -84,13 +79,7 @@ class ProfileScreenViewModel extends BaseModel {
   TextEditingController get heightController => _heightController;
   TextEditingController get weightController => _weightController;
 
-  String get fullName => _fullName;
-  String get dob => _dob;
-  String get phoneNum => _phoneNum;
   String get currentImage => _currentImage;
-  String get email => _email;
-  String get idCard => _idCard;
-  String get bloodType => _bloodType;
   String get height => _height;
   String get weight => _weight;
   String get selectGender => _selectGender;
@@ -103,7 +92,7 @@ class ProfileScreenViewModel extends BaseModel {
   bool _check;
   bool get check => _check;
 
-  ProfileScreenViewModel() {
+  DependentProfileViewModel() {
     //list for height
     for (int i = 0; i <= 99; i++) {
       if (i == 99)
@@ -118,30 +107,30 @@ class ProfileScreenViewModel extends BaseModel {
       else
         this._weight1 += i.toString() + ',';
     }
-    _fullNameController.addListener(() {
-      _fullName = _fullNameController.text;
-      notifyListeners();
-    });
-    _dobController.addListener(() {
-      _dob = _dobController.text;
-      notifyListeners();
-    });
-    _phoneNumController.addListener(() {
-      _phoneNum = _phoneNumController.text;
-      notifyListeners();
-    });
-    _emailController.addListener(() {
-      _email = _emailController.text;
-      notifyListeners();
-    });
-    _idCardController.addListener(() {
-      _idCard = _idCardController.text;
-      notifyListeners();
-    });
-    _bloodTpeController.addListener(() {
-      _bloodType = _bloodTpeController.text;
-      notifyListeners();
-    });
+    // _fullNameController.addListener(() {
+    //   _fullName = _fullNameController.text;
+    //   notifyListeners();
+    // });
+    // _dobController.addListener(() {
+    //   _dob = _dobController.text;
+    //   notifyListeners();
+    // });
+    // _phoneNumController.addListener(() {
+    //   _phoneNum = _phoneNumController.text;
+    //   notifyListeners();
+    // });
+    // _emailController.addListener(() {
+    //   _email = _emailController.text;
+    //   notifyListeners();
+    // });
+    // _idCardController.addListener(() {
+    //   _idCard = _idCardController.text;
+    //   notifyListeners();
+    // });
+    // _bloodTpeController.addListener(() {
+    //   _bloodType = _bloodTpeController.text;
+    //   notifyListeners();
+    // });
     _heightController.addListener(() {
       _height = _heightController.text;
       notifyListeners();
@@ -190,13 +179,13 @@ class ProfileScreenViewModel extends BaseModel {
           ]
       ]
           ''';
-    getProfile();
+    getDependentProfile();
   }
 
-  void getProfile() async {
+  void getDependentProfile() async {
     this._isLoading = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    profileID = prefs.getInt("usProfileID");
+    profileID = prefs.getInt("dependentProfileID");
 
     //Get user profile
     _profileModel = await _profileRepo.getBasicInfo(profileID.toString());
@@ -305,10 +294,6 @@ class ProfileScreenViewModel extends BaseModel {
       } else {
         uploadImage = currentImage;
       }
-
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString("usFullName", fullNameController.text);
-      prefs.setString("usImg", uploadImage);
 
       _profileModel = new ProfileModel(
           profileId: profileID,

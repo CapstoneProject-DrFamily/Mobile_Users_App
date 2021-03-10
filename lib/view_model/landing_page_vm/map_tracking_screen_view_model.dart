@@ -245,6 +245,8 @@ class MapTrackingScreenViewModel extends BaseModel {
     bool cancel = await _transactionRepo.updateTransaction(transactionJson);
 
     if (cancel) {
+      print(notiToken);
+
       _notifyRepo.cancelTransaction(
           _transactionMapModel.transactionId, notiToken);
       Fluttertoast.showToast(

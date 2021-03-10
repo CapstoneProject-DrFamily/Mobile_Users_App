@@ -19,6 +19,7 @@ class APIHelper {
   static const String CREATE_PATIENT_API = '$PREFIX_API/api/v1/Patients';
   static const String GET_PATIENT_BY_ID_API = '$PREFIX_API/api/v1/Patients/';
   static const String UPDATE_PATIENT_API = '$PREFIX_API/api/v1/Patients';
+  static const String GET_DEPENDENT_API = '$PREFIX_API/api/v1/Patients/';
 
   //API Symptom
   static const String SYMPTOM_API = '$PREFIX_API/api/v1/Symptoms';

@@ -28,9 +28,9 @@ class AdditionInfoModel {
 
   Map<String, dynamic> toJson() => {
         "patientId": patientId,
+        "bloodType": bloodType,
         "height": height,
         "weight": weight,
-        "bloodType": bloodType,
         "profileId": profileId,
         "recordId": recordId,
         "relationship": relationship,

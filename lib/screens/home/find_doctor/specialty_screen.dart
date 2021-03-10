@@ -99,7 +99,9 @@ class SpecialtyScreen extends StatelessWidget {
           return InkWell(
             onTap: () {
               model.chooseSpecialty(
-                  context, model.listSpecialty[index].specialtyId);
+                  context,
+                  model.listSpecialty[index].specialtyId,
+                  model.listSpecialty[index].specialtyTitle);
             },
             child: Card(
               shape: RoundedRectangleBorder(

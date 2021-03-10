@@ -4,7 +4,7 @@ import 'package:drFamily_app/screens/landing_page/home_page.dart';
 import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
 import 'package:drFamily_app/model/home/landing_model.dart';
 import 'package:drFamily_app/repository/langding/landing_repo.dart';
-import 'package:drFamily_app/screens/setting/setting.dart';
+import 'package:drFamily_app/screens/setting/setting_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/map_tracking_screen_view_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';

@@ -60,6 +60,9 @@ class MapPageViewModel extends BaseModel {
 
   String get currentSearch => _currentSearch;
 
+  bool _isEnable = false;
+  bool get isEnable => _isEnable;
+
   MapPageViewModel() {
     KeyboardVisibilityNotification().addNewListener(
       onChange: (bool visible) {
@@ -86,6 +89,7 @@ class MapPageViewModel extends BaseModel {
   void initMap() {}
 
   void onMapCreated(GoogleMapController controller) {
+    _isEnable = false;
     _controllerGoogle.complete(controller);
     _controller = controller;
 
@@ -118,6 +122,8 @@ class MapPageViewModel extends BaseModel {
     _pickUpInfo = await _mapRepo.searchCoordinateAddress(latLngPosition);
 
     _addressController.text = _pickUpInfo.placeName;
+
+    _isEnable = true;
 
     notifyListeners();
   }

@@ -68,26 +68,44 @@ class DoctorDetailViewModel extends BaseModel {
     prefs.setString("usTransactionStatus", "waiting");
 
     var usServiceID = prefs.getInt("usServiceID");
-    var usListSymptomID = prefs.getStringList("usListSymptomID");
-    var usPatientID = prefs.getInt("usPatientID");
-    var usLocation = prefs.getString("usLocation");
-    var doctorID = _doctor.doctorId;
 
-    List<SymptomTemp> listSymptom = [];
+    String transaction;
 
-    for (var item in usListSymptomID) {
-      listSymptom.add(SymptomTemp(id: int.parse(item)));
+    if (usServiceID == 1) {
+      var usListSymptomID = prefs.getStringList("usListSymptomID");
+      var usPatientID = prefs.getInt("usPatientID");
+      var usLocation = prefs.getString("usLocation");
+      var doctorID = _doctor.doctorId;
+
+      List<SymptomTemp> listSymptom = [];
+
+      for (var item in usListSymptomID) {
+        listSymptom.add(SymptomTemp(id: int.parse(item)));
+      }
+
+      transaction = jsonEncode({
+        "doctorId": doctorID,
+        "patientId": usPatientID,
+        "status": 0,
+        "location": usLocation,
+        "note": "Nothing",
+        "serviceId": usServiceID,
+        "symptomDetails": listSymptom,
+      });
+    } else {
+      var usPatientID = prefs.getInt("usPatientID");
+      var usLocation = prefs.getString("usLocation");
+      var doctorID = _doctor.doctorId;
+
+      transaction = jsonEncode({
+        "doctorId": doctorID,
+        "patientId": usPatientID,
+        "status": 0,
+        "location": usLocation,
+        "note": "Nothing",
+        "serviceId": usServiceID,
+      });
     }
-
-    String transaction = jsonEncode({
-      "doctorId": doctorID,
-      "patientId": usPatientID,
-      "status": 0,
-      "location": usLocation,
-      "note": "Nothing",
-      "serviceId": usServiceID,
-      "symptomDetails": listSymptom,
-    });
 
     print("transaction: " + transaction);
 

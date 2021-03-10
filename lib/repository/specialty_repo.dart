@@ -21,6 +21,8 @@ class SpecialtyRepo extends ISpecialtyRepo {
 
     List<SpecialtyModel> listSpecialty;
 
+    print(response.statusCode);
+
     if (response.statusCode == 200) {
       listSpecialty = (json.decode(response.body) as List)
           .map((data) => SpecialtyModel.fromJson(data))

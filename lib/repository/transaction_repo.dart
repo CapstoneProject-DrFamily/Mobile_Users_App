@@ -61,6 +61,8 @@ class TransactionRepo extends ITransactionRepo {
       int patientId = 0;
       String estimateTime = "";
       int examId = 0;
+      String serviceName = "";
+      double servicePrice = 0;
 
       Map<String, dynamic> transactionJson = jsonDecode(response.body);
 
@@ -99,6 +101,8 @@ class TransactionRepo extends ITransactionRepo {
       estimateTime = transactionJson["estimatedTime"];
       examId = transactionJson["examId"];
       transactionNote = transactionJson["note"];
+      serviceName = transactionJson['service']['serviceName'];
+      servicePrice = transactionJson['service']['servicePrice'];
 
       transactionMapModel = TransactionMapModel(
         doctorDegree: doctorDegree,
@@ -116,6 +120,8 @@ class TransactionRepo extends ITransactionRepo {
         estimateTime: estimateTime,
         examId: examId,
         transactionId: transactionID,
+        serviceName: serviceName,
+        servicePrice: servicePrice,
       );
       return transactionMapModel;
     } else

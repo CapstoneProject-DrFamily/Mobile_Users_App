@@ -7,8 +7,9 @@ class TransactionMapModel {
       doctorDegree,
       transactionNote,
       location,
-      estimateTime;
-  final double longitude, latitude;
+      estimateTime,
+      serviceName;
+  final double longitude, latitude, servicePrice;
   final int doctorId, patientId, examId;
   final List<SymptomTempModel> patientSymptom;
 
@@ -27,7 +28,9 @@ class TransactionMapModel {
       this.location,
       this.estimateTime,
       this.transactionId,
-      this.examId});
+      this.examId,
+      this.serviceName,
+      this.servicePrice});
 }
 
 class SymptomTempModel {

@@ -231,7 +231,6 @@ class HomeScreen extends StatelessWidget {
                     TextButton(
                       child: Text('Next'),
                       onPressed: () async {
-                        homeViewModel.initTransaction();
                         // pop out current popup
                         Navigator.of(dialogContex).pop();
                         // wait 0.5s to change popup
@@ -241,7 +240,7 @@ class HomeScreen extends StatelessWidget {
                         //new popup
                         homeViewModel.choosePatient(
                             model.listDependent[model.patientChoose].patientID);
-                        _buildDialogChooseType(context);
+                        _buildDialogChooseType(context, homeViewModel);
                       },
                     ),
                     TextButton(
@@ -257,7 +256,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Future _buildDialogChooseType(BuildContext context) {
+  Future _buildDialogChooseType(
+      BuildContext context, HomeViewModel homeViewModel) {
     return showDialog(
       context: context,
       builder: (_) => new AlertDialog(
@@ -272,6 +272,8 @@ class HomeScreen extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
+                    homeViewModel.initTransaction();
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => SymptomScreen()),
@@ -346,6 +348,8 @@ class HomeScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
+                    homeViewModel.initTransaction();
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(

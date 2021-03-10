@@ -2,21 +2,20 @@ import 'dart:convert';
 
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
-import 'package:drFamily_app/view_model/setting_vm/profile_screen_view_model.dart';
+import 'package:drFamily_app/view_model/setting_vm/dependent_profile_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProfileScreen extends StatelessWidget {
+class DependentProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: BaseView<ProfileScreenViewModel>(
+        body: BaseView<DependentProfileViewModel>(
           builder: (context, child, model) {
             return SingleChildScrollView(
               child: model.isLoading
@@ -197,7 +196,7 @@ class ProfileScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        _buildAppbar(context),
+                        _buildAppbar(context, model),
                       ],
                     ),
             );
@@ -208,7 +207,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   GestureDetector _buildWeightField(
-      ProfileScreenViewModel model, BuildContext context) {
+      DependentProfileViewModel model, BuildContext context) {
     return GestureDetector(
       onTap: () {
         Picker(
@@ -261,7 +260,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   GestureDetector _buildHeightField(
-      ProfileScreenViewModel model, BuildContext context) {
+      DependentProfileViewModel model, BuildContext context) {
     return GestureDetector(
       onTap: () {
         Picker(
@@ -314,7 +313,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Padding _buildBloodTypeField(
-      ProfileScreenViewModel model, BuildContext context) {
+      DependentProfileViewModel model, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: GestureDetector(
@@ -374,7 +373,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Padding _buildIDCardField(ProfileScreenViewModel model) {
+  Padding _buildIDCardField(DependentProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: TextFormField(
@@ -417,7 +416,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Padding _buildEmailField(ProfileScreenViewModel model) {
+  Padding _buildEmailField(DependentProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: TextFormField(
@@ -460,7 +459,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Padding _buildPhoneNumberField(ProfileScreenViewModel model) {
+  Padding _buildPhoneNumberField(DependentProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: TextFormField(
@@ -498,7 +497,8 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Padding _buildDOBFIeld(BuildContext context, ProfileScreenViewModel model) {
+  Padding _buildDOBFIeld(
+      BuildContext context, DependentProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: GestureDetector(
@@ -561,7 +561,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Padding _buildFullNameField(ProfileScreenViewModel model) {
+  Padding _buildFullNameField(DependentProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: TextFormField(
@@ -636,7 +636,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Row _buildFieldGender(ProfileScreenViewModel model) {
+  Row _buildFieldGender(DependentProfileViewModel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -732,14 +732,15 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Positioned _buildAppbar(BuildContext context) {
+  Positioned _buildAppbar(
+      BuildContext context, DependentProfileViewModel model) {
     return Positioned(
       top: 0.0,
       left: 0.0,
       right: 0.0,
       child: AppBar(
         title: Text(
-          'Your Profile',
+          model.fullNameController.text + "'s profile",
           style: GoogleFonts.varelaRound(
               fontWeight: FontWeight.bold, fontSize: 22),
         ),
@@ -755,7 +756,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  ClipPath _buildImageSelectField(ProfileScreenViewModel model) {
+  ClipPath _buildImageSelectField(DependentProfileViewModel model) {
     return ClipPath(
       clipper: MyClipper(),
       child: GestureDetector(
@@ -769,9 +770,6 @@ class ProfileScreen extends StatelessWidget {
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [Colors.lightBlue[200], Colors.blue[600]]),
-            image: DecorationImage(
-              image: AssetImage(PROFILE_BACKGROUD),
-            ),
           ),
           child: Align(
             alignment: Alignment.center,
@@ -809,14 +807,14 @@ class ProfileScreen extends StatelessWidget {
   }
 
   GestureDetector _buildSaveButton(
-      BuildContext context, ProfileScreenViewModel model) {
+      BuildContext context, DependentProfileViewModel model) {
     return GestureDetector(
       onTap: () async {
         bool check = await model.updateInformation();
         print("Check: " + check.toString());
 
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => ProfileScreen()));
+            builder: (BuildContext context) => DependentProfileScreen()));
       },
       child: Padding(
         padding: const EdgeInsets.all(4.0),
