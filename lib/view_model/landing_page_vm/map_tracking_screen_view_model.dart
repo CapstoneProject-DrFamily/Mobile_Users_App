@@ -94,10 +94,7 @@ class MapTrackingScreenViewModel extends BaseModel {
         .child(doctorFBid)
         .once()
         .then((DataSnapshot dataSnapshot) {
-      Map<dynamic, dynamic> values = dataSnapshot.value;
-      values.forEach((key, values) async {
-        notiToken = values['token'];
-      });
+      notiToken = dataSnapshot.value['token'];
     });
 
     updateDoctorLocation =
@@ -241,6 +238,8 @@ class MapTrackingScreenViewModel extends BaseModel {
     bool cancel = await _transactionRepo.updateTransaction(transactionJson);
 
     if (cancel) {
+      print(notiToken);
+
       _notifyRepo.cancelTransaction(
           _transactionMapModel.transactionId, notiToken);
       Fluttertoast.showToast(
