@@ -95,9 +95,8 @@ class MapTrackingScreenViewModel extends BaseModel {
         .once()
         .then((DataSnapshot dataSnapshot) {
       Map<dynamic, dynamic> values = dataSnapshot.value;
-      values.forEach((key, values) async {
-        notiToken = values['token'];
-      });
+
+      notiToken = values['token'];
     });
 
     updateDoctorLocation =
@@ -122,46 +121,51 @@ class MapTrackingScreenViewModel extends BaseModel {
     _transactionMapModel =
         await _transactionRepo.detailTransactionMap(_transactionID);
     //format list symptom to display
-    bool first = true;
-    SymptomTempModel symptom;
-    String sympTitle;
-    List<SymptomTempModel> symptomsList = _transactionMapModel.patientSymptom;
-    String symptomName;
-    for (int i = 0; i < symptomsList.length; i++) {
-      if (titleSymptom.contains(symptomsList[i].symptomtype)) {
-        if (i == (symptomsList.length - 1)) {
-          symptomName = symptomName + symptomsList[i].symptomName;
-        } else {
-          symptomName = symptomName + symptomsList[i].symptomName + ", ";
-        }
-        first = false;
-      } else {
-        if (first == true) {
-          titleSymptom.add(symptomsList[i].symptomtype);
-          sympTitle = symptomsList[i].symptomtype;
-          symptomName = "";
-          symptomName = symptomName + symptomsList[i].symptomName + ", ";
-        } else {
-          first = true;
-          symptomName = symptomName.substring(0, symptomName.length - 2);
-          symptom = SymptomTempModel(
-              symptomtype: sympTitle, symptomName: symptomName);
-          symptomsDisplay.add(symptom);
-          titleSymptom.add(symptomsList[i].symptomtype);
-          sympTitle = symptomsList[i].symptomtype;
+    print('stymptom: ${transactionMapModel.patientSymptom.isEmpty}');
+    if (_transactionMapModel.patientSymptom.isEmpty) {
+      symptomsDisplay = [];
+    } else {
+      bool first = true;
+      SymptomTempModel symptom;
+      String sympTitle;
+      List<SymptomTempModel> symptomsList = _transactionMapModel.patientSymptom;
+      String symptomName;
+      for (int i = 0; i < symptomsList.length; i++) {
+        if (titleSymptom.contains(symptomsList[i].symptomtype)) {
           if (i == (symptomsList.length - 1)) {
-            symptomName = "";
             symptomName = symptomName + symptomsList[i].symptomName;
           } else {
+            symptomName = symptomName + symptomsList[i].symptomName + ", ";
+          }
+          first = false;
+        } else {
+          if (first == true) {
+            titleSymptom.add(symptomsList[i].symptomtype);
+            sympTitle = symptomsList[i].symptomtype;
             symptomName = "";
             symptomName = symptomName + symptomsList[i].symptomName + ", ";
+          } else {
+            first = true;
+            symptomName = symptomName.substring(0, symptomName.length - 2);
+            symptom = SymptomTempModel(
+                symptomtype: sympTitle, symptomName: symptomName);
+            symptomsDisplay.add(symptom);
+            titleSymptom.add(symptomsList[i].symptomtype);
+            sympTitle = symptomsList[i].symptomtype;
+            if (i == (symptomsList.length - 1)) {
+              symptomName = "";
+              symptomName = symptomName + symptomsList[i].symptomName;
+            } else {
+              symptomName = "";
+              symptomName = symptomName + symptomsList[i].symptomName + ", ";
+            }
           }
         }
       }
+      symptom =
+          SymptomTempModel(symptomtype: sympTitle, symptomName: symptomName);
+      symptomsDisplay.add(symptom);
     }
-    symptom =
-        SymptomTempModel(symptomtype: sympTitle, symptomName: symptomName);
-    symptomsDisplay.add(symptom);
     print('transaction ${transactionMapModel.estimateTime}');
     durationString = transactionMapModel.estimateTime;
 
