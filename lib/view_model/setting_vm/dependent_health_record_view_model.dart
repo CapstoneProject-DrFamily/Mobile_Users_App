@@ -9,7 +9,7 @@ import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HealthRecordViewModel extends BaseModel {
+class DependentHealthRecordViewModel extends BaseModel {
   final IHealthRecordRepo _healthRecordRepo = HealthRecordRepo();
   final IProfileRepo _profileRepo = ProfileRepo();
   HealthRecordModel _healthRecordModel;
@@ -59,7 +59,7 @@ class HealthRecordViewModel extends BaseModel {
   TextEditingController _toiletTypeController = TextEditingController();
   TextEditingController _otherRisksController = TextEditingController();
 
-  String _conditionAtBirth = "";
+  String _conditionAtBirth = "Spontaneous delivery";
 
   //Getter
   TextEditingController get conditionAtBirthController =>
@@ -129,16 +129,14 @@ class HealthRecordViewModel extends BaseModel {
   int get choiceActivity => _choiceActivity;
   //----------------------------------------
 
-  //Constructor
-  HealthRecordViewModel() {
+  DependentHealthRecordViewModel() {
     getHealthRecordByID();
   }
 
   void getHealthRecordByID() async {
     this._isLoading = true;
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    profileID = prefs.getInt("usProfileID");
+    profileID = prefs.getInt("dependentProfileID");
 
     _profileModel = await _profileRepo.getBasicInfo(profileID.toString());
     _additionInfoModel = _profileModel.additionInfoModel;
@@ -233,16 +231,6 @@ class HealthRecordViewModel extends BaseModel {
 
     this._isLoading = false;
     notifyListeners();
-  }
-
-  void printCheck() async {
-    print("Condition: " + _conditionAtBirthController.text);
-    print("birthWeight: " + _birthWeightController.text);
-    print("birthHeight: " + _birthHeightController.text);
-    print("birthDefects: " + _birthDefectsController.text);
-    print("strCigarette" + strCigarette);
-
-    updateHealthRecord();
   }
 
   void changeConditionAtBirth(String newChoice) {
