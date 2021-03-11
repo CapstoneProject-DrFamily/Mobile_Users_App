@@ -1,13 +1,15 @@
+import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/doctor_detail_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class DoctorDetailScreen extends StatelessWidget {
   final int id;
-  final String token;
+  final String token, fbId;
 
-  DoctorDetailScreen({Key key, @required this.id, @required this.token})
+  DoctorDetailScreen({Key key, @required this.id, @required this.token,this.fbId})
       : super(key: key);
 
   @override
@@ -15,7 +17,7 @@ class DoctorDetailScreen extends StatelessWidget {
     return BaseView<DoctorDetailViewModel>(
       builder: (context, child, model) {
         return FutureBuilder(
-          future: model.getDoctorDetail(id, token),
+          future: model.getDoctorDetail(id, token,fbId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Scaffold(
@@ -25,22 +27,7 @@ class DoctorDetailScreen extends StatelessWidget {
                   child: Stack(
                     children: [
                       _buildBody(context, model),
-                      Positioned(
-                        top: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: AppBar(
-                          title: Text(''), // You can add title here
-                          leading: new IconButton(
-                            icon: new Icon(Icons.arrow_back_ios,
-                                color: Colors.white),
-                            onPressed: () => Navigator.of(context).pop(),
-                          ),
-                          backgroundColor: Colors.blue
-                              .withOpacity(0), //You can make this transparent
-                          elevation: 0.0, //No shadow
-                        ),
-                      ),
+                      _buildAppbar(context),
                     ],
                   ),
                 ),
@@ -53,6 +40,43 @@ class DoctorDetailScreen extends StatelessWidget {
           },
         );
       },
+    );
+  }
+
+  Positioned _buildAppbar(BuildContext context) {
+    return Positioned(
+      top: 0.0,
+      left: 0.0,
+      right: 0.0,
+      child: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              alignment: Alignment.center,
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Color(0xff4ee1c7),
+              ),
+              child: IconButton(
+                icon: Icon(EvaIcons.home, color: Colors.white),
+                onPressed: () {
+                  _confirmDialog(context);
+                },
+              ),
+            ),
+          ],
+        ), // You can add title here
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor:
+            Colors.blue.withOpacity(0), //You can make this transparent
+        elevation: 0.0, //No shadow
+      ),
     );
   }
 
@@ -238,6 +262,152 @@ class DoctorDetailScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Future _confirmDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (alertContext) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.45,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 25,
+                ),
+                Icon(
+                  Icons.info,
+                  color: Color(0xff4ee1c7),
+                  size: 90,
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Please Note",
+                  style: TextStyle(
+                    fontSize: 27,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'avenir',
+                    color: Color(0xff0d47a1),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  'You have not finished booking your',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'avenir',
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'appointment. Are you sure that you would',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'avenir',
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'like to go back to the home page?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'avenir',
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => LandingScreen()),
+                            (Route<dynamic> route) => false);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(alertContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "Yes",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(alertContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "No",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
