@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:commons/commons.dart';
 import 'package:drFamily_app/Helper/validate.dart';
 import 'package:drFamily_app/model/sign_up/signup_model.dart';
 import 'package:drFamily_app/repository/sign_up/sign_up_repo.dart';
@@ -165,7 +166,7 @@ class SignUpViewModel extends BaseModel {
     return url;
   }
 
-  Future<bool> createNewAccount() async {
+  Future<bool> createNewAccount(BuildContext context) async {
     _check = true;
     if (_fullName.value == null) {
       checkFullName(null);
@@ -173,6 +174,7 @@ class SignUpViewModel extends BaseModel {
     }
 
     if (_check = true) {
+      waitDialog(context, message: "Creating account! please wait...");
       String currentImage;
 
       if (_image != null) {
@@ -201,6 +203,8 @@ class SignUpViewModel extends BaseModel {
       if (check == true) check = await _signUpRepo.createHealthRecord();
 
       if (check == true) check = await _signUpRepo.createPatient();
+
+      Navigator.pop(context);
     }
     return check;
   }
