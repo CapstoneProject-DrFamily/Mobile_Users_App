@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:commons/commons.dart';
 import 'package:drFamily_app/model/doctor_detail_model.dart';
 import 'package:drFamily_app/repository/doctor_repo.dart';
 import 'package:drFamily_app/repository/notify_repo.dart';
@@ -10,7 +11,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DoctorDetailViewModel extends BaseModel {
@@ -60,6 +60,7 @@ class DoctorDetailViewModel extends BaseModel {
     );
 
     if (!isOnline) {
+      waitDialog(context, duration: Duration(milliseconds: 500));
       Fluttertoast.showToast(
         msg: "Doctor now is not online",
         textColor: Colors.red,
@@ -76,6 +77,14 @@ class DoctorDetailViewModel extends BaseModel {
       print('transactionStatus $usTransactionStatus');
 
       if (usTransactionStatus.endsWith("waiting")) {
+        print("in waiting");
+
+        waitDialog(
+          context,
+          duration: Duration(seconds: 1),
+        );
+        await Future.delayed(const Duration(seconds: 1));
+
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -85,6 +94,9 @@ class DoctorDetailViewModel extends BaseModel {
         );
         transactionID = prefs.getString("usTransaction");
       } else {
+        print("in else");
+        transactionID = await newTransaction(prefs, context);
+
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -93,7 +105,6 @@ class DoctorDetailViewModel extends BaseModel {
             ),
           ),
         );
-        transactionID = await newTransaction(prefs);
       }
 
       print(transactionID);
@@ -103,7 +114,11 @@ class DoctorDetailViewModel extends BaseModel {
     }
   }
 
-  Future<String> newTransaction(SharedPreferences prefs) async {
+  Future<String> newTransaction(
+      SharedPreferences prefs, BuildContext context) async {
+    waitDialog(
+      context,
+    );
     prefs.setString("usTransactionStatus", "waiting");
 
     var usServiceID = prefs.getInt("usServiceID");
@@ -151,6 +166,8 @@ class DoctorDetailViewModel extends BaseModel {
     String transactionID = await _transactionRepo.addTransaction(transaction);
 
     prefs.setString("usTransaction", transactionID);
+
+    Navigator.pop(context);
 
     return transactionID;
   }

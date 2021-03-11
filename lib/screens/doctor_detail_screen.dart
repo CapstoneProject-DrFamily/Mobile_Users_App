@@ -9,7 +9,8 @@ class DoctorDetailScreen extends StatelessWidget {
   final int id;
   final String token, fbId;
 
-  DoctorDetailScreen({Key key, @required this.id, @required this.token,this.fbId})
+  DoctorDetailScreen(
+      {Key key, @required this.id, @required this.token, this.fbId})
       : super(key: key);
 
   @override
@@ -17,7 +18,7 @@ class DoctorDetailScreen extends StatelessWidget {
     return BaseView<DoctorDetailViewModel>(
       builder: (context, child, model) {
         return FutureBuilder(
-          future: model.getDoctorDetail(id, token,fbId),
+          future: model.getDoctorDetail(id, token, fbId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Scaffold(
@@ -265,6 +266,125 @@ class DoctorDetailScreen extends StatelessWidget {
     );
   }
 
+  Future _confirmBookingDialog(
+      BuildContext context, DoctorDetailViewModel model) {
+    return showDialog(
+      context: context,
+      builder: (bookingContext) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.4,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 25,
+                ),
+                Icon(
+                  Icons.info,
+                  color: Color(0xff4ee1c7),
+                  size: 90,
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Confirmation?",
+                  style: TextStyle(
+                    fontSize: 27,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'avenir',
+                    color: Color(0xff0d47a1),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  'Are you sure want to book this doctor?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'avenir',
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.pop(bookingContext);
+                        model.confirmBooking(context);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(bookingContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "Yes",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.pop(bookingContext);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(bookingContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "No",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Future _confirmDialog(BuildContext context) {
     return showDialog(
       context: context,
@@ -379,7 +499,7 @@ class DoctorDetailScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pop(alertContext);
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -415,7 +535,7 @@ class DoctorDetailScreen extends StatelessWidget {
       DoctorDetailViewModel model, BuildContext context) {
     return GestureDetector(
       onTap: () {
-        model.confirmBooking(context);
+        _confirmBookingDialog(context, model);
       },
       child: Padding(
         padding: const EdgeInsets.all(4.0),
