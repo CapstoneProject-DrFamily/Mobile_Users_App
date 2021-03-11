@@ -3,6 +3,7 @@ import 'package:drFamily_app/view_model/setting_vm/add_dependent_profile_screen_
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddDependentProfilePage extends StatelessWidget {
   @override
@@ -96,8 +97,27 @@ class AddDependentProfilePage extends StatelessWidget {
                     ),
                     child: RaisedButton(
                       color: Colors.lightBlue,
-                      onPressed: () {
-                        model.completeProcess();
+                      onPressed: () async {
+                        bool isCreated = await model.createDependent();
+                        if (isCreated) {
+                          Fluttertoast.showToast(
+                            msg: "Add Dependent success",
+                            textColor: Colors.red,
+                            toastLength: Toast.LENGTH_SHORT,
+                            backgroundColor: Colors.white,
+                            gravity: ToastGravity.CENTER,
+                          );
+                          Navigator.of(context).pop();
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Add Dependent fail",
+                            textColor: Colors.red,
+                            toastLength: Toast.LENGTH_SHORT,
+                            backgroundColor: Colors.white,
+                            gravity: ToastGravity.CENTER,
+                          );
+                          Navigator.of(context).pop();
+                        }
                       },
                       textColor: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -176,7 +196,7 @@ class AddDependentProfilePage extends StatelessWidget {
       centerTitle: true,
       elevation: 0,
       title: new Text(
-        "ADD PEOPLE",
+        "ADD DEPENDENT",
       ),
     );
   }
@@ -187,7 +207,6 @@ class AddDependentProfilePage extends StatelessWidget {
         top: 10.0,
         left: 30.0,
         right: 20.0,
-        // right: 270.0,
       ),
       child: TextFormField(
         controller: model.fullNameController,
@@ -214,7 +233,6 @@ class AddDependentProfilePage extends StatelessWidget {
         top: 10.0,
         left: 30.0,
         right: 20.0,
-        // right: 270.0,
       ),
       child: TextFormField(
         controller: model.phoneController,
@@ -242,7 +260,6 @@ class AddDependentProfilePage extends StatelessWidget {
         top: 10.0,
         left: 30.0,
         right: 20.0,
-        // right: 270.0,
       ),
       child: GestureDetector(
         onTap: () {

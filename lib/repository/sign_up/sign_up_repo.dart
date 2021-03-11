@@ -57,7 +57,7 @@ class SignUpRepo extends ISignUpRepo {
 
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    sharedPreferences.setInt("usProfileID", profileId);
+    // sharedPreferences.setInt("usProfileID", profileId);
     phone = sharedPreferences.getString('usPhone');
     accountId = sharedPreferences.getInt('usAccountID');
     formatPhone = phone.replaceFirst("0", "84");

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:drFamily_app/screens/setting/dependent_profile_screen.dart';
+import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
 import 'package:drFamily_app/model/setting/addition_info_model.dart';
@@ -33,7 +34,7 @@ class DependentProfileViewModel extends BaseModel {
 
   String _height = "";
   String _weight = "";
-  String _currentImage = "";
+  String _currentImage = DEFAULT_IMG;
   String _selectGender;
 
   int _gender = 0;
@@ -194,16 +195,20 @@ class DependentProfileViewModel extends BaseModel {
     DateTime date = DateTime.parse(_profileModel.dob);
     changeDOB(date);
 
-    if (_profileModel.gender.trim() == "Male") {
+    if (_profileModel.gender == "Male") {
       changeGender(0);
-    } else if (_profileModel.gender.trim() == "Female") {
+    } else if (_profileModel.gender == "Female") {
       changeGender(1);
     } else {
       changeGender(2);
     }
 
     phoneNumController.text = _profileModel.phone;
-    _currentImage = _profileModel.image;
+
+    if (_profileModel.image != null) {
+      _currentImage = _profileModel.image;
+    }
+
     emailController.text = _profileModel.email;
     idCardController.text = _profileModel.idCard;
 

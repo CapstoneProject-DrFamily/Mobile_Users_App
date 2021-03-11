@@ -1,7 +1,16 @@
+import 'dart:convert';
+
+import 'package:drFamily_app/model/sign_up/signup_model.dart';
+import 'package:drFamily_app/repository/setting/dependent_repo.dart';
+import 'package:drFamily_app/repository/sign_up/sign_up_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 class AddDependentProfileScreenViewModel extends BaseModel {
+  IDependentRepo _dependentRepo = DependentRepo();
+  SignUpModel _signUpModel;
+
   // controller
   TextEditingController _fullNameController = TextEditingController();
   TextEditingController get fullNameController => _fullNameController;
@@ -55,5 +64,29 @@ class AddDependentProfileScreenViewModel extends BaseModel {
         _phoneNumValue +
         "Relation: " +
         _relationshipValue);
+  }
+
+  Future<bool> createDependent() async {
+    _signUpModel = new SignUpModel(
+      fullName: _fullNameController.text,
+      dob: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      gender: null,
+      phone: _phoneController.text,
+      image: null,
+      email: null,
+      idCard: null,
+    );
+
+    String addProfileJson = jsonEncode(_signUpModel.toJson());
+    print(addProfileJson + "\n");
+
+    bool check = await _dependentRepo.createDependentProfile(addProfileJson);
+
+    if (check == true) check = await _dependentRepo.createHealthRecord();
+
+    if (check == true)
+      check = await _dependentRepo.createPatient(_relationshipValue);
+
+    return check;
   }
 }
