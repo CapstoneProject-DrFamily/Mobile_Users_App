@@ -275,7 +275,7 @@ class VerifyOTPViewModel extends BaseModel {
     };
     try {
       print(number);
-      // if (number[0].endsWith('0')) number = number.substring(1, number.length);
+      if (number[0].endsWith('0')) number = number.substring(1, number.length);
       await _auth.verifyPhoneNumber(
           phoneNumber: '+84' + number.trim(),
           timeout: const Duration(seconds: 60),
