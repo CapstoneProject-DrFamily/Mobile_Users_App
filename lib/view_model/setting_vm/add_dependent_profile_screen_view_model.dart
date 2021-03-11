@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:drFamily_app/model/sign_up/signup_model.dart';
 import 'package:drFamily_app/repository/setting/dependent_repo.dart';
-import 'package:drFamily_app/repository/sign_up/sign_up_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:drFamily_app/screens/setting/dependent_profile_screen.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;

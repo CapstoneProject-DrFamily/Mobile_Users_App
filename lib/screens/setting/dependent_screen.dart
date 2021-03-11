@@ -1,4 +1,3 @@
-import 'package:drFamily_app/screens/setting/dependent_profile_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/setting_vm/dependent_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';

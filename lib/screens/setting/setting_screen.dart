@@ -1,9 +1,6 @@
 import 'package:drFamily_app/screens/setting/dependent_screen.dart';
-import 'package:drFamily_app/screens/setting/health_record_screen.dart';
-import 'package:drFamily_app/screens/setting/profile_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/setting_view_model.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

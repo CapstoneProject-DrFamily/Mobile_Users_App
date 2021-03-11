@@ -1,6 +1,6 @@
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
-import 'package:drFamily_app/view_model/doctor_detail_view_model.dart';
+import 'package:drFamily_app/view_model/home_vm/doctor_detail_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';

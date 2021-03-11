@@ -1,6 +1,5 @@
 import 'package:drFamily_app/Helper/StatefulWrapper.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
-import 'package:drFamily_app/screens/doctor_detail_screen.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/list_doctor_screen_view_model.dart';

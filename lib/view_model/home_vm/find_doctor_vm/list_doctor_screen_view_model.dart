@@ -1,6 +1,6 @@
 import 'package:drFamily_app/model/doctor_model.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
-import 'package:drFamily_app/screens/doctor_detail_screen.dart';
+import 'package:drFamily_app/screens/home/doctor_detail_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';

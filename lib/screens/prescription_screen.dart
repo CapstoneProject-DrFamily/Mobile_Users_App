@@ -4,7 +4,6 @@ import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:flutter/material.dart';
 
 class PrescrptionScreen extends StatelessWidget {
-  ScrollController scrollControler = ScrollController();
   @override
   Widget build(BuildContext context) {
     return BaseView<PrescriptionViewModel>(
