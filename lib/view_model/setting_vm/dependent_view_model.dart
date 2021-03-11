@@ -1,5 +1,6 @@
 import 'package:drFamily_app/model/dependent_model.dart';
 import 'package:drFamily_app/repository/setting/dependent_repo.dart';
+import 'package:drFamily_app/screens/landing_page/add_dependent_profile_page.dart';
 import 'package:drFamily_app/screens/setting/dependent_health_record_screen.dart';
 import 'package:drFamily_app/screens/setting/dependent_profile_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DependentViewModel extends BaseModel {
-  final IDependentRepo _patientRepo = DependentRepo();
+  final IDependentRepo _dependentRepo = DependentRepo();
 
   List<DependentModel> _listDependent = [];
   List<DependentModel> get listDependent => _listDependent;
@@ -27,7 +28,7 @@ class DependentViewModel extends BaseModel {
     notifyListeners();
 
     _listDependent =
-        await _patientRepo.getListDependent(accountID).whenComplete(() {
+        await _dependentRepo.getListDependent(accountID).whenComplete(() {
       _isLoading = false;
     });
     notifyListeners();
@@ -49,5 +50,18 @@ class DependentViewModel extends BaseModel {
         builder: (context) => DependentHealthRecordScreen(),
       ),
     ).then((value) => getListDependent());
+  }
+
+  void addDependent(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddDependentProfilePage(),
+      ),
+    ).then((value) => getListDependent());
+  }
+
+  Future<bool> deleteDependent(int patientID) async {
+    return _dependentRepo.deleteDependent(patientID);
   }
 }

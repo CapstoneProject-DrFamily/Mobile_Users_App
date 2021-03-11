@@ -200,7 +200,8 @@ class SignUpViewModel extends BaseModel {
 
       if (check == true) check = await _signUpRepo.createHealthRecord();
 
-      if (check == true) return _signUpRepo.createPatient();
+      if (check == true) check = await _signUpRepo.createPatient();
     }
+    return check;
   }
 }

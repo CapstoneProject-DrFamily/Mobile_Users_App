@@ -4,6 +4,7 @@ import 'package:drFamily_app/view_model/setting_vm/dependent_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:drFamily_app/widgets/common/fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,7 +41,9 @@ class DependentScreen extends StatelessWidget {
                   ? Column(
                       children: <Widget>[
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            model.addDependent(context);
+                          },
                           child: Container(
                             margin: EdgeInsets.only(top: 15.0),
                             width: MediaQuery.of(context).size.width * 0.8,
@@ -72,7 +75,7 @@ class DependentScreen extends StatelessWidget {
                                         EdgeInsets.symmetric(vertical: 15.0),
                                     child: Material(
                                       borderRadius: BorderRadius.circular(20.0),
-                                      elevation: 4.0,
+                                      elevation: 6.0,
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(
                                           horizontal: 20.0,
@@ -88,8 +91,14 @@ class DependentScreen extends StatelessWidget {
                                               child: CircleAvatar(
                                                 radius: 40,
                                                 backgroundColor: Colors.white,
-                                                backgroundImage: NetworkImage(
-                                                    model.listDependent[index]
+                                                backgroundImage: model
+                                                            .listDependent[
+                                                                index]
+                                                            .dependentImage ==
+                                                        null
+                                                    ? NetworkImage(DEFAULT_IMG)
+                                                    : NetworkImage(model
+                                                        .listDependent[index]
                                                         .dependentImage),
                                               ),
                                             ),
@@ -263,6 +272,93 @@ class DependentScreen extends StatelessWidget {
                                                     ),
                                                   ],
                                                 ),
+                                                SizedBox(
+                                                  height: 15.0,
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () async {
+                                                    bool isDelete = await model
+                                                        .deleteDependent(model
+                                                            .listDependent[
+                                                                index]
+                                                            .patientID);
+                                                    if (isDelete) {
+                                                      Fluttertoast.showToast(
+                                                        msg:
+                                                            "Delete Dependent success",
+                                                        textColor: Colors.red,
+                                                        toastLength:
+                                                            Toast.LENGTH_SHORT,
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        gravity:
+                                                            ToastGravity.CENTER,
+                                                      );
+                                                      Navigator.of(context).pushReplacement(
+                                                          MaterialPageRoute(
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  DependentScreen()));
+                                                    } else {
+                                                      Fluttertoast.showToast(
+                                                        msg:
+                                                            "Delete Dependent fail",
+                                                        textColor: Colors.red,
+                                                        toastLength:
+                                                            Toast.LENGTH_SHORT,
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        gravity:
+                                                            ToastGravity.CENTER,
+                                                      );
+                                                      Navigator.of(context).pushReplacement(
+                                                          MaterialPageRoute(
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  DependentScreen()));
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.62,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.08,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.red,
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  16)),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey
+                                                              .withOpacity(0.3),
+                                                          spreadRadius: 1,
+                                                          blurRadius: 7,
+                                                          offset: Offset(0,
+                                                              3), // changes position of shadow
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        'Delete dependent',
+                                                        style: GoogleFonts
+                                                            .varelaRound(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ],
@@ -299,7 +395,9 @@ class DependentScreen extends StatelessWidget {
                             height: 20.0,
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              model.addDependent(context);
+                            },
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.8,
                               height: MediaQuery.of(context).size.height / 14,
