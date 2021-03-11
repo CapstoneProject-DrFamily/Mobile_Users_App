@@ -76,17 +76,17 @@ class LandingPageViewModel extends BaseModel {
   List<BottomNavyBarItem> _listItem = [
     BottomNavyBarItem(
         icon: Icon(EvaIcons.cameraOutline),
-        title: Text('Doctor'),
-        textAlign: TextAlign.center,
-        activeColor: Colors.blue[400]),
-    BottomNavyBarItem(
-        icon: Icon(EvaIcons.gridOutline),
-        title: Text('Service'),
+        title: Text('Home'),
         textAlign: TextAlign.center,
         activeColor: Colors.blue[400]),
     BottomNavyBarItem(
         icon: Icon(EvaIcons.calendarOutline),
-        title: Text('Appointment'),
+        title: Text('Schedule'),
+        textAlign: TextAlign.center,
+        activeColor: Colors.blue[400]),
+    BottomNavyBarItem(
+        icon: Icon(EvaIcons.clockOutline),
+        title: Text('Records'),
         textAlign: TextAlign.center,
         activeColor: Colors.blue[400]),
     BottomNavyBarItem(

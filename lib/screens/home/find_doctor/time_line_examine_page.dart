@@ -57,24 +57,6 @@ class TimeLineExamineScreen extends StatelessWidget {
                           _buildMainText(),
                           SizedBox(height: 20),
                           _buildTimeLine(context, model),
-                          InkWell(
-                            onTap: () {
-                              print('oke');
-                              model.continueStep();
-                              // FeedBackDialog().showCustomDialog(context);
-                            },
-                            child: Container(
-                              width: 100,
-                              height: 50,
-                              color: Colors.blue,
-                              child: Center(
-                                child: Text(
-                                  'Next',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),

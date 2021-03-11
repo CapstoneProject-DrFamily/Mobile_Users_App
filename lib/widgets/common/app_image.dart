@@ -25,3 +25,5 @@ const String PROFILE_BACKGROUD = 'assets/images/virus.png';
 const String DEFAULT_IMG =
     'https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/UserStorage%2FdefaultImg.png?alt=media&token=43fd6f6f-665f-40bf-8a4e-d2cf05b9f94f';
 const String DEPENDENT_ICON = 'assets/images/dependent.png';
+const String NOT_FOUND_DOCTOR = 'assets/images/doctor.svg';
+

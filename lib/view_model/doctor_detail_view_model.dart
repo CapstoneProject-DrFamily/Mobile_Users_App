@@ -1,13 +1,16 @@
 import 'dart:convert';
 
+import 'package:commons/commons.dart';
 import 'package:drFamily_app/model/doctor_detail_model.dart';
 import 'package:drFamily_app/repository/doctor_repo.dart';
 import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/home/find_doctor/waiting_booking_doctor_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DoctorDetailViewModel extends BaseModel {
@@ -23,48 +26,99 @@ class DoctorDetailViewModel extends BaseModel {
   bool get isLoading => _isLoading;
 
   String _tokenNotiDoctor;
+  String _fbId;
+
+  DatabaseReference _doctorRequest;
 
   DoctorDetailViewModel();
 
-  Future<void> getDoctorDetail(int doctorId, String token) async {
+  Future<void> getDoctorDetail(int doctorId, String token, String fbID) async {
     _doctor = await _doctorRepo.getDoctor(doctorId);
+    _fbId = fbID;
     _tokenNotiDoctor = token;
-    print(_tokenNotiDoctor);
+    print('notiToken: $_tokenNotiDoctor - fbId: $fbID');
   }
 
   Future<void> confirmBooking(BuildContext context) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var usTransactionStatus = prefs.getString("usTransactionStatus");
-    var usNotiToken = prefs.getString("usNotiToken");
-    String transactionID;
-    print('transactionStatus $usTransactionStatus');
+    bool isOnline = false;
+    _doctorRequest =
+        FirebaseDatabase.instance.reference().child("Doctor Request");
 
-    if (usTransactionStatus.endsWith("waiting")) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => WaitingBookingDoctorScreen(
-                  token: _tokenNotiDoctor,
-                )),
+    await _doctorRequest.child(_fbId).once().then(
+      (DataSnapshot dataSnapshot) {
+        if (dataSnapshot.value == null) {
+          isOnline = false;
+        } else {
+          var status = dataSnapshot.value["doctor_status"];
+          if (status == "waiting") {
+            isOnline = true;
+          } else {
+            isOnline = false;
+          }
+        }
+      },
+    );
+
+    if (!isOnline) {
+      waitDialog(context, duration: Duration(milliseconds: 500));
+      Fluttertoast.showToast(
+        msg: "Doctor now is not online",
+        textColor: Colors.red,
+        toastLength: Toast.LENGTH_LONG,
+        backgroundColor: Colors.white,
+        gravity: ToastGravity.CENTER,
       );
-      transactionID = prefs.getString("usTransaction");
+      Navigator.pop(context);
     } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      var usTransactionStatus = prefs.getString("usTransactionStatus");
+      var usNotiToken = prefs.getString("usNotiToken");
+      String transactionID;
+      print('transactionStatus $usTransactionStatus');
+
+      if (usTransactionStatus.endsWith("waiting")) {
+        print("in waiting");
+
+        waitDialog(
+          context,
+          duration: Duration(seconds: 1),
+        );
+        await Future.delayed(const Duration(seconds: 1));
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => WaitingBookingDoctorScreen(
+                    token: _tokenNotiDoctor,
+                  )),
+        );
+        transactionID = prefs.getString("usTransaction");
+      } else {
+        print("in else");
+        transactionID = await newTransaction(prefs, context);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
             builder: (context) => WaitingBookingDoctorScreen(
-                  token: _tokenNotiDoctor,
-                )),
-      );
-      transactionID = await newTransaction(prefs);
+              token: _tokenNotiDoctor,
+            ),
+          ),
+        );
+      }
+
+      print(transactionID);
+
+      await _notifyRepo.bookDoctor(
+          _tokenNotiDoctor, transactionID, usNotiToken);
     }
-
-    print(transactionID);
-
-    await _notifyRepo.bookDoctor(_tokenNotiDoctor, transactionID, usNotiToken);
   }
 
-  Future<String> newTransaction(SharedPreferences prefs) async {
+  Future<String> newTransaction(
+      SharedPreferences prefs, BuildContext context) async {
+    waitDialog(
+      context,
+    );
     prefs.setString("usTransactionStatus", "waiting");
 
     var usServiceID = prefs.getInt("usServiceID");
@@ -112,6 +166,8 @@ class DoctorDetailViewModel extends BaseModel {
     String transactionID = await _transactionRepo.addTransaction(transaction);
 
     prefs.setString("usTransaction", transactionID);
+
+    Navigator.pop(context);
 
     return transactionID;
   }

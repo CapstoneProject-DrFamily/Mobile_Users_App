@@ -1,6 +1,7 @@
-import 'package:drFamily_app/screens/home/find_doctor/list_doctor_page.dart';
+import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/map_page_view_model.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,6 +10,7 @@ class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _buildAppbar(context),
       backgroundColor: Colors.white,
       body: BaseView<MapPageViewModel>(
         builder: (context, child, model) {
@@ -26,7 +28,7 @@ class MapScreen extends StatelessWidget {
                 _buildContinueButtom(context, model),
                 model.currentSearch.length > 1
                     ? Container(
-                        margin: EdgeInsets.only(top: 80, left: 20, right: 20),
+                        margin: EdgeInsets.only(top: 60, left: 20, right: 20),
                         child: MediaQuery.removePadding(
                           context: context,
                           removeTop: true,
@@ -80,6 +82,183 @@ class MapScreen extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+
+  AppBar _buildAppbar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0.0, //No shadow
+      leading: new IconButton(
+        icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Color(0xff567feb),
+            ),
+            child: IconButton(
+              icon: Icon(EvaIcons.home, color: Colors.white),
+              onPressed: () {
+                _confirmDialog(context);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future _confirmDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (alertContext) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.45,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 25,
+                ),
+                Icon(
+                  Icons.info,
+                  color: Color(0xff4ee1c7),
+                  size: 90,
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Please Note",
+                  style: TextStyle(
+                    fontSize: 27,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'avenir',
+                    color: Color(0xff0d47a1),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  'You have not finished booking your',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'avenir',
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'appointment. Are you sure that you would',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'avenir',
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'like to go back to the home page?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'avenir',
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => LandingScreen()),
+                            (Route<dynamic> route) => false);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(alertContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "Yes",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(alertContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "No",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -179,7 +358,7 @@ class MapScreen extends StatelessWidget {
 
   Padding _buildSearchAddressField(MapPageViewModel model) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: TextFormField(
         controller: model.addressController,
         onChanged: (value) => model.searchPlace(value),
