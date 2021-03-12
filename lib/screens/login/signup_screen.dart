@@ -37,7 +37,7 @@ class SignUpScreen extends StatelessWidget {
                   _emailField(context, model),
                   GestureDetector(
                     onTap: () async {
-                      bool check = await model.createNewAccount();
+                      bool check = await model.createNewAccount(context);
                       print("Check: " + check.toString());
                       if (check) {
                         Navigator.of(context).pushAndRemoveUntil(

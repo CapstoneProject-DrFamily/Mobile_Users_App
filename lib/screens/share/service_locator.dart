@@ -1,4 +1,5 @@
 import 'package:drFamily_app/view_model/home_vm/doctor_detail_view_model.dart';
+import 'package:drFamily_app/view_model/landing_page_vm/history_record_screen_view_model.dart';
 import 'package:drFamily_app/view_model/setting_vm/dependent_health_record_view_model.dart';
 import 'package:drFamily_app/view_model/setting_vm/dependent_profile_view_model.dart';
 import 'package:drFamily_app/view_model/setting_vm/dependent_view_model.dart';
@@ -57,4 +58,6 @@ void setupLocator() {
       () => DependentProfileViewModel());
   locator.registerFactory<DependentHealthRecordViewModel>(
       () => DependentHealthRecordViewModel());
+  locator.registerFactory<HistoryRecordScreenViewModel>(
+      () => HistoryRecordScreenViewModel());
 }

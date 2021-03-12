@@ -57,17 +57,18 @@ class SignUpRepo extends ISignUpRepo {
 
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    // sharedPreferences.setInt("usProfileID", profileId);
+    sharedPreferences.setInt("usProfileID", profileId);
     phone = sharedPreferences.getString('usPhone');
+    if (phone[0].endsWith('0')) phone = phone.substring(1, phone.length);
+    phone = "84" + phone;
     accountId = sharedPreferences.getInt('usAccountID');
-    formatPhone = phone.replaceFirst("0", "84");
 
     _userUpdateModel = new UserUpdateModel(
         disable: 0,
         updBy: phone,
         updDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
         accountId: accountId,
-        username: formatPhone,
+        username: phone,
         password: null,
         roleId: 2,
         profileId: profileId,
@@ -129,7 +130,7 @@ class SignUpRepo extends ISignUpRepo {
     _patientCreateModel = new PatientCreateModel(
         profileId: profileId,
         healthRecordId: healthRecordId,
-        relationship: "owner",
+        relationship: "Owner",
         accountId: accountId);
     String createPatientJson = jsonEncode(_patientCreateModel.toJson());
     print("CreatePatientJson: " + createPatientJson);

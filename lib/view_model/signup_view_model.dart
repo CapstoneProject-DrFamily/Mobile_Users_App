@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:commons/commons.dart';
 import 'package:drFamily_app/Helper/validate.dart';
 import 'package:drFamily_app/model/sign_up/signup_model.dart';
 import 'package:drFamily_app/repository/sign_up/sign_up_repo.dart';
@@ -177,8 +178,8 @@ class SignUpViewModel extends BaseModel {
   bool _isReady;
   bool get isReady => _isReady;
 
-  Future<bool> createNewAccount() async {
-    _isReady = true;
+  Future<bool> createNewAccount(BuildContext context) async {
+    _check = true;
     if (_fullName.value == null) {
       checkFullName(null);
       _isReady = false;
@@ -224,6 +225,8 @@ class SignUpViewModel extends BaseModel {
       if (check == true) check = await _signUpRepo.createHealthRecord();
 
       if (check == true) check = await _signUpRepo.createPatient();
+
+      Navigator.pop(context);
     }
     return check;
   }

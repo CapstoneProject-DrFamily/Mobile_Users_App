@@ -19,6 +19,7 @@ class HomeScreen extends StatelessWidget {
     return BaseView<HomeViewModel>(
       builder: (context, child, model) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Color(0xffF9F9F9),
           body: Column(
             children: [
