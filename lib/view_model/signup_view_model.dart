@@ -130,9 +130,18 @@ class SignUpViewModel extends BaseModel {
   }
 
   void checkEmail(String email) {
-    print(email);
+    String check = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
+        "\\@" +
+        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+        "(" +
+        "\\." +
+        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+        ")+";
+    RegExp regExp = new RegExp(check);
     if (email == null || email.length == 0) {
       _email = Validate(null, "Email can't be blank");
+    } else if (!regExp.hasMatch(email)) {
+      _email = Validate(null, "Invalid Email!");
     } else {
       _email = Validate(email, null);
     }
@@ -165,14 +174,28 @@ class SignUpViewModel extends BaseModel {
     return url;
   }
 
+  bool _isReady;
+  bool get isReady => _isReady;
+
   Future<bool> createNewAccount() async {
-    _check = true;
+    _isReady = true;
     if (_fullName.value == null) {
       checkFullName(null);
-      _check = false;
+      _isReady = false;
     }
 
-    if (_check = true) {
+    if (_idCard.value == null) {
+      checkIDCard(null);
+      _isReady = false;
+    }
+
+    if (_email.value == null) {
+      checkEmail(null);
+      _isReady = false;
+    }
+
+    bool check;
+    if (_isReady == true) {
       String currentImage;
 
       if (_image != null) {
@@ -183,19 +206,19 @@ class SignUpViewModel extends BaseModel {
       }
 
       _signUpModel = new SignUpModel(
-        fullName: _fullName.value,
+        fullName: _fullNameController.text,
         dob: _dob,
         gender: _gender,
         phone: phone,
         image: currentImage,
-        email: _email.value,
-        idCard: _idCard.value,
+        email: _emailController.text,
+        idCard: _idCardController.text,
       );
 
       String addProfileJson = jsonEncode(_signUpModel.toJson());
       print(addProfileJson + "\n");
 
-      bool check = await _signUpRepo.createProfile(addProfileJson);
+      check = await _signUpRepo.createProfile(addProfileJson);
       if (check == true) check = await _signUpRepo.updateUser();
 
       if (check == true) check = await _signUpRepo.createHealthRecord();
