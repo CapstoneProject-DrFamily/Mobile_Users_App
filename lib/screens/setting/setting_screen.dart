@@ -1,6 +1,7 @@
 import 'package:drFamily_app/screens/setting/dependent_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/setting_view_model.dart';
+import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -196,7 +197,9 @@ class SettingPage extends StatelessWidget {
         alignment: Alignment.center,
         child: CircleAvatar(
           radius: 50.0,
-          backgroundImage: NetworkImage(model.img),
+          backgroundImage: model.img == null
+              ? NetworkImage(DEFAULT_IMG)
+              : NetworkImage(model.img),
         ),
       ),
       flex: 2,

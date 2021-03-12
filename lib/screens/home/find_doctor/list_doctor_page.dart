@@ -3,15 +3,14 @@ import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dar
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/list_doctor_screen_view_model.dart';
-import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui' as ui;
-
 import '../../share/base_view.dart';
+import 'package:drFamily_app/widgets/common/app_image.dart';
 
 class ListDoctorPage extends StatelessWidget {
   final UserCurrentAddress pickUpInfo;
@@ -253,6 +252,7 @@ class ListDoctorPage extends StatelessWidget {
       child: Column(
         children: [
           SvgPicture.asset(
+            // "",
             NOT_FOUND_DOCTOR,
             width: 80,
             height: 80,

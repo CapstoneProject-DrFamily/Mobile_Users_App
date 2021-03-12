@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:drFamily_app/Helper/validate.dart';
 import 'package:drFamily_app/model/sign_up/signup_model.dart';
 import 'package:drFamily_app/repository/setting/dependent_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
@@ -28,6 +29,7 @@ class AddDependentProfileScreenViewModel extends BaseModel {
     'Child',
   ];
   List<String> get relationshipList => _relationshipList;
+
   //string value text field
   String _relationshipValue;
   String get relationshipValue => _relationshipValue;
@@ -35,6 +37,12 @@ class AddDependentProfileScreenViewModel extends BaseModel {
   String get fullNameValue => _fullNameValue;
   String _phoneNumValue;
   String get phoneNumValue => _phoneNumValue;
+
+  Validate _fullName = Validate(null, null);
+  Validate _phone = Validate(null, null);
+  Validate get fullName => _fullName;
+  Validate get phone => _phone;
+
   //Constructor
   AddDependentProfileScreenViewModel() {
     _fullNameController.addListener(() {
@@ -56,35 +64,71 @@ class AddDependentProfileScreenViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void completeProcess() {
-    print("Name: " +
-        _fullNameValue +
-        "Phone: " +
-        _phoneNumValue +
-        "Relation: " +
-        _relationshipValue);
+  void validateFullname(String value) {
+    if (value == null || value.length == 0) {
+      _fullName = Validate(null, "Full name can't be blank.");
+    } else {
+      _fullName = Validate(value, null);
+    }
+    notifyListeners();
   }
 
+  void validatePhone(String value) {
+    if (value == null || value.length <= 10) {
+      _phone = Validate(null, "Phone number must be 10 numbers.");
+    } else {
+      _phone = Validate(value, null);
+    }
+    notifyListeners();
+  }
+
+  void completeProcess() {
+    // if (_error.value == null) {
+    //   print("----Quantity---");
+    //   print(_error.value);
+    //   validateFullname(null);
+    // }
+  }
+
+  bool _isReady;
+  bool get isReady => _isReady;
+
   Future<bool> createDependent() async {
-    _signUpModel = new SignUpModel(
-      fullName: _fullNameController.text,
-      dob: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      gender: null,
-      phone: _phoneController.text,
-      image: null,
-      email: null,
-      idCard: null,
-    );
+    _isReady = true;
 
-    String addProfileJson = jsonEncode(_signUpModel.toJson());
-    print(addProfileJson + "\n");
+    if (_fullName.value == null) {
+      validateFullname(null);
+      _isReady = false;
+    }
 
-    bool check = await _dependentRepo.createDependentProfile(addProfileJson);
+    if (_phone.value == null) {
+      validatePhone(null);
+      _isReady = false;
+    }
 
-    if (check == true) check = await _dependentRepo.createHealthRecord();
+    bool check;
+    if (_isReady == true) {
+      print("_isReady " + _isReady.toString());
+      _signUpModel = new SignUpModel(
+        fullName: _fullNameController.text,
+        dob: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        gender: null,
+        phone: _phoneController.text,
+        image: null,
+        email: null,
+        idCard: null,
+      );
 
-    if (check == true)
-      check = await _dependentRepo.createPatient(_relationshipValue);
+      String addProfileJson = jsonEncode(_signUpModel.toJson());
+      print(addProfileJson + "\n");
+
+      check = await _dependentRepo.createDependentProfile(addProfileJson);
+
+      if (check == true) check = await _dependentRepo.createHealthRecord();
+
+      if (check == true)
+        check = await _dependentRepo.createPatient(_relationshipValue);
+    }
 
     return check;
   }
