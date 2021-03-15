@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:drFamily_app/Helper/api_helper.dart';
+import 'package:drFamily_app/model/transaction_history_model.dart';
 import 'package:drFamily_app/model/transaction_map_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,6 +10,8 @@ abstract class ITransactionRepo {
   Future<String> addTransaction(String transaction);
   Future<TransactionMapModel> detailTransactionMap(String transactionID);
   Future<bool> updateTransaction(String transaction);
+  Future<List<TransactionHistoryModel>> getListTransactionHistory(
+      String patientId, int status);
 }
 
 class TransactionRepo extends ITransactionRepo {
@@ -145,5 +148,31 @@ class TransactionRepo extends ITransactionRepo {
       return true;
     } else
       return false;
+  }
+
+  @override
+  Future<List<TransactionHistoryModel>> getListTransactionHistory(
+      String patientId, int status) async {
+    String urlAPI = APIHelper.TRANSACTION_PATIENT_API +
+        patientId +
+        "?status=" +
+        status.toString();
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    List<TransactionHistoryModel> listTransactionHistoryModel;
+
+    var response = await http.get(urlAPI, headers: header);
+    if (response.statusCode == 200) {
+      listTransactionHistoryModel = (json.decode(response.body) as List)
+          .map((data) => TransactionHistoryModel.fromJson(data))
+          .toList();
+      if (listTransactionHistoryModel.isEmpty)
+        return null;
+      else
+        return listTransactionHistoryModel;
+    } else
+      return null;
   }
 }
