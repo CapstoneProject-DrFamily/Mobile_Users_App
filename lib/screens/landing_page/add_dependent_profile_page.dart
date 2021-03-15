@@ -12,127 +12,131 @@ class AddDependentProfilePage extends StatelessWidget {
       builder: (context, child, model) {
         return Scaffold(
           extendBodyBehindAppBar: true,
-          resizeToAvoidBottomInset: false,
           appBar: _buildAppBar(),
-          body: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
-            child: Container(
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height / 1.1,
-                    padding: EdgeInsets.only(top: 60),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [
-                            Colors.lightBlue[400],
-                            Colors.lightBlue[700]
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter),
-                    ),
-                    child: Column(
-                      children: [
-                        _buildTopText(),
-                        _buildDivider(),
-                        _buildAskText(),
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: 30.0,
-                            right: 255.0,
-                          ),
-                          child: Text(
-                            "Full name",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'avenir',
-                              fontSize: 17,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        _fullNameField(model),
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: 20.0,
-                            right: 280.0,
-                          ),
-                          child: Text(
-                            "Phone",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'avenir',
-                              fontSize: 17,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        _phoneField(model),
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: 20.0,
-                            right: 170.0,
-                          ),
-                          child: Text(
-                            "Relationship with you",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'avenir',
-                              fontSize: 17,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        _buildListRelationship(context, model),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 50.0,
-                    width: 300.0,
-                    margin: const EdgeInsets.only(
-                      top: 15.0,
-                    ),
-                    child: RaisedButton(
-                      color: Colors.lightBlue,
-                      onPressed: () async {
-                        bool isCreated = await model.createDependent();
-                        if (isCreated) {
-                          Fluttertoast.showToast(
-                            msg: "Add Dependent success",
-                            textColor: Colors.red,
-                            toastLength: Toast.LENGTH_SHORT,
-                            backgroundColor: Colors.white,
-                            gravity: ToastGravity.CENTER,
-                          );
-                          Navigator.of(context).pop();
-                        } else {
-                          Fluttertoast.showToast(
-                            msg: "Add Dependent fail",
-                            textColor: Colors.red,
-                            toastLength: Toast.LENGTH_SHORT,
-                            backgroundColor: Colors.white,
-                            gravity: ToastGravity.CENTER,
-                          );
-                          Navigator.of(context).pop();
-                        }
-                      },
-                      textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+          body: SingleChildScrollView(
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(new FocusNode());
+              },
+              child: Container(
+                child: Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height / 1.1,
+                      padding: EdgeInsets.only(top: 60),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [
+                              Colors.lightBlue[400],
+                              Colors.lightBlue[700]
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter),
                       ),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'NEXT',
-                          style: TextStyle(fontSize: 18),
-                        ),
+                      child: Column(
+                        children: [
+                          _buildTopText(),
+                          _buildDivider(),
+                          _buildAskText(),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 30.0,
+                              right: 255.0,
+                            ),
+                            child: Text(
+                              "Full name",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'avenir',
+                                fontSize: 17,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                          _fullNameField(model),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 20.0,
+                              right: 280.0,
+                            ),
+                            child: Text(
+                              "Phone",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'avenir',
+                                fontSize: 17,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                          _phoneField(model),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 20.0,
+                              right: 170.0,
+                            ),
+                            child: Text(
+                              "Relationship with you",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'avenir',
+                                fontSize: 17,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                          _buildListRelationship(context, model),
+                        ],
                       ),
                     ),
-                  )
-                ],
+                    Container(
+                      height: 50.0,
+                      width: 300.0,
+                      margin: const EdgeInsets.only(
+                        top: 15.0,
+                      ),
+                      child: RaisedButton(
+                        color: Colors.lightBlue,
+                        // onPressed: () {
+                        //   model.completeProcess();
+                        // },
+                        onPressed: () async {
+                          bool isCreated = await model.createDependent();
+                          if (isCreated) {
+                            Fluttertoast.showToast(
+                              msg: "Add Dependent success",
+                              textColor: Colors.red,
+                              toastLength: Toast.LENGTH_SHORT,
+                              backgroundColor: Colors.white,
+                              gravity: ToastGravity.CENTER,
+                            );
+                            Navigator.of(context).pop();
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: "Add Dependent fail",
+                              textColor: Colors.red,
+                              toastLength: Toast.LENGTH_SHORT,
+                              backgroundColor: Colors.white,
+                              gravity: ToastGravity.CENTER,
+                            );
+                            Navigator.of(context).pop();
+                          }
+                        },
+                        textColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'ADD',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -212,7 +216,11 @@ class AddDependentProfilePage extends StatelessWidget {
         controller: model.fullNameController,
         keyboardType: TextInputType.text,
         textCapitalization: TextCapitalization.none,
+        onChanged: (value) {
+          model.validateFullname(value);
+        },
         decoration: InputDecoration(
+          errorText: model.fullName.error,
           filled: true,
           fillColor: Colors.white,
           hintText: 'Enter full name...',
@@ -238,7 +246,13 @@ class AddDependentProfilePage extends StatelessWidget {
         controller: model.phoneController,
         keyboardType: TextInputType.phone,
         textCapitalization: TextCapitalization.none,
+        maxLength: 10,
+        onChanged: (value) {
+          model.validatePhone(value);
+        },
         decoration: InputDecoration(
+          errorText: model.phone.error,
+          counterText: '',
           filled: true,
           fillColor: Colors.white,
           hintText: 'Enter phone..',

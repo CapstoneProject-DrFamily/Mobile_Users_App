@@ -115,7 +115,6 @@ class SignUpScreen extends StatelessWidget {
         top: 30.0,
         left: 30.0,
         right: 20.0,
-        // right: 270.0,
       ),
       child: TextFormField(
         controller: model.fullNameController,
@@ -125,6 +124,7 @@ class SignUpScreen extends StatelessWidget {
         keyboardType: TextInputType.text,
         textCapitalization: TextCapitalization.none,
         decoration: InputDecoration(
+          errorText: model.fullName.error,
           filled: true,
           fillColor: Colors.white,
           hintText: 'Enter name..',
@@ -133,7 +133,6 @@ class SignUpScreen extends StatelessWidget {
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            // borderSide: BorderSide.none,
           ),
         ),
       ),
@@ -146,7 +145,6 @@ class SignUpScreen extends StatelessWidget {
         top: 15.0,
         left: 30.0,
         right: 20.0,
-        // right: 270.0,
       ),
       child: TextFormField(
         controller: model.idCardController,
@@ -156,6 +154,7 @@ class SignUpScreen extends StatelessWidget {
         keyboardType: TextInputType.number,
         maxLength: 12,
         decoration: InputDecoration(
+          errorText: model.idCard.error,
           counterText: "",
           filled: true,
           fillColor: Colors.white,
@@ -177,7 +176,6 @@ class SignUpScreen extends StatelessWidget {
         top: 15.0,
         left: 30.0,
         right: 20.0,
-        // right: 270.0,
       ),
       child: GestureDetector(
         onTap: () {
@@ -299,7 +297,6 @@ class SignUpScreen extends StatelessWidget {
         top: 15.0,
         left: 30.0,
         right: 20.0,
-        // right: 270.0,
       ),
       child: TextFormField(
         controller: model.emailController,
@@ -309,9 +306,10 @@ class SignUpScreen extends StatelessWidget {
         keyboardType: TextInputType.emailAddress,
         textCapitalization: TextCapitalization.none,
         decoration: InputDecoration(
+          errorText: model.email.error,
           filled: true,
           fillColor: Colors.white,
-          hintText: 'Enter email..',
+          hintText: 'abc@gmail.com',
           hintStyle: TextStyle(
             color: MainColors.hintTextColor,
           ),

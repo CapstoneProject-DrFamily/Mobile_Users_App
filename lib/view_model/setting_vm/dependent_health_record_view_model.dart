@@ -150,11 +150,13 @@ class DependentHealthRecordViewModel extends BaseModel {
     _conditionAtBirth = _conditionAtBirthController.text;
 
     _birthWeightController.text = _healthRecordModel.birthWeight.toString();
-    if (_birthWeightController.text == "null") {
+    if (_birthWeightController.text == "null" ||
+        _birthWeightController.text == "0") {
       _birthWeightController.text = "";
     }
     _birthHeightController.text = _healthRecordModel.birthHeight.toString();
-    if (_birthHeightController.text == "null") {
+    if (_birthHeightController.text == "null" ||
+        _birthHeightController.text == "0") {
       _birthHeightController.text = "";
     }
     _birthDefectsController.text = _healthRecordModel.birthDefects;
@@ -287,11 +289,18 @@ class DependentHealthRecordViewModel extends BaseModel {
   }
 
   Future<bool> updateHealthRecord() async {
+    double birthWeight, birthHeight;
+    if (_birthWeightController.text == null) {
+      birthWeight = 0;
+    }
+    if (_birthHeightController.text == null) {
+      birthHeight = 0;
+    }
     _healthRecordModel = new HealthRecordModel(
       healthRecordID: healthRecordID,
       conditionAtBirth: _conditionAtBirthController.text,
-      birthWeight: double.parse(_birthWeightController.text),
-      birthHeight: double.parse(_birthHeightController.text),
+      birthWeight: birthWeight,
+      birthHeight: birthHeight,
       birthDefects: _birthDefectsController.text,
       otherDefects: _otherDefectsController.text,
       medicineAllergy: _medicineAllergyController.text,

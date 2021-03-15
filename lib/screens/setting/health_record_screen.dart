@@ -1200,7 +1200,9 @@ class HealthRecordScreen extends StatelessWidget {
               height: 20,
             ),
             CustomRadioButton(
-              defaultSelected: model.conditionAtBirth,
+              defaultSelected: model.conditionAtBirth != ""
+                  ? model.conditionAtBirth
+                  : "Spontaneous delivery",
               horizontal: true,
               enableShape: true,
               unSelectedColor: Theme.of(context).canvasColor,
@@ -2438,7 +2440,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Drug allergy - patient",
+                        "Medicines allergy - patient",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2588,7 +2590,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Other allergy",
+                        "Other allergy - patient",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2658,7 +2660,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Pathology",
+                        "Pathology - patient",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2708,7 +2710,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Cancer",
+                        "Cancer - patient",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2758,7 +2760,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Tuberculosis",
+                        "Tuberculosis - patient",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -2809,7 +2811,7 @@ class HealthRecordScreen extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Other",
+                        "Other - patient",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
