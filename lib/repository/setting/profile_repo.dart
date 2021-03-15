@@ -10,6 +10,7 @@ abstract class IProfileRepo {
   Future<AdditionInfoModel> getAdditionInfo(String patientID);
   Future<bool> updateBasicInfo(String updateBasicInfoJson);
   Future<bool> updateAdditionInfo(String updateAdditionInfoJson);
+  Future<int> getPatientId(String profileID);
 }
 
 class ProfileRepo extends IProfileRepo {
@@ -96,5 +97,23 @@ class ProfileRepo extends IProfileRepo {
       isUpdated = false;
       return isUpdated;
     }
+  }
+
+  @override
+  Future<int> getPatientId(String profileID) async {
+    String urlAPI = APIHelper.GET_PROFILE_BY_ID_API + profileID;
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    var response = await http.get(urlAPI, headers: header);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> map = json.decode(response.body);
+
+      int patientID = map['patients'][0]['patientId'];
+      return patientID;
+    } else
+      return null;
   }
 }

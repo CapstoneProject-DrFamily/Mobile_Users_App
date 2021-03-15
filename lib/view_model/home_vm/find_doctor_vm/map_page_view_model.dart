@@ -185,7 +185,7 @@ class MapPageViewModel extends BaseModel {
   Future<void> doneMap(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String location =
-        'latitude: ${_pickUpInfo.latitude}, longitude: ${_pickUpInfo.longtitude}';
+        'latitude: ${_pickUpInfo.latitude}, longitude: ${_pickUpInfo.longtitude}; placeName: ${_pickUpInfo.placeName}';
     prefs.setString("usLocation", location);
 
     Navigator.push(
