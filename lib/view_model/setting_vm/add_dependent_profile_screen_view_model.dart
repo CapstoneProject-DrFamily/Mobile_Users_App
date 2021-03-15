@@ -74,7 +74,7 @@ class AddDependentProfileScreenViewModel extends BaseModel {
   }
 
   void validatePhone(String value) {
-    if (value == null || value.length <= 10) {
+    if (value == null || value.length < 10) {
       _phone = Validate(null, "Phone number must be 10 numbers.");
     } else {
       _phone = Validate(value, null);
