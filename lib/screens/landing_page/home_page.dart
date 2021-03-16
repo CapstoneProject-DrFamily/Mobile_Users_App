@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -152,7 +153,8 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                     child: InkWell(
                                       onTap: () {
-                                        model.choosePatient(index);
+                                        model.choosePatient(
+                                            index, model.listDependent[index]);
                                       },
                                       child: Container(
                                         child: Row(
@@ -264,7 +266,16 @@ class HomeScreen extends StatelessWidget {
       builder: (_) => new AlertDialog(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(30))),
-        title: Center(child: new Text("Find By")),
+        title: Center(
+          child: new Text(
+            "Find By",
+            style: GoogleFonts.varelaRound(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+              color: Color(0xff0d47a1),
+            ),
+          ),
+        ),
         content: new Container(
           height: 300.0, // Change as per your requirement
           width: 300.0, // Change as per your requirement

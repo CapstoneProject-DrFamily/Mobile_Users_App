@@ -1,5 +1,6 @@
 import 'package:drFamily_app/screens/share/base_view.dart';
-import 'package:drFamily_app/view_model/landing_page_vm/history_record_screen_view_model.dart';
+import 'package:drFamily_app/view_model/home_vm/pop_up_choose_patient_view_model.dart';
+import 'package:drFamily_app/view_model/landing_page_vm/history_record/history_record_screen_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,165 @@ class HistoryRecordScreen extends StatelessWidget {
                           icon: Icon(EvaIcons.flip2Outline,
                               color: Colors.black87),
                           onPressed: () {
-                            print("change Patient");
+                            showDialog(
+                              context: context,
+                              builder: (dialogContex) =>
+                                  BaseView<PopUpChoosePatientViewModel>(
+                                builder:
+                                    (dialogContex, child, popUpPatientModel) {
+                                  return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(30))),
+                                    title: Center(
+                                      child: new Text(
+                                        "Change Patients",
+                                        style: GoogleFonts.varelaRound(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22,
+                                          color: Color(0xff0d47a1),
+                                        ),
+                                      ),
+                                    ),
+                                    content: new Container(
+                                      height:
+                                          300.0, // Change as per your requirement
+                                      width:
+                                          300.0, // Change as per your requirement
+                                      child: popUpPatientModel.isLoading
+                                          ? Center(
+                                              child: CircularProgressIndicator(
+                                              backgroundColor: Colors.white,
+                                            ))
+                                          : SingleChildScrollView(
+                                              child: Column(
+                                                children: [
+                                                  ListView.builder(
+                                                    primary: false,
+                                                    shrinkWrap: true,
+                                                    itemCount: popUpPatientModel
+                                                        .listDependent.length,
+                                                    itemBuilder:
+                                                        (dialogContex, index) =>
+                                                            Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Card(
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          40),
+                                                            ),
+                                                            child: InkWell(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          40),
+                                                              onTap: () {
+                                                                popUpPatientModel
+                                                                    .choosePatient(
+                                                                        index,
+                                                                        popUpPatientModel
+                                                                            .listDependent[index]);
+                                                              },
+                                                              child: Container(
+                                                                child: Row(
+                                                                  children: [
+                                                                    Expanded(
+                                                                      flex: 3,
+                                                                      child:
+                                                                          ListTile(
+                                                                        leading:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .account_circle,
+                                                                          size:
+                                                                              50,
+                                                                        ),
+                                                                        title: Text(popUpPatientModel
+                                                                            .listDependent[index]
+                                                                            .dependentName),
+                                                                        subtitle: Text(popUpPatientModel
+                                                                            .listDependent[index]
+                                                                            .dependentRelationShip),
+                                                                      ),
+                                                                    ),
+                                                                    index ==
+                                                                            popUpPatientModel.patientChoose
+                                                                        ? Expanded(
+                                                                            child:
+                                                                                Icon(
+                                                                              EvaIcons.radioButtonOn,
+                                                                              color: Color(0xff0d47a1),
+                                                                            ),
+                                                                          )
+                                                                        : Expanded(
+                                                                            child:
+                                                                                Icon(
+                                                                              EvaIcons.radioButtonOffOutline,
+                                                                            ),
+                                                                          ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 15,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                    ),
+                                    actions: popUpPatientModel.isLoading
+                                        ? <Widget>[
+                                            Container(),
+                                          ]
+                                        : <Widget>[
+                                            TextButton(
+                                              child: Text(
+                                                'Confirm',
+                                                style: GoogleFonts.varelaRound(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                  color: Color(0xff0d47a1),
+                                                ),
+                                              ),
+                                              onPressed: () async {
+                                                model.changePatients(
+                                                    dialogContex,
+                                                    popUpPatientModel
+                                                        .tempPatientChoose
+                                                        .patientID,
+                                                    popUpPatientModel
+                                                        .tempPatientChoose
+                                                        .dependentName);
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: Text(
+                                                'Cancel',
+                                                style: GoogleFonts.varelaRound(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                  color: Color(0xff0d47a1),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                  );
+                                },
+                              ),
+                            );
                           }),
                     ],
                   ),
@@ -90,31 +249,7 @@ class HistoryRecordScreen extends StatelessWidget {
                                   child: CircularProgressIndicator(),
                                 )
                               : (model.isNotHave)
-                                  ? Container(
-                                      alignment: Alignment.center,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                            NOT_FOUND_RECORDS,
-                                            width: 80,
-                                            height: 80,
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            "Not Found Any Records",
-                                            style: GoogleFonts.varelaRound(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14,
-                                                color: Color(0xff0d47a1),
-                                                fontStyle: FontStyle.italic),
-                                          ),
-                                        ],
-                                      ),
-                                    )
+                                  ? _buildNotFound()
                                   : ListView.builder(
                                       itemCount: model.listTransaction.length,
                                       itemBuilder: (context, index) {
@@ -178,6 +313,33 @@ class HistoryRecordScreen extends StatelessWidget {
           },
         );
       },
+    );
+  }
+
+  Container _buildNotFound() {
+    return Container(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            NOT_FOUND_RECORDS,
+            width: 80,
+            height: 80,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            "Not Found Any Records",
+            style: GoogleFonts.varelaRound(
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
+                color: Color(0xff0d47a1),
+                fontStyle: FontStyle.italic),
+          ),
+        ],
+      ),
     );
   }
 }
