@@ -75,14 +75,10 @@ class TransactionRepo extends ITransactionRepo {
               .toList();
 
       String locationTemp = transactionJson['location'];
-      List<String> locationPositionTemp = locationTemp.split(",");
-      for (var item in locationPositionTemp) {
-        List<String> positionTemp = item.split(":");
-        if (positionTemp[0].endsWith("latitude"))
-          latitude = positionTemp[1].trim();
-        else
-          longitude = positionTemp[1].trim();
-      }
+
+      longitude = locationTemp.split(',')[1].split(':')[1].split(';')[0];
+
+      latitude = locationTemp.split(',')[0].split(':')[1];
 
       String url =
           'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyDFd7ZNm2BL2JREvk32NZJ0wHzUn2fjw4A';
