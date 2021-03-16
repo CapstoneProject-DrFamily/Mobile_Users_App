@@ -2,6 +2,7 @@ import 'package:drFamily_app/view_model/landing_page_vm/map_tracking_screen_view
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -21,7 +22,7 @@ class MapTrackingScreen extends StatelessWidget {
             if (model.isLoading == true) {
               return Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                 ),
               );
             } else
@@ -184,9 +185,14 @@ class MapTrackingScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(right: 30),
-                child: Icon(Icons.call),
+              InkWell(
+                onTap: () {
+                  model.callPhone(context);
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(right: 30),
+                  child: Icon(Icons.call),
+                ),
               ),
             ],
           ),
@@ -420,7 +426,9 @@ class MapTrackingScreen extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    '${model.transactionMapModel.serviceName} - ${model.transactionMapModel.servicePrice}',
+                    '${model.transactionMapModel.serviceName} - ' +
+                        NumberFormat.simpleCurrency(locale: 'vi')
+                            .format(model.transactionMapModel.servicePrice),
                     softWrap: true,
                     style: GoogleFonts.varelaRound(
                       fontWeight: FontWeight.normal,

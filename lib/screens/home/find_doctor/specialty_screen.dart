@@ -3,6 +3,7 @@ import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/specialty_screen_
 import 'package:drFamily_app/widgets/common/not_found_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 class SpecialtyScreen extends StatelessWidget {
   @override
@@ -101,7 +102,8 @@ class SpecialtyScreen extends StatelessWidget {
               model.chooseSpecialty(
                   context,
                   model.listSpecialty[index].specialtyId,
-                  model.listSpecialty[index].specialtyTitle);
+                  model.listSpecialty[index].specialtyTitle,
+                  model.listSpecialty[index].serviceId);
             },
             child: Card(
               shape: RoundedRectangleBorder(
@@ -136,6 +138,31 @@ class SpecialtyScreen extends StatelessWidget {
                       model.listSpecialty[index].specialtyTitle,
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Original Price",
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'avenir',
+                            color: Colors.grey,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          NumberFormat.simpleCurrency(locale: 'vi')
+                              .format(model.listSpecialty[index].servicePrice),
+                          style: TextStyle(
+                              color: Color(0xff0d47a1),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                     trailing: Icon(
                       Icons.keyboard_arrow_right,

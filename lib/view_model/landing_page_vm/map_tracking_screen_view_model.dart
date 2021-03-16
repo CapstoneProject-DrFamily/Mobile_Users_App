@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:commons/commons.dart';
 import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
 import 'package:drFamily_app/global_variable.dart';
 import 'package:drFamily_app/model/transaction_map_model.dart';
 import 'package:drFamily_app/model/transaction_map_update_model.dart';
-import 'package:drFamily_app/repository/home/find_doctor/map_api/map_screen_repo.dart';
+import 'package:drFamily_app/repository/doctor_repo.dart';
 import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
@@ -18,7 +19,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MapTrackingScreenViewModel extends BaseModel {
-  final IMapScreenRepo _mapRepo = MapScreenRepo();
+  final IDoctorRepo _doctorRepo = DoctorRepo();
   final ITransactionRepo _transactionRepo = TransactionRepo();
   final INotifyRepo _notifyRepo = NotifyRepo();
 
@@ -70,6 +71,8 @@ class MapTrackingScreenViewModel extends BaseModel {
   String doctorFBid;
 
   String notiToken;
+
+  int _doctorPhoneNum;
 
   MapTrackingScreenViewModel(String transactionId) {
     _transactionID = transactionId;
@@ -166,8 +169,9 @@ class MapTrackingScreenViewModel extends BaseModel {
           SymptomTempModel(symptomtype: sympTitle, symptomName: symptomName);
       symptomsDisplay.add(symptom);
     }
-    print('transaction ${transactionMapModel.estimateTime}');
     durationString = transactionMapModel.estimateTime;
+    var doctorId = transactionMapModel.doctorId;
+    _doctorPhoneNum = await _doctorRepo.getDoctorPhoneNum(doctorId);
 
     _isLoading = false;
     notifyListeners();
@@ -201,11 +205,30 @@ class MapTrackingScreenViewModel extends BaseModel {
 
     LatLng patienLatLng =
         LatLng(_transactionMapModel.latitude, _transactionMapModel.longitude);
-    Marker currentDoctorLocation = Marker(
+    Marker patientLocation = Marker(
         markerId: MarkerId("patientLocation"),
         position: patienLatLng,
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed));
-    _markers.add(currentDoctorLocation);
+    _markers.add(patientLocation);
+
+    await _doctorRequest
+        .child(doctorFBid)
+        .once()
+        .then((DataSnapshot dataSnapshot) {
+      if (dataSnapshot.value == null) {
+      } else {
+        var latitude = double.parse(dataSnapshot.value['pickup']["latitude"]);
+        var longitude =
+            double.parse(dataSnapshot.value['pickup']["longtitude"]);
+        LatLng doctorLatLng = LatLng(latitude, longitude);
+        Marker currentDoctorLocation = Marker(
+            markerId: MarkerId("doctorLocation"),
+            position: doctorLatLng,
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                BitmapDescriptor.hueGreen));
+        _markers.add(currentDoctorLocation);
+      }
+    });
 
     notifyListeners();
   }
@@ -258,5 +281,10 @@ class MapTrackingScreenViewModel extends BaseModel {
       );
       Navigator.pop(context);
     }
+  }
+
+  void callPhone(BuildContext context) async {
+    await launch('tel://$_doctorPhoneNum');
+    Navigator.pop(context);
   }
 }

@@ -12,6 +12,9 @@ class PopUpChoosePatientViewModel extends BaseModel {
   int _patientChoose = 0;
   int get patientChoose => _patientChoose;
 
+  DependentModel _tempPatientChoose;
+  DependentModel get tempPatientChoose => _tempPatientChoose;
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -27,11 +30,14 @@ class PopUpChoosePatientViewModel extends BaseModel {
     _listDependent = await _patientRepo.getDependent(userId).whenComplete(() {
       _isLoading = false;
     });
+    _tempPatientChoose = _listDependent[0];
     notifyListeners();
   }
 
-  void choosePatient(int patient) {
+  void choosePatient(int patient, DependentModel patientModel) {
+    print('patient Model: ${patientModel.patientID}');
     _patientChoose = patient;
+    _tempPatientChoose = patientModel;
     notifyListeners();
   }
 }
