@@ -16,9 +16,13 @@ class TransactionDetailScreen extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             centerTitle: true,
+            leading: new IconButton(
+              icon: new Icon(Icons.arrow_back_ios, color: Color(0xff0d47a1)),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
             title: Text(
               'Transaction Detail',
-              style: TextStyle(color: Colors.blue),
+              style: TextStyle(color: Color(0xff0d47a1)),
             ),
           ),
           body: FutureBuilder(builder: (contextC, snapshop) {
@@ -193,13 +197,14 @@ class TransactionDetailScreen extends StatelessWidget {
                                         height: 60,
                                         child: ListView.builder(
                                           scrollDirection: Axis.horizontal,
-                                          itemCount: 3,
+                                          itemCount: 1,
                                           itemBuilder: (context, index) {
                                             return Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: Chip(
-                                                label: Text('...'),
+                                                label:
+                                                    Text('Difficulty sleeping'),
                                               ),
                                             );
                                           },
@@ -227,7 +232,8 @@ class TransactionDetailScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Service Info',
-                            style: TextStyle(color: Colors.blue, fontSize: 20),
+                            style: TextStyle(
+                                color: Color(0xff0d47a1), fontSize: 20),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(

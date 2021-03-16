@@ -4,6 +4,7 @@ import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/screens/transaction/transaction_detail_screen.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/map_tracking_screen_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -211,12 +212,22 @@ class HistoryRecordScreenViewModel extends BaseModel {
         break;
       case 3:
         {
-          print("status 3");
+           Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TransactionDetailScreen(transactionId: transactionId),
+            ),
+          );
         }
         break;
       case 4:
         {
-          print("status 4");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TransactionDetailScreen(transactionId: transactionId),
+            ),
+          );
         }
         break;
       default:
