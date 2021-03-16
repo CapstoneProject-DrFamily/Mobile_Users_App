@@ -51,127 +51,132 @@ class SymptomScreen extends StatelessWidget {
       BuildContext context, SymptomePageViewModel model) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.8,
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.only(right: 20, left: 20),
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
-      child: ListView.builder(
-        itemCount: model.symptomsDisplay.length,
-        itemBuilder: (context, indexFather) {
-          return Column(
-            children: [
-              Stack(
-                children: [
-                  Opacity(
-                    opacity: 0.8,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20),
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF1EFF1),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(40),
+      child: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView.builder(
+          itemCount: model.symptomsDisplay.length,
+          itemBuilder: (context, indexFather) {
+            return Column(
+              children: [
+                Stack(
+                  children: [
+                    Opacity(
+                      opacity: 0.8,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 20),
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF1EFF1),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(left: 40),
-                    margin: EdgeInsets.only(top: 33),
-                    child: Text(
-                      model.symptomsDisplay[indexFather].headerValue,
-                      style: TextStyle(
-                          color: Color(0xff0d47a1),
-                          fontFamily: 'avenir',
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
+                    Container(
+                      padding: EdgeInsets.only(left: 40),
+                      margin: EdgeInsets.only(top: 33),
+                      child: Text(
+                        model.symptomsDisplay[indexFather].headerValue,
+                        style: TextStyle(
+                            color: Color(0xff0d47a1),
+                            fontFamily: 'avenir',
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(left: 5),
-                    margin: EdgeInsets.only(top: 30),
-                    child: Icon(
-                      EvaIcons.activityOutline,
-                      color: Color(0xff0d47a1),
+                    Container(
+                      padding: EdgeInsets.only(left: 5),
+                      margin: EdgeInsets.only(top: 30),
+                      child: Icon(
+                        EvaIcons.activityOutline,
+                        color: Color(0xff0d47a1),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                alignment: Alignment.centerRight,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount:
-                      model.symptomsDisplay[indexFather].expandedValue.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      child: GestureDetector(
-                        onTap: () {
-                          model.changeChecked(model
-                              .symptomsDisplay[indexFather].expandedValue.keys
-                              .toList()[index]);
-                        },
-                        child: Column(
-                          children: [
-                            Stack(
-                              children: [
-                                Opacity(
-                                  opacity: 0.7,
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.8,
-                                    margin: EdgeInsets.only(top: 20),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.06,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFF1EFF1),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(40),
+                  ],
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.centerRight,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount:
+                        model.symptomsDisplay[indexFather].expandedValue.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        child: GestureDetector(
+                          onTap: () {
+                            model.changeChecked(model
+                                .symptomsDisplay[indexFather].expandedValue.keys
+                                .toList()[index]);
+                          },
+                          child: Column(
+                            children: [
+                              Stack(
+                                children: [
+                                  Opacity(
+                                    opacity: 0.7,
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.8,
+                                      margin: EdgeInsets.only(top: 20),
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFF1EFF1),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(40),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(left: 40),
-                                  margin: EdgeInsets.only(top: 33),
-                                  child: Text(
-                                    model.symptomsDisplay[indexFather]
-                                        .expandedValue.values
-                                        .toList()[index],
-                                    style: TextStyle(
-                                      color: Color(0xff0d47a1),
-                                      fontFamily: 'avenir',
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                                  Container(
+                                    padding: EdgeInsets.only(left: 40),
+                                    margin: EdgeInsets.only(top: 33),
+                                    child: Text(
+                                      model.symptomsDisplay[indexFather]
+                                          .expandedValue.values
+                                          .toList()[index],
+                                      style: TextStyle(
+                                        color: Color(0xff0d47a1),
+                                        fontFamily: 'avenir',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(left: 5),
-                                  margin: EdgeInsets.only(top: 30),
-                                  child: Icon(
-                                      model.savedValue.contains(model
-                                              .symptomsDisplay[indexFather]
-                                              .expandedValue
-                                              .keys
-                                              .toList()[index]
-                                              .toString())
-                                          ? EvaIcons.checkmarkCircle2
-                                          : EvaIcons.checkmarkCircle2Outline,
-                                      color: Color(0xff0d47a1)),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Container(
+                                    padding: EdgeInsets.only(left: 5),
+                                    margin: EdgeInsets.only(top: 30),
+                                    child: Icon(
+                                        model.savedValue.contains(model
+                                                .symptomsDisplay[indexFather]
+                                                .expandedValue
+                                                .keys
+                                                .toList()[index]
+                                                .toString())
+                                            ? EvaIcons.checkmarkCircle2
+                                            : EvaIcons.checkmarkCircle2Outline,
+                                        color: Color(0xff0d47a1)),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }

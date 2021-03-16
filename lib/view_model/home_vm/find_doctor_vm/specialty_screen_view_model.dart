@@ -37,28 +37,11 @@ class SpecialtyScreenViewModel extends BaseModel {
     }
   }
 
-  void chooseSpecialty(
-      BuildContext context, int specialtyID, String specialtyName) async {
-    print(specialtyID);
+  void chooseSpecialty(BuildContext context, int specialtyID,
+      String specialtyName, int serviceId) async {
+    print('serviceId: $serviceId');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    switch (specialtyID) {
-      case 1:
-        prefs.setInt("usServiceID", 2);
-        break;
-      case 2:
-        prefs.setInt("usServiceID", 3);
-        break;
-      case 3:
-        prefs.setInt("usServiceID", 4);
-        break;
-      case 4:
-        prefs.setInt("usServiceID", 5);
-        break;
-      case 5:
-        prefs.setInt("usServiceID", 6);
-        break;
-      default:
-    }
+    prefs.setInt("usServiceID", serviceId);
     prefs.setString("chooseSpecialty", specialtyName);
 
     Navigator.push(
