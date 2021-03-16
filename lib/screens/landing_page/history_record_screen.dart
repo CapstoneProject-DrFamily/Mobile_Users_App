@@ -118,36 +118,49 @@ class HistoryRecordScreen extends StatelessWidget {
                                   : ListView.builder(
                                       itemCount: model.listTransaction.length,
                                       itemBuilder: (context, index) {
-                                        return Container(
-                                          padding:
-                                              EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                          color: (index % 2 == 0)
-                                              ? Colors.white
-                                              : Colors.grey[100],
-                                          child: CustomListItemTwo(
-                                            serviceType: model
-                                                .listTransaction[index]
-                                                .serviceName,
-                                            dateTimeBook:
-                                                DateFormat("yyyy-MM-dd - hh:mm")
-                                                    .format(DateTime.parse(model
-                                                        .listTransaction[index]
-                                                        .dateTimeStart))
-                                                    .toString(),
-                                            location: model
-                                                .listTransaction[index].location
-                                                .split(';')[1]
-                                                .split(':')[1],
-                                            price: NumberFormat.simpleCurrency(
-                                                    locale: 'vi')
-                                                .format(model
-                                                    .listTransaction[index]
-                                                    .servicePrice),
-                                            doctorName: model
-                                                .listTransaction[index]
-                                                .doctorName,
-                                            status: model
-                                                .listTransaction[index].status,
+                                        return GestureDetector(
+                                          onTap: () {
+                                            model.chooseTransaction(
+                                                context,
+                                                model.listTransaction[index]
+                                                    .transactionID,
+                                                model.listTransaction[index]
+                                                    .status);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.fromLTRB(
+                                                10, 0, 10, 0),
+                                            color: (index % 2 == 0)
+                                                ? Colors.white
+                                                : Colors.grey[100],
+                                            child: CustomListItemTwo(
+                                              serviceType: model
+                                                  .listTransaction[index]
+                                                  .serviceName,
+                                              dateTimeBook: DateFormat(
+                                                      "yyyy-MM-dd - hh:mm")
+                                                  .format(DateTime.parse(model
+                                                      .listTransaction[index]
+                                                      .dateTimeStart))
+                                                  .toString(),
+                                              location: model
+                                                  .listTransaction[index]
+                                                  .location
+                                                  .split(';')[1]
+                                                  .split(':')[1],
+                                              price: NumberFormat
+                                                      .simpleCurrency(
+                                                          locale: 'vi')
+                                                  .format(model
+                                                      .listTransaction[index]
+                                                      .servicePrice),
+                                              doctorName: model
+                                                  .listTransaction[index]
+                                                  .doctorName,
+                                              status: model
+                                                  .listTransaction[index]
+                                                  .status,
+                                            ),
                                           ),
                                         );
                                       },

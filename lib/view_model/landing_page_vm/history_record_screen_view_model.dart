@@ -1,7 +1,12 @@
 import 'package:drFamily_app/model/transaction_history_model.dart';
 import 'package:drFamily_app/repository/setting/profile_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
+import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
+import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/view_model/landing_page_vm/map_tracking_screen_view_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryRecordScreenViewModel extends BaseModel {
@@ -151,6 +156,45 @@ class HistoryRecordScreenViewModel extends BaseModel {
           notifyListeners();
         }
 
+        break;
+      default:
+    }
+  }
+
+  void chooseTransaction(
+      BuildContext context, String transactionId, int transactionStatus) async {
+    switch (transactionStatus) {
+      case 1:
+        {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MapTrackingScreen(
+                  model: MapTrackingScreenViewModel(transactionId)),
+            ),
+          );
+        }
+        break;
+      case 2:
+        {
+          TimeLineExamineScreen.transactionID = transactionId;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TimeLineExamineScreen(),
+            ),
+          );
+        }
+        break;
+      case 3:
+        {
+          print("status 3");
+        }
+        break;
+      case 4:
+        {
+          print("status 4");
+        }
         break;
       default:
     }

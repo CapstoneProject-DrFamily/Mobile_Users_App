@@ -51,7 +51,7 @@ class SymptomScreen extends StatelessWidget {
       BuildContext context, SymptomePageViewModel model) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.8,
-      padding: EdgeInsets.only(right: 20, left: 20),
+      padding: EdgeInsets.only(right: 20, left: 20, top: 20),
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
       child: MediaQuery.removePadding(
         context: context,
