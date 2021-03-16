@@ -2,8 +2,11 @@ import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
 import 'package:drFamily_app/global_variable.dart';
 import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/screens/transaction/transaction_detail_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 class TimeLineExamineViewModel extends BaseModel {
   int _currentStep = 1;
@@ -214,6 +217,23 @@ class TimeLineExamineViewModel extends BaseModel {
             fourthStepSubText = "Doctor is preparing prescription.";
             fourthStatus = false;
             notifyListeners();
+          }
+          break;
+        case "done":
+          {
+            fourthStep = colorDone;
+            fourthStepBeforeLine = colorDone;
+            fourthStepSubText = "Your prescription is ready for pickup.";
+            fourthStatus = false;
+            notifyListeners();
+            Fluttertoast.showToast(
+              msg: "Your have done this transaction",
+              textColor: Colors.green,
+              toastLength: Toast.LENGTH_SHORT,
+              backgroundColor: Colors.white,
+              gravity: ToastGravity.CENTER,
+            );
+            Get.off(TransactionDetailScreen(transactionId: _transactionId));
           }
           break;
         default:
