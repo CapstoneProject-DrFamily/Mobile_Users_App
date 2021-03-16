@@ -64,6 +64,29 @@ class HistoryRecordScreenViewModel extends BaseModel {
     }
   }
 
+  void changePatients(
+      BuildContext context, int profileId, String fullName) async {
+    _status = 0;
+    _isLoading = true;
+    _isNotHave = false;
+    Navigator.pop(context);
+    notifyListeners();
+    _fullUserName = fullName;
+    _profileId = profileId;
+    _patientId = await profileRepo.getPatientId(_profileId.toString());
+
+    _listTransaction = await transactionRepo.getListTransactionHistory(
+        _patientId.toString(), -1);
+
+    if (_listTransaction == null) {
+      _isNotHave = true;
+    }
+
+    _isLoading = false;
+    _isFirst = false;
+    notifyListeners();
+  }
+
   void changeStatus(int status) async {
     switch (status) {
       case 0:

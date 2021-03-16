@@ -12,195 +12,193 @@ import 'package:google_fonts/google_fonts.dart';
 class DependentProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: BaseView<DependentProfileViewModel>(
-          builder: (context, child, model) {
-            return SingleChildScrollView(
-              child: model.isLoading
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.white,
-                      ),
-                    )
-                  : Stack(
-                      children: [
-                        Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              _buildImageSelectField(model),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 5),
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      spreadRadius: 1,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    _buildTitleCard('Basic Infomation',
-                                        Icons.info, Colors.greenAccent),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    _buildTitle('Full Name'),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    _buildFullNameField(model),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    _buildTitle('Gender'),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    _buildFieldGender(model),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    _buildTitle('Date of Birth'),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    _buildDOBFIeld(context, model),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    _buildTitle('Phone Number'),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    _buildPhoneNumberField(model),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    _buildTitle('Email'),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    _buildEmailField(model),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    _buildTitle('ID Card'),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    _buildIDCardField(model),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              //additional
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 5),
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      spreadRadius: 1,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    _buildTitleCard('Additional Infomation',
-                                        EvaIcons.fileTextOutline, Colors.blue),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    _buildTitle('Blood Type'),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    _buildBloodTypeField(model, context),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Expanded(
-                                            child: Column(
-                                              children: [
-                                                _buildTitle('Height'),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                _buildHeightField(
-                                                    model, context),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                              children: [
-                                                _buildTitle('Weight'),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                _buildWeightField(
-                                                    model, context),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 30.0,
-                              ),
-                              _buildSaveButton(context, model),
-                            ],
-                          ),
-                        ),
-                        _buildAppbar(context, model),
-                      ],
+    return Scaffold(
+      body: BaseView<DependentProfileViewModel>(
+        builder: (context, child, model) {
+          return SingleChildScrollView(
+            child: model.isLoading
+                ? Container(
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.height,
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
                     ),
-            );
-          },
-        ),
+                  )
+                : Stack(
+                    children: [
+                      Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            _buildImageSelectField(model),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 1,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildTitleCard('Basic Infomation',
+                                      Icons.info, Colors.greenAccent),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  _buildTitle('Full Name'),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  _buildFullNameField(model),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  _buildTitle('Gender'),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  _buildFieldGender(model),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  _buildTitle('Date of Birth'),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  _buildDOBFIeld(context, model),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  _buildTitle('Phone Number'),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  _buildPhoneNumberField(model),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  _buildTitle('Email'),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  _buildEmailField(model),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  _buildTitle('ID Card'),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  _buildIDCardField(model),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            //additional
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 1,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildTitleCard('Additional Infomation',
+                                      EvaIcons.fileTextOutline, Colors.blue),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  _buildTitle('Blood Type'),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  _buildBloodTypeField(model, context),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              _buildTitle('Height'),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              _buildHeightField(model, context),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              _buildTitle('Weight'),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              _buildWeightField(model, context),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            _buildSaveButton(context, model),
+                          ],
+                        ),
+                      ),
+                      _buildAppbar(context, model),
+                    ],
+                  ),
+          );
+        },
       ),
     );
   }
@@ -763,7 +761,7 @@ class DependentProfileScreen extends StatelessWidget {
           model.getUserImage();
         },
         child: Container(
-          padding: EdgeInsets.only(top: 50, bottom: 50),
+          padding: EdgeInsets.only(top: 70, bottom: 50),
           decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topRight,

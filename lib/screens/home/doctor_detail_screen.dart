@@ -278,7 +278,7 @@ class DoctorDetailScreen extends StatelessWidget {
             ),
           ),
           child: Container(
-            height: 380,
+            height: 345,
             width: MediaQuery.of(context).size.width * 0.8,
             child: Column(
               children: [
