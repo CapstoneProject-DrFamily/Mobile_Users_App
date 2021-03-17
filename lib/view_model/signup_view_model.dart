@@ -179,7 +179,7 @@ class SignUpViewModel extends BaseModel {
   bool get isReady => _isReady;
 
   Future<bool> createNewAccount(BuildContext context) async {
-    _check = true;
+    _isReady = true;
     if (_fullName.value == null) {
       checkFullName(null);
       _isReady = false;
@@ -225,8 +225,6 @@ class SignUpViewModel extends BaseModel {
       if (check == true) check = await _signUpRepo.createHealthRecord();
 
       if (check == true) check = await _signUpRepo.createPatient();
-
-      Navigator.pop(context);
     }
     return check;
   }

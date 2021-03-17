@@ -160,11 +160,12 @@ class DependentScreen extends StatelessWidget {
                                                             .seeDetail(context);
                                                       },
                                                       child: Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.3,
+                                                        width: 120,
+                                                        // MediaQuery.of(
+                                                        //             context)
+                                                        //         .size
+                                                        //         .width *
+                                                        //     0.3,
                                                         height: MediaQuery.of(
                                                                     context)
                                                                 .size
@@ -224,11 +225,12 @@ class DependentScreen extends StatelessWidget {
                                                             context);
                                                       },
                                                       child: Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.3,
+                                                        width: 120,
+                                                        // MediaQuery.of(
+                                                        //             context)
+                                                        //         .size
+                                                        //         .width *
+                                                        //     0.3,
                                                         height: MediaQuery.of(
                                                                     context)
                                                                 .size
@@ -318,11 +320,11 @@ class DependentScreen extends StatelessWidget {
                                                     }
                                                   },
                                                   child: Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.62,
+                                                    width: 250,
+                                                    // MediaQuery.of(context)
+                                                    //         .size
+                                                    //         .width *
+                                                    //     0.62,
                                                     height:
                                                         MediaQuery.of(context)
                                                                 .size
