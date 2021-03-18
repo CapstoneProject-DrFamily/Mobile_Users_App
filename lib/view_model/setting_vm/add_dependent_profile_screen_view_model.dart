@@ -6,6 +6,7 @@ import 'package:drFamily_app/repository/setting/dependent_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddDependentProfileScreenViewModel extends BaseModel {
   IDependentRepo _dependentRepo = DependentRepo();
@@ -108,6 +109,8 @@ class AddDependentProfileScreenViewModel extends BaseModel {
 
     bool check;
     if (_isReady == true) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      int accountID = prefs.getInt("usAccountID");
       print("_isReady " + _isReady.toString());
       _signUpModel = new SignUpModel(
         fullName: _fullNameController.text,
@@ -117,6 +120,7 @@ class AddDependentProfileScreenViewModel extends BaseModel {
         image: null,
         email: null,
         idCard: null,
+        accountID: accountID,
       );
 
       String addProfileJson = jsonEncode(_signUpModel.toJson());
@@ -124,10 +128,10 @@ class AddDependentProfileScreenViewModel extends BaseModel {
 
       check = await _dependentRepo.createDependentProfile(addProfileJson);
 
-      if (check == true) check = await _dependentRepo.createHealthRecord();
-
       if (check == true)
         check = await _dependentRepo.createPatient(_relationshipValue);
+
+      if (check == true) check = await _dependentRepo.createHealthRecord();
     }
 
     return check;

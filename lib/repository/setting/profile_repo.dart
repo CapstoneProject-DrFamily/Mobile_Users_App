@@ -30,7 +30,7 @@ class ProfileRepo extends IProfileRepo {
     if (response.statusCode == 200) {
       Map<String, dynamic> map = json.decode(response.body);
       profileModel = ProfileModel.fromJson(map);
-      var additionModel = map['patients'];
+      var additionModel = map['patient'];
       profileModel.additionInfoModel =
           AdditionInfoModel.fromJson(additionModel);
       return profileModel;

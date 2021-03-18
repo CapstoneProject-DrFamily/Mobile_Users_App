@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:drFamily_app/Helper/validate.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
@@ -35,6 +36,10 @@ class DependentProfileViewModel extends BaseModel {
   String _weight = "";
   String _currentImage = DEFAULT_IMG;
   String _selectGender;
+
+  Validate _fullName = Validate(null, null);
+  Validate _email = Validate(null, null);
+  Validate _idCard = Validate(null, null);
 
   int _gender = 0;
   List _months = [
@@ -84,6 +89,10 @@ class DependentProfileViewModel extends BaseModel {
   String get weight => _weight;
   String get selectGender => _selectGender;
 
+  Validate get fullName => _fullName;
+  Validate get email => _email;
+  Validate get idCard => _idCard;
+
   int get gender => _gender;
 
   bool _isLoading = false;
@@ -107,30 +116,6 @@ class DependentProfileViewModel extends BaseModel {
       else
         this._weight1 += i.toString() + ',';
     }
-    // _fullNameController.addListener(() {
-    //   _fullName = _fullNameController.text;
-    //   notifyListeners();
-    // });
-    // _dobController.addListener(() {
-    //   _dob = _dobController.text;
-    //   notifyListeners();
-    // });
-    // _phoneNumController.addListener(() {
-    //   _phoneNum = _phoneNumController.text;
-    //   notifyListeners();
-    // });
-    // _emailController.addListener(() {
-    //   _email = _emailController.text;
-    //   notifyListeners();
-    // });
-    // _idCardController.addListener(() {
-    //   _idCard = _idCardController.text;
-    //   notifyListeners();
-    // });
-    // _bloodTpeController.addListener(() {
-    //   _bloodType = _bloodTpeController.text;
-    //   notifyListeners();
-    // });
     _heightController.addListener(() {
       _height = _heightController.text;
       notifyListeners();
@@ -179,6 +164,18 @@ class DependentProfileViewModel extends BaseModel {
           ]
       ]
           ''';
+    _fullNameController.addListener(() {
+      _fullName = Validate(_fullNameController.text, null);
+      notifyListeners();
+    });
+    _idCardController.addListener(() {
+      _idCard = Validate(_idCardController.text, null);
+      notifyListeners();
+    });
+    _emailController.addListener(() {
+      _email = Validate(_emailController.text, null);
+      notifyListeners();
+    });
     getDependentProfile();
   }
 
@@ -186,6 +183,7 @@ class DependentProfileViewModel extends BaseModel {
     this._isLoading = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     profileID = prefs.getInt("dependentProfileID");
+    accountId = prefs.getInt("usAccountID");
 
     //Get user profile
     _profileModel = await _profileRepo.getBasicInfo(profileID.toString());
@@ -214,11 +212,8 @@ class DependentProfileViewModel extends BaseModel {
     //Get user additional infomation
     _additionInfoModel = _profileModel.additionInfoModel;
 
-    recordId = _additionInfoModel.recordId;
     patientID = _additionInfoModel.patientId;
-
     relationship = _additionInfoModel.relationship;
-    accountId = _additionInfoModel.accountId;
 
     _bloodTpeController.text = _additionInfoModel.bloodType;
 
@@ -287,9 +282,73 @@ class DependentProfileViewModel extends BaseModel {
     return url;
   }
 
+  void checkFullName(String fullName) {
+    print(fullName);
+    if (fullName == null || fullName.length == 0) {
+      _fullName = Validate(null, "Fullname can't be blank");
+    } else {
+      _fullName = Validate(fullName, null);
+    }
+    notifyListeners();
+  }
+
+  void checkIDCard(String idCard) {
+    print(idCard);
+    if (idCard == null || idCard.length == 0) {
+      _idCard = Validate(null, "ID Card can't be blank");
+    } else {
+      _idCard = Validate(idCard, null);
+    }
+    notifyListeners();
+  }
+
+  void checkEmail(String email) {
+    String check = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
+        "\\@" +
+        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+        "(" +
+        "\\." +
+        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+        ")+";
+    RegExp regExp = new RegExp(check);
+    if (email == null || email.length == 0) {
+      _email = Validate(null, "Email can't be blank");
+    } else if (!regExp.hasMatch(email)) {
+      _email = Validate(null, "Invalid Email!");
+    } else {
+      _email = Validate(email, null);
+    }
+    notifyListeners();
+  }
+
+  bool _isReady;
+  bool get isReady => _isReady;
+
+  String _error;
+  String get error => _error;
+
   Future<bool> updateInformation() async {
-    _check = true;
-    if (_check = true) {
+    _isReady = true;
+
+    if (_fullName.value == null) {
+      checkFullName(null);
+      _isReady = false;
+    }
+
+    if (_idCard.value == null) {
+      checkIDCard(null);
+      _isReady = false;
+    }
+
+    if (_email.value == null) {
+      checkEmail(null);
+      _isReady = false;
+    }
+
+    print('isReady: $_isReady');
+
+    bool check;
+    if (_isReady == true) {
       String uploadImage;
 
       if (_image != null) {
@@ -307,42 +366,41 @@ class DependentProfileViewModel extends BaseModel {
           phone: phoneNumController.text,
           image: uploadImage,
           email: emailController.text,
-          idCard: idCardController.text);
+          idCard: idCardController.text,
+          accountID: accountId);
 
       String updateBasicInfoJson = jsonEncode(_profileModel.toJson());
       print(updateBasicInfoJson + "\n");
 
-      _check = await _profileRepo.updateBasicInfo(updateBasicInfoJson);
+      check = await _profileRepo.updateBasicInfo(updateBasicInfoJson);
 
-      if (_check == true) {
-        print("height: " + height);
-        print("weight: " + weight);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      print("height: " + height);
+      print("weight: " + weight);
 
-        double newWeight;
-        if (weight.length <= 5) {
-          newWeight = double.parse(weight.substring(0, 3));
-        } else {
-          newWeight = double.parse(weight.substring(0, 4));
-        }
-
-        print("newWeight: " + newWeight.toString());
-
-        _additionInfoModel = new AdditionInfoModel(
-          patientId: patientID,
-          bloodType: bloodTpeController.text,
-          height: double.parse(height.substring(0, 3)),
-          weight: newWeight,
-          profileId: profileID,
-          recordId: recordId,
-          relationship: relationship,
-          accountId: accountId,
-        );
-
-        String updateAdditionInfoJson = jsonEncode(_additionInfoModel.toJson());
-        print("updateAdditionInfoJson: " + updateAdditionInfoJson);
-
-        _check = await _profileRepo.updateAdditionInfo(updateAdditionInfoJson);
+      double newWeight;
+      if (_weightController.text.length <= 5) {
+        newWeight = double.parse(_weightController.text.substring(0, 3));
+      } else {
+        newWeight = double.parse(_weightController.text.substring(0, 4));
       }
+
+      print("newWeight: " + newWeight.toString());
+
+      _additionInfoModel = new AdditionInfoModel(
+        patientId: patientID,
+        bloodType: bloodTpeController.text,
+        height: double.parse(_heightController.text.substring(0, 3)),
+        weight: newWeight,
+        updBy: prefs.getString("usFullName"),
+        updDatetime: DateTime.now().toString(),
+        relationship: relationship,
+      );
+
+      String updateAdditionInfoJson = jsonEncode(_additionInfoModel.toJson());
+      print("updateAdditionInfoJson: " + updateAdditionInfoJson);
+
+      check = await _profileRepo.updateAdditionInfo(updateAdditionInfoJson);
     }
     return check;
   }
