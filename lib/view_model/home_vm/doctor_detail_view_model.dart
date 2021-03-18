@@ -88,9 +88,11 @@ class DoctorDetailViewModel extends BaseModel {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => WaitingBookingDoctorScreen(
-                    token: _tokenNotiDoctor,
-                  )),
+            builder: (context) => WaitingBookingDoctorScreen(
+              token: _tokenNotiDoctor,
+              doctorFbId: _fbId,
+            ),
+          ),
         );
         transactionID = prefs.getString("usTransaction");
       } else {
@@ -102,12 +104,15 @@ class DoctorDetailViewModel extends BaseModel {
           MaterialPageRoute(
             builder: (context) => WaitingBookingDoctorScreen(
               token: _tokenNotiDoctor,
+              doctorFbId: _fbId,
             ),
           ),
         );
       }
 
       print(transactionID);
+
+      await addTransactionToFb(transactionID, _fbId, usNotiToken);
 
       await _notifyRepo.bookDoctor(
           _tokenNotiDoctor, transactionID, usNotiToken);
@@ -170,6 +175,15 @@ class DoctorDetailViewModel extends BaseModel {
     Navigator.pop(context);
 
     return transactionID;
+  }
+
+  Future<void> addTransactionToFb(
+      String transactionId, String doctorFBId, String usNotitoken) async {
+    await _doctorRequest
+        .child(doctorFBId)
+        .child("transaction")
+        .child(transactionId)
+        .set({"status": "waiting", "usNotiToken": usNotitoken});
   }
 }
 

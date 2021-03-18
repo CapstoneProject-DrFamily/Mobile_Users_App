@@ -5,16 +5,18 @@ import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:flutter/material.dart';
 
 class WaitingBookingDoctorScreen extends StatelessWidget {
-  final String token;
+  final String token, doctorFbId;
 
-  WaitingBookingDoctorScreen({Key key, @required this.token}) : super(key: key);
+  WaitingBookingDoctorScreen(
+      {Key key, @required this.token, @required this.doctorFbId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BaseView<WaitingBookingDoctorViewModel>(
       builder: (context, child, model) {
         return FutureBuilder(
-          future: model.getDoctorToken(token),
+          future: model.initWaitingScreen(token, doctorFbId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Scaffold(

@@ -33,13 +33,11 @@ class NotifyRepo extends INotifyRepo {
       body: jsonEncode(
         <String, dynamic>{
           'notification': <String, dynamic>{
-            'body': 'Patient Hoang Duc is waiting for your response',
+            'body': 'Patient is waiting for your response',
             'title': 'YOU HAVE A NEW PATIENT'
           },
           'priority': 'high',
           'data': <String, dynamic>{
-            'transactionId': transactionID,
-            'notiToken': usToken,
             'status': 'waiting',
             'type': 'booking',
           },
@@ -68,13 +66,11 @@ class NotifyRepo extends INotifyRepo {
       body: jsonEncode(
         <String, dynamic>{
           'notification': <String, dynamic>{
-            'body': 'Patient Hoang Duc is waiting for your response',
-            'title': 'YOU HAVE A NEW PATIENT'
+            'body': 'Patient have cancel booking',
+            'title': 'YOUr PATIENT HAVE CANCEL BOOKING'
           },
           'priority': 'high',
           'data': <String, dynamic>{
-            'transactionId': transactionID,
-            'notiToken': usToken,
             'status': 'cancel',
             'type': 'booking',
           },
