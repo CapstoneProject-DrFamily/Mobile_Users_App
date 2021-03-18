@@ -1,7 +1,7 @@
 import 'package:drFamily_app/model/setting/addition_info_model.dart';
 
 class ProfileModel {
-  int profileId;
+  int profileId, accountID;
   String fullName, dob, gender, phone, image, email, idCard;
   AdditionInfoModel additionInfoModel;
 
@@ -13,7 +13,8 @@ class ProfileModel {
       this.phone,
       this.image,
       this.email,
-      this.idCard});
+      this.idCard,
+      this.accountID});
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
@@ -36,5 +37,6 @@ class ProfileModel {
         "image": this.image,
         "email": this.email,
         "idCard": this.idCard,
+        "accountID": this.accountID,
       };
 }

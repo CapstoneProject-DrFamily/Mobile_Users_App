@@ -143,10 +143,7 @@ class HealthRecordViewModel extends BaseModel {
     _profileModel = await _profileRepo.getBasicInfo(profileID.toString());
     _additionInfoModel = _profileModel.additionInfoModel;
 
-    healthRecordID = _additionInfoModel.recordId;
-
-    _healthRecordModel =
-        await _healthRecordRepo.getHealthRecordByID(healthRecordID);
+    _healthRecordModel = await _healthRecordRepo.getHealthRecordByID(profileID);
 
     _conditionAtBirthController.text = _healthRecordModel.conditionAtBirth;
     _conditionAtBirth = _conditionAtBirthController.text;
@@ -304,12 +301,18 @@ class HealthRecordViewModel extends BaseModel {
     double birthWeight, birthHeight;
     if (_birthWeightController.text == null) {
       birthWeight = 0;
+    } else {
+      birthWeight = double.parse(_birthWeightController.text);
     }
+
     if (_birthHeightController.text == null) {
       birthHeight = 0;
+    } else {
+      birthHeight = double.parse(_birthHeightController.text);
     }
+
     _healthRecordModel = new HealthRecordModel(
-      healthRecordID: healthRecordID,
+      healthRecordID: profileID,
       conditionAtBirth: _conditionAtBirthController.text,
       birthWeight: birthWeight,
       birthHeight: birthHeight,
