@@ -48,7 +48,7 @@ class DoctorRepo extends IDoctorRepo {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> sc = json.decode(response.body);
-      var doctorPhone = sc['profile']['users'][0]['username'];
+      var doctorPhone = sc['doctorNavigation']['account']['username'];
       return int.parse(doctorPhone);
     } else
       return null;

@@ -6,6 +6,7 @@ import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/screens/transaction/transaction_detail_screen.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/map_tracking_screen_view_model.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,13 +43,19 @@ class HistoryRecordScreenViewModel extends BaseModel {
   bool _isNotHave = false;
   bool get isNotHave => _isNotHave;
 
+  DatabaseReference _transactionRequest;
+
   Future<void> initHistory() async {
     if (_isFirst) {
+      _transactionRequest =
+          FirebaseDatabase.instance.reference().child("Transaction");
+
       _isNotHave = false;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var userName = prefs.getString('usFullName');
       _fullUserName = userName;
       _profileId = prefs.getInt("usProfileID");
+
       _patientId = await profileRepo.getPatientId(_profileId.toString());
 
       _listTransaction = await transactionRepo.getListTransactionHistory(
@@ -190,11 +197,25 @@ class HistoryRecordScreenViewModel extends BaseModel {
     switch (transactionStatus) {
       case 1:
         {
+          var doctorFbID;
+          await _transactionRequest
+              .child(transactionId)
+              .once()
+              .then((DataSnapshot dataSnapshot) {
+            Map<dynamic, dynamic> values = dataSnapshot.value;
+            if (values == null) {
+              print("not have");
+            } else {
+              doctorFbID = values['doctor_FBId'];
+            }
+          });
+
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => MapTrackingScreen(
-                  model: MapTrackingScreenViewModel(transactionId)),
+                model: MapTrackingScreenViewModel(transactionId, doctorFbID),
+              ),
             ),
           );
         }
@@ -212,10 +233,11 @@ class HistoryRecordScreenViewModel extends BaseModel {
         break;
       case 3:
         {
-           Navigator.push(
+          Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => TransactionDetailScreen(transactionId: transactionId),
+              builder: (context) =>
+                  TransactionDetailScreen(transactionId: transactionId),
             ),
           );
         }
@@ -225,7 +247,8 @@ class HistoryRecordScreenViewModel extends BaseModel {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => TransactionDetailScreen(transactionId: transactionId),
+              builder: (context) =>
+                  TransactionDetailScreen(transactionId: transactionId),
             ),
           );
         }

@@ -89,8 +89,8 @@ class TransactionRepo extends ITransactionRepo {
         placeName = decodeData["results"][0]["formatted_address"];
       } else {}
 
-      doctorName = transactionJson["doctor"]["profile"]["fullName"];
-      doctorImage = transactionJson["doctor"]["profile"]["image"];
+      doctorName = transactionJson["doctor"]["doctorNavigation"]["fullName"];
+      doctorImage = transactionJson["doctor"]["doctorNavigation"]["image"];
       doctorDegree = transactionJson["doctor"]["degree"];
       doctorSpecialty = transactionJson["doctor"]["specialty"]["name"];
       transactionID = transactionJson["transactionId"];

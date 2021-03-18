@@ -48,57 +48,63 @@ class ListDoctorScreenViewModel extends BaseModel {
     await _doctorRequest.once().then(
       (DataSnapshot dataSnapshot) {
         Map<dynamic, dynamic> values = dataSnapshot.value;
-        values.forEach(
-          (key, values) {
-            // print(values['pickup']['latitude']);
-            final double distance = Geolocator.distanceBetween(
-                _pickUpInfo.latitude,
-                _pickUpInfo.longtitude,
-                double.parse(values['pickup']['latitude']),
-                double.parse(values['pickup']['longtitude']));
-            var doctorStatus = values['doctor_status'];
-            var doctorSpecialty = values['doctor_specialty'];
+        if (values == null) {
+          _nearByDoctorList = [];
+        } else {
+          values.forEach(
+            (key, values) {
+              // print(values['pickup']['latitude']);
+              final double distance = Geolocator.distanceBetween(
+                  _pickUpInfo.latitude,
+                  _pickUpInfo.longtitude,
+                  double.parse(values['pickup']['latitude']),
+                  double.parse(values['pickup']['longtitude']));
+              var doctorStatus = values['doctor_status'];
+              var doctorSpecialty = values['doctor_specialty'];
 
-            if (serviceID == 1) {
-              if ((distance / 1000) <= 5 && doctorStatus == "waiting") {
-                DoctorModel tDoctor = DoctorModel(
-                  fbId: key,
-                  notitoken: values['token'],
-                  id: int.parse(values['doctor_id']),
-                  image: values['doctor_image'],
-                  name: values['doctor_name'],
-                  speciality: doctorSpecialty,
-                  year: 0,
-                  latitude: double.parse(values['pickup']['latitude']),
-                  longitude: double.parse(values['pickup']['longtitude']),
-                  distance: double.parse((distance / 1000).toStringAsFixed(1)),
-                );
+              if (serviceID == 1) {
+                if ((distance / 1000) <= 5 && doctorStatus == "waiting") {
+                  DoctorModel tDoctor = DoctorModel(
+                    fbId: key,
+                    notitoken: values['token'],
+                    id: int.parse(values['doctor_id']),
+                    image: values['doctor_image'],
+                    name: values['doctor_name'],
+                    speciality: doctorSpecialty,
+                    year: 0,
+                    latitude: double.parse(values['pickup']['latitude']),
+                    longitude: double.parse(values['pickup']['longtitude']),
+                    distance:
+                        double.parse((distance / 1000).toStringAsFixed(1)),
+                  );
 
-                _nearByDoctorList.add(tDoctor);
+                  _nearByDoctorList.add(tDoctor);
+                }
+              } else {
+                var specialtyName = prefs.getString("chooseSpecialty");
+                if ((distance / 1000) <= 5 &&
+                    doctorStatus == "waiting" &&
+                    doctorSpecialty == specialtyName) {
+                  DoctorModel tDoctor = DoctorModel(
+                    fbId: key,
+                    notitoken: values['token'],
+                    id: int.parse(values['doctor_id']),
+                    image: values['doctor_image'],
+                    name: values['doctor_name'],
+                    speciality: values['doctor_specialty'],
+                    year: 0,
+                    latitude: double.parse(values['pickup']['latitude']),
+                    longitude: double.parse(values['pickup']['longtitude']),
+                    distance:
+                        double.parse((distance / 1000).toStringAsFixed(1)),
+                  );
+
+                  _nearByDoctorList.add(tDoctor);
+                }
               }
-            } else {
-              var specialtyName = prefs.getString("chooseSpecialty");
-              if ((distance / 1000) <= 5 &&
-                  doctorStatus == "waiting" &&
-                  doctorSpecialty == specialtyName) {
-                DoctorModel tDoctor = DoctorModel(
-                  fbId: key,
-                  notitoken: values['token'],
-                  id: int.parse(values['doctor_id']),
-                  image: values['doctor_image'],
-                  name: values['doctor_name'],
-                  speciality: values['doctor_specialty'],
-                  year: 0,
-                  latitude: double.parse(values['pickup']['latitude']),
-                  longitude: double.parse(values['pickup']['longtitude']),
-                  distance: double.parse((distance / 1000).toStringAsFixed(1)),
-                );
-
-                _nearByDoctorList.add(tDoctor);
-              }
-            }
-          },
-        );
+            },
+          );
+        }
       },
     );
 

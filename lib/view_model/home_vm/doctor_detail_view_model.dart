@@ -114,8 +114,7 @@ class DoctorDetailViewModel extends BaseModel {
 
       await addTransactionToFb(transactionID, _fbId, usNotiToken);
 
-      await _notifyRepo.bookDoctor(
-          _tokenNotiDoctor, transactionID, usNotiToken);
+      await _notifyRepo.bookDoctor(_tokenNotiDoctor);
     }
   }
 
