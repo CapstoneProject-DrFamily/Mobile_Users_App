@@ -71,7 +71,6 @@ class SignUpRepo extends ISignUpRepo {
         username: phone,
         password: null,
         roleId: 2,
-        profileId: profileId,
         waiting: 0);
     String updateUserJson = jsonEncode(_userUpdateModel.toJson());
     print("UpdUserJson: " + updateUserJson);
@@ -97,7 +96,10 @@ class SignUpRepo extends ISignUpRepo {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
-    _healthRecordModel = new HealthRecordModel(insBy: null, insDatetime: null);
+    _healthRecordModel = new HealthRecordModel(
+        healthRecordID: profileId,
+        insBy: "Owner",
+        insDatetime: DateTime.now().toString());
 
     String createHealthRecordJson = jsonEncode(_healthRecordModel.toJson());
     print("CreateHealthRecordJson: " + createHealthRecordJson);
@@ -128,10 +130,12 @@ class SignUpRepo extends ISignUpRepo {
     };
 
     _patientCreateModel = new PatientCreateModel(
-        profileId: profileId,
-        healthRecordId: healthRecordId,
-        relationship: "Owner",
-        accountId: accountId);
+      patientId: profileId,
+      height: 0,
+      weight: 0,
+      bloodType: null,
+      relationship: "Owner",
+    );
     String createPatientJson = jsonEncode(_patientCreateModel.toJson());
     print("CreatePatientJson: " + createPatientJson);
 

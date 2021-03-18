@@ -26,9 +26,9 @@ class DoctorDetailModel {
       doctorExperience: json['experience'] as String,
       doctorDescription: json['description'] as String,
       doctorSpecialty: json['specialty']['name'] as String,
-      doctorName: json['profile']['fullName'] as String,
+      doctorName: json['doctorNavigation']['fullName'] as String,
       doctorSchool: json['school'] as String,
-      doctorImage: json['profile']['image'] as String,
+      doctorImage: json['doctorNavigation']['image'] as String,
     );
   }
 }

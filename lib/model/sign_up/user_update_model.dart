@@ -1,6 +1,6 @@
 class UserUpdateModel {
   final String updBy, username, password, updDate;
-  final int roleId, profileId, accountId, disable, waiting;
+  final int roleId, accountId, disable, waiting;
 
   UserUpdateModel(
       {this.disable,
@@ -10,7 +10,6 @@ class UserUpdateModel {
       this.username,
       this.password,
       this.roleId,
-      this.profileId,
       this.waiting});
 
   Map<String, dynamic> toJson() => {
@@ -21,7 +20,6 @@ class UserUpdateModel {
         "username": username,
         "password": password,
         "roleId": roleId,
-        "profileId": profileId,
         "waiting": waiting
       };
 }

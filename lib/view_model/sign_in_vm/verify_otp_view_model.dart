@@ -204,11 +204,11 @@ class VerifyOTPViewModel extends BaseModel {
 
               var waiting = _userModel.waiting;
 
-              if (waiting == false && _userModel.profileId != null) {
+              if (waiting == false && _userModel.profileId != 0) {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => LandingScreen()),
                     (Route<dynamic> route) => false);
-              } else if (waiting == true && _userModel.profileId == null) {
+              } else if (waiting == true && _userModel.profileId == 0) {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => SignUpScreen()),
                     (Route<dynamic> route) => false);

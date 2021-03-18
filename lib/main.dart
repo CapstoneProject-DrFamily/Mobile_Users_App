@@ -16,7 +16,9 @@ Future<void> main() async {
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: profileID == null ? LoginScreen() : LandingScreen(),
+      home: (profileID == 0 || profileID == null)
+          ? LoginScreen()
+          : LandingScreen(),
       // home: SignUpScreen(),
     ),
   );

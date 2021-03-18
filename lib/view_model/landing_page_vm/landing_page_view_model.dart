@@ -48,6 +48,7 @@ class LandingPageViewModel extends BaseModel {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String phone = prefs.getString("usPhone");
     int profileID = prefs.getInt("usProfileID");
+    print('profile $profileID');
     int userID = prefs.getInt("usAccountID");
 
     _firebaseuser = await FirebaseAuth.instance.currentUser();

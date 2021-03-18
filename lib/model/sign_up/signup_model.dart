@@ -1,5 +1,6 @@
 class SignUpModel {
   final String fullName, dob, gender, phone, image, email, idCard;
+  final int accountID;
 
   SignUpModel(
       {this.fullName,
@@ -8,7 +9,8 @@ class SignUpModel {
       this.phone,
       this.image,
       this.email,
-      this.idCard});
+      this.idCard,
+      this.accountID});
 
   Map<String, dynamic> toJson() => {
         "fullName": fullName,
@@ -18,5 +20,6 @@ class SignUpModel {
         "image": image,
         "email": email,
         "idCard": idCard,
+        "accountId": accountID,
       };
 }

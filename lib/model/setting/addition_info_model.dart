@@ -19,7 +19,6 @@ class AdditionInfoModel {
       bloodType: json['bloodType'] as String,
       height: json['height'] as double,
       weight: json['weight'] as double,
-      profileId: json['profileId'] as int,
       recordId: json['recordId'] as int,
       relationship: json['relationship'] as String,
       accountId: json['accountId'] as int,
