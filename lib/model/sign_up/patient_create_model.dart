@@ -1,14 +1,20 @@
 class PatientCreateModel {
-  final int profileId, healthRecordId, accountId;
-  final String relationship;
+  final int patientId;
+  final double height, weight;
+  final String relationship, bloodType;
 
   PatientCreateModel(
-      {this.profileId, this.healthRecordId, this.relationship, this.accountId});
+      {this.patientId,
+      this.relationship,
+      this.height,
+      this.bloodType,
+      this.weight});
 
   Map<String, dynamic> toJson() => {
-        "profileId": profileId,
-        "recordId": healthRecordId,
-        "relationship": relationship,
-        "accountId": accountId
+        "patientId": patientId,
+        "height": height,
+        "weight": weight,
+        "bloodType": bloodType,
+        "relationship": relationship
       };
 }

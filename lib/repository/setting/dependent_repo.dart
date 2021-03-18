@@ -119,8 +119,8 @@ class DependentRepo extends IDependentRepo {
 
   @override
   Future<bool> createPatient(String relationship) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    int accountID = prefs.getInt("usAccountID");
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // int accountID = prefs.getInt("usAccountID");
 
     String urlAPI = APIHelper.CREATE_PATIENT_API;
     Map<String, String> header = {
@@ -128,10 +128,11 @@ class DependentRepo extends IDependentRepo {
     };
 
     _patientCreateModel = new PatientCreateModel(
-        profileId: profileId,
-        healthRecordId: healthRecordId,
-        relationship: relationship,
-        accountId: accountID);
+        patientId: profileId,
+        height: 0,
+        weight: 0,
+        bloodType: null,
+        relationship: relationship);
     String createPatientJson = jsonEncode(_patientCreateModel.toJson());
     print("CreatePatientJson: " + createPatientJson);
 

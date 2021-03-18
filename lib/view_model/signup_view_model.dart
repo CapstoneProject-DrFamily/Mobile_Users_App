@@ -16,6 +16,7 @@ class SignUpViewModel extends BaseModel {
   ISignUpRepo _signUpRepo = SignUpRepo();
   SignUpModel _signUpModel;
   String phone;
+  int accountID;
 
   //TextEditingController
   TextEditingController _fullNameController = TextEditingController();
@@ -83,14 +84,15 @@ class SignUpViewModel extends BaseModel {
       _gender = _genderController.text;
       notifyListeners();
     });
-    getUserPhoneNum();
+    getUserInfo();
   }
 
   //function get user phone number in SharedPreferences
-  void getUserPhoneNum() async {
+  void getUserInfo() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     phone = sharedPreferences.getString('usPhone');
+    accountID = sharedPreferences.getInt('usAccountID');
     notifyListeners();
   }
 
@@ -179,7 +181,7 @@ class SignUpViewModel extends BaseModel {
   bool get isReady => _isReady;
 
   Future<bool> createNewAccount(BuildContext context) async {
-    _check = true;
+    _isReady = true;
     if (_fullName.value == null) {
       checkFullName(null);
       _isReady = false;
@@ -214,6 +216,7 @@ class SignUpViewModel extends BaseModel {
         image: currentImage,
         email: _emailController.text,
         idCard: _idCardController.text,
+        accountID: accountID,
       );
 
       String addProfileJson = jsonEncode(_signUpModel.toJson());
@@ -222,11 +225,9 @@ class SignUpViewModel extends BaseModel {
       check = await _signUpRepo.createProfile(addProfileJson);
       if (check == true) check = await _signUpRepo.updateUser();
 
-      if (check == true) check = await _signUpRepo.createHealthRecord();
-
       if (check == true) check = await _signUpRepo.createPatient();
 
-      Navigator.pop(context);
+      if (check == true) check = await _signUpRepo.createHealthRecord();
     }
     return check;
   }
