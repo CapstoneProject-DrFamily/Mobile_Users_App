@@ -7,6 +7,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DependentProfileScreen extends StatelessWidget {
@@ -85,7 +86,7 @@ class DependentProfileScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  _buildPhoneNumberField(model),
+                                  _buildPhoneNumberField(context, model),
                                   SizedBox(
                                     height: 15,
                                   ),
@@ -93,7 +94,7 @@ class DependentProfileScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  _buildEmailField(model),
+                                  _buildEmailField(context, model),
                                   SizedBox(
                                     height: 15,
                                   ),
@@ -101,7 +102,7 @@ class DependentProfileScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  _buildIDCardField(model),
+                                  _buildIDCardField(context, model),
                                   SizedBox(
                                     height: 20,
                                   ),
@@ -370,13 +371,17 @@ class DependentProfileScreen extends StatelessWidget {
     );
   }
 
-  Padding _buildIDCardField(DependentProfileViewModel model) {
+  Padding _buildIDCardField(
+      BuildContext context, DependentProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: TextFormField(
         keyboardType: TextInputType.number,
+        maxLength: 12,
         controller: model.idCardController,
-        // onChanged: (value) => model.changePhoneNum(value),
+        onChanged: (text) {
+          model.checkIDCard(text);
+        },
         style: GoogleFonts.varelaRound(
           fontWeight: FontWeight.normal,
           fontSize: 16,
@@ -386,6 +391,8 @@ class DependentProfileScreen extends StatelessWidget {
             color: MainColors.hintTextColor,
           ),
           hintText: "Enter your ID Card",
+          counterText: "",
+          errorText: model.idCard.error,
           filled: true,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
@@ -402,24 +409,21 @@ class DependentProfileScreen extends StatelessWidget {
           fillColor: Colors.white,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-          suffixIcon: model.idCardController.text.isEmpty
-              ? null
-              : InkWell(
-                  onTap: () => model.idCardController.clear(),
-                  child: Icon(Icons.clear),
-                ),
         ),
       ),
     );
   }
 
-  Padding _buildEmailField(DependentProfileViewModel model) {
+  Padding _buildEmailField(
+      BuildContext context, DependentProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: TextFormField(
         keyboardType: TextInputType.emailAddress,
         controller: model.emailController,
-        // onChanged: (value) => model.changePhoneNum(value),
+        onChanged: (text) {
+          model.checkEmail(text);
+        },
         style: GoogleFonts.varelaRound(
           fontWeight: FontWeight.normal,
           fontSize: 16,
@@ -429,6 +433,7 @@ class DependentProfileScreen extends StatelessWidget {
             color: MainColors.hintTextColor,
           ),
           hintText: "Enter your email address",
+          errorText: model.email.error,
           filled: true,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
@@ -445,18 +450,13 @@ class DependentProfileScreen extends StatelessWidget {
           fillColor: Colors.white,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-          suffixIcon: model.emailController.text.isEmpty
-              ? null
-              : InkWell(
-                  onTap: () => model.emailController.clear(),
-                  child: Icon(Icons.clear),
-                ),
         ),
       ),
     );
   }
 
-  Padding _buildPhoneNumberField(DependentProfileViewModel model) {
+  Padding _buildPhoneNumberField(
+      BuildContext context, DependentProfileViewModel model) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: TextFormField(
@@ -563,13 +563,16 @@ class DependentProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: TextFormField(
         controller: model.fullNameController,
-        // onChanged: (value) => model.changePhoneNum(value),
+        onChanged: (text) {
+          model.checkFullName(text);
+        },
         style: GoogleFonts.varelaRound(
           fontWeight: FontWeight.normal,
           fontSize: 16,
         ),
         decoration: InputDecoration(
           hintText: "Enter your full name",
+          errorText: model.fullName.error,
           filled: true,
           hintStyle: TextStyle(
             color: MainColors.hintTextColor,
@@ -589,12 +592,6 @@ class DependentProfileScreen extends StatelessWidget {
           fillColor: Colors.white,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-          suffixIcon: model.fullNameController.text.isEmpty
-              ? null
-              : InkWell(
-                  onTap: () => model.fullNameController.clear(),
-                  child: Icon(Icons.clear),
-                ),
         ),
       ),
     );
@@ -810,8 +807,29 @@ class DependentProfileScreen extends StatelessWidget {
         bool check = await model.updateInformation();
         print("Check: " + check.toString());
 
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => DependentProfileScreen()));
+        if (check) {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) => DependentProfileScreen()));
+
+          Fluttertoast.showToast(
+            msg: "Update success",
+            textColor: Colors.red,
+            toastLength: Toast.LENGTH_SHORT,
+            backgroundColor: Colors.white,
+            gravity: ToastGravity.CENTER,
+          );
+        } else {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) => DependentProfileScreen()));
+
+          Fluttertoast.showToast(
+            msg: "Update fail",
+            textColor: Colors.red,
+            toastLength: Toast.LENGTH_SHORT,
+            backgroundColor: Colors.white,
+            gravity: ToastGravity.CENTER,
+          );
+        }
       },
       child: Padding(
         padding: const EdgeInsets.all(4.0),

@@ -16,7 +16,7 @@ class DependentHealthRecordViewModel extends BaseModel {
   ProfileModel _profileModel;
   AdditionInfoModel _additionInfoModel;
 
-  int profileID, healthRecordID;
+  int dependentProfileID, healthRecordID;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -136,15 +136,14 @@ class DependentHealthRecordViewModel extends BaseModel {
   void getHealthRecordByID() async {
     this._isLoading = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    profileID = prefs.getInt("dependentProfileID");
+    dependentProfileID = prefs.getInt("dependentProfileID");
 
-    _profileModel = await _profileRepo.getBasicInfo(profileID.toString());
+    _profileModel =
+        await _profileRepo.getBasicInfo(dependentProfileID.toString());
     _additionInfoModel = _profileModel.additionInfoModel;
 
-    healthRecordID = _additionInfoModel.recordId;
-
     _healthRecordModel =
-        await _healthRecordRepo.getHealthRecordByID(healthRecordID);
+        await _healthRecordRepo.getHealthRecordByID(dependentProfileID);
 
     _conditionAtBirthController.text = _healthRecordModel.conditionAtBirth;
     _conditionAtBirth = _conditionAtBirthController.text;
@@ -292,12 +291,18 @@ class DependentHealthRecordViewModel extends BaseModel {
     double birthWeight, birthHeight;
     if (_birthWeightController.text == null) {
       birthWeight = 0;
+    } else {
+      birthWeight = double.parse(_birthWeightController.text);
     }
+
     if (_birthHeightController.text == null) {
       birthHeight = 0;
+    } else {
+      birthHeight = double.parse(_birthHeightController.text);
     }
+
     _healthRecordModel = new HealthRecordModel(
-      healthRecordID: healthRecordID,
+      healthRecordID: dependentProfileID,
       conditionAtBirth: _conditionAtBirthController.text,
       birthWeight: birthWeight,
       birthHeight: birthHeight,

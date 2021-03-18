@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -381,8 +382,11 @@ class ProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: TextFormField(
         keyboardType: TextInputType.number,
+        maxLength: 12,
         controller: model.idCardController,
-        // onChanged: (value) => model.changePhoneNum(value),
+        onChanged: (text) {
+          model.checkIDCard(text);
+        },
         style: GoogleFonts.varelaRound(
           fontWeight: FontWeight.normal,
           fontSize: 16,
@@ -392,6 +396,8 @@ class ProfileScreen extends StatelessWidget {
             color: MainColors.hintTextColor,
           ),
           hintText: "Enter your ID Card",
+          errorText: model.idCard.error,
+          counterText: "",
           filled: true,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
@@ -408,12 +414,6 @@ class ProfileScreen extends StatelessWidget {
           fillColor: Colors.white,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-          suffixIcon: model.idCardController.text.isEmpty
-              ? null
-              : InkWell(
-                  onTap: () => model.idCardController.clear(),
-                  child: Icon(Icons.clear),
-                ),
         ),
       ),
     );
@@ -425,7 +425,9 @@ class ProfileScreen extends StatelessWidget {
       child: TextFormField(
         keyboardType: TextInputType.emailAddress,
         controller: model.emailController,
-        // onChanged: (value) => model.changePhoneNum(value),
+        onChanged: (text) {
+          model.checkEmail(text);
+        },
         style: GoogleFonts.varelaRound(
           fontWeight: FontWeight.normal,
           fontSize: 16,
@@ -435,6 +437,7 @@ class ProfileScreen extends StatelessWidget {
             color: MainColors.hintTextColor,
           ),
           hintText: "Enter your email address",
+          errorText: model.email.error,
           filled: true,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
@@ -451,12 +454,6 @@ class ProfileScreen extends StatelessWidget {
           fillColor: Colors.white,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-          suffixIcon: model.emailController.text.isEmpty
-              ? null
-              : InkWell(
-                  onTap: () => model.emailController.clear(),
-                  child: Icon(Icons.clear),
-                ),
         ),
       ),
     );
@@ -568,13 +565,16 @@ class ProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.only(left: 8.0, right: 8),
       child: TextFormField(
         controller: model.fullNameController,
-        // onChanged: (value) => model.changePhoneNum(value),
+        onChanged: (text) {
+          model.checkFullName(text);
+        },
         style: GoogleFonts.varelaRound(
           fontWeight: FontWeight.normal,
           fontSize: 16,
         ),
         decoration: InputDecoration(
           hintText: "Enter your full name",
+          errorText: model.fullName.error,
           filled: true,
           hintStyle: TextStyle(
             color: MainColors.hintTextColor,
@@ -594,12 +594,6 @@ class ProfileScreen extends StatelessWidget {
           fillColor: Colors.white,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-          suffixIcon: model.fullNameController.text.isEmpty
-              ? null
-              : InkWell(
-                  onTap: () => model.fullNameController.clear(),
-                  child: Icon(Icons.clear),
-                ),
         ),
       ),
     );
@@ -817,8 +811,29 @@ class ProfileScreen extends StatelessWidget {
         bool check = await model.updateInformation();
         print("Check: " + check.toString());
 
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => ProfileScreen()));
+        if (check) {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) => ProfileScreen()));
+
+          Fluttertoast.showToast(
+            msg: "Update success",
+            textColor: Colors.red,
+            toastLength: Toast.LENGTH_SHORT,
+            backgroundColor: Colors.white,
+            gravity: ToastGravity.CENTER,
+          );
+        } else {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) => ProfileScreen()));
+
+          Fluttertoast.showToast(
+            msg: "Update fail",
+            textColor: Colors.red,
+            toastLength: Toast.LENGTH_SHORT,
+            backgroundColor: Colors.white,
+            gravity: ToastGravity.CENTER,
+          );
+        }
       },
       child: Padding(
         padding: const EdgeInsets.all(4.0),

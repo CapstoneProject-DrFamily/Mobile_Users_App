@@ -94,7 +94,8 @@ class DependentRepo extends IDependentRepo {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
-    _healthRecordModel = new HealthRecordModel(insBy: null, insDatetime: null);
+    _healthRecordModel = new HealthRecordModel(
+        healthRecordID: profileId, insBy: null, insDatetime: null);
 
     String createHealthRecordJson = jsonEncode(_healthRecordModel.toJson());
     print("CreateHealthRecordJson: " + createHealthRecordJson);
