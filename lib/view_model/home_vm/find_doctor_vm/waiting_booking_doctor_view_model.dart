@@ -1,14 +1,22 @@
 import 'package:drFamily_app/repository/notify_repo.dart';
+import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../global_variable.dart';
+
 class WaitingBookingDoctorViewModel extends BaseModel {
+  static String screenStatus = "";
+  static String doctorFBId = "";
+  static String homeTransactionId = "";
   INotifyRepo _notifyRepo = NotifyRepo();
 
   String _tokenNotiDoctor;
   String _doctorFbId;
+  String _transactionId;
 
   DatabaseReference _doctorRequest;
 
@@ -18,19 +26,20 @@ class WaitingBookingDoctorViewModel extends BaseModel {
   }
 
   Future<void> initWaitingScreen(String token, String doctorFbId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     _tokenNotiDoctor = token;
     _doctorFbId = doctorFbId;
+    _transactionId = prefs.getString("usTransaction");
+    prefs.setString("doctorFBId", doctorFbId);
+
+    liveCheckingTransaction();
   }
 
   Future<void> cancelBooking(BuildContext context) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var usNotiToken = prefs.getString("usNotiToken");
-    var transactionID = prefs.getString("usTransaction");
-    await cancelTransactionOnFb(transactionID, _doctorFbId);
+    await cancelTransactionOnFb(_transactionId, _doctorFbId);
 
-    print(
-        'info: $usNotiToken transaciont: $transactionID doctor noti:$_tokenNotiDoctor');
-    _notifyRepo.cancelBooking(_tokenNotiDoctor, transactionID, usNotiToken);
+    print(' transacion: $_transactionId doctor noti:$_tokenNotiDoctor');
+    _notifyRepo.cancelBooking(_tokenNotiDoctor);
 
     Navigator.pop(context);
   }
@@ -42,5 +51,25 @@ class WaitingBookingDoctorViewModel extends BaseModel {
         .child("transaction")
         .child(transactionId)
         .remove();
+  }
+
+  void liveCheckingTransaction() {
+    print("in live");
+    updateDoctorTransaction = _doctorRequest
+        .child(_doctorFbId)
+        .child("transaction")
+        .child(_transactionId)
+        .onChildChanged
+        .listen(
+      (event) {
+        print(' status: ${event.snapshot.value}');
+        if (event.snapshot.value == 'accept') {
+          screenStatus = "Map Changing";
+          homeTransactionId = _transactionId;
+          doctorFBId = _doctorFbId;
+          Get.offAll(LandingScreen());
+        }
+      },
+    );
   }
 }

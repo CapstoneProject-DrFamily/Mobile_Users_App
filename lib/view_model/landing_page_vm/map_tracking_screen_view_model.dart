@@ -9,14 +9,16 @@ import 'package:drFamily_app/model/transaction_map_update_model.dart';
 import 'package:drFamily_app/repository/doctor_repo.dart';
 import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
+import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/waiting_booking_doctor_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MapTrackingScreenViewModel extends BaseModel {
   final IDoctorRepo _doctorRepo = DoctorRepo();
@@ -58,6 +60,8 @@ class MapTrackingScreenViewModel extends BaseModel {
 
   DatabaseReference _doctorRequest;
 
+  DatabaseReference _transactionRequest;
+
   String userId;
 
   String _transactionID;
@@ -74,24 +78,26 @@ class MapTrackingScreenViewModel extends BaseModel {
 
   int _doctorPhoneNum;
 
-  MapTrackingScreenViewModel(String transactionId) {
+  MapTrackingScreenViewModel(String transactionId, String doctorFBID) {
     _transactionID = transactionId;
-    PushNotifycationService.usStatus = "Map";
+    WaitingBookingDoctorViewModel.screenStatus = "Map";
     _isLoading = true;
     _fabHeight = _initFabHeight;
+    doctorFBid = doctorFBID;
+    WaitingBookingDoctorViewModel.doctorFBId = "";
     notifyListeners();
     initMap();
   }
 
   void initMap() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    doctorFBid = prefs.get("doctorFBId");
-
     _firebaseuser = await FirebaseAuth.instance.currentUser();
     userId = _firebaseuser.uid;
-
+    print('doctorFBID $doctorFBid');
     _doctorRequest =
         FirebaseDatabase.instance.reference().child("Doctor Request");
+
+    _transactionRequest =
+        FirebaseDatabase.instance.reference().child("Transaction");
 
     await _doctorRequest
         .child(doctorFBid)
@@ -172,9 +178,24 @@ class MapTrackingScreenViewModel extends BaseModel {
     durationString = transactionMapModel.estimateTime;
     var doctorId = transactionMapModel.doctorId;
     _doctorPhoneNum = await _doctorRepo.getDoctorPhoneNum(doctorId);
+    getWhenDoctorCome();
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  void getWhenDoctorCome() {
+    transactionStatusUpdate = _transactionRequest
+        .child(_transactionMapModel.transactionId)
+        .onChildAdded
+        .listen((event) {
+      print('doctor come ${event.snapshot.value}');
+      if (event.snapshot.key == "transaction_status") {
+        TimeLineExamineScreen.transactionID =
+            _transactionMapModel.transactionId;
+        Get.off(TimeLineExamineScreen());
+      }
+    });
   }
 
   void onMapCreated(GoogleMapController controller) {

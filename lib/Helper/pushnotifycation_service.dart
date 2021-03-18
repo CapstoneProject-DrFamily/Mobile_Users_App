@@ -7,9 +7,6 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PushNotifycationService {
-  static String usStatus = "";
-  static String usTransactionID = "";
-
   final FirebaseMessaging fcm = FirebaseMessaging();
 
   Future initialize() async {
@@ -18,19 +15,14 @@ class PushNotifycationService {
         print('in mess');
         String typeNoti = message['data']['type'];
         if (typeNoti.endsWith("booking")) {
-          var transactionId = message['data']['transactionId'];
           String status = message['data']['status'];
           if (status.endsWith('cancel')) {
             await cancelBooking();
           } else if (status.endsWith("accept")) {
-            usStatus = "Map Changing";
-            usTransactionID = transactionId;
-            String doctorFBId = message['data']['doctorFBId'];
-            await acceptBooking(doctorFBId);
+            await acceptBooking();
             //accept
           } else if (status.endsWith("arrived")) {
-            usTransactionID = transactionId;
-            await arrivedBooking(usTransactionID);
+            await arrivedBooking();
           }
           print('booking');
         }
@@ -63,13 +55,10 @@ class PushNotifycationService {
       backgroundColor: Colors.white,
       gravity: ToastGravity.CENTER,
     );
-    Get.back();
+    // Get.back();
   }
 
-  Future<void> acceptBooking(String doctorFBId) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("doctorFBId", doctorFBId);
-
+  Future<void> acceptBooking() async {
     Fluttertoast.showToast(
       msg: "Doctor have Accept your request",
       textColor: Colors.green,
@@ -77,10 +66,9 @@ class PushNotifycationService {
       backgroundColor: Colors.white,
       gravity: ToastGravity.CENTER,
     );
-    Get.offAll(LandingScreen());
   }
 
-  Future<void> arrivedBooking(String transactionID) async {
+  Future<void> arrivedBooking() async {
     Fluttertoast.showToast(
       msg: "Doctor have Arrived",
       textColor: Colors.green,
@@ -88,7 +76,5 @@ class PushNotifycationService {
       backgroundColor: Colors.white,
       gravity: ToastGravity.CENTER,
     );
-    TimeLineExamineScreen.transactionID = transactionID;
-    Get.off(TimeLineExamineScreen());
   }
 }

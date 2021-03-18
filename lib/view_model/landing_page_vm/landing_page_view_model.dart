@@ -7,6 +7,7 @@ import 'package:drFamily_app/model/home/landing_model.dart';
 import 'package:drFamily_app/repository/langding/landing_repo.dart';
 import 'package:drFamily_app/screens/setting/setting_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/waiting_booking_doctor_view_model.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/map_tracking_screen_view_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,7 +37,7 @@ class LandingPageViewModel extends BaseModel {
   ];
 
   LandingPageViewModel() {
-    if (PushNotifycationService.usStatus.contains("Changing")) {
+    if (WaitingBookingDoctorViewModel.screenStatus.contains("Changing")) {
       changingPage();
     } else {
       init();
@@ -109,10 +110,10 @@ class LandingPageViewModel extends BaseModel {
   List<BottomNavyBarItem> get listItem => _listItem;
 
   Future<void> changingPage() async {
-    String transactionId = PushNotifycationService.usTransactionID;
+    String transactionId = WaitingBookingDoctorViewModel.homeTransactionId;
     await Future.delayed(Duration(milliseconds: 500));
     Get.to(() => MapTrackingScreen(
-          model: MapTrackingScreenViewModel(transactionId),
+          model: MapTrackingScreenViewModel(transactionId,WaitingBookingDoctorViewModel.doctorFBId),
         )).then((value) {
       notifyListeners();
     });

@@ -1,6 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
+import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/waiting_booking_doctor_view_model.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/landing_page_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +9,7 @@ class LandingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<LandingPageViewModel>(
       builder: (context, child, model) {
-        if (PushNotifycationService.usStatus.contains("Changing")) {
+        if (WaitingBookingDoctorViewModel.screenStatus.contains("Changing")) {
           return Scaffold(
             body: Center(
               child: CircularProgressIndicator(),

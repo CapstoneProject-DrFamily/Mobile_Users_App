@@ -110,8 +110,8 @@ class ProfileRepo extends IProfileRepo {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> map = json.decode(response.body);
+      int patientID = map['patient']['patientId'];
 
-      int patientID = map['patients'][0]['patientId'];
       return patientID;
     } else
       return null;

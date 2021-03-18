@@ -16,4 +16,12 @@ class HelperMethod {
   static void enabletransactionStatusUpdate() {
     transactionStatusUpdate.resume();
   }
+
+  static void disablUpdateDoctorTransaction() {
+    updateDoctorTransaction.pause();
+  }
+
+  static void enableUpdateDoctorTransaction() {
+    updateDoctorTransaction.resume();
+  }
 }

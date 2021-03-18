@@ -3,9 +3,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 
 abstract class INotifyRepo {
-  Future<void> bookDoctor(String tokenID, String transactionID, String usToken);
-  Future<void> cancelBooking(
-      String tokenID, String transactionID, String usToken);
+  Future<void> bookDoctor(String tokenID);
+  Future<void> cancelBooking(String tokenID);
   Future<void> cancelTransaction(String transactionID, String usToken);
 }
 
@@ -15,14 +14,11 @@ class NotifyRepo extends INotifyRepo {
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
   @override
-  Future<void> bookDoctor(
-      String tokenID, String transactionID, String usToken) async {
+  Future<void> bookDoctor(String tokenID) async {
     await firebaseMessaging.requestNotificationPermissions(
       const IosNotificationSettings(
           sound: true, badge: true, alert: true, provisional: false),
     );
-
-    print(transactionID);
 
     await http.post(
       'https://fcm.googleapis.com/fcm/send',
@@ -48,14 +44,11 @@ class NotifyRepo extends INotifyRepo {
   }
 
   @override
-  Future<void> cancelBooking(
-      String tokenID, String transactionID, String usToken) async {
+  Future<void> cancelBooking(String tokenID) async {
     await firebaseMessaging.requestNotificationPermissions(
       const IosNotificationSettings(
           sound: true, badge: true, alert: true, provisional: false),
     );
-
-    print(transactionID);
 
     await http.post(
       'https://fcm.googleapis.com/fcm/send',
