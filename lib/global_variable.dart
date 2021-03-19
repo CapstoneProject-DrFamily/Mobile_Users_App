@@ -7,3 +7,5 @@ StreamSubscription<Event> updateDoctorLocation;
 StreamSubscription<Event> transactionStatusUpdate;
 
 StreamSubscription<Event> updateDoctorTransaction;
+
+StreamSubscription<Event> transactionMapStreamSubscription;

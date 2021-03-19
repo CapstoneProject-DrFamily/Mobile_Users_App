@@ -8,6 +8,7 @@ import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -181,6 +182,7 @@ class SignUpViewModel extends BaseModel {
   bool get isReady => _isReady;
 
   Future<bool> createNewAccount(BuildContext context) async {
+    waitDialog(context);
     _isReady = true;
     if (_fullName.value == null) {
       checkFullName(null);
@@ -228,6 +230,8 @@ class SignUpViewModel extends BaseModel {
       if (check == true) check = await _signUpRepo.createPatient();
 
       if (check == true) check = await _signUpRepo.createHealthRecord();
+
+      Navigator.pop(context);
     }
     return check;
   }
