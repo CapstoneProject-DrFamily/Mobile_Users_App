@@ -278,11 +278,9 @@ class MapTrackingScreenViewModel extends BaseModel {
     TransactionMapUpdateModel transaction = TransactionMapUpdateModel(
         doctorId: _transactionMapModel.doctorId,
         estimatedTime: _transactionMapModel.estimateTime,
-        examId: _transactionMapModel.examId,
         location: _transactionMapModel.location,
         note: _transactionMapModel.transactionNote,
         patientId: _transactionMapModel.patientId,
-        prescriptionId: null,
         status: 4,
         transactionId: _transactionMapModel.transactionId);
     String transactionJson = jsonEncode(transaction.toJson());

@@ -3,6 +3,8 @@ import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -68,6 +70,15 @@ class WaitingBookingDoctorViewModel extends BaseModel {
           homeTransactionId = _transactionId;
           doctorFBId = _doctorFbId;
           Get.offAll(LandingScreen());
+        } else {
+          Fluttertoast.showToast(
+            msg: "Doctor have already been booked",
+            textColor: Colors.red,
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: Colors.white,
+            gravity: ToastGravity.CENTER,
+          );
+          Get.back();
         }
       },
     );
