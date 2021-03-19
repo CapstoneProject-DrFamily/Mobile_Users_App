@@ -38,7 +38,7 @@ class PopUpChoosePatientViewModel extends BaseModel {
   }
 
   void choosePatient(int patient, DependentModel patientModel) {
-    print('patient Model: ${patientModel.patientID}');
+    print('Patient Model: ${patientModel.patientID}');
     _patientChoose = patient;
     _tempPatientChoose = patientModel;
     notifyListeners();
