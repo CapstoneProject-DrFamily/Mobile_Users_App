@@ -209,12 +209,7 @@ class HomeScreen extends StatelessWidget {
                                     height: 56,
                                     child: Icon(Icons.add)),
                                 onTap: () {
-                                  Navigator.push(
-                                    dialogContex,
-                                    MaterialPageRoute(
-                                        builder: (dialogContex) =>
-                                            AddDependentProfilePage()),
-                                  );
+                                  model.addPatient(dialogContex);
                                 },
                               ),
                             ),

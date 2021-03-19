@@ -1,6 +1,9 @@
 import 'package:drFamily_app/model/dependent_model.dart';
 import 'package:drFamily_app/repository/patient_repo.dart';
+import 'package:drFamily_app/screens/landing_page/add_dependent_profile_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PopUpChoosePatientViewModel extends BaseModel {
@@ -39,5 +42,18 @@ class PopUpChoosePatientViewModel extends BaseModel {
     _patientChoose = patient;
     _tempPatientChoose = patientModel;
     notifyListeners();
+  }
+
+  void addPatient(
+    BuildContext dialogContext,
+  ) {
+    Navigator.push(
+      dialogContext,
+      MaterialPageRoute(
+        builder: (dialogContex) => AddDependentProfilePage(),
+      ),
+    ).then((value) async {
+      await init();
+    });
   }
 }
