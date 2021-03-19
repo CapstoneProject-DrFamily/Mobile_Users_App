@@ -1,3 +1,4 @@
+import 'package:drFamily_app/Helper/helper_method.dart';
 import 'package:drFamily_app/model/transaction_history_model.dart';
 import 'package:drFamily_app/repository/setting/profile_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
@@ -47,6 +48,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
 
   Future<void> initHistory() async {
     if (_isFirst) {
+      _isLoading = true;
       _transactionRequest =
           FirebaseDatabase.instance.reference().child("Transaction");
 
@@ -217,7 +219,12 @@ class HistoryRecordScreenViewModel extends BaseModel {
                 model: MapTrackingScreenViewModel(transactionId, doctorFbID),
               ),
             ),
-          );
+          ).then((value) async {
+            HelperMethod.disabltransactionStatusUpdate();
+            HelperMethod.disableUpdateDoctorLocation();
+            HelperMethod.disableTransactionMapUpdates();
+            await initHistory();
+          });
         }
         break;
       case 2:
@@ -228,7 +235,9 @@ class HistoryRecordScreenViewModel extends BaseModel {
             MaterialPageRoute(
               builder: (context) => TimeLineExamineScreen(),
             ),
-          );
+          ).then((value) async {
+            await initHistory();
+          });
         }
         break;
       case 3:

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:commons/commons.dart';
+import 'package:drFamily_app/Helper/helper_method.dart';
 import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
 import 'package:drFamily_app/global_variable.dart';
 import 'package:drFamily_app/model/transaction_map_model.dart';
@@ -109,23 +110,27 @@ class MapTrackingScreenViewModel extends BaseModel {
     });
 
     updateDoctorLocation =
-        _doctorRequest.child(doctorFBid).onChildChanged.listen((event) {
-      if (event.snapshot.value.toString().contains("latitude")) {
-        if (event.snapshot.value['latitude'] != null &&
-            event.snapshot.value['longtitude'] != null) {
-          double latitude = double.parse(event.snapshot.value['latitude']);
-          double longitude = double.parse(event.snapshot.value['longtitude']);
-          LatLng doctorLatLng = LatLng(latitude, longitude);
-          Marker currentDoctorLocation = Marker(
-              markerId: MarkerId("doctorLocation"),
-              position: doctorLatLng,
-              icon: BitmapDescriptor.defaultMarkerWithHue(
-                  BitmapDescriptor.hueGreen));
-          _markers.add(currentDoctorLocation);
-          notifyListeners();
+        _doctorRequest.child(doctorFBid).onChildChanged.listen(
+      (event) {
+        if (event.snapshot.value.toString().contains("latitude")) {
+          if (event.snapshot.value['latitude'] != null &&
+              event.snapshot.value['longtitude'] != null) {
+            double latitude = double.parse(event.snapshot.value['latitude']);
+            double longitude = double.parse(event.snapshot.value['longtitude']);
+            LatLng doctorLatLng = LatLng(latitude, longitude);
+            Marker currentDoctorLocation = Marker(
+                markerId: MarkerId("doctorLocation"),
+                position: doctorLatLng,
+                icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueGreen));
+            _markers.add(currentDoctorLocation);
+            notifyListeners();
+          }
         }
-      }
-    });
+      },
+    );
+
+    getTransactionCancelUpdate();
 
     _transactionMapModel =
         await _transactionRepo.detailTransactionMap(_transactionID);
@@ -191,6 +196,10 @@ class MapTrackingScreenViewModel extends BaseModel {
         .listen((event) {
       print('doctor come ${event.snapshot.value}');
       if (event.snapshot.key == "transaction_status") {
+        HelperMethod.disabltransactionStatusUpdate();
+        HelperMethod.disableUpdateDoctorLocation();
+        HelperMethod.disableTransactionMapUpdates();
+
         TimeLineExamineScreen.transactionID =
             _transactionMapModel.transactionId;
         Get.off(TimeLineExamineScreen());
@@ -275,6 +284,10 @@ class MapTrackingScreenViewModel extends BaseModel {
   }
 
   void cancelTransaction(BuildContext context) async {
+    HelperMethod.disabltransactionStatusUpdate();
+    HelperMethod.disableUpdateDoctorLocation();
+    HelperMethod.disableTransactionMapUpdates();
+
     TransactionMapUpdateModel transaction = TransactionMapUpdateModel(
         doctorId: _transactionMapModel.doctorId,
         estimatedTime: _transactionMapModel.estimateTime,
@@ -288,6 +301,9 @@ class MapTrackingScreenViewModel extends BaseModel {
 
     if (cancel) {
       print(notiToken);
+      await _transactionRequest
+          .child(_transactionMapModel.transactionId)
+          .remove();
 
       _notifyRepo.cancelTransaction(
           _transactionMapModel.transactionId, notiToken);
@@ -305,5 +321,25 @@ class MapTrackingScreenViewModel extends BaseModel {
   void callPhone(BuildContext context) async {
     await launch('tel://$_doctorPhoneNum');
     Navigator.pop(context);
+  }
+
+  void getTransactionCancelUpdate() {
+    transactionMapStreamSubscription =
+        _transactionRequest.child(_transactionID).onChildRemoved.listen(
+      (event) {
+        HelperMethod.disabltransactionStatusUpdate();
+        HelperMethod.disableUpdateDoctorLocation();
+        HelperMethod.disableTransactionMapUpdates();
+
+        Fluttertoast.showToast(
+          msg: "Doctor have Cancel Booking",
+          textColor: Colors.red,
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.white,
+          gravity: ToastGravity.CENTER,
+        );
+        Get.back();
+      },
+    );
   }
 }
