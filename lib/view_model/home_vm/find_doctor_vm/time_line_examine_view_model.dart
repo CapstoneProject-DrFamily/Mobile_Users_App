@@ -1,6 +1,7 @@
 import 'package:drFamily_app/global_variable.dart';
 import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/screens/transaction/transaction_base_screen.dart';
 import 'package:drFamily_app/screens/transaction/transaction_detail_screen.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/waiting_booking_doctor_view_model.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -233,7 +234,7 @@ class TimeLineExamineViewModel extends BaseModel {
               backgroundColor: Colors.white,
               gravity: ToastGravity.CENTER,
             );
-            Get.off(TransactionDetailScreen(transactionId: _transactionId));
+            Get.off(TransactionBaseScreen(transactionId: _transactionId));
           }
           break;
         default:
