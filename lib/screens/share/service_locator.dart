@@ -22,7 +22,10 @@ import 'package:drFamily_app/view_model/setting_vm/profile_screen_view_model.dar
 import 'package:drFamily_app/view_model/sign_in_vm/sign_in_view_model.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/verify_otp_view_model.dart';
 import 'package:drFamily_app/view_model/signup_view_model.dart';
+import 'package:drFamily_app/view_model/transaction_vm/transaction_base_view_model.dart';
 import 'package:drFamily_app/view_model/transaction_vm/transaction_detail_view_model.dart';
+import 'package:drFamily_app/view_model/transaction_vm/transaction_form_view_model.dart';
+import 'package:drFamily_app/view_model/transaction_vm/transaction_prescription_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.asNewInstance();
@@ -65,4 +68,10 @@ void setupLocator() {
   locator.registerFactory<RatingBaseViewModel>(() => RatingBaseViewModel());
   locator.registerFactory<TransactionDetailViewModel>(
       () => TransactionDetailViewModel());
+  locator.registerFactory<TransactionBaseViewModel>(
+      () => TransactionBaseViewModel());
+  locator.registerFactory<TransactionFormViewModel>(
+      () => TransactionFormViewModel());
+  locator.registerFactory<TransactionPrescriptionViewModel>(
+      () => TransactionPrescriptionViewModel());
 }
