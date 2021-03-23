@@ -1,9 +1,14 @@
+import 'package:drFamily_app/model/transaction/transaction_model.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/rating_vm/rating_base_view_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RatingBaseScreen extends StatelessWidget {
+  final TransactionModel transactionModel;
+  RatingBaseScreen({@required this.transactionModel});
   @override
   Widget build(BuildContext context) {
     return BaseView<RatingBaseViewModel>(builder: (context, child, model) {
@@ -13,7 +18,7 @@ class RatingBaseScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           leading: IconButton(
             icon: Icon(Icons.clear, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.of(context).pop(false),
           ),
         ),
         body: SingleChildScrollView(
@@ -195,14 +200,36 @@ class RatingBaseScreen extends StatelessWidget {
         ),
         bottomNavigationBar: Container(
           padding: EdgeInsets.all(20),
-          child: FloatingActionButton.extended(
-            onPressed: () {
-              model.rateService();
-            },
-            label: const Text('Rate'),
-            icon: const Icon(Icons.thumb_up),
-            backgroundColor: Colors.blue,
-          ),
+          child: model.isLoading
+              ? FloatingActionButton.extended(
+                  label:
+                      CircularProgressIndicator(backgroundColor: Colors.white))
+              : FloatingActionButton.extended(
+                  onPressed: () async {
+                    bool isSucces = await model.rateService(transactionModel);
+                    if (isSucces) {
+                      Fluttertoast.showToast(
+                        msg: "Send feedback success",
+                        textColor: Colors.green,
+                        toastLength: Toast.LENGTH_LONG,
+                        backgroundColor: Colors.white,
+                        gravity: ToastGravity.CENTER,
+                      );
+                      Navigator.of(context).pop(isSucces);
+                    } else {
+                      Fluttertoast.showToast(
+                        msg: "Send feedback faild",
+                        textColor: Colors.red,
+                        toastLength: Toast.LENGTH_LONG,
+                        backgroundColor: Colors.white,
+                        gravity: ToastGravity.CENTER,
+                      );
+                    }
+                  },
+                  label: const Text('Rate'),
+                  icon: const Icon(Icons.thumb_up),
+                  backgroundColor: Colors.blue,
+                ),
         ),
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );

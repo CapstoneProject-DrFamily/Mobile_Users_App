@@ -1,4 +1,8 @@
+import 'package:drFamily_app/model/feedback_model.dart';
+import 'package:drFamily_app/model/transaction/transaction_model.dart';
+import 'package:drFamily_app/repository/feedback_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RatingBaseViewModel extends BaseModel {
   double rating = 3;
@@ -7,6 +11,8 @@ class RatingBaseViewModel extends BaseModel {
   String note = "";
   String other = "";
   List<String> list = List<String>();
+  IFeedbackRepo _feedbackRepo = FeedbackRepo();
+  bool isLoading = false;
 
   changeRating(value) {
     this.rating = value;
@@ -37,7 +43,10 @@ class RatingBaseViewModel extends BaseModel {
     notifyListeners();
   }
 
-  rateService() {
+  rateService(TransactionModel model) async {
+    isLoading = true;
+    notifyListeners();
+
     this.note = "";
     for (int i = 0; i < list.length; i++) {
       this.note = this.note + list[i].trim() + ", ";
@@ -50,6 +59,22 @@ class RatingBaseViewModel extends BaseModel {
         this.note = this.note.substring(0, this.note.length - 2);
       }
     }
-    print(this.note);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String name = prefs.getString("usFullName");
+
+    FeedbackModel feedback = FeedbackModel(
+      feedbackId: model.transactionId,
+      ratingPoint: this.rating,
+      doctorId: model.doctorId,
+      patientId: model.patientId,
+      note: this.note,
+      insBy: name,
+      updBy: name,
+    );
+    print(feedback.toJson());
+    bool isSuccess = await _feedbackRepo.createFeedback(feedback);
+    isLoading = false;
+    notifyListeners();
+    return isSuccess;
   }
 }

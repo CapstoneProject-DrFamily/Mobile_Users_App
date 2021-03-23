@@ -258,7 +258,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  TransactionDetailScreen(transactionId: transactionId),
+                  TransactionBaseScreen(transactionId: transactionId),
             ),
           );
         }

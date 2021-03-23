@@ -2,6 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:drFamily_app/Helper/api_helper.dart';
+import 'package:drFamily_app/model/feedback_model.dart';
+import 'package:drFamily_app/model/setting/profile_model.dart';
+import 'package:drFamily_app/model/transaction/examination_form_model.dart';
+import 'package:drFamily_app/model/transaction/service_model.dart';
+import 'package:drFamily_app/model/transaction/transaction_model.dart';
 import 'package:drFamily_app/model/transaction_history_model.dart';
 import 'package:drFamily_app/model/transaction_map_model.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +17,8 @@ abstract class ITransactionRepo {
   Future<bool> updateTransaction(String transaction);
   Future<List<TransactionHistoryModel>> getListTransactionHistory(
       String patientId, int status);
+
+  Future<List<dynamic>> getTransactionDetail(String transactionId);
 }
 
 class TransactionRepo extends ITransactionRepo {
@@ -170,5 +177,47 @@ class TransactionRepo extends ITransactionRepo {
         return listTransactionHistoryModel;
     } else
       return null;
+  }
+
+  @override
+  Future<List<dynamic>> getTransactionDetail(String transactionId) async {
+    List<dynamic> list = [];
+    String urlAPI = APIHelper.TRANSACTION_API;
+
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    var response = await http.get(urlAPI + "/$transactionId", headers: header);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      TransactionModel transaction = TransactionModel.fromJson(data);
+
+      ProfileModel profileDoctor =
+          ProfileModel.fromJson(data['doctor']['doctorNavigation']);
+      String doctorSpeciality = data['doctor']['specialty']['name'];
+
+      ServiceModel service = ServiceModel.fromJson(data['service']);
+      ExaminationHistoryModel examination =
+          ExaminationHistoryModel.fromJson(data['examinationHistory']);
+
+      // FEEDBACK
+      FeedbackModel feedback;
+      urlAPI = APIHelper.FEEDBACK_API;
+      response = await http.get(urlAPI + "/$transactionId", headers: header);
+      if (response.statusCode == 200) {
+        data = jsonDecode(response.body);
+        feedback = FeedbackModel.fromJson(data);
+      }
+
+      list.add(transaction);
+      list.add(profileDoctor);
+      list.add(doctorSpeciality);
+      list.add(service);
+      list.add(examination);
+      list.add(feedback);
+    }
+
+    return list;
   }
 }
