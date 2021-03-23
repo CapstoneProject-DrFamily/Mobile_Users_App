@@ -6,19 +6,20 @@ class PrescriptionModel {
       morningQuantity,
       noonQuantity,
       afternoonQuantity,
-      totalQuantity;
+      totalQuantity,
+      totalDays;
   MedicineModel medicine;
 
-  PrescriptionModel({
-    this.prescriptionId,
-    this.method,
-    this.type,
-    this.medicineId,
-    this.morningQuantity,
-    this.noonQuantity,
-    this.afternoonQuantity,
-    this.totalQuantity,
-  });
+  PrescriptionModel(
+      {this.prescriptionId,
+      this.method,
+      this.type,
+      this.medicineId,
+      this.morningQuantity,
+      this.noonQuantity,
+      this.afternoonQuantity,
+      this.totalQuantity,
+      this.totalDays});
 
   factory PrescriptionModel.fromJson(Map<String, dynamic> json) {
     return PrescriptionModel(
@@ -30,6 +31,7 @@ class PrescriptionModel {
       noonQuantity: json['noonQuantity'] as int,
       afternoonQuantity: json['afternoonQuantity'] as int,
       totalQuantity: json['totalQuantity'] as int,
+      totalDays: json['totalDays'] as int,
     );
   }
 
@@ -42,5 +44,6 @@ class PrescriptionModel {
         "noonQuantity": this.noonQuantity,
         "afternoonQuantity": this.afternoonQuantity,
         "totalQuantity": this.totalQuantity,
+        "totalDays": this.totalDays,
       };
 }

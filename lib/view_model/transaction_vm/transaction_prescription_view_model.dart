@@ -6,10 +6,15 @@ class TransactionPrescriptionViewModel extends BaseModel {
   bool init = true;
   List<PrescriptionModel> list;
   IPrescriptionRepo _prescriptionRepo = PrescriptionRepo();
+  String description;
 
   fetchData(String transactionId) async {
     if (init) {
-      list = await _prescriptionRepo.getPrescriptionDetail(transactionId);
+      List<dynamic> result =
+          await _prescriptionRepo.getPrescriptionDetail(transactionId);
+      list = result[0];
+      description = result[1];
+      print(description);
 
       this.init = false;
       notifyListeners();

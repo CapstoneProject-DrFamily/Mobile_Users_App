@@ -312,7 +312,8 @@ class TransactionPrescriptionScreen extends StatelessWidget {
                                                 padding: const EdgeInsets.only(
                                                     left: 8, right: 8),
                                                 child: Text(
-                                                  '99',
+                                                  model.list[index].totalDays
+                                                      .toString(),
                                                   style: TextStyle(
                                                       fontSize: 20,
                                                       color: Colors.white),
@@ -344,6 +345,40 @@ class TransactionPrescriptionScreen extends StatelessWidget {
                   ],
                 );
               }),
+          Row(
+            children: [
+              SizedBox(
+                width: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Note',
+                  style: TextStyle(
+                    color: Color(0xff0d47a1),
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  model.description == null ? '' : model.description,
+                  style: TextStyle(
+                    color: Color(0xff0d47a1),
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
