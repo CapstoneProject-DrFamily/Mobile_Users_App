@@ -18,13 +18,13 @@ Future<void> main() async {
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: (profileID == 0 || profileID == null)
-      //     ? LoginScreen()
-      //     : LandingScreen(),
+      home: (profileID == 0 || profileID == null)
+          ? LoginScreen()
+          : LandingScreen(),
       // home: SignUpScreen(),
-      home: TransactionBaseScreen(
-        transactionId: 'TS-07df1a78-9ce5-4fe9-8903-aca2f177f954',
-      ),
+      // home: TransactionBaseScreen(
+      //   transactionId: 'TS-a093b19b-95b4-4c38-a3f5-4da3467caa7b',
+      // ),
     ),
   );
 }

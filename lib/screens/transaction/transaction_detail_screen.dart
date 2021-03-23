@@ -208,6 +208,43 @@ class TransactionDetailScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                Divider(
+                  thickness: 1,
+                  indent: 50,
+                  endIndent: 50,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Note',
+                        style: TextStyle(
+                          color: Color(0xff0d47a1),
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 10, left: 30, right: 30, bottom: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(this.model.transaction.note == "Nothing"
+                          ? ""
+                          : this.model.transaction.note),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
