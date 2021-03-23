@@ -25,6 +25,7 @@ class ProfileModel {
       image: json['image'] as String,
       email: json['email'] as String,
       idCard: json['idCard'] as String,
+      profileId: json['profileId'] as int,
     );
   }
 

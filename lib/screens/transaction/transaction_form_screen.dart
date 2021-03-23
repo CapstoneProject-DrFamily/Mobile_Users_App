@@ -1,13 +1,13 @@
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
+import 'package:drFamily_app/view_model/transaction_vm/transaction_base_view_model.dart';
 import 'package:drFamily_app/view_model/transaction_vm/transaction_form_view_model.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 class TransactionFormScreen extends StatelessWidget {
-  List<String> listCheck = List();
-  final String transactionId;
-  TransactionFormScreen({@required this.transactionId});
+  final TransactionBaseViewModel model;
+  TransactionFormScreen({@required this.model});
   @override
   Widget build(BuildContext context) {
     return BaseView<TransactionFormViewModel>(
@@ -20,7 +20,7 @@ class TransactionFormScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              buildMedicalHistoryExpand(context),
+              buildMedicalHistoryExpand(context, this.model),
               SizedBox(
                 height: 10,
               ),
@@ -131,12 +131,7 @@ class TransactionFormScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Please enter your conclusion";
-                              }
-                              return null;
-                            },
+                            initialValue: this.model.examinationForm.conclusion,
                             maxLines: 5,
                             decoration: InputDecoration.collapsed(
                                 hintText: 'Enter your text'),
@@ -168,7 +163,8 @@ class TransactionFormScreen extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextField(
+                          child: TextFormField(
+                            initialValue: this.model.examinationForm.advisory,
                             maxLines: 5,
                             decoration: InputDecoration.collapsed(
                                 hintText: 'Enter your text'),
@@ -205,14 +201,15 @@ class TransactionFormScreen extends StatelessWidget {
             header: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
-                'Các cơ quan',
+                'Organs',
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
             // collapsed: Text('See details'),
             expanded: Column(
-                children: List.generate(model.listParameter.length, (index) {
+                children:
+                    List.generate(this.model.listSpeciality.length, (index) {
               return Column(
                 children: [
                   Padding(
@@ -233,7 +230,7 @@ class TransactionFormScreen extends StatelessWidget {
                                 Container(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    model.listParameter[index].name,
+                                    this.model.listSpeciality[index].name,
                                     style: TextStyle(fontSize: 18),
                                   ),
                                 ),
@@ -242,8 +239,8 @@ class TransactionFormScreen extends StatelessWidget {
                           ),
                           Flexible(
                             child: Checkbox(
-                              value: listCheck
-                                      .contains(model.listParameter[index].name)
+                              value: this.model.listCheck.contains(
+                                      this.model.listSpeciality[index].name)
                                   ? true
                                   : false,
                             ),
@@ -253,19 +250,28 @@ class TransactionFormScreen extends StatelessWidget {
                     ),
                   ),
                   Visibility(
-                    visible:
-                        listCheck.contains(model.listParameter[index].name),
+                    visible: this
+                        .model
+                        .listCheck
+                        .contains(this.model.listSpeciality[index].name),
                     child: Column(
                       children: [
                         Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              height: MediaQuery.of(context).size.height * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              // height: MediaQuery.of(context).size.height * 0.2,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  'text',
+                                child: TextFormField(
+                                  initialValue: this.model.getTextData(index),
+                                  readOnly: true,
+                                  maxLines: 3,
+                                  decoration: InputDecoration(
+                                      hintText: 'Enter text',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12))),
                                 ),
                               ),
                               decoration: BoxDecoration(
@@ -308,7 +314,7 @@ class TransactionFormScreen extends StatelessWidget {
             header: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
-                'Khám lâm sàng',
+                'Clinical Diagnosis',
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
@@ -324,11 +330,13 @@ class TransactionFormScreen extends StatelessWidget {
     );
   }
 
-  Row buildMedicalHistoryExpand(BuildContext context) {
+  Row buildMedicalHistoryExpand(
+      BuildContext context, TransactionBaseViewModel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
+          width: MediaQuery.of(context).size.width * 0.9,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.blueAccent),
             borderRadius: BorderRadius.circular(15.0),
@@ -343,8 +351,7 @@ class TransactionFormScreen extends StatelessWidget {
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
-            // collapsed: Text('See details'),
-            expanded: buildMedicalHistory(context),
+            expanded: buildMedicalHistory(context, model),
             tapHeaderToExpand: true,
             hasIcon: true,
             iconColor: Colors.white,
@@ -370,7 +377,7 @@ class TransactionFormScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                  '2. Thăm khám lâm sàng',
+                  '2. Clinical Diagnosis',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -386,7 +393,7 @@ class TransactionFormScreen extends StatelessWidget {
                     ),
                     Flexible(
                       child: Text(
-                        'Dấu hiệu sinh tồn, chỉ số nhân trắc học',
+                        'Vital Signs',
                         style: TextStyle(
                           fontSize: 18,
                         ),
@@ -398,19 +405,19 @@ class TransactionFormScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              buildAnthropometricIndex("Mạch", "nhịp/phút", model, "pulseRate"),
+              buildAnthropometricIndex("Pulse", "...", model, "pulseRate"),
               // buildErrorMessage(),
               buildAnthropometricIndex(
-                  "Nhiệt độ", "độ C", model, "temperature"),
+                  "Temperature", "Celsius", model, "temperature"),
               buildAnthropometricIndex(
-                  "Huyết áp", "...", model, "bloodPressure"),
+                  "Blood Pressure", "...", model, "bloodPressure"),
               buildAnthropometricIndex(
-                  "Nhịp thở", "...", model, "respiratoryRate"),
-              buildAnthropometricIndex("Cân nặng", "kg", model, "weight"),
-              buildAnthropometricIndex("Chiều cao", "cm", model, "height"),
+                  "Respiratory Rate", "...", model, "respiratoryRate"),
+              buildAnthropometricIndex("Weight", "kg", model, "weight"),
+              buildAnthropometricIndex("Height", "cm", model, "height"),
               buildAnthropometricIndex("BMI", "...", model, "BMI"),
               buildAnthropometricIndex(
-                  "Vòng bụng", "...", model, "waistCircumference"),
+                  "Hips", "...", model, "waistCircumference"),
               Divider(
                 thickness: 0.5,
               ),
@@ -426,7 +433,8 @@ class TransactionFormScreen extends StatelessWidget {
     );
   }
 
-  Row buildMedicalHistory(BuildContext context) {
+  Row buildMedicalHistory(
+      BuildContext context, TransactionBaseViewModel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -459,11 +467,14 @@ class TransactionFormScreen extends StatelessWidget {
                         color: Colors.white.withOpacity(0.8),
                         alignment: Alignment.topCenter,
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: TextFormField(
-                          initialValue: 'text field',
-                          maxLines: 5,
-                          decoration: InputDecoration.collapsed(),
-                          enabled: false,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: TextFormField(
+                            initialValue: model.examinationForm.history,
+                            maxLines: 5,
+                            decoration: InputDecoration.collapsed(),
+                            enabled: false,
+                          ),
                         ),
                       ),
                     ],
@@ -500,10 +511,9 @@ class TransactionFormScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Container(
               child: TextFormField(
-                // initialValue: model.getFieldNumber(field) != null
-                //     ? model.getFieldNumber(field).toString()
-                //     : null,
-
+                initialValue: this.model.getFieldNumber(field) != null
+                    ? this.model.getFieldNumber(field).toStringAsFixed(1)
+                    : null,
                 enabled: false,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
@@ -550,7 +560,7 @@ class TransactionFormScreen extends StatelessWidget {
               ),
               Flexible(
                 child: Text(
-                  'Thị lực',
+                  'Eye Sight',
                   style: TextStyle(
                     fontSize: 18,
                   ),
@@ -565,19 +575,19 @@ class TransactionFormScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Không kính ',
+                'No glasses',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              buildEyeExaminationForm("Mắt trái", "0 ~ 10", model, "leftEye"),
-              buildEyeExaminationForm("Mắt phải", "0 ~ 10", model, "rightEye"),
+              buildEyeExaminationForm("Left Eye", "0 ~ 10", model, "leftEye"),
+              buildEyeExaminationForm("Right Eye", "0 ~ 10", model, "rightEye"),
               Text(
-                'Có kính',
+                'With glasses',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               buildEyeExaminationForm(
-                  "Mắt trái", "0 ~ 10", model, "leftEyeGlassed"),
+                  "Left Eye", "0 ~ 10", model, "leftEyeGlassed"),
               buildEyeExaminationForm(
-                  "Mắt phải", "0 ~ 10", model, "rightEyeGlassed"),
+                  "Right Eye", "0 ~ 10", model, "rightEyeGlassed"),
             ],
           ),
         ),
@@ -605,12 +615,9 @@ class TransactionFormScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 10, top: 10, left: 10),
             child: TextFormField(
-              // initialValue: model.getFieldNumber(field) != null
-              //     ? model.getFieldNumber(field).toString()
-              //     : null,
-              // onChanged: (value) {
-              //   model.changeFieldNumber(field, model, value);
-              // },
+              initialValue: this.model.getFieldNumber(field) != null
+                  ? this.model.getFieldNumber(field).toString()
+                  : null,
               enabled: false,
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
@@ -655,7 +662,7 @@ class TransactionFormScreen extends StatelessWidget {
               ),
               Flexible(
                 child: Text(
-                  'Khám lâm sàng',
+                  'Paraclinical',
                   style: TextStyle(
                     fontSize: 18,
                   ),
@@ -674,7 +681,7 @@ class TransactionFormScreen extends StatelessWidget {
               ),
               Flexible(
                 child: Text(
-                  'Toàn thân',
+                  'Full body',
                   style: TextStyle(
                     fontSize: 18,
                   ),
@@ -686,14 +693,14 @@ class TransactionFormScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Da, niêm mạc',
+            'Mucosocutaneous',
             style: TextStyle(fontSize: 18),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
-            initialValue: 'model.examinationForm.mucosa',
+            initialValue: this.model.examinationForm.mucosa,
             enabled: false,
             maxLines: 3,
             decoration: InputDecoration(
@@ -705,14 +712,14 @@ class TransactionFormScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Khác',
+            'Other',
             style: TextStyle(fontSize: 18),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
-            initialValue: 'model.examinationForm.otherBody',
+            initialValue: this.model.examinationForm.otherBody,
             enabled: false,
             maxLines: 3,
             decoration: InputDecoration(

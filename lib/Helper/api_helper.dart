@@ -42,4 +42,10 @@ class APIHelper {
       '$PREFIX_API/api/v1/Transactions/patients/';
   static const String GET_TRANSACTION_BY_ID_API =
       '$PREFIX_API/api/v1/Transactions/';
+
+  //API Prescription
+  static const String PRESCRIPTION_API = '$PREFIX_API/api/v1/Presciptions';
+
+  //API Feedback
+  static const String FEEDBACK_API = '$PREFIX_API/api/v1/Feedbacks';
 }
