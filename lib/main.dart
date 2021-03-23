@@ -1,6 +1,8 @@
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/login/login_page.dart';
+import 'package:drFamily_app/screens/prescription_screen.dart';
 import 'package:drFamily_app/screens/share/service_locator.dart';
+import 'package:drFamily_app/screens/transaction/transaction_base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,10 +18,13 @@ Future<void> main() async {
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: (profileID == 0 || profileID == null)
-          ? LoginScreen()
-          : LandingScreen(),
+      // home: (profileID == 0 || profileID == null)
+      //     ? LoginScreen()
+      //     : LandingScreen(),
       // home: SignUpScreen(),
+      home: TransactionBaseScreen(
+        transactionId: 'TS-07df1a78-9ce5-4fe9-8903-aca2f177f954',
+      ),
     ),
   );
 }
