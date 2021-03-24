@@ -184,17 +184,24 @@ class MapPageViewModel extends BaseModel {
 
   Future<void> doneMap(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String transactionStatus = prefs.getString("usTransactionStatus");
+
     String location =
         'latitude: ${_pickUpInfo.latitude}, longitude: ${_pickUpInfo.longtitude}; placeName: ${_pickUpInfo.placeName}';
     prefs.setString("usLocation", location);
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ListDoctorPage(
-          pickUpInfo: _pickUpInfo,
+    if (transactionStatus.endsWith("booking")) {
+      print("go to Booking");
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ListDoctorPage(
+            pickUpInfo: _pickUpInfo,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
