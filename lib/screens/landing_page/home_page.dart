@@ -104,8 +104,18 @@ class HomeScreen extends StatelessWidget {
                         _buildDialogListDependent(context, model);
                       },
                     ),
-                    _buildDoctorFunction(context, 'Book Appointment',
-                        BOOK_APPOINTMENT, 130, 170),
+                    GestureDetector(
+                      onTap: () async {
+                        await model.bookingTransaction();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SpecialtyScreen()),
+                        );
+                      },
+                      child: _buildDoctorFunction(context, 'Book Appointment',
+                          BOOK_APPOINTMENT, 130, 170),
+                    ),
                     _buildDoctorFunction(
                         context, 'Your own Doctor', YOUR_DOCTOR, 140, 180),
                     _buildDoctorFunction(context, 'Medicine Schedule',

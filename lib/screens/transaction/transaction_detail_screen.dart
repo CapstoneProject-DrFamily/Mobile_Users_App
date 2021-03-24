@@ -21,64 +21,71 @@ class TransactionDetailScreen extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Feedback',
-                        style: TextStyle(
-                          color: Color(0xff0d47a1),
-                          fontSize: 20,
-                        ),
+                (this.model.transaction.status == 4)
+                    ? Container()
+                    : Column(
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Feedback',
+                                  style: TextStyle(
+                                    color: Color(0xff0d47a1),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Column(
+                            children: [
+                              RatingBar.builder(
+                                ignoreGestures: true,
+                                initialRating: this.model.feedback != null
+                                    ? this.model.feedback.ratingPoint
+                                    : 0,
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: false,
+                                itemCount: 5,
+                                glowColor: Colors.amber,
+                                itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                // onRatingUpdate: (rating) {
+                                //   // model.changeRating(rating);
+                                // },
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              this.model.buildWidget(context),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Divider(
+                            thickness: 1,
+                            indent: 50,
+                            endIndent: 50,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  children: [
-                    RatingBar.builder(
-                      ignoreGestures: true,
-                      initialRating: this.model.feedback != null
-                          ? this.model.feedback.ratingPoint
-                          : 0,
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      allowHalfRating: false,
-                      itemCount: 5,
-                      glowColor: Colors.amber,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      // onRatingUpdate: (rating) {
-                      //   // model.changeRating(rating);
-                      // },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    this.model.buildWidget(context),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Divider(
-                  thickness: 1,
-                  indent: 50,
-                  endIndent: 50,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
                 Row(
                   children: [
                     SizedBox(
