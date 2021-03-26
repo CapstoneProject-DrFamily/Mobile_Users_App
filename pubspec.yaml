@@ -84,6 +84,9 @@ flutter:
    - family: roboto
      fonts:
        - asset: assets/fonts/Roboto-Black.ttf
+   - family: VarelaRound
+     fonts:
+       - asset: assets/fonts/VarelaRound-Regular.ttf
   assets:
     - assets/images/
   # To add assets to your application, add an assets section, like this:
@@ -102,6 +105,8 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+
+     
   # fonts:
   #   - family: Schyler
   #     fonts:

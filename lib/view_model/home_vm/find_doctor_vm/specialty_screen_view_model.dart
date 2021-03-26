@@ -43,6 +43,7 @@ class SpecialtyScreenViewModel extends BaseModel {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt("usServiceID", serviceId);
     prefs.setString("chooseSpecialty", specialtyName);
+    prefs.setInt("chooseSpecialtyId", specialtyID);
 
     Navigator.push(
       context,

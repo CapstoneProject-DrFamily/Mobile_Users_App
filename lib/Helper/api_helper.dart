@@ -46,4 +46,7 @@ class APIHelper {
 
   //API Feedback
   static const String FEEDBACK_API = '$PREFIX_API/api/v1/Feedbacks';
+
+  //API Schedule
+  static const String SCHEDULE_API = '$PREFIX_API/api/v1/Schedules';
 }

@@ -4,6 +4,7 @@ import 'package:drFamily_app/model/home/find_doctor/map/place_predictions.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
 import 'package:drFamily_app/repository/home/find_doctor/map_api/map_screen_repo.dart';
 import 'package:drFamily_app/screens/home/find_doctor/list_doctor_page.dart';
+import 'package:drFamily_app/screens/schedule/list_doctor_in_schedule_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -192,7 +193,14 @@ class MapPageViewModel extends BaseModel {
     prefs.setString("usLocation", location);
 
     if (transactionStatus.endsWith("booking")) {
-      print("go to Booking");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ListDoctorScheduleScreen(
+            specialityId: prefs.getInt('chooseSpecialtyId'),
+          ),
+        ),
+      );
     } else {
       Navigator.push(
         context,
