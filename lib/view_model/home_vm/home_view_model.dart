@@ -21,4 +21,9 @@ class HomeViewModel extends BaseModel {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("usTransactionStatus", "init");
   }
+
+  Future<void> bookingTransaction() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("usTransactionStatus", "booking");
+  }
 }

@@ -60,6 +60,7 @@ class TransactionBaseViewModel extends BaseModel {
 
       initCheck(this.listCheck);
       this.init = false;
+
       notifyListeners();
     }
   }

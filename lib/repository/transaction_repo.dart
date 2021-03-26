@@ -182,13 +182,14 @@ class TransactionRepo extends ITransactionRepo {
   @override
   Future<List<dynamic>> getTransactionDetail(String transactionId) async {
     List<dynamic> list = [];
-    String urlAPI = APIHelper.TRANSACTION_API;
+    String urlAPI = APIHelper.TRANSACTION_API + "/" + transactionId.trim();
+    print('transactionID $transactionId');
 
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
+    var response = await http.get(urlAPI, headers: header);
 
-    var response = await http.get(urlAPI + "/$transactionId", headers: header);
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
       TransactionModel transaction = TransactionModel.fromJson(data);

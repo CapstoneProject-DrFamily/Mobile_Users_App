@@ -7,13 +7,13 @@ import 'package:drFamily_app/model/prescription_model.dart';
 import 'package:http/http.dart' as http;
 
 abstract class IPrescriptionRepo {
-  Future<List<PrescriptionModel>> getPrescriptionDetail(String prescriptionId);
+  Future<List<dynamic>> getPrescriptionDetail(String prescriptionId);
 }
 
 class PrescriptionRepo extends IPrescriptionRepo {
   @override
-  Future<List<PrescriptionModel>> getPrescriptionDetail(
-      String prescriptionId) async {
+  Future<List<dynamic>> getPrescriptionDetail(String prescriptionId) async {
+    List<dynamic> result = [];
     List<PrescriptionModel> list = [];
 
     String urlAPI = APIHelper.PRESCRIPTION_API;
@@ -23,9 +23,8 @@ class PrescriptionRepo extends IPrescriptionRepo {
     };
 
     var response = await http.get(urlAPI + "/$prescriptionId", headers: header);
-
+    Map<String, dynamic> data = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
       for (int i = 0; i < data['prescriptionDetails'].length; i++) {
         PrescriptionModel prescription =
             PrescriptionModel.fromJson(data['prescriptionDetails'][i]);
@@ -35,7 +34,9 @@ class PrescriptionRepo extends IPrescriptionRepo {
         list.add(prescription);
       }
     }
+    result.add(list);
+    result.add(data['description']);
 
-    return list;
+    return result;
   }
 }
