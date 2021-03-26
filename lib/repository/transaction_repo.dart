@@ -17,6 +17,7 @@ abstract class ITransactionRepo {
   Future<bool> updateTransaction(String transaction);
   Future<List<TransactionHistoryModel>> getListTransactionHistory(
       String patientId, int status);
+  Future<TransactionModel> getTransaction(String transactionId);
 
   Future<List<dynamic>> getTransactionDetail(String transactionId);
 }
@@ -36,6 +37,7 @@ class TransactionRepo extends ITransactionRepo {
 
     print(response.statusCode);
 
+    print(response.body);
     if (response.statusCode == 201) {
       String jSonData = response.body;
       var decodeData = jsonDecode(jSonData);
@@ -220,5 +222,21 @@ class TransactionRepo extends ITransactionRepo {
     }
 
     return list;
+  }
+
+  @override
+  Future<TransactionModel> getTransaction(String transactionId) async {
+    TransactionModel transaction;
+    String urlAPI = APIHelper.TRANSACTION_API + "/" + transactionId.trim();
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+    var response = await http.get(urlAPI, headers: header);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      transaction = TransactionModel.fromJson(data);
+    }
+    return transaction;
   }
 }
