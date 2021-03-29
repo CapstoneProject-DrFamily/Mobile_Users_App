@@ -3,6 +3,10 @@ import 'package:drFamily_app/view_model/home_vm/doctor_detail_view_model.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/history_record/history_record_screen_view_model.dart';
 import 'package:drFamily_app/view_model/payment_vm/payment_view_model.dart';
 import 'package:drFamily_app/view_model/rating_vm/rating_base_view_model.dart';
+import 'package:drFamily_app/view_model/schedule_vm/appointment_view_model.dart';
+import 'package:drFamily_app/view_model/schedule_vm/doctor_detail_schedule_view_model.dart';
+import 'package:drFamily_app/view_model/schedule_vm/list_doctor_schedule_view_model.dart';
+import 'package:drFamily_app/view_model/schedule_vm/reason_appointment_view_model.dart';
 import 'package:drFamily_app/view_model/setting_vm/dependent_health_record_view_model.dart';
 import 'package:drFamily_app/view_model/setting_vm/dependent_profile_view_model.dart';
 import 'package:drFamily_app/view_model/setting_vm/dependent_view_model.dart';
@@ -78,4 +82,14 @@ void setupLocator() {
       () => TransactionPrescriptionViewModel());
   locator.registerFactory<CheckOutViewModel>(() => CheckOutViewModel());
   locator.registerFactory<PaymentViewModel>(() => PaymentViewModel());
+
+  locator.registerFactory<ListDoctorScheduleViewModel>(
+      () => ListDoctorScheduleViewModel());
+
+  locator.registerFactory<AppointmentViewModel>(() => AppointmentViewModel());
+  locator.registerFactory<ReasonAppointmentViewModel>(
+      () => ReasonAppointmentViewModel());
+
+  locator.registerFactory<DoctorDetailScheduleViewModel>(
+      () => DoctorDetailScheduleViewModel());
 }

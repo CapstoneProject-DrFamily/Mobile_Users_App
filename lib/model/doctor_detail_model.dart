@@ -31,4 +31,15 @@ class DoctorDetailModel {
       doctorImage: json['doctorNavigation']['image'] as String,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        "doctorId": this.doctorId,
+        "doctorDegree": this.doctorDegree,
+        "doctorExperience": this.doctorExperience,
+        "doctorDescription": this.doctorDescription,
+        "doctorSpecialty": this.doctorSpecialty,
+        "doctorName": this.doctorName,
+        "doctorSchool": this.doctorSchool,
+        "doctorImage": this.doctorImage,
+      };
 }

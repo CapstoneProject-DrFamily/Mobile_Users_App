@@ -13,16 +13,10 @@ Future<void> main() async {
 
   await setupLocator();
 
-  runApp(
-    GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: (profileID == 0 || profileID == null)
-          ? LoginScreen()
-          : LandingScreen(),
-      // home: TestPaypal(),
-      // home: TransactionBaseScreen(
-      //   transactionId: 'TS-a093b19b-95b4-4c38-a3f5-4da3467caa7b',
-      // ),
-    ),
-  );
+  runApp(GetMaterialApp(
+    theme: ThemeData(fontFamily: 'VarelaRound'),
+    debugShowCheckedModeBanner: false,
+    home:
+        (profileID == 0 || profileID == null) ? LoginScreen() : LandingScreen(),
+  ));
 }
