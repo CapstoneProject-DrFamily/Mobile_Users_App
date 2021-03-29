@@ -40,6 +40,8 @@ class APIHelper {
   static const String TRANSACTION_API = '$PREFIX_API/api/v1/Transactions';
   static const String TRANSACTION_PATIENT_API =
       '$PREFIX_API/api/v1/Transactions/patients/';
+  static const String GET_TRANSACTION_BY_ID_API =
+      '$PREFIX_API/api/v1/Transactions/';
 
   //API Prescription
   static const String PRESCRIPTION_API = '$PREFIX_API/api/v1/Presciptions';
