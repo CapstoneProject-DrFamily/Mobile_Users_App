@@ -5,6 +5,7 @@ import 'package:drFamily_app/view_model/schedule_vm/appointment_view_model.dart'
 import 'package:drFamily_app/view_model/schedule_vm/reason_appointment_view_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ReasonAppointmentScreen extends StatelessWidget {
   final AppointmentViewModel appointmentViewModel;
@@ -114,7 +115,27 @@ class ReasonAppointmentScreen extends StatelessWidget {
       ReasonAppointmentViewModel model, BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        model.bookingDoctor(this.appointmentViewModel);
+        bool isSuccess = await model.bookingDoctor(this.appointmentViewModel);
+        if (isSuccess) {
+          Fluttertoast.showToast(
+            msg: "Booking success",
+            textColor: Colors.green,
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: Colors.white,
+            gravity: ToastGravity.CENTER,
+          );
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => LandingScreen()),
+              (Route<dynamic> route) => false);
+        } else {
+          Fluttertoast.showToast(
+            msg: "Booking failed",
+            textColor: Colors.red,
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: Colors.white,
+            gravity: ToastGravity.CENTER,
+          );
+        }
       },
       child:
           // model.loadingProfile

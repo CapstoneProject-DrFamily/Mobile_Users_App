@@ -44,10 +44,13 @@ class ListDoctorScreenViewModel extends BaseModel {
 
     _doctorRequest =
         FirebaseDatabase.instance.reference().child("Doctor Request");
+    print("oke");
 
     await _doctorRequest.once().then(
       (DataSnapshot dataSnapshot) {
+        print('data $dataSnapshot');
         Map<dynamic, dynamic> values = dataSnapshot.value;
+        print("value $values");
         if (values == null) {
           _nearByDoctorList = [];
         } else {

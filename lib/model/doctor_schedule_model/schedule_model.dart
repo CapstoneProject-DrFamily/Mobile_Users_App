@@ -1,6 +1,6 @@
 class ScheduleModel {
-  int scheduleId, doctorId;
-  String appointmentTime, insBy, updBy, updDatetime;
+  int doctorId;
+  String appointmentTime, insBy, updBy, updDatetime, scheduleId;
   bool status;
 
   ScheduleModel(
@@ -14,7 +14,7 @@ class ScheduleModel {
 
   factory ScheduleModel.fromJson(Map<String, dynamic> json) {
     return ScheduleModel(
-      scheduleId: json['scheduleId'] as int,
+      scheduleId: json['scheduleId'] as String,
       doctorId: json['doctorId'] as int,
       appointmentTime: json['appointmentTime'] as String,
       insBy: json['insBy'] as String,

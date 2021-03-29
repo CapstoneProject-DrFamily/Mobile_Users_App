@@ -5,6 +5,7 @@ import 'package:drFamily_app/screens/landing_page/home_page.dart';
 import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
 import 'package:drFamily_app/model/home/landing_model.dart';
 import 'package:drFamily_app/repository/langding/landing_repo.dart';
+import 'package:drFamily_app/screens/schedule/list_schedule_appointment_screen.dart';
 import 'package:drFamily_app/screens/setting/setting_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/waiting_booking_doctor_view_model.dart';
@@ -31,7 +32,7 @@ class LandingPageViewModel extends BaseModel {
 
   final List<Widget> page = [
     HomeScreen(),
-    SettingPage(),
+    ListScheduleAppointmentScreen(),
     HistoryRecordScreen(),
     SettingPage(),
   ];
@@ -113,7 +114,8 @@ class LandingPageViewModel extends BaseModel {
     String transactionId = WaitingBookingDoctorViewModel.homeTransactionId;
     await Future.delayed(Duration(milliseconds: 500));
     Get.to(() => MapTrackingScreen(
-          model: MapTrackingScreenViewModel(transactionId,WaitingBookingDoctorViewModel.doctorFBId),
+          model: MapTrackingScreenViewModel(
+              transactionId, WaitingBookingDoctorViewModel.doctorFBId),
         )).then((value) {
       notifyListeners();
     });
