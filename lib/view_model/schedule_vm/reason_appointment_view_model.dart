@@ -6,6 +6,7 @@ import 'package:drFamily_app/repository/schedule_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/view_model/schedule_vm/appointment_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReasonAppointmentViewModel extends BaseModel {
@@ -20,37 +21,29 @@ class ReasonAppointmentViewModel extends BaseModel {
     notifyListeners();
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String transaction;
+
     int patientid = prefs.getInt('usPatientID');
 
-    print('patientId $patientid');
-
-    transaction = jsonEncode({
-      "doctorId": model.doctorScheduleModel.doctorDetail.doctorId,
-      "patientId": prefs.getInt('usPatientID'),
-      "status": 0,
-      "location": prefs.getString('usLocation'),
-      "note": this.note.isEmpty ? "Nothing" : this.note,
-      "serviceId": prefs.getInt('usServiceID'),
-    });
-
-    // String transactionId = await _transactionRepo.addTransaction(transaction);
-    String transactionId = 'TS-e81af94f-3b07-49ea-9f78-fcffd9d3074b';
-
-    // check if cannot create transaction
-    if (transactionId == null) {
-      return booking;
-    }
-
     TransactionModel transactionModel =
-        await _transactionRepo.getTransaction(transactionId);
+        await _transactionRepo.getTransaction(model.selectedValue);
 
     // check if get transaction success
     if (transactionModel == null) {
       return booking;
     }
 
-    print("Start: " + transactionModel.dateStart);
+    // update transaction
+    transactionModel.patientId = patientid;
+    transactionModel.location = prefs.getString("usLocation");
+    transactionModel.note = this.note.isEmpty ? "Nothing" : this.note;
+
+    String data = jsonEncode(transactionModel.toJson());
+    print(data);
+    bool isUpdated = await _transactionRepo.updateTransaction(data);
+
+    if (!isUpdated) {
+      return booking;
+    }
 
     String appointmentTime;
     model.schedules.forEach((key, value) {

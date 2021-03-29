@@ -4,7 +4,7 @@ import 'package:drFamily_app/screens/share/base_model.dart';
 
 class AppointmentViewModel extends BaseModel {
   DoctorScheduleModel doctorScheduleModel;
-  int selectedValue;
+  String selectedValue;
 
   Map<String, List<ScheduleModel>> schedules =
       Map<String, List<ScheduleModel>>();
@@ -22,7 +22,7 @@ class AppointmentViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void changeSelectedDay(int value) {
+  void changeSelectedDay(String value) {
     this.selectedValue = value;
 
     notifyListeners();
