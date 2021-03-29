@@ -6,8 +6,8 @@ class DoctorDetailModel {
       doctorName,
       doctorImage,
       doctorSchool;
-  final int doctorId;
-
+  final int doctorId, transactionBooked;
+  final double ratingPoint;
   DoctorDetailModel({
     this.doctorImage,
     this.doctorDegree,
@@ -17,6 +17,8 @@ class DoctorDetailModel {
     this.doctorName,
     this.doctorSchool,
     this.doctorSpecialty,
+    this.ratingPoint,
+    this.transactionBooked,
   });
 
   factory DoctorDetailModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,8 @@ class DoctorDetailModel {
       doctorName: json['doctorNavigation']['fullName'] as String,
       doctorSchool: json['school'] as String,
       doctorImage: json['doctorNavigation']['image'] as String,
+      ratingPoint: json['ratingPoint'] as double,
+      transactionBooked: json['totalDoneTransaction'] as int,
     );
   }
 

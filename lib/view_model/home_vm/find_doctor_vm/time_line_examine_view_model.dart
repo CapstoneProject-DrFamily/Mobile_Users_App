@@ -1,4 +1,5 @@
 import 'package:drFamily_app/global_variable.dart';
+import 'package:drFamily_app/screens/checkout_screen.dart';
 import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/screens/transaction/transaction_base_screen.dart';
@@ -234,7 +235,11 @@ class TimeLineExamineViewModel extends BaseModel {
               backgroundColor: Colors.white,
               gravity: ToastGravity.CENTER,
             );
-            Get.off(TransactionBaseScreen(transactionId: _transactionId));
+            Get.off(
+              CheckOutScreen(
+                transactionId: _transactionId,
+              ),
+            );
           }
           break;
         default:
