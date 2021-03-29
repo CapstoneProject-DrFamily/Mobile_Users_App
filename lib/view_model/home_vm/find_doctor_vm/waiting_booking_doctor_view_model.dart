@@ -1,3 +1,4 @@
+import 'package:drFamily_app/Helper/helper_method.dart';
 import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
@@ -69,8 +70,20 @@ class WaitingBookingDoctorViewModel extends BaseModel {
           screenStatus = "Map Changing";
           homeTransactionId = _transactionId;
           doctorFBId = _doctorFbId;
+          HelperMethod.disablUpdateDoctorTransaction();
           Get.offAll(LandingScreen());
+        } else if (event.snapshot.value == 'offline') {
+          HelperMethod.disablUpdateDoctorTransaction();
+          Fluttertoast.showToast(
+            msg: "Doctor have gone offline",
+            textColor: Colors.red,
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: Colors.white,
+            gravity: ToastGravity.CENTER,
+          );
+          Get.back();
         } else {
+          HelperMethod.disablUpdateDoctorTransaction();
           Fluttertoast.showToast(
             msg: "Doctor have already been booked",
             textColor: Colors.red,
