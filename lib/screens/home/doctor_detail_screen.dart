@@ -153,15 +153,21 @@ class DoctorDetailScreen extends StatelessWidget {
                               Expanded(
                                 child: Column(
                                   children: <Widget>[
-                                    Text("800"),
-                                    Text("Reviews"),
+                                    (model.doctor.transactionBooked == null)
+                                        ? Text("Not Yet")
+                                        : Text(model.doctor.transactionBooked
+                                            .toString()),
+                                    Text("Booked"),
                                   ],
                                 ),
                               ),
                               Expanded(
                                 child: Column(
                                   children: <Widget>[
-                                    Text("4.0"),
+                                    (model.doctor.ratingPoint == null)
+                                        ? Text("Not Yet")
+                                        : Text(model.doctor.ratingPoint
+                                            .toString()),
                                     Text("Rating"),
                                   ],
                                 ),
