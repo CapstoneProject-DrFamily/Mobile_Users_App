@@ -27,3 +27,4 @@ const String DEFAULT_IMG =
 const String DEPENDENT_ICON = 'assets/images/dependent.png';
 const String NOT_FOUND_DOCTOR = 'assets/images/doctor.svg';
 const String NOT_FOUND_RECORDS = 'assets/images/prescription.svg';
+const String PAYPAL_ICON = 'assets/images/paypal.png';
