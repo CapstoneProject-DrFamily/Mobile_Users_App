@@ -505,7 +505,7 @@ class ProfileScreen extends StatelessWidget {
           DatePicker.showDatePicker(context,
               showTitleActions: true,
               minTime: DateTime(1900, 1, 1),
-              maxTime: DateTime(2007, 12, 31),
+              maxTime: DateTime(2009, 12, 31),
               theme: DatePickerTheme(
                   cancelStyle: TextStyle(color: Colors.black, fontSize: 16),
                   itemStyle: TextStyle(
