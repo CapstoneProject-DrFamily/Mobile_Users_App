@@ -519,13 +519,15 @@ class _ArticleDescription extends StatelessWidget {
         SizedBox(
           height: 5,
         ),
-        Text(
-          '$price',
-          textAlign: TextAlign.left,
-          style: const TextStyle(
-              fontSize: 18.0,
-              color: Color(0xff0d47a1),
-              fontWeight: FontWeight.bold),
+        Container(
+          alignment: Alignment.centerRight,
+          child: Text(
+            '$price',
+            style: const TextStyle(
+                fontSize: 18.0,
+                color: Color(0xff0d47a1),
+                fontWeight: FontWeight.bold),
+          ),
         ),
       ],
     );

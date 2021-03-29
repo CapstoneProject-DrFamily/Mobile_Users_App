@@ -35,6 +35,7 @@ class DoctorRepo extends IDoctorRepo {
     if (response.statusCode == 200) {
       Map<String, dynamic> sc = json.decode(response.body);
       doctorDetail = DoctorDetailModel.fromJson(sc);
+      print('model: $doctorDetail');
       return doctorDetail;
     } else
       return null;

@@ -109,6 +109,10 @@ class ListDoctorScreenViewModel extends BaseModel {
     );
 
     if (_nearByDoctorList.length == 0) {
+      Comparator<DoctorModel> distanceComparator =
+          (a, b) => a.distance.compareTo(b.distance);
+      _nearByDoctorList.sort(distanceComparator);
+
       _isLoading = false;
       _isNotHave = true;
     } else {
