@@ -6,6 +6,8 @@ abstract class INotifyRepo {
   Future<void> bookDoctor(String tokenID);
   Future<void> cancelBooking(String tokenID);
   Future<void> cancelTransaction(String transactionID, String usToken);
+  Future<void> bookScheduleDoctor(
+      String tokenID, String patientName, String time);
 }
 
 class NotifyRepo extends INotifyRepo {
@@ -99,6 +101,31 @@ class NotifyRepo extends INotifyRepo {
             'transactionId': transactionID,
             'status': 'end',
             'type': 'booking',
+          },
+          'to': tokenID,
+        },
+      ),
+    );
+  }
+
+  @override
+  Future<void> bookScheduleDoctor(
+      String tokenID, String patientName, String time) async {
+    await http.post(
+      'https://fcm.googleapis.com/fcm/send',
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'key=$serverToken',
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          'notification': <String, dynamic>{
+            'body': 'Patient $patientName book at $time',
+            'title': 'Patient $patientName have book appoinment'
+          },
+          'priority': 'high',
+          'data': <String, dynamic>{
+            'type': 'schedule',
           },
           'to': tokenID,
         },

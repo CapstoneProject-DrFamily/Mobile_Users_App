@@ -90,11 +90,19 @@ class DoctorRepo extends IDoctorRepo {
 
         listSchedule.add(schedule);
       }
+
+      String notiToken =
+          data['doctors'][i]['doctorNavigation']['account']['notiToken'];
+
+      print('notitoken $notiToken');
+
       DoctorScheduleModel model = DoctorScheduleModel(
           doctorDetail: doctorDetailModel,
           profile: profile,
           specialty: speciality,
-          schedules: listSchedule);
+          schedules: listSchedule,
+          notiToken: notiToken);
+
       listDoctor.add(model);
     }
 

@@ -1,5 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
+import 'package:drFamily_app/repository/user_repo.dart';
 import 'package:drFamily_app/screens/landing_page/history_record_screen.dart';
 import 'package:drFamily_app/screens/landing_page/home_page.dart';
 import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
@@ -17,6 +18,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingPageViewModel extends BaseModel {
+  final IUserRepo _userRepo = UserRepo();
   FirebaseUser _firebaseuser;
 
   PageController _pageController = PageController();
@@ -59,6 +61,8 @@ class LandingPageViewModel extends BaseModel {
 
     await pushNotifycationService.initialize();
     String tokenNotifycation = await pushNotifycationService.getToken();
+
+    _userRepo.updateUser(tokenNotifycation);
 
     prefs.setString("usNotiToken", tokenNotifycation);
 

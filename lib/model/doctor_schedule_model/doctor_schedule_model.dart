@@ -9,6 +9,11 @@ class DoctorScheduleModel {
   ProfileModel profile;
   DoctorSpecialtyModel specialty;
   List<ScheduleModel> schedules;
+  String notiToken;
   DoctorScheduleModel(
-      {this.doctorDetail, this.profile, this.specialty, this.schedules});
+      {this.doctorDetail,
+      this.profile,
+      this.specialty,
+      this.schedules,
+      this.notiToken});
 }
