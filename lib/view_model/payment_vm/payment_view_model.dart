@@ -23,8 +23,8 @@ class PaymentViewModel extends BaseModel {
   bool isEnableShipping = false;
   bool isEnableAddress = false;
 
-  String returnURL = 'return.example.com';
-  String cancelURL = 'cancel.example.com';
+  String returnURL = 'https://junedr375.github.io/junedr375-payment/';
+  String cancelURL = 'https://junedr375.github.io/junedr375-payment/error.html';
 
   String _transactionId;
   String _name;

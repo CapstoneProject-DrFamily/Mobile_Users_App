@@ -1,5 +1,4 @@
 import 'package:commons/commons.dart';
-import 'package:drFamily_app/screens/landing_page/add_dependent_profile_page.dart';
 import 'package:drFamily_app/screens/home/find_doctor/specialty_screen.dart';
 import 'package:drFamily_app/screens/home/find_doctor/symptom_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
@@ -78,7 +77,7 @@ class HomeScreen extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
           Container(
             child: Stack(
               children: [
@@ -86,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                   opacity: 0.6,
                   child: Container(
                     margin: EdgeInsets.only(top: 60),
-                    height: MediaQuery.of(context).size.height * 0.86,
+                    height: MediaQuery.of(context).size.height * 0.5,
                     decoration: BoxDecoration(
                       color: Color(0xFFF1EFF1),
                       borderRadius: BorderRadius.all(
@@ -114,8 +113,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     _buildDoctorFunction(
                         context, 'Your own Doctor', YOUR_DOCTOR, 140, 180),
-                    _buildDoctorFunction(context, 'Medicine Schedule',
-                        MEDICINE_SCHEDULE, 140, 180),
+                    // _buildDoctorFunction(context, 'Medicine Schedule',
+                    //     MEDICINE_SCHEDULE, 140, 180),
                   ],
                 ),
               ],

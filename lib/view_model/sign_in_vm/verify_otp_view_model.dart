@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:commons/commons.dart';
+import 'package:drFamily_app/Helper/pushnotifycation_service.dart';
 import 'package:drFamily_app/model/sign_in/user_model.dart';
 import 'package:drFamily_app/repository/sign_in/sign_in_repo.dart';
+import 'package:drFamily_app/repository/user_repo.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/login/login_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
@@ -13,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class VerifyOTPViewModel extends BaseModel {
   final ISignInRepo _signInRepo = SignInRepo();
+  final IUserRepo _userRepo = UserRepo();
   UserModel _userModel;
 
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -38,6 +41,7 @@ class VerifyOTPViewModel extends BaseModel {
   int _start;
   Timer _timer;
   int _inittimer = 59;
+  String notiToken;
 
   //getters
   bool get hideResend => _hideResend;
@@ -86,6 +90,10 @@ class VerifyOTPViewModel extends BaseModel {
     _phoneNum = prefs.getString("usPhone");
     if (_phoneNum[0].endsWith('0'))
       _phoneNum = _phoneNum.substring(1, _phoneNum.length);
+
+    PushNotifycationService pushNotifycationService = PushNotifycationService();
+    notiToken = await pushNotifycationService.getToken();
+
     notifyListeners();
   }
 
@@ -205,6 +213,7 @@ class VerifyOTPViewModel extends BaseModel {
               var waiting = _userModel.waiting;
 
               if (waiting == false && _userModel.profileId != 0) {
+                await _userRepo.updateUser(notiToken);
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => LandingScreen()),
                     (Route<dynamic> route) => false);

@@ -6,7 +6,15 @@ class HomeViewModel extends BaseModel {
   int get patientID => _patientID;
 
   HomeViewModel() {
+    init();
     print("init home model");
+  }
+
+  void init() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    int profileId = prefs.getInt("usProfileID");
+    print("profileId $profileId");
+    prefs.setInt("usPatientID", profileId);
   }
 
   Future<void> choosePatient(int patientId) async {

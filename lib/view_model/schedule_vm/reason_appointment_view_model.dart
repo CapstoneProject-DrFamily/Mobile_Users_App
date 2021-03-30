@@ -2,14 +2,16 @@ import 'dart:convert';
 
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/model/transaction/transaction_model.dart';
+import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/repository/schedule_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/view_model/schedule_vm/appointment_view_model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReasonAppointmentViewModel extends BaseModel {
+  final INotifyRepo notifyRepo = NotifyRepo();
   String note = "";
   final ITransactionRepo _transactionRepo = TransactionRepo();
   final IScheduleRepo _scheduleRepo = ScheduleRepo();
@@ -56,6 +58,8 @@ class ReasonAppointmentViewModel extends BaseModel {
     });
 
     print("Appointment time :" + appointmentTime);
+    String formattedDate =
+        DateFormat('yyyy-MM-dd HH:mm:').format(DateTime.parse(appointmentTime));
 
     ScheduleModel schedule = ScheduleModel(
         appointmentTime: appointmentTime,
@@ -67,6 +71,8 @@ class ReasonAppointmentViewModel extends BaseModel {
 
     bool isSuccess = await _scheduleRepo.updateSchedule(schedule);
     if (isSuccess) {
+      notifyRepo.bookScheduleDoctor(model.doctorScheduleModel.notiToken,
+          prefs.getString('usFullName'), formattedDate);
       booking = true;
     }
     isLoading = false;
