@@ -5,7 +5,6 @@ import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.d
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_speciality_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/model/setting/profile_model.dart';
-import 'package:drFamily_app/model/specialty_model.dart';
 import 'package:drFamily_app/model/transaction/service_model.dart';
 import 'package:drFamily_app/model/transaction/transaction_model.dart';
 

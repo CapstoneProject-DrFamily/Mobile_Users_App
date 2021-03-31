@@ -1,10 +1,6 @@
-import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
-import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PushNotifycationService {
   final FirebaseMessaging fcm = FirebaseMessaging();

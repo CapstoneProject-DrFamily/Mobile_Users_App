@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:drFamily_app/Helper/api_helper.dart';
 import 'package:drFamily_app/model/doctor_detail_model.dart';
 import 'package:drFamily_app/model/doctor_information_model.dart';
