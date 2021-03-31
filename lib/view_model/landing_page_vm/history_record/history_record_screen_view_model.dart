@@ -6,7 +6,6 @@ import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dar
 import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/screens/transaction/transaction_base_screen.dart';
-import 'package:drFamily_app/screens/transaction/transaction_detail_screen.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/map_tracking_screen_view_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';

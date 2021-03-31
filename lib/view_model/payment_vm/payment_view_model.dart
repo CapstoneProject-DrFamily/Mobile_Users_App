@@ -106,7 +106,8 @@ class PaymentViewModel extends BaseModel {
     if (init) {
       _transactionId = transactionId;
       _name = name;
-      _price = double.parse((price / 23000).toStringAsFixed(2));
+      _price = price;
+
       Future.delayed(
         Duration.zero,
         () async {

@@ -1,13 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:drFamily_app/Helper/api_helper.dart';
 import 'package:drFamily_app/model/doctor_detail_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_speciality_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
-import 'package:drFamily_app/model/patient_schedule_model/patient_schedule_model.dart';
 import 'package:drFamily_app/model/setting/profile_model.dart';
-import 'package:drFamily_app/model/specialty_model.dart';
 import 'package:http/http.dart' as http;
 
 abstract class IScheduleRepo {

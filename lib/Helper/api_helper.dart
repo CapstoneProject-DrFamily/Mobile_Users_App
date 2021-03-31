@@ -51,4 +51,8 @@ class APIHelper {
 
   //API Schedule
   static const String SCHEDULE_API = '$PREFIX_API/api/v1/Schedules';
+
+  //API Convert Currency
+  static const String CONVERT_CURR_API =
+      'https://openexchangerates.org/api/latest.json?app_id=6b8fe57526b7441d8478b3cedbacac46';
 }

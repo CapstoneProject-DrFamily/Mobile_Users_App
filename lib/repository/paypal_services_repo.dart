@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:drFamily_app/Helper/api_helper.dart';
+import 'package:drFamily_app/model/convert_curr_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert' as convert;
@@ -9,6 +12,7 @@ abstract class IPaypalServicesRepo {
   Future<String> getAccessToken();
   Future<Map<String, String>> createPaypalPayment(transactions, accessToken);
   Future<String> executePayment(url, payerId, accessToken);
+  Future<ConvertCurrModel> getCurrency();
 }
 
 class PaypalServicesRepo extends IPaypalServicesRepo {
@@ -116,5 +120,27 @@ class PaypalServicesRepo extends IPaypalServicesRepo {
       print('$body');
     }
     return null;
+  }
+
+  @override
+  Future<ConvertCurrModel> getCurrency() async {
+    String urlAPI = APIHelper.CONVERT_CURR_API;
+
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    var response = await http.get(urlAPI, headers: header);
+    print("Currency: " + response.body);
+
+    ConvertCurrModel convertCurrModel;
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> map = json.decode(response.body);
+      convertCurrModel = ConvertCurrModel.fromJson(map);
+      return convertCurrModel;
+    } else {
+      return null;
+    }
   }
 }

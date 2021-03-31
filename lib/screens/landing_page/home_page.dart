@@ -329,9 +329,13 @@ class HomeScreen extends StatelessWidget {
                                                 title: Text(model
                                                     .listDependent[index]
                                                     .dependentName),
-                                                subtitle: Text(model
-                                                    .listDependent[index]
-                                                    .dependentRelationShip),
+                                                subtitle: Text(
+                                                  model.listDependent[index]
+                                                      .dependentRelationShip,
+                                                  style: TextStyle(
+                                                    color: Colors.orange,
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                             index == model.patientChoose

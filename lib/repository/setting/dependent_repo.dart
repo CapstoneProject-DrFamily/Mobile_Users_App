@@ -5,7 +5,6 @@ import 'package:drFamily_app/model/sign_up/patient_create_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:drFamily_app/Helper/api_helper.dart';
 import 'package:drFamily_app/model/dependent_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class IDependentRepo {
   Future<List<DependentModel>> getListDependent(int accountID);

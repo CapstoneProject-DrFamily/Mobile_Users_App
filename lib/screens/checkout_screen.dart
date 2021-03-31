@@ -69,7 +69,7 @@ class CheckOutScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            height: 70,
+                            height: 80,
                             color: Colors.white,
                             child: Row(
                               children: <Widget>[
@@ -308,7 +308,7 @@ class CheckOutScreen extends StatelessWidget {
                     left: 20.0,
                   ),
                   child: Text(
-                    "Total ",
+                    "Total (VND) ",
                     style: TextStyle(
                       fontFamily: AVENIR,
                       fontSize: 14,
@@ -336,6 +336,64 @@ class CheckOutScreen extends StatelessWidget {
           SizedBox(
             height: 20.0,
           ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                flex: 5,
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    left: 20.0,
+                  ),
+                  child: Text(
+                    "Total (USD) ",
+                    style: TextStyle(
+                      fontFamily: AVENIR,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    right: 20.0,
+                  ),
+                  child: Text(
+                    model.priceUSD.toString() + ' USD',
+                    style: TextStyle(
+                      fontFamily: AVENIR,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          Row(
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(
+                  left: 20.0,
+                ),
+                child: Text(
+                  'Exchange rate: 1 USD = ' +
+                      model.currency.toString() +
+                      ' VND',
+                  style: TextStyle(
+                    fontFamily: AVENIR,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
         ],
       ),
     );
@@ -350,7 +408,7 @@ class CheckOutScreen extends StatelessWidget {
             builder: (BuildContext context) => PaymentPayPalScreen(
               transactionId: transactionId,
               name: model.service,
-              price: model.price,
+              price: model.priceUSD,
             ),
           ),
         );
