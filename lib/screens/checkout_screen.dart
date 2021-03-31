@@ -375,17 +375,33 @@ class CheckOutScreen extends StatelessWidget {
           ),
           Row(
             children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(
-                  left: 20.0,
+              Expanded(
+                flex: 5,
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    left: 20.0,
+                  ),
+                  child: Text(
+                    "Exchange rate ",
+                    style: TextStyle(
+                      fontFamily: AVENIR,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
-                child: Text(
-                  'Exchange rate: 1 USD = ' +
-                      model.currency.toString() +
-                      ' VND',
-                  style: TextStyle(
-                    fontFamily: AVENIR,
-                    fontSize: 14,
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    right: 20.0,
+                  ),
+                  child: Text(
+                    '1 USD = ' + model.currency.toString() + ' VND',
+                    style: TextStyle(
+                      fontFamily: AVENIR,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
               ),

@@ -55,4 +55,7 @@ class APIHelper {
   //API Convert Currency
   static const String CONVERT_CURR_API =
       'https://openexchangerates.org/api/latest.json?app_id=6b8fe57526b7441d8478b3cedbacac46';
+
+  // static const String CONVERT_CURR_API =
+  //     'https://free.currconv.com/api/v7/convert?q=USD_VND&compact=ultra&apiKey=31e1bd042b52358dde02';
 }
