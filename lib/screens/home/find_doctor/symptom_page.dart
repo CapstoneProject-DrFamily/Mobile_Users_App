@@ -69,7 +69,7 @@ class SymptomScreen extends StatelessWidget {
                         margin: EdgeInsets.only(top: 20),
                         height: MediaQuery.of(context).size.height * 0.06,
                         decoration: BoxDecoration(
-                          color: Color(0xFFF1EFF1),
+                          color: Color(0xff0d47a1),
                           borderRadius: BorderRadius.all(
                             Radius.circular(40),
                           ),
@@ -82,7 +82,7 @@ class SymptomScreen extends StatelessWidget {
                       child: Text(
                         model.symptomsDisplay[indexFather].headerValue,
                         style: TextStyle(
-                            color: Color(0xff0d47a1),
+                            color: Color(0xFFF1EFF1),
                             fontFamily: 'avenir',
                             fontSize: 18,
                             fontWeight: FontWeight.bold),
@@ -93,7 +93,7 @@ class SymptomScreen extends StatelessWidget {
                       margin: EdgeInsets.only(top: 30),
                       child: Icon(
                         EvaIcons.activityOutline,
-                        color: Color(0xff0d47a1),
+                        color: Color(0xFFF1EFF1),
                       ),
                     ),
                   ],
@@ -126,7 +126,7 @@ class SymptomScreen extends StatelessWidget {
                                       margin: EdgeInsets.only(top: 20),
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.06,
+                                              0.05,
                                       decoration: BoxDecoration(
                                         color: Color(0xFFF1EFF1),
                                         borderRadius: BorderRadius.all(
@@ -137,7 +137,7 @@ class SymptomScreen extends StatelessWidget {
                                   ),
                                   Container(
                                     padding: EdgeInsets.only(left: 40),
-                                    margin: EdgeInsets.only(top: 33),
+                                    margin: EdgeInsets.only(top: 30),
                                     child: Text(
                                       model.symptomsDisplay[indexFather]
                                           .expandedValue.values
@@ -145,14 +145,14 @@ class SymptomScreen extends StatelessWidget {
                                       style: TextStyle(
                                         color: Color(0xff0d47a1),
                                         fontFamily: 'avenir',
-                                        fontSize: 16,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
                                   Container(
                                     padding: EdgeInsets.only(left: 5),
-                                    margin: EdgeInsets.only(top: 30),
+                                    margin: EdgeInsets.only(top: 27),
                                     child: Icon(
                                         model.savedValue.contains(model
                                                 .symptomsDisplay[indexFather]
