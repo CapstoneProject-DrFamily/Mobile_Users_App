@@ -1,3 +1,5 @@
+import 'package:drFamily_app/Helper/common.dart';
+import 'package:drFamily_app/model/patient_schedule_model/patient_schedule_model.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/pop_up_choose_patient_view_model.dart';
 import 'package:drFamily_app/view_model/schedule_vm/list_schedule_appointment_view_model.dart';
@@ -18,7 +20,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
             elevation: 0,
             centerTitle: true,
             title: Text(
-              'model.fullUserName',
+              'List Schedule',
               textAlign: TextAlign.center,
               style: GoogleFonts.varelaRound(
                 fontWeight: FontWeight.w600,
@@ -26,166 +28,13 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                 color: Color(0xff0d47a1),
               ),
             ),
-            actions: [
-              IconButton(
-                  icon: Icon(EvaIcons.flip2Outline, color: Colors.black87),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (dialogContex) =>
-                          BaseView<PopUpChoosePatientViewModel>(
-                        builder: (dialogContex, child, popUpPatientModel) {
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
-                            title: Center(
-                              child: new Text(
-                                "Change Patients",
-                                style: GoogleFonts.varelaRound(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22,
-                                  color: Color(0xff0d47a1),
-                                ),
-                              ),
-                            ),
-                            content: new Container(
-                              height: 300.0, // Change as per your requirement
-                              width: 300.0, // Change as per your requirement
-                              child: popUpPatientModel.isLoading
-                                  ? Center(
-                                      child: CircularProgressIndicator(
-                                      backgroundColor: Colors.white,
-                                    ))
-                                  : SingleChildScrollView(
-                                      child: Column(
-                                        children: [
-                                          ListView.builder(
-                                            primary: false,
-                                            shrinkWrap: true,
-                                            itemCount: popUpPatientModel
-                                                .listDependent.length,
-                                            itemBuilder:
-                                                (dialogContex, index) => Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Card(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              40),
-                                                    ),
-                                                    child: InkWell(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              40),
-                                                      onTap: () {
-                                                        popUpPatientModel
-                                                            .choosePatient(
-                                                                index,
-                                                                popUpPatientModel
-                                                                        .listDependent[
-                                                                    index]);
-                                                      },
-                                                      child: Container(
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child: ListTile(
-                                                                leading: Icon(
-                                                                  Icons
-                                                                      .account_circle,
-                                                                  size: 50,
-                                                                ),
-                                                                title: Text(popUpPatientModel
-                                                                    .listDependent[
-                                                                        index]
-                                                                    .dependentName),
-                                                                subtitle: Text(
-                                                                    popUpPatientModel
-                                                                        .listDependent[
-                                                                            index]
-                                                                        .dependentRelationShip),
-                                                              ),
-                                                            ),
-                                                            index ==
-                                                                    popUpPatientModel
-                                                                        .patientChoose
-                                                                ? Expanded(
-                                                                    child: Icon(
-                                                                      EvaIcons
-                                                                          .radioButtonOn,
-                                                                      color: Color(
-                                                                          0xff0d47a1),
-                                                                    ),
-                                                                  )
-                                                                : Expanded(
-                                                                    child: Icon(
-                                                                      EvaIcons
-                                                                          .radioButtonOffOutline,
-                                                                    ),
-                                                                  ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 15,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                            ),
-                            actions: popUpPatientModel.isLoading
-                                ? <Widget>[
-                                    Container(),
-                                  ]
-                                : <Widget>[
-                                    TextButton(
-                                      child: Text(
-                                        'Confirm',
-                                        style: GoogleFonts.varelaRound(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                          color: Color(0xff0d47a1),
-                                        ),
-                                      ),
-                                      onPressed: () async {
-                                        model.changePatients(
-                                            dialogContex,
-                                            popUpPatientModel
-                                                .tempPatientChoose.patientID,
-                                            popUpPatientModel.tempPatientChoose
-                                                .dependentName);
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: Text(
-                                        'Cancel',
-                                        style: GoogleFonts.varelaRound(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                          color: Color(0xff0d47a1),
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                          );
-                        },
-                      ),
-                    );
-                  }),
-            ],
+            // actions: [
+            //   IconButton(
+            //       icon: Icon(EvaIcons.flip2Outline, color: Colors.black87),
+            //       onPressed: () {
+            //         buildChoosePatient(context, model);
+            //       }),
+            // ],
           ),
           body: FutureBuilder(
             future: model.fetchData(),
@@ -197,219 +46,230 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
               } else
                 return Column(
                   children: [
-                    buildNextSchedule(),
+                    buildNextSchedule(model),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'List upcoming appointment',
+                            style: TextStyle(
+                                color: Color(0xff0d47a1),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
                     Expanded(
-                      child: Container(
-                        child: DefaultTabController(
-                            length: 2,
-                            child: Scaffold(
-                              appBar: AppBar(
-                                backgroundColor: Colors.transparent,
-                                elevation: 0,
-                                // centerTitle: true,
-                                title: Text('List appointment',
-                                    style: TextStyle(
-                                        color: Color(0xff0d47a1),
-                                        fontWeight: FontWeight.bold)),
-                                bottom: TabBar(
-                                  labelColor: Color(0xff0d47a1),
-                                  labelStyle:
-                                      TextStyle(fontWeight: FontWeight.bold),
-                                  indicatorColor: Color(0xff0d47a1),
-                                  unselectedLabelColor: Colors.grey,
-                                  tabs: [
-                                    Tab(
-                                      text: 'Upcoming',
-                                    ),
-                                    Tab(
-                                      text: 'Complete',
-                                    ),
-                                  ],
-                                ),
+                      child: ListView.builder(
+                        itemCount: model.schedules.length,
+                        itemBuilder: (context, index) {
+                          String key = model.schedules.keys.elementAt(index);
+                          return Container(
+                            padding: EdgeInsets.only(
+                                top: 20, left: 20, right: 20, bottom: 0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 3,
+                                    blurRadius: 4,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
                               ),
-                              body: TabBarView(
-                                children: [
-                                  ListView.builder(
-                                    itemCount: 2,
-                                    itemBuilder: (context, index) {
-                                      return Container(
-                                        padding: EdgeInsets.only(
-                                            top: 20,
-                                            left: 20,
-                                            right: 20,
-                                            bottom: 0),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey
-                                                    .withOpacity(0.3),
-                                                spreadRadius: 3,
-                                                blurRadius: 4,
-                                                offset: Offset(0,
-                                                    3), // changes position of shadow
-                                              ),
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: ExpandablePanel(
+                                  header: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      Common.convertSchedule(key),
+                                      style: TextStyle(
+                                        color: Color(0xff0d47a1),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  expanded: Container(
+                                    // padding: EdgeInsets.only(
+                                    //     top: 5,
+                                    //     left: 20,
+                                    //     right: 20,
+                                    //     bottom: 30),
+                                    child: Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 5,
                                           ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: ExpandablePanel(
-                                              header: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0),
-                                                child: Text(
-                                                  '25-March 2021',
-                                                  style: TextStyle(
-                                                    color: Color(0xff0d47a1),
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                              expanded: Container(
-                                                // padding: EdgeInsets.only(
-                                                //     top: 5,
-                                                //     left: 20,
-                                                //     right: 20,
-                                                //     bottom: 30),
-                                                child: Container(
+                                          ListView.builder(
+                                              shrinkWrap: true,
+                                              physics: ClampingScrollPhysics(),
+                                              itemCount:
+                                                  model.schedules[key].length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return Container(
                                                   child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
                                                     children: [
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      ListView.builder(
-                                                          shrinkWrap: true,
-                                                          physics:
-                                                              ClampingScrollPhysics(),
-                                                          itemCount: 2,
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  int index) {
-                                                            return Container(
-                                                              child: Column(
-                                                                children: [
-                                                                  InkWell(
-                                                                    onTap: () {
-                                                                      Alert(
-                                                                        context:
-                                                                            context,
-                                                                        title:
-                                                                            "Booking information",
-                                                                        style: AlertStyle(
-                                                                            isCloseButton:
-                                                                                false,
-                                                                            isButtonVisible:
-                                                                                false,
-                                                                            titleStyle:
-                                                                                TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold)),
-                                                                        content:
-                                                                            buildInformation(),
-                                                                      ).show();
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(12),
-                                                                        color: Color(0xffe6eafb)
-                                                                            .withOpacity(0.8),
-                                                                      ),
-                                                                      child:
-                                                                          Row(
-                                                                        children: [
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            '8:30',
-                                                                            style:
-                                                                                TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          Expanded(
-                                                                            child:
-                                                                                Column(
-                                                                              children: [
-                                                                                ListTile(
-                                                                                  leading: CircleAvatar(
-                                                                                    backgroundImage: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAvmHzekxmFztD2jjR_tKBUOn4hbZQ3PDQjcpDdMHtJhiD0Ro-_bkNGD5m19PLdWe0stw&usqp=CAU'),
-                                                                                    radius: 30,
-                                                                                    backgroundColor: Colors.white,
-                                                                                  ),
-                                                                                  title: Text(
-                                                                                    'Bùi Thông Hoàng Đức Doctor',
-                                                                                    style: TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold),
-                                                                                  ),
-                                                                                  subtitle: Text(
-                                                                                    'Chuyên khoa',
-                                                                                    style: TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
-                                                                                  ),
-                                                                                )
-                                                                              ],
-                                                                            ),
-                                                                            //     Text(
-                                                                            //   'sa',
-                                                                            //   style: TextStyle(
-                                                                            //     color: Color(
-                                                                            //         0xff0d47a1),
-                                                                            //   ),
-                                                                            // )
-                                                                          ),
-                                                                          Icon(
-                                                                              Icons.info,
-                                                                              color: Color(0xff0d47a1)),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 10,
-                                                                  )
-                                                                  // index !=
-                                                                  //         (model.schedules[key]
-                                                                  //                 .length -
-                                                                  //             1)
-                                                                  //     ? Divider(
-                                                                  //         thickness: 2,
-                                                                  //         endIndent: 50,
-                                                                  //         indent: 50,
-                                                                  //       )
-                                                                  //     : Container(),
-                                                                ],
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Alert(
+                                                            context: context,
+                                                            title:
+                                                                "Booking information",
+                                                            style: AlertStyle(
+                                                                isCloseButton:
+                                                                    false,
+                                                                isButtonVisible:
+                                                                    false,
+                                                                titleStyle: TextStyle(
+                                                                    color: Color(
+                                                                        0xff0d47a1),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            content:
+                                                                buildInformation(
+                                                                    model.schedules[
+                                                                            key]
+                                                                        [
+                                                                        index]),
+                                                          ).show();
+                                                        },
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12),
+                                                            color: Color(
+                                                                    0xffe6eafb)
+                                                                .withOpacity(
+                                                                    0.8),
+                                                          ),
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 10,
                                                               ),
-                                                            );
-                                                          }),
+                                                              Text(
+                                                                Common.convertTime(model
+                                                                    .schedules[
+                                                                        key]
+                                                                        [index]
+                                                                    .schedule
+                                                                    .appointmentTime),
+                                                                style: TextStyle(
+                                                                    color: Color(
+                                                                        0xff0d47a1),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              Expanded(
+                                                                child: Column(
+                                                                  children: [
+                                                                    ListTile(
+                                                                      leading:
+                                                                          CircleAvatar(
+                                                                        backgroundImage: NetworkImage(model
+                                                                            .schedules[key][index]
+                                                                            .profile
+                                                                            .image),
+                                                                        radius:
+                                                                            30,
+                                                                        backgroundColor:
+                                                                            Colors.white,
+                                                                      ),
+                                                                      title:
+                                                                          Text(
+                                                                        model
+                                                                            .schedules[key][index]
+                                                                            .profile
+                                                                            .fullName,
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Color(0xff0d47a1),
+                                                                            fontWeight: FontWeight.bold),
+                                                                      ),
+                                                                      subtitle:
+                                                                          Text(
+                                                                        model
+                                                                            .schedules[key][index]
+                                                                            .specialty
+                                                                            .name,
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Color(0xff0d47a1),
+                                                                            fontWeight: FontWeight.bold,
+                                                                            fontStyle: FontStyle.italic),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                //     Text(
+                                                                //   'sa',
+                                                                //   style: TextStyle(
+                                                                //     color: Color(
+                                                                //         0xff0d47a1),
+                                                                //   ),
+                                                                // )
+                                                              ),
+                                                              Icon(Icons.info,
+                                                                  color: Color(
+                                                                      0xff0d47a1)),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      )
+                                                      // index !=
+                                                      //         (model.schedules[key]
+                                                      //                 .length -
+                                                      //             1)
+                                                      //     ? Divider(
+                                                      //         thickness: 2,
+                                                      //         endIndent: 50,
+                                                      //         indent: 50,
+                                                      //       )
+                                                      //     : Container(),
                                                     ],
                                                   ),
-                                                ),
-                                              ),
-                                              tapHeaderToExpand: true,
-                                              hasIcon: true,
-                                              iconColor: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                                );
+                                              }),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                  Text('sa'),
-                                ],
+                                  tapHeaderToExpand: true,
+                                  hasIcon: true,
+                                  iconColor: Colors.black,
+                                ),
                               ),
-                            )),
+                            ),
+                          );
+                        },
                       ),
-                    )
+                    ),
 
                     // Flexible(
                     //   child: ListView.builder(
@@ -428,26 +288,164 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
     );
   }
 
-  Column buildInformation() {
+  Future buildChoosePatient(
+      BuildContext context, ListScheduleAppointmentViewModel model) {
+    return showDialog(
+      context: context,
+      builder: (dialogContex) => BaseView<PopUpChoosePatientViewModel>(
+        builder: (dialogContex, child, popUpPatientModel) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30))),
+            title: Center(
+              child: new Text(
+                "Change Patients",
+                style: GoogleFonts.varelaRound(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: Color(0xff0d47a1),
+                ),
+              ),
+            ),
+            content: new Container(
+              height: 300.0, // Change as per your requirement
+              width: 300.0, // Change as per your requirement
+              child: popUpPatientModel.isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                    ))
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            primary: false,
+                            shrinkWrap: true,
+                            itemCount: popUpPatientModel.listDependent.length,
+                            itemBuilder: (dialogContex, index) => Row(
+                              children: [
+                                Expanded(
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(40),
+                                      onTap: () {
+                                        popUpPatientModel.choosePatient(
+                                            index,
+                                            popUpPatientModel
+                                                .listDependent[index]);
+                                      },
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 3,
+                                              child: ListTile(
+                                                leading: Icon(
+                                                  Icons.account_circle,
+                                                  size: 50,
+                                                ),
+                                                title: Text(popUpPatientModel
+                                                    .listDependent[index]
+                                                    .dependentName),
+                                                subtitle: Text(popUpPatientModel
+                                                    .listDependent[index]
+                                                    .dependentRelationShip),
+                                              ),
+                                            ),
+                                            index ==
+                                                    popUpPatientModel
+                                                        .patientChoose
+                                                ? Expanded(
+                                                    child: Icon(
+                                                      EvaIcons.radioButtonOn,
+                                                      color: Color(0xff0d47a1),
+                                                    ),
+                                                  )
+                                                : Expanded(
+                                                    child: Icon(
+                                                      EvaIcons
+                                                          .radioButtonOffOutline,
+                                                    ),
+                                                  ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                        ],
+                      ),
+                    ),
+            ),
+            actions: popUpPatientModel.isLoading
+                ? <Widget>[
+                    Container(),
+                  ]
+                : <Widget>[
+                    TextButton(
+                      child: Text(
+                        'Confirm',
+                        style: GoogleFonts.varelaRound(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Color(0xff0d47a1),
+                        ),
+                      ),
+                      onPressed: () async {
+                        model.changePatients(
+                            dialogContex,
+                            popUpPatientModel.tempPatientChoose.patientID,
+                            popUpPatientModel.tempPatientChoose.dependentName);
+                      },
+                    ),
+                    TextButton(
+                      child: Text(
+                        'Cancel',
+                        style: GoogleFonts.varelaRound(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Color(0xff0d47a1),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+          );
+        },
+      ),
+    );
+  }
+
+  Column buildInformation(PatientScheduleModel patientModel) {
     return Column(
       children: [
         SizedBox(
           height: 20,
         ),
         CircleAvatar(
-          backgroundImage: NetworkImage(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAvmHzekxmFztD2jjR_tKBUOn4hbZQ3PDQjcpDdMHtJhiD0Ro-_bkNGD5m19PLdWe0stw&usqp=CAU'),
+          backgroundImage: NetworkImage(patientModel.profile.image),
           radius: 60,
           backgroundColor: Colors.white,
         ),
         ListTile(
           title: Text(
-            'Bùi Thông Hoàng Đức Doctor',
+            patientModel.profile.fullName,
             style: TextStyle(
                 color: Color(0xff0d47a1), fontWeight: FontWeight.bold),
           ),
           subtitle: Text(
-            'Chuyên khoa',
+            patientModel.specialty.name,
             style: TextStyle(
                 color: Color(0xff0d47a1),
                 fontWeight: FontWeight.bold,
@@ -465,7 +463,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
             ),
             Flexible(
                 child: Text(
-              '24-March-2021',
+              Common.convertSchedule(patientModel.schedule.appointmentTime),
               style: TextStyle(
                 fontSize: 15,
                 color: Color(0xff0d47a1),
@@ -487,7 +485,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
             ),
             Flexible(
                 child: Text(
-              '8:30',
+              Common.convertTime(patientModel.schedule.appointmentTime),
               style: TextStyle(
                 fontSize: 15,
                 color: Color(0xff0d47a1),
@@ -509,7 +507,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
             ),
             Flexible(
                 child: Text(
-              'Khu Công Nghệ Cao, Long Thạnh Mỹ, Quận 9, Thành phố Hồ Chí Minh, Vietnam',
+              Common.getLocationName(patientModel.transaction.location),
               style: TextStyle(
                 fontSize: 15,
                 color: Color(0xff0d47a1),
@@ -531,7 +529,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
             ),
             Flexible(
                 child: Text(
-              'General Check-up',
+              patientModel.service.serviceName,
               style: TextStyle(
                 fontSize: 15,
                 color: Color(0xff0d47a1),
@@ -553,7 +551,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
             ),
             Flexible(
                 child: Text(
-              '150 000 VND',
+              Common.convertPrice(patientModel.service.servicePrice),
               style: TextStyle(
                 fontSize: 15,
                 color: Color(0xff0d47a1),
@@ -568,7 +566,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
     );
   }
 
-  Column buildNextSchedule() {
+  Column buildNextSchedule(ListScheduleAppointmentViewModel model) {
     return Column(
       children: [
         Row(
@@ -588,21 +586,24 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
             ),
           ],
         ),
-        Row(
-          children: [
-            SizedBox(
-              width: 20,
-            ),
-            Text(
-              '24-March-2021',
-              style: TextStyle(
-                color: Color(0xff0d47a1),
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-          ],
-        ),
+        model.list.length != 0 && model.list.length != null
+            ? Row(
+                children: [
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    Common.convertSchedule(
+                        model.list[0].schedule.appointmentTime),
+                    style: TextStyle(
+                      color: Color(0xff0d47a1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              )
+            : Container(),
         SizedBox(
           height: 10,
         ),
@@ -626,7 +627,8 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          '8:30',
+                          Common.convertTime(
+                              model.list[0].schedule.appointmentTime),
                           style: TextStyle(
                               color: Color(0xff0d47a1),
                               fontWeight: FontWeight.bold),
@@ -636,19 +638,19 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                             children: [
                               ListTile(
                                 leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAvmHzekxmFztD2jjR_tKBUOn4hbZQ3PDQjcpDdMHtJhiD0Ro-_bkNGD5m19PLdWe0stw&usqp=CAU'),
+                                  backgroundImage:
+                                      NetworkImage(model.list[0].profile.image),
                                   radius: 30,
                                   backgroundColor: Colors.white,
                                 ),
                                 title: Text(
-                                  'Bùi Thông Hoàng Đức Doctor',
+                                  model.list[0].profile.fullName,
                                   style: TextStyle(
                                       color: Color(0xff0d47a1),
                                       fontWeight: FontWeight.bold),
                                 ),
                                 subtitle: Text(
-                                  'Chuyên khoa',
+                                  model.list[0].specialty.name,
                                   style: TextStyle(
                                       color: Color(0xff0d47a1),
                                       fontWeight: FontWeight.bold,
