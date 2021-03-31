@@ -25,7 +25,7 @@ class ReasonAppointmentViewModel extends BaseModel {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     int patientid = prefs.getInt('usPatientID');
-
+    print(patientid);
     TransactionModel transactionModel =
         await _transactionRepo.getTransaction(model.selectedValue);
 

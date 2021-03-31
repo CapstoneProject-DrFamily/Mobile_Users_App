@@ -153,70 +153,147 @@ class HomeScreen extends StatelessWidget {
                             itemBuilder: (dialogContex, index) => Row(
                               children: [
                                 Expanded(
-                                  child: Badge(
-                                    badgeContent: Icon(EvaIcons.awardOutline,
-                                        color: Colors.white),
-                                    showBadge: (model.listDependent[index]
-                                                .dependentRelationShip ==
-                                            "Owner")
-                                        ? true
-                                        : false,
-                                    badgeColor: Colors.red,
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(40),
-                                      ),
-                                      child: InkWell(
-                                        onTap: () {
-                                          model.choosePatient(index,
-                                              model.listDependent[index]);
-                                        },
-                                        child: Container(
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                flex: 3,
-                                                child: ListTile(
-                                                  leading: CircleAvatar(
-                                                    backgroundImage: model
+                                  child: model.listDependent[index]
+                                              .dependentRelationShip ==
+                                          "Owner"
+                                      ? Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                          child: InkWell(
+                                            onTap: () {
+                                              model.choosePatient(index,
+                                                  model.listDependent[index]);
+                                            },
+                                            child: Container(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: ListTile(
+                                                      leading: CircleAvatar(
+                                                        backgroundImage: model
+                                                                    .listDependent[
+                                                                        index]
+                                                                    .dependentImage ==
+                                                                null
+                                                            ? NetworkImage(
+                                                                DEFAULT_IMG)
+                                                            : NetworkImage(model
                                                                 .listDependent[
                                                                     index]
-                                                                .dependentImage ==
-                                                            null
-                                                        ? NetworkImage(
-                                                            DEFAULT_IMG)
-                                                        : NetworkImage(model
-                                                            .listDependent[
-                                                                index]
-                                                            .dependentImage),
-                                                  ),
-                                                  title: Text(model
-                                                      .listDependent[index]
-                                                      .dependentName),
-                                                  subtitle: Text(model
-                                                      .listDependent[index]
-                                                      .dependentRelationShip),
-                                                ),
-                                              ),
-                                              index == model.patientChoose
-                                                  ? Expanded(
-                                                      child: Icon(
-                                                        EvaIcons.radioButtonOn,
-                                                        color: Colors.blue,
+                                                                .dependentImage),
                                                       ),
-                                                    )
-                                                  : Expanded(
-                                                      child: Icon(
-                                                        EvaIcons
-                                                            .radioButtonOffOutline,
+                                                      title: Text(model
+                                                          .listDependent[index]
+                                                          .dependentName),
+                                                      subtitle: Row(
+                                                        children: [
+                                                          Text(
+                                                            model
+                                                                .listDependent[
+                                                                    index]
+                                                                .dependentRelationShip,
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Color(
+                                                                  0xff0d47a1),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 7.0,
+                                                          ),
+                                                          Icon(
+                                                            EvaIcons
+                                                                .awardOutline,
+                                                            color: Color(
+                                                                0xff0d47a1),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
-                                            ],
+                                                  ),
+                                                  index == model.patientChoose
+                                                      ? Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOn,
+                                                            color: Colors.blue,
+                                                          ),
+                                                        )
+                                                      : Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOffOutline,
+                                                          ),
+                                                        ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                          child: InkWell(
+                                            onTap: () {
+                                              model.choosePatient(index,
+                                                  model.listDependent[index]);
+                                            },
+                                            child: Container(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: ListTile(
+                                                      leading: CircleAvatar(
+                                                        backgroundImage: model
+                                                                    .listDependent[
+                                                                        index]
+                                                                    .dependentImage ==
+                                                                null
+                                                            ? NetworkImage(
+                                                                DEFAULT_IMG)
+                                                            : NetworkImage(model
+                                                                .listDependent[
+                                                                    index]
+                                                                .dependentImage),
+                                                      ),
+                                                      title: Text(model
+                                                          .listDependent[index]
+                                                          .dependentName),
+                                                      subtitle: Text(
+                                                        model
+                                                            .listDependent[
+                                                                index]
+                                                            .dependentRelationShip,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  index == model.patientChoose
+                                                      ? Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOn,
+                                                            color: Colors.blue,
+                                                          ),
+                                                        )
+                                                      : Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOffOutline,
+                                                          ),
+                                                        ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
                                 ),
                               ],
                             ),
@@ -307,55 +384,129 @@ class HomeScreen extends StatelessWidget {
                             itemBuilder: (dialogContex, index) => Row(
                               children: [
                                 Expanded(
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(40),
-                                    ),
-                                    child: InkWell(
-                                      onTap: () {
-                                        model.choosePatient(
-                                            index, model.listDependent[index]);
-                                      },
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              flex: 3,
-                                              child: ListTile(
-                                                leading: Icon(
-                                                  Icons.account_circle,
-                                                  size: 50,
-                                                ),
-                                                title: Text(model
-                                                    .listDependent[index]
-                                                    .dependentName),
-                                                subtitle: Text(
-                                                  model.listDependent[index]
-                                                      .dependentRelationShip,
-                                                  style: TextStyle(
-                                                    color: Colors.orange,
+                                  child: model.listDependent[index]
+                                              .dependentRelationShip ==
+                                          "Owner"
+                                      ? Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                          child: InkWell(
+                                            onTap: () {
+                                              model.choosePatient(index,
+                                                  model.listDependent[index]);
+                                            },
+                                            child: Container(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: ListTile(
+                                                      leading: Icon(
+                                                        Icons.account_circle,
+                                                        size: 50,
+                                                      ),
+                                                      title: Text(model
+                                                          .listDependent[index]
+                                                          .dependentName),
+                                                      subtitle: Row(
+                                                        children: [
+                                                          Text(
+                                                            model
+                                                                .listDependent[
+                                                                    index]
+                                                                .dependentRelationShip,
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Color(
+                                                                  0xff0d47a1),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 7.0,
+                                                          ),
+                                                          Icon(
+                                                            EvaIcons
+                                                                .awardOutline,
+                                                            color: Color(
+                                                                0xff0d47a1),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
+                                                  index == model.patientChoose
+                                                      ? Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOn,
+                                                            color: Colors.blue,
+                                                          ),
+                                                        )
+                                                      : Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOffOutline,
+                                                          ),
+                                                        ),
+                                                ],
                                               ),
                                             ),
-                                            index == model.patientChoose
-                                                ? Expanded(
-                                                    child: Icon(
-                                                      EvaIcons.radioButtonOn,
-                                                      color: Colors.blue,
-                                                    ),
-                                                  )
-                                                : Expanded(
-                                                    child: Icon(
-                                                      EvaIcons
-                                                          .radioButtonOffOutline,
+                                          ),
+                                        )
+                                      : Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                          child: InkWell(
+                                            onTap: () {
+                                              model.choosePatient(index,
+                                                  model.listDependent[index]);
+                                            },
+                                            child: Container(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: ListTile(
+                                                      leading: Icon(
+                                                        Icons.account_circle,
+                                                        size: 50,
+                                                      ),
+                                                      title: Text(model
+                                                          .listDependent[index]
+                                                          .dependentName),
+                                                      subtitle: Text(
+                                                        model
+                                                            .listDependent[
+                                                                index]
+                                                            .dependentRelationShip,
+                                                      ),
                                                     ),
                                                   ),
-                                          ],
+                                                  index == model.patientChoose
+                                                      ? Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOn,
+                                                            color: Colors.blue,
+                                                          ),
+                                                        )
+                                                      : Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOffOutline,
+                                                          ),
+                                                        ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
                                 ),
                               ],
                             ),
@@ -393,6 +544,8 @@ class HomeScreen extends StatelessWidget {
                     TextButton(
                       child: Text('Next'),
                       onPressed: () async {
+                        homeViewModel.choosePatient(
+                            model.listDependent[model.patientChoose].patientID);
                         //booking screen specialty
                         Navigator.push(
                           context,

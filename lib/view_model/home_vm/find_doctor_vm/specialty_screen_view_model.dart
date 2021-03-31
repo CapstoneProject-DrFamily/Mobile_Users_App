@@ -22,6 +22,10 @@ class SpecialtyScreenViewModel extends BaseModel {
   }
 
   Future<void> getListSpecialty() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    int patientid = prefs.getInt('usPatientID');
+    print("lits specialty : " + patientid.toString());
     this._isLoading = true;
     notifyListeners();
 
