@@ -403,9 +403,18 @@ class HomeScreen extends StatelessWidget {
                                                   Expanded(
                                                     flex: 3,
                                                     child: ListTile(
-                                                      leading: Icon(
-                                                        Icons.account_circle,
-                                                        size: 50,
+                                                      leading: CircleAvatar(
+                                                        backgroundImage: model
+                                                                    .listDependent[
+                                                                        index]
+                                                                    .dependentImage ==
+                                                                null
+                                                            ? NetworkImage(
+                                                                DEFAULT_IMG)
+                                                            : NetworkImage(model
+                                                                .listDependent[
+                                                                    index]
+                                                                .dependentImage),
                                                       ),
                                                       title: Text(model
                                                           .listDependent[index]

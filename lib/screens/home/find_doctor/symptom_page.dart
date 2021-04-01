@@ -99,6 +99,7 @@ class SymptomScreen extends StatelessWidget {
                   ],
                 ),
                 Container(
+                  margin: EdgeInsets.only(left: 25),
                   width: MediaQuery.of(context).size.width,
                   alignment: Alignment.centerRight,
                   child: ListView.builder(
