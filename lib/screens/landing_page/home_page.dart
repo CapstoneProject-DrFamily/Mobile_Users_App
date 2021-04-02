@@ -1,7 +1,7 @@
-import 'package:badges/badges.dart';
 import 'package:commons/commons.dart';
 import 'package:drFamily_app/screens/home/find_doctor/specialty_screen.dart';
-import 'package:drFamily_app/screens/home/find_doctor/symptom_page.dart';
+import 'package:drFamily_app/screens/home/time_line_book_appoinment/base_time_line_appoinemnt.dart';
+import 'package:drFamily_app/screens/home/time_line_find_doctor/base_time_line.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/home_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/pop_up_choose_patient_view_model.dart';
@@ -559,7 +559,8 @@ class HomeScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SpecialtyScreen()),
+                              builder: (context) =>
+                                  BaseTimeLineAppoinmentScreen()),
                         );
                       },
                     ),
@@ -601,11 +602,12 @@ class HomeScreen extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    homeViewModel.initTransaction();
+                    homeViewModel.initTransaction(1);
 
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SymptomScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => BaseTimeLineScreen()),
                     );
                   },
                   child: Stack(
@@ -677,12 +679,12 @@ class HomeScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    homeViewModel.initTransaction();
+                    homeViewModel.initTransaction(2);
 
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SpecialtyScreen()),
+                          builder: (context) => BaseTimeLineScreen()),
                     );
                   },
                   child: Stack(

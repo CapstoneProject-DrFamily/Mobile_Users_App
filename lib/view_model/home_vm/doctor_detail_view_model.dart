@@ -71,44 +71,20 @@ class DoctorDetailViewModel extends BaseModel {
       Navigator.pop(context);
     } else {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      var usTransactionStatus = prefs.getString("usTransactionStatus");
       var usNotiToken = prefs.getString("usNotiToken");
       String transactionID;
-      print('transactionStatus $usTransactionStatus');
 
-      if (usTransactionStatus.endsWith("waiting")) {
-        print("in waiting");
+      transactionID = await newTransaction(prefs, context);
 
-        waitDialog(
-          context,
-          duration: Duration(seconds: 1),
-        );
-        await Future.delayed(const Duration(seconds: 1));
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => WaitingBookingDoctorScreen(
-              token: _tokenNotiDoctor,
-              doctorFbId: _fbId,
-            ),
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WaitingBookingDoctorScreen(
+            token: _tokenNotiDoctor,
+            doctorFbId: _fbId,
           ),
-        );
-        transactionID = prefs.getString("usTransaction");
-      } else {
-        print("in else");
-        transactionID = await newTransaction(prefs, context);
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => WaitingBookingDoctorScreen(
-              token: _tokenNotiDoctor,
-              doctorFbId: _fbId,
-            ),
-          ),
-        );
-      }
+        ),
+      );
 
       print(transactionID);
 
@@ -123,7 +99,6 @@ class DoctorDetailViewModel extends BaseModel {
     waitDialog(
       context,
     );
-    prefs.setString("usTransactionStatus", "waiting");
 
     var usServiceID = prefs.getInt("usServiceID");
 

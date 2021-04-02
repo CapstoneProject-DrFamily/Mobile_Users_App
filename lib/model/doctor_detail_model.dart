@@ -33,7 +33,7 @@ class DoctorDetailModel {
       doctorSchool: json['school'] as String,
       doctorImage: json['doctorNavigation']['image'] as String,
       ratingPoint: json['ratingPoint'] as double,
-      transactionBooked: json['totalDoneTransaction'] as int,
+      transactionBooked: json['bookedCount'] as int,
       tokenNoti: json['doctorNavigation']['account']['notiToken'] as String,
     );
   }

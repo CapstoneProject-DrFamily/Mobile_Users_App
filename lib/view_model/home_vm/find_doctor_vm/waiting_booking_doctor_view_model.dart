@@ -39,6 +39,7 @@ class WaitingBookingDoctorViewModel extends BaseModel {
   }
 
   Future<void> cancelBooking(BuildContext context) async {
+    HelperMethod.disablUpdateDoctorTransaction();
     await cancelTransactionOnFb(_transactionId, _doctorFbId);
 
     print(' transacion: $_transactionId doctor noti:$_tokenNotiDoctor');
@@ -75,7 +76,17 @@ class WaitingBookingDoctorViewModel extends BaseModel {
         } else if (event.snapshot.value == 'offline') {
           HelperMethod.disablUpdateDoctorTransaction();
           Fluttertoast.showToast(
-            msg: "Doctor have gone offline",
+            msg: "Doctor has gone offline",
+            textColor: Colors.red,
+            toastLength: Toast.LENGTH_LONG,
+            backgroundColor: Colors.white,
+            gravity: ToastGravity.CENTER,
+          );
+          Get.back();
+        } else if (event.snapshot.value == "notbook") {
+          HelperMethod.disablUpdateDoctorTransaction();
+          Fluttertoast.showToast(
+            msg: "Doctor has Cancel your booking",
             textColor: Colors.red,
             toastLength: Toast.LENGTH_LONG,
             backgroundColor: Colors.white,

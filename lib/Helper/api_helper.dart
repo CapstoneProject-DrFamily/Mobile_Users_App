@@ -58,4 +58,7 @@ class APIHelper {
 
   // static const String CONVERT_CURR_API =
   //     'https://free.currconv.com/api/v7/convert?q=USD_VND&compact=ultra&apiKey=31e1bd042b52358dde02';
+
+  //API Service
+  static const String SERVICE_API = '$PREFIX_API/api/v1/Services';
 }
