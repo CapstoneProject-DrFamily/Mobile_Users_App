@@ -2,9 +2,8 @@ import 'package:drFamily_app/model/doctor_model.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
 import 'package:drFamily_app/screens/home/doctor_detail_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,25 +16,24 @@ class ListDoctorScreenViewModel extends BaseModel {
   UserCurrentAddress _pickUpInfo;
   UserCurrentAddress get pickUpInfo => _pickUpInfo;
 
-  bool _isLoading = false;
+  bool _isLoading = true;
   bool get isLoading => _isLoading;
 
   bool _isNotHave = false;
   bool get isNotHave => _isNotHave;
 
-  void init(UserCurrentAddress pickUpInfoRef) {
-    _nearByDoctorList = [];
-    _isLoading = true;
-    _isNotHave = false;
-    notifyListeners();
-    this._pickUpInfo = pickUpInfoRef;
-    print(_pickUpInfo.placeID);
-    print(_pickUpInfo.placeName);
-    print("latitude: " +
-        _pickUpInfo.latitude.toString() +
-        " longtitude: " +
-        _pickUpInfo.longtitude.toString());
-    getListDoctorNearby();
+  Future<void> init(UserCurrentAddress pickUpInfoRef) async {
+    if (isLoading) {
+      _nearByDoctorList = [];
+      this._pickUpInfo = pickUpInfoRef;
+      print(_pickUpInfo.placeID);
+      print(_pickUpInfo.placeName);
+      print("latitude: " +
+          _pickUpInfo.latitude.toString() +
+          " longtitude: " +
+          _pickUpInfo.longtitude.toString());
+      await getListDoctorNearby();
+    }
   }
 
   Future<void> getListDoctorNearby() async {
@@ -79,6 +77,11 @@ class ListDoctorScreenViewModel extends BaseModel {
                     longitude: double.parse(values['pickup']['longtitude']),
                     distance:
                         double.parse((distance / 1000).toStringAsFixed(1)),
+                    booked: values['doctor_booked_count'],
+                    feedback: values['doctor_feedback_count'],
+                    ratingPoint: double.parse(
+                        values['doctor_raiting_point'].toStringAsFixed(1)),
+                    service: values['doctor_service_id'],
                   );
 
                   _nearByDoctorList.add(tDoctor);
@@ -100,6 +103,11 @@ class ListDoctorScreenViewModel extends BaseModel {
                     longitude: double.parse(values['pickup']['longtitude']),
                     distance:
                         double.parse((distance / 1000).toStringAsFixed(1)),
+                    booked: values['doctor_booked_count'],
+                    feedback: values['doctor_feedback_count'],
+                    ratingPoint: double.parse(
+                        values['doctor_raiting_point'].toStringAsFixed(1)),
+                    service: values['doctor_service_id'],
                   );
 
                   _nearByDoctorList.add(tDoctor);
@@ -125,19 +133,11 @@ class ListDoctorScreenViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void getDetailDoctor(
-      int id, String notiToken, String fbId, BuildContext context) async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DoctorDetailScreen(
-          id: id,
-          token: notiToken,
-          fbId: fbId,
-        ),
-      ),
-    ).then((value) {
-      init(_pickUpInfo);
-    });
+  void getDetailDoctor(int id, String notiToken, String fbId,
+      BaseTimeLineViewModel baseTimeLineViewModel) {
+    baseTimeLineViewModel.id = id;
+    baseTimeLineViewModel.fbId = fbId;
+    baseTimeLineViewModel.notiToken = notiToken;
+    baseTimeLineViewModel.nextStep();
   }
 }

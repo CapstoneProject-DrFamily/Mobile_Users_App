@@ -1,87 +1,86 @@
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/map_page_view_model.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapScreen extends StatelessWidget {
+  final BaseTimeLineViewModel baseTimeLineViewModel;
+  MapScreen({@required this.baseTimeLineViewModel});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppbar(context),
-      backgroundColor: Colors.white,
-      body: BaseView<MapPageViewModel>(
-        builder: (context, child, model) {
-          if (model.isLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return Stack(
-              children: [
-                _buildGoogleMap(model),
-                _buildSearchAddressField(model),
-                _buildButtomMyLocation(model),
-                _buildImportantMessage(),
-                _buildContinueButtom(context, model),
-                model.currentSearch.length > 1
-                    ? Container(
-                        margin: EdgeInsets.only(top: 60, left: 20, right: 20),
-                        child: MediaQuery.removePadding(
-                          context: context,
-                          removeTop: true,
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) => Divider(
-                              height: 0.01,
-                            ),
-                            primary: false,
-                            shrinkWrap: true,
-                            itemCount: model.listAddress.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: ListTile(
-                                  leading: Transform.translate(
-                                    offset: Offset(-7, 0),
-                                    child: Icon(
-                                      Icons.location_on,
-                                      color: Colors.greenAccent[400],
-                                      size: 30,
-                                    ),
-                                  ),
-                                  title: Transform.translate(
-                                    offset: Offset(-7, 0),
-                                    child: Text(
-                                        model.listAddress[index].main_text),
-                                  ),
-                                  subtitle: Transform.translate(
-                                    offset: Offset(-7, 0),
-                                    child: Text(model
-                                        .listAddress[index].secondary_text),
-                                  ),
-                                  onTap: () {
-                                    model.chooseLocation(
-                                        model.listAddress[index].place_id);
-                                  },
-                                ),
-                              );
-                            },
+    return BaseView<MapPageViewModel>(
+      builder: (context, child, model) {
+        if (model.isLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return Stack(
+            children: [
+              _buildGoogleMap(model),
+              _buildSearchAddressField(model),
+              _buildButtomMyLocation(model),
+              _buildImportantMessage(),
+              _buildContinueButtom(context, model),
+              model.currentSearch.length > 1
+                  ? Container(
+                      margin: EdgeInsets.only(top: 60, left: 20, right: 20),
+                      child: MediaQuery.removePadding(
+                        context: context,
+                        removeTop: true,
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) => Divider(
+                            height: 0.01,
                           ),
+                          primary: false,
+                          shrinkWrap: true,
+                          itemCount: model.listAddress.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: ListTile(
+                                leading: Transform.translate(
+                                  offset: Offset(-7, 0),
+                                  child: Icon(
+                                    Icons.location_on,
+                                    color: Colors.greenAccent[400],
+                                    size: 30,
+                                  ),
+                                ),
+                                title: Transform.translate(
+                                  offset: Offset(-7, 0),
+                                  child:
+                                      Text(model.listAddress[index].main_text),
+                                ),
+                                subtitle: Transform.translate(
+                                  offset: Offset(-7, 0),
+                                  child: Text(
+                                      model.listAddress[index].secondary_text),
+                                ),
+                                onTap: () {
+                                  model.chooseLocation(
+                                      model.listAddress[index].place_id);
+                                },
+                              ),
+                            );
+                          },
                         ),
-                      )
-                    : Container(
-                        child: Text(""),
                       ),
-              ],
-            );
-          }
-        },
-      ),
+                    )
+                  : Container(
+                      child: Text(""),
+                    ),
+            ],
+          );
+        }
+      },
     );
   }
 
@@ -277,7 +276,7 @@ class MapScreen extends StatelessWidget {
             onPressed: () {
               if (!model.isEnable) {
               } else {
-                model.doneMap(context);
+                model.doneMap(context, baseTimeLineViewModel);
               }
             },
             shape: RoundedRectangleBorder(
@@ -301,9 +300,9 @@ class MapScreen extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 child: Text(
-                  "Continue",
+                  "Save",
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: 15),
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
             ),

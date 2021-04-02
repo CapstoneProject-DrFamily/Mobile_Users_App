@@ -18,9 +18,6 @@ class SymptomePageViewModel extends BaseModel {
   List<String> _savedValue = [];
   List<String> get savedValue => _savedValue;
 
-  bool _checked = false;
-  bool get checked => _checked;
-
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 

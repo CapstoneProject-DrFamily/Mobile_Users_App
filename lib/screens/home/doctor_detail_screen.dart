@@ -28,7 +28,6 @@ class DoctorDetailScreen extends StatelessWidget {
                   child: Stack(
                     children: [
                       _buildBody(context, model),
-                      _buildAppbar(context),
                     ],
                   ),
                 ),
@@ -86,7 +85,7 @@ class DoctorDetailScreen extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           SizedBox(
-            height: 250,
+            height: 150,
             width: double.infinity,
             child: Image.asset(
               DR_DETAIL_BACKGROUND,
@@ -94,7 +93,7 @@ class DoctorDetailScreen extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(15, 200, 15, 15),
+            margin: EdgeInsets.fromLTRB(15, 100, 15, 15),
             child: Column(
               children: <Widget>[
                 Stack(
@@ -167,7 +166,7 @@ class DoctorDetailScreen extends StatelessWidget {
                                     (model.doctor.ratingPoint == null)
                                         ? Text("Not Yet")
                                         : Text(model.doctor.ratingPoint
-                                            .toString()),
+                                            .toStringAsFixed(2)),
                                     Text("Rating"),
                                   ],
                                 ),
@@ -546,11 +545,16 @@ class DoctorDetailScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
           width: double.infinity,
           height: 40,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
-            color: Colors.blue[400],
+            borderRadius: BorderRadius.all(Radius.circular(80)),
+            gradient: LinearGradient(
+              colors: [Color(0xff374ABE), Color(0xff64B6FF).withOpacity(0.4)],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
           ),
           child: Center(
             child: Text(

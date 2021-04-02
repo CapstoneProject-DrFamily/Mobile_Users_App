@@ -4,7 +4,6 @@ import 'package:drFamily_app/view_model/transaction_vm/transaction_base_view_mod
 import 'package:drFamily_app/view_model/transaction_vm/transaction_detail_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TransactionDetailScreen extends StatelessWidget {
   final TransactionBaseViewModel model;

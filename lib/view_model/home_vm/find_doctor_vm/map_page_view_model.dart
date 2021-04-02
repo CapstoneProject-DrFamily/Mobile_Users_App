@@ -6,6 +6,7 @@ import 'package:drFamily_app/repository/home/find_doctor/map_api/map_screen_repo
 import 'package:drFamily_app/screens/home/find_doctor/list_doctor_page.dart';
 import 'package:drFamily_app/screens/schedule/list_doctor_in_schedule_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
@@ -183,7 +184,8 @@ class MapPageViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future<void> doneMap(BuildContext context) async {
+  Future<void> doneMap(
+      BuildContext context, BaseTimeLineViewModel baseTimeLineViewModel) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String transactionStatus = prefs.getString("usTransactionStatus");
@@ -192,24 +194,30 @@ class MapPageViewModel extends BaseModel {
         'latitude: ${_pickUpInfo.latitude}, longitude: ${_pickUpInfo.longtitude}; placeName: ${_pickUpInfo.placeName}';
     prefs.setString("usLocation", location);
 
-    if (transactionStatus.endsWith("booking")) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ListDoctorScheduleScreen(
-            specialityId: prefs.getInt('chooseSpecialtyId'),
-          ),
-        ),
-      );
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ListDoctorPage(
-            pickUpInfo: _pickUpInfo,
-          ),
-        ),
-      );
-    }
+    baseTimeLineViewModel.pickUpInfo = _pickUpInfo;
+
+    print("location: $location");
+
+    baseTimeLineViewModel.nextStep();
+
+    // if (transactionStatus.endsWith("booking")) {
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => ListDoctorScheduleScreen(
+    //         specialityId: prefs.getInt('chooseSpecialtyId'),
+    //       ),
+    //     ),
+    //   );
+    // } else {
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => ListDoctorPage(
+    //         pickUpInfo: _pickUpInfo,
+    //       ),
+    //     ),
+    //   );
+    // }
   }
 }

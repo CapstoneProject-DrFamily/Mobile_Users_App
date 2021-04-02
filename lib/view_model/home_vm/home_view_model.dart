@@ -34,9 +34,10 @@ class HomeViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future<void> initTransaction() async {
+  Future<void> initTransaction(int typeFindDoctor) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("usTransactionStatus", "init");
+    prefs.setInt("typeFindDoctor", typeFindDoctor);
   }
 
   Future<void> bookingTransaction() async {
