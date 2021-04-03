@@ -3,8 +3,8 @@ import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/schedule/doctor_detail_schedule_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
 import 'package:drFamily_app/view_model/schedule_vm/list_doctor_schedule_view_model.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,52 +14,15 @@ import 'package:drFamily_app/widgets/common/app_image.dart';
 
 class ListDoctorScheduleScreen extends StatelessWidget {
   final int specialityId;
-  ListDoctorScheduleScreen({@required this.specialityId});
+  final BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel;
+  ListDoctorScheduleScreen(
+      {@required this.specialityId, this.baseTimeLineAppoinmentViewModel});
 
   Widget build(BuildContext context) {
     return BaseView<ListDoctorScheduleViewModel>(
       builder: (context, child, model) {
         return Scaffold(
             backgroundColor: MainColors.white,
-            appBar: AppBar(
-              leading: new IconButton(
-                icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              iconTheme: IconThemeData(color: MainColors.blueBegin),
-              backgroundColor: Colors.blue.withOpacity(0),
-              centerTitle: true,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 0,
-                  ),
-                  Text(
-                    'Meet Our Doctor',
-                    style: TextStyle(
-                      color: Color(0xff0d47a1),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Color(0xff567feb),
-                    ),
-                    child: IconButton(
-                      icon: Icon(EvaIcons.home, color: Colors.white),
-                      onPressed: () {
-                        _confirmDialog(context);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              elevation: 0,
-            ),
             body: FutureBuilder(
               future: model.fetchData(specialityId),
               builder: (context, snapshot) {
@@ -96,14 +59,11 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                           (BuildContext context, int index) {
                                         return GestureDetector(
                                           onTap: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        DoctorDetailScheduleScreen(
-                                                          doctorScheduleModel:
-                                                              model.listResult[
-                                                                  index],
-                                                        )));
+                                            //next page detail doctor
+
+                                            model.nextStep(
+                                                baseTimeLineAppoinmentViewModel,
+                                                model.listResult[index]);
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(15.0),
@@ -281,35 +241,7 @@ class ListDoctorScheduleScreen extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.5,
-              height: MediaQuery.of(context).size.height * 0.05,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Color(0xff4ee1c7),
-              ),
-              child: Center(
-                child: Text(
-                  'Choose another location',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => LandingScreen()),
-                  (Route<dynamic> route) => false);
+              baseTimeLineAppoinmentViewModel.backStep(0);
             },
             child: Container(
               width: MediaQuery.of(context).size.width * 0.5,
@@ -320,7 +252,7 @@ class ListDoctorScheduleScreen extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  'Choose another service',
+                  'Choose another Sepecialty',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,

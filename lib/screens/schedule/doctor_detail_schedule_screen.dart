@@ -2,6 +2,7 @@ import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.d
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/schedule/appointment_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
 import 'package:drFamily_app/view_model/schedule_vm/doctor_detail_schedule_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -9,20 +10,23 @@ import 'package:flutter/material.dart';
 
 class DoctorDetailScheduleScreen extends StatelessWidget {
   final DoctorScheduleModel doctorScheduleModel;
-  DoctorDetailScheduleScreen({@required this.doctorScheduleModel});
+  final BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel;
+  DoctorDetailScheduleScreen(
+      {@required this.doctorScheduleModel,
+      this.baseTimeLineAppoinmentViewModel});
 
   @override
   Widget build(BuildContext context) {
     return BaseView<DoctorDetailScheduleViewModel>(
       builder: (context, child, model) {
         return Scaffold(
-          bottomNavigationBar: _buildConfirmButtom(context),
+          bottomNavigationBar: _buildConfirmButtom(
+              context, model, baseTimeLineAppoinmentViewModel),
           backgroundColor: Colors.grey.shade300,
           body: SingleChildScrollView(
             child: Stack(
               children: [
                 _buildBody(context, doctorScheduleModel),
-                _buildAppbar(context),
               ],
             ),
           ),
@@ -73,7 +77,7 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           SizedBox(
-            height: 250,
+            height: 150,
             width: double.infinity,
             child: Image.asset(
               DR_DETAIL_BACKGROUND,
@@ -81,7 +85,7 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(15, 200, 15, 15),
+            margin: EdgeInsets.fromLTRB(15, 100, 15, 15),
             child: Column(
               children: <Widget>[
                 Stack(
@@ -518,13 +522,11 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
     );
   }
 
-  GestureDetector _buildConfirmButtom(BuildContext context) {
+  GestureDetector _buildConfirmButtom(BuildContext context,
+      DoctorDetailScheduleViewModel model, baseTimeLineAppoinmentViewModel) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => AppointmentScreen(
-                  doctorScheduleModel: doctorScheduleModel,
-                )));
+        model.nextStep(baseTimeLineAppoinmentViewModel, doctorScheduleModel);
       },
       child: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -533,7 +535,11 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
           height: 40,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: Color(0xff0d47a1),
+            gradient: LinearGradient(
+              colors: [Color(0xff374ABE), Color(0xff64B6FF).withOpacity(0.4)],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
           ),
           child: Center(
             child: Row(

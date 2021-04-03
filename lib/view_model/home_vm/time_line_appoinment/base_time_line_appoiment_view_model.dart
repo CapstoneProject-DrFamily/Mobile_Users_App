@@ -1,5 +1,12 @@
+import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
+import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
+import 'package:drFamily_app/screens/home/find_doctor/map_page.dart';
 import 'package:drFamily_app/screens/home/time_line_find_doctor/specialty_service_screen.dart';
+import 'package:drFamily_app/screens/schedule/appointment_screen.dart';
+import 'package:drFamily_app/screens/schedule/doctor_detail_schedule_screen.dart';
+import 'package:drFamily_app/screens/schedule/list_doctor_in_schedule_screen.dart';
+import 'package:drFamily_app/screens/schedule/reason_appointment_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,9 +23,13 @@ class BaseTimeLineAppoinmentViewModel extends BaseModel {
 
   UserCurrentAddress pickUpInfo = UserCurrentAddress();
 
-  int id;
-  String notiToken;
-  String fbId;
+  int specialty;
+
+  DoctorScheduleModel doctorScheduleModel;
+
+  String selectedValue;
+
+  Map<String, List<ScheduleModel>> schedules = {};
 
   List<String> appStepText = [
     "Choose Specialty",
@@ -49,31 +60,52 @@ class BaseTimeLineAppoinmentViewModel extends BaseModel {
   }
 
   void backStep(int index) {
+    if (index <= 2) {
+      oldStep.removeWhere((element) => element == 3);
+      oldStep.removeWhere((element) => element == 4);
+      oldStep.removeWhere((element) => element == 5);
+    }
     initStep = index;
     notifyListeners();
   }
 
-  Widget buildWidget(index) {
+  Widget buildWidget(index, BaseTimeLineAppoinmentViewModel model) {
     switch (index) {
       case 0:
-        return SpecialtyServiceScreen();
+        return SpecialtyServiceScreen(
+          baseTimeLineAppoinmentViewModel: model,
+        );
         break;
-      // case 1:
-      //   return MapScreen(
-      //     baseTimeLineViewModel: model,
-      //   );
-      //   break;
-      // case 2:
-      //   return ListDoctorPage(
-      //       pickUpInfo: pickUpInfo, baseTimeLineViewModel: model);
-      //   break;
-      // case 3:
-      //   return DoctorDetailScreen(
-      //     id: id,
-      //     token: notiToken,
-      //     fbId: fbId,
-      //   );
-      //   break;
+      case 1:
+        return MapScreen(
+          baseTimeLineAppoinmentViewModel: model,
+        );
+        break;
+      case 2:
+        return ListDoctorScheduleScreen(
+          specialityId: specialty,
+          baseTimeLineAppoinmentViewModel: model,
+        );
+        break;
+      case 3:
+        return DoctorDetailScheduleScreen(
+          doctorScheduleModel: doctorScheduleModel,
+          baseTimeLineAppoinmentViewModel: model,
+        );
+        break;
+      case 4:
+        return AppointmentScreen(
+          doctorScheduleModel: doctorScheduleModel,
+          baseTimeLineAppoinmentViewModel: model,
+        );
+        break;
+      case 5:
+        return ReasonAppointmentScreen(
+          doctorScheduleModel: doctorScheduleModel,
+          schedules: schedules,
+          selectedValue: selectedValue,
+        );
+        break;
       default:
         return null;
         break;

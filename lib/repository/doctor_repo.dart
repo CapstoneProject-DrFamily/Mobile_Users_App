@@ -102,7 +102,10 @@ class DoctorRepo extends IDoctorRepo {
           schedules: listSchedule,
           notiToken: notiToken);
 
-      listDoctor.add(model);
+      if (listSchedule.isEmpty) {
+      } else {
+        listDoctor.add(model);
+      }
     }
 
     return listDoctor;

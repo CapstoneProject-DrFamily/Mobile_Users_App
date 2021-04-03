@@ -558,7 +558,7 @@ class DoctorDetailScreen extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              "Confirm Booking",
+              "Book this doctor",
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),

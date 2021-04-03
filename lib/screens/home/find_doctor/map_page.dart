@@ -2,6 +2,7 @@ import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/map_page_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,7 +10,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapScreen extends StatelessWidget {
   final BaseTimeLineViewModel baseTimeLineViewModel;
-  MapScreen({@required this.baseTimeLineViewModel});
+  final BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel;
+  MapScreen({this.baseTimeLineViewModel, this.baseTimeLineAppoinmentViewModel});
   @override
   Widget build(BuildContext context) {
     return BaseView<MapPageViewModel>(
@@ -276,7 +278,8 @@ class MapScreen extends StatelessWidget {
             onPressed: () {
               if (!model.isEnable) {
               } else {
-                model.doneMap(context, baseTimeLineViewModel);
+                model.doneMap(context, baseTimeLineViewModel,
+                    baseTimeLineAppoinmentViewModel);
               }
             },
             shape: RoundedRectangleBorder(

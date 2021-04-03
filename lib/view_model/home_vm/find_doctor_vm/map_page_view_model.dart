@@ -7,6 +7,7 @@ import 'package:drFamily_app/screens/home/find_doctor/list_doctor_page.dart';
 import 'package:drFamily_app/screens/schedule/list_doctor_in_schedule_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
@@ -185,20 +186,26 @@ class MapPageViewModel extends BaseModel {
   }
 
   Future<void> doneMap(
-      BuildContext context, BaseTimeLineViewModel baseTimeLineViewModel) async {
+      BuildContext context,
+      BaseTimeLineViewModel baseTimeLineViewModel,
+      BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String transactionStatus = prefs.getString("usTransactionStatus");
+    String service = prefs.getString("usTransactionStatus");
 
     String location =
         'latitude: ${_pickUpInfo.latitude}, longitude: ${_pickUpInfo.longtitude}; placeName: ${_pickUpInfo.placeName}';
     prefs.setString("usLocation", location);
 
-    baseTimeLineViewModel.pickUpInfo = _pickUpInfo;
-
     print("location: $location");
 
-    baseTimeLineViewModel.nextStep();
+    if (service == "booking") {
+      baseTimeLineAppoinmentViewModel.nextStep();
+    } else {
+      baseTimeLineViewModel.pickUpInfo = _pickUpInfo;
+
+      baseTimeLineViewModel.nextStep();
+    }
 
     // if (transactionStatus.endsWith("booking")) {
     //   Navigator.push(

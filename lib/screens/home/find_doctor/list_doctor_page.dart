@@ -334,7 +334,7 @@ class ListDoctorPage extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.of(context).pop();
+              baseTimeLineViewModel.backStep(1);
             },
             child: Container(
               width: MediaQuery.of(context).size.width * 0.5,
@@ -360,9 +360,7 @@ class ListDoctorPage extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => LandingScreen()),
-                  (Route<dynamic> route) => false);
+              Navigator.pop(context);
             },
             child: Container(
               width: MediaQuery.of(context).size.width * 0.5,

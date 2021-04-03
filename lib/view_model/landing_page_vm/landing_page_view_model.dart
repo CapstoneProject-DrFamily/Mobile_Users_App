@@ -116,7 +116,11 @@ class LandingPageViewModel extends BaseModel {
 
   Future<void> changingPage() async {
     String transactionId = WaitingBookingDoctorViewModel.homeTransactionId;
+
     await Future.delayed(Duration(milliseconds: 500));
+    _currentIndex = 2;
+    _pageController.jumpToPage(2);
+
     Get.to(() => MapTrackingScreen(
           model: MapTrackingScreenViewModel(
               transactionId, WaitingBookingDoctorViewModel.doctorFBId),
