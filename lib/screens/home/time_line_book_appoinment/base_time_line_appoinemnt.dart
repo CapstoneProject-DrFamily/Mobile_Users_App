@@ -41,7 +41,7 @@ class BaseTimeLineAppoinmentScreen extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Expanded(child: model.buildWidget(model.initStep))
+                Expanded(child: model.buildWidget(model.initStep, model))
               ],
             ),
           ),

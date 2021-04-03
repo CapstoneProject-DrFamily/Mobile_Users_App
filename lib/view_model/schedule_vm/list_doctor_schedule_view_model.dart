@@ -1,6 +1,7 @@
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
 import 'package:drFamily_app/repository/doctor_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ListDoctorScheduleViewModel extends BaseModel {
@@ -19,5 +20,11 @@ class ListDoctorScheduleViewModel extends BaseModel {
       this.init = false;
       notifyListeners();
     }
+  }
+
+  void nextStep(BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel,
+      DoctorScheduleModel doctorScheduleModel) {
+    baseTimeLineAppoinmentViewModel.doctorScheduleModel = doctorScheduleModel;
+    baseTimeLineAppoinmentViewModel.nextStep();
   }
 }

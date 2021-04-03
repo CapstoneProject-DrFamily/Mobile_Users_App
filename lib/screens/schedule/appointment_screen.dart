@@ -4,15 +4,17 @@ import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.d
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/schedule/reason_appointment_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
-import 'package:drFamily_app/themes/colors.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
 import 'package:drFamily_app/view_model/schedule_vm/appointment_view_model.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentScreen extends StatelessWidget {
   final DoctorScheduleModel doctorScheduleModel;
+  final BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel;
 
-  AppointmentScreen({@required this.doctorScheduleModel});
+  AppointmentScreen(
+      {@required this.doctorScheduleModel,
+      this.baseTimeLineAppoinmentViewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -23,39 +25,6 @@ class AppointmentScreen extends StatelessWidget {
             model.fetchData(doctorScheduleModel);
           },
           child: Scaffold(
-            appBar: AppBar(
-              leading: new IconButton(
-                icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              iconTheme: IconThemeData(color: MainColors.blueBegin),
-              backgroundColor: Colors.blue.withOpacity(0),
-              centerTitle: true,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 0,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Color(0xff567feb),
-                    ),
-                    child: IconButton(
-                      icon: Icon(EvaIcons.home, color: Colors.white),
-                      onPressed: () {
-                        _confirmDialog(context);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              elevation: 0,
-            ),
             body: Column(
               children: [
                 Row(
@@ -227,10 +196,11 @@ class AppointmentScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (model.selectedValue != null) {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ReasonAppointmentScreen(
-                    appointmentViewModel: model,
-                  )));
+          model.nextStep(baseTimeLineAppoinmentViewModel);
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (context) => ReasonAppointmentScreen(
+          //           appointmentViewModel: model,
+          //         )));
         }
       },
       child: Padding(
@@ -240,8 +210,18 @@ class AppointmentScreen extends StatelessWidget {
           height: 40,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
-            color:
-                model.selectedValue != null ? Color(0xff0d47a1) : Colors.grey,
+            gradient: LinearGradient(
+              colors: [
+                model.selectedValue == null
+                    ? Color(0xff374ABE).withOpacity(0.4)
+                    : Color(0xff374ABE),
+                model.selectedValue == null
+                    ? Color(0xff64B6FF).withOpacity(0.4)
+                    : Color(0xff64B6FF)
+              ],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
           ),
           child: Center(
             child: Row(

@@ -1,54 +1,26 @@
+import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
+import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
-import 'package:drFamily_app/themes/colors.dart';
-import 'package:drFamily_app/view_model/schedule_vm/appointment_view_model.dart';
 import 'package:drFamily_app/view_model/schedule_vm/reason_appointment_view_model.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ReasonAppointmentScreen extends StatelessWidget {
-  final AppointmentViewModel appointmentViewModel;
+  final String selectedValue;
+  final Map<String, List<ScheduleModel>> schedules;
+  final DoctorScheduleModel doctorScheduleModel;
 
-  ReasonAppointmentScreen({@required this.appointmentViewModel});
+  ReasonAppointmentScreen(
+      {@required this.doctorScheduleModel,
+      @required this.schedules,
+      @required this.selectedValue});
+
   @override
   Widget build(BuildContext context) {
     return BaseView<ReasonAppointmentViewModel>(
         builder: (context, child, model) {
       return Scaffold(
-        appBar: AppBar(
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          iconTheme: IconThemeData(color: MainColors.blueBegin),
-          backgroundColor: Colors.blue.withOpacity(0),
-          centerTitle: true,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: 0,
-              ),
-              Container(
-                alignment: Alignment.center,
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Color(0xff567feb),
-                ),
-                child: IconButton(
-                  icon: Icon(EvaIcons.home, color: Colors.white),
-                  onPressed: () {
-                    _confirmDialog(context);
-                  },
-                ),
-              ),
-            ],
-          ),
-          elevation: 0,
-        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -115,7 +87,8 @@ class ReasonAppointmentScreen extends StatelessWidget {
       ReasonAppointmentViewModel model, BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        bool isSuccess = await model.bookingDoctor(this.appointmentViewModel);
+        bool isSuccess = await model.bookingDoctor(
+            selectedValue, schedules, doctorScheduleModel);
         if (isSuccess) {
           Fluttertoast.showToast(
             msg: "Booking success",
@@ -148,7 +121,11 @@ class ReasonAppointmentScreen extends StatelessWidget {
           height: 40,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: Color(0xff0d47a1),
+            gradient: LinearGradient(
+              colors: [Color(0xff374ABE), Color(0xff64B6FF).withOpacity(0.4)],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
           ),
           child: Center(
             child: Row(

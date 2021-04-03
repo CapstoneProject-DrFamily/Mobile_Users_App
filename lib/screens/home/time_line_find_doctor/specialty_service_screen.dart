@@ -1,13 +1,16 @@
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/specialty_service_view_model.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class SpecialtyServiceScreen extends StatelessWidget {
   final BaseTimeLineViewModel baseTimeLineViewModel;
-  SpecialtyServiceScreen({this.baseTimeLineViewModel});
+  final BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel;
+  SpecialtyServiceScreen(
+      {this.baseTimeLineViewModel, this.baseTimeLineAppoinmentViewModel});
   @override
   Widget build(BuildContext context) {
     return BaseView<SpecialtyServiceViewModel>(
@@ -93,7 +96,8 @@ class SpecialtyServiceScreen extends StatelessWidget {
                                           .specialtyId,
                                       model.listDislay[model.chooseIndex].name,
                                       model.listDislay[model.chooseIndex]
-                                          .listService[index].serviceId);
+                                          .listService[index].serviceId,
+                                      baseTimeLineAppoinmentViewModel);
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(

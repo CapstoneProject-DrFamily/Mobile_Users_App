@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/model/transaction/transaction_model.dart';
 import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/repository/schedule_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
-import 'package:drFamily_app/view_model/schedule_vm/appointment_view_model.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +17,10 @@ class ReasonAppointmentViewModel extends BaseModel {
   final IScheduleRepo _scheduleRepo = ScheduleRepo();
   bool isLoading = false;
 
-  Future<bool> bookingDoctor(AppointmentViewModel model) async {
+  Future<bool> bookingDoctor(
+      String selectedValue,
+      Map<String, List<ScheduleModel>> schedules,
+      DoctorScheduleModel doctorScheduleModel) async {
     bool booking = false;
     isLoading = true;
     notifyListeners();
@@ -27,7 +30,7 @@ class ReasonAppointmentViewModel extends BaseModel {
     int patientid = prefs.getInt('usPatientID');
     print(patientid);
     TransactionModel transactionModel =
-        await _transactionRepo.getTransaction(model.selectedValue);
+        await _transactionRepo.getTransaction(selectedValue);
 
     // check if get transaction success
     if (transactionModel == null) {
@@ -48,9 +51,9 @@ class ReasonAppointmentViewModel extends BaseModel {
     }
 
     String appointmentTime;
-    model.schedules.forEach((key, value) {
+    schedules.forEach((key, value) {
       for (int i = 0; i < value.length; i++) {
-        if (value[i].scheduleId == model.selectedValue) {
+        if (value[i].scheduleId == selectedValue) {
           appointmentTime = value[i].appointmentTime;
           break;
         }
@@ -63,15 +66,15 @@ class ReasonAppointmentViewModel extends BaseModel {
 
     ScheduleModel schedule = ScheduleModel(
         appointmentTime: appointmentTime,
-        doctorId: model.doctorScheduleModel.doctorDetail.doctorId,
+        doctorId: doctorScheduleModel.doctorDetail.doctorId,
         updBy: prefs.getString('usFullName'),
-        scheduleId: model.selectedValue,
+        scheduleId: selectedValue,
         status: true,
         updDatetime: transactionModel.dateStart);
 
     bool isSuccess = await _scheduleRepo.updateSchedule(schedule);
     if (isSuccess) {
-      notifyRepo.bookScheduleDoctor(model.doctorScheduleModel.notiToken,
+      notifyRepo.bookScheduleDoctor(doctorScheduleModel.notiToken,
           prefs.getString('usFullName'), formattedDate);
       booking = true;
     }
