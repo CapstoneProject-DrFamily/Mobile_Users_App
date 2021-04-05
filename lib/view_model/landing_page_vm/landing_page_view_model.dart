@@ -41,6 +41,8 @@ class LandingPageViewModel extends BaseModel {
 
   LandingPageViewModel() {
     if (WaitingBookingDoctorViewModel.screenStatus.contains("Changing")) {
+      _currentIndex = 2;
+      _pageController = PageController(initialPage: 2);
       changingPage();
     } else {
       init();
@@ -118,8 +120,6 @@ class LandingPageViewModel extends BaseModel {
     String transactionId = WaitingBookingDoctorViewModel.homeTransactionId;
 
     await Future.delayed(Duration(milliseconds: 500));
-    _currentIndex = 2;
-    _pageController.jumpToPage(2);
 
     Get.to(() => MapTrackingScreen(
           model: MapTrackingScreenViewModel(

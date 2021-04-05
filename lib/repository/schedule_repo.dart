@@ -1,20 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:drFamily_app/Helper/api_helper.dart';
-import 'package:drFamily_app/model/doctor_detail_model.dart';
 import 'package:drFamily_app/model/doctor_information_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_speciality_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/model/patient_schedule_model/patient_schedule_model.dart';
 import 'package:drFamily_app/model/setting/profile_model.dart';
-import 'package:drFamily_app/model/specialty_model.dart';
 import 'package:drFamily_app/model/transaction/service_model.dart';
 import 'package:drFamily_app/model/transaction/transaction_model.dart';
 import 'package:http/http.dart' as http;
 
 abstract class IScheduleRepo {
   Future<bool> updateSchedule(ScheduleModel schedule);
-  Future<List<PatientScheduleModel>> getListScheduleByPatientId(int patientId);
+  Future<List<PatientScheduleModel>> getListScheduleByPatientIdUpComing(
+      int patientId);
 }
 
 class ScheduleRepo extends IScheduleRepo {
@@ -36,7 +35,7 @@ class ScheduleRepo extends IScheduleRepo {
   }
 
   @override
-  Future<List<PatientScheduleModel>> getListScheduleByPatientId(
+  Future<List<PatientScheduleModel>> getListScheduleByPatientIdUpComing(
       int patientId) async {
     List<PatientScheduleModel> list = [];
     String urlAPI = APIHelper.SCHEDULE_API;
@@ -44,7 +43,7 @@ class ScheduleRepo extends IScheduleRepo {
       HttpHeaders.contentTypeHeader: "application/json",
     };
     var response = await http.get(
-      urlAPI + "/patients/$patientId",
+      urlAPI + "/patients/$patientId/Overtime",
       headers: header,
     );
 
@@ -63,7 +62,7 @@ class ScheduleRepo extends IScheduleRepo {
 
         TransactionModel transaction = TransactionModel.fromJson(
             data['schedules'][i]['scheduleNavigation']);
-        // print(doctor.toJson());
+        print(doctor.toJson());
         PatientScheduleModel model = PatientScheduleModel(
             doctor: doctor,
             profile: profile,
