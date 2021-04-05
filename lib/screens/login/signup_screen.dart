@@ -127,7 +127,7 @@ class SignUpScreen extends StatelessWidget {
           errorText: model.fullName.error,
           filled: true,
           fillColor: Colors.white,
-          hintText: 'Enter name..',
+          labelText: 'Enter name',
           hintStyle: TextStyle(
             color: MainColors.hintTextColor,
           ),
@@ -158,7 +158,7 @@ class SignUpScreen extends StatelessWidget {
           counterText: "",
           filled: true,
           fillColor: Colors.white,
-          hintText: 'Enter ID Card..',
+          labelText: 'Enter Social Security Number',
           hintStyle: TextStyle(
             color: MainColors.hintTextColor,
           ),
@@ -201,7 +201,7 @@ class SignUpScreen extends StatelessWidget {
             filled: true,
             enabled: false,
             fillColor: Colors.white,
-            hintText: 'Choose Gender',
+            labelText: 'Choose Gender',
             hintStyle: TextStyle(
               color: MainColors.hintTextColor,
             ),
@@ -260,7 +260,7 @@ class SignUpScreen extends StatelessWidget {
             fontSize: 16,
           ),
           decoration: InputDecoration(
-            hintText: "Choose Your Birthday",
+            labelText: 'Choose Your Birthday',
             hintStyle: TextStyle(
               color: MainColors.hintTextColor,
             ),
@@ -310,6 +310,7 @@ class SignUpScreen extends StatelessWidget {
           filled: true,
           fillColor: Colors.white,
           hintText: 'abc@gmail.com',
+          labelText: 'Enter email',
           hintStyle: TextStyle(
             color: MainColors.hintTextColor,
           ),

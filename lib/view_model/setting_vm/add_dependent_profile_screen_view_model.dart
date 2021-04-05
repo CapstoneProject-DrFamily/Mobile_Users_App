@@ -28,6 +28,7 @@ class AddDependentProfileScreenViewModel extends BaseModel {
     'Sister',
     'Brother',
     'Child',
+    'Other',
   ];
   List<String> get relationshipList => _relationshipList;
 

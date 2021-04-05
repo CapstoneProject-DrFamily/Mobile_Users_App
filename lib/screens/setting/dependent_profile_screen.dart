@@ -58,7 +58,22 @@ class DependentProfileScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  _buildTitle('Full Name'),
+                                  Row(
+                                    children: [
+                                      _buildTitle('Full Name'),
+                                      SizedBox(
+                                        width: 2.0,
+                                      ),
+                                      Text(
+                                        "(*)",
+                                        style: TextStyle(
+                                          color: Colors.red.shade300,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -66,7 +81,22 @@ class DependentProfileScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  _buildTitle('Gender'),
+                                  Row(
+                                    children: [
+                                      _buildTitle('Gender'),
+                                      SizedBox(
+                                        width: 2.0,
+                                      ),
+                                      Text(
+                                        "(*)",
+                                        style: TextStyle(
+                                          color: Colors.red.shade300,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -74,7 +104,22 @@ class DependentProfileScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  _buildTitle('Date of Birth'),
+                                  Row(
+                                    children: [
+                                      _buildTitle('Date of Birth'),
+                                      SizedBox(
+                                        width: 2.0,
+                                      ),
+                                      Text(
+                                        "(*)",
+                                        style: TextStyle(
+                                          color: Colors.red.shade300,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -82,7 +127,22 @@ class DependentProfileScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  _buildTitle('Phone Number'),
+                                  Row(
+                                    children: [
+                                      _buildTitle('Phone Number'),
+                                      SizedBox(
+                                        width: 2.0,
+                                      ),
+                                      Text(
+                                        "(*)",
+                                        style: TextStyle(
+                                          color: Colors.red.shade300,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -90,7 +150,22 @@ class DependentProfileScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  _buildTitle('Email'),
+                                  Row(
+                                    children: [
+                                      _buildTitle('Email'),
+                                      SizedBox(
+                                        width: 2.0,
+                                      ),
+                                      Text(
+                                        "(*)",
+                                        style: TextStyle(
+                                          color: Colors.red.shade300,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -98,7 +173,22 @@ class DependentProfileScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  _buildTitle('ID Card'),
+                                  Row(
+                                    children: [
+                                      _buildTitle('Social Security Number'),
+                                      SizedBox(
+                                        width: 2.0,
+                                      ),
+                                      Text(
+                                        "(*)",
+                                        style: TextStyle(
+                                          color: Colors.red.shade300,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -139,7 +229,22 @@ class DependentProfileScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  _buildTitle('Blood Type'),
+                                  Row(
+                                    children: [
+                                      _buildTitle('Blood Type'),
+                                      SizedBox(
+                                        width: 2.0,
+                                      ),
+                                      Text(
+                                        "(*)",
+                                        style: TextStyle(
+                                          color: Colors.red.shade300,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -157,7 +262,24 @@ class DependentProfileScreen extends StatelessWidget {
                                         Expanded(
                                           child: Column(
                                             children: [
-                                              _buildTitle('Height'),
+                                              Row(
+                                                children: [
+                                                  _buildTitle('Height'),
+                                                  SizedBox(
+                                                    width: 2.0,
+                                                  ),
+                                                  Text(
+                                                    "(*)",
+                                                    style: TextStyle(
+                                                      color:
+                                                          Colors.red.shade300,
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                               SizedBox(
                                                 height: 5,
                                               ),
@@ -171,7 +293,24 @@ class DependentProfileScreen extends StatelessWidget {
                                         Expanded(
                                           child: Column(
                                             children: [
-                                              _buildTitle('Weight'),
+                                              Row(
+                                                children: [
+                                                  _buildTitle('Weight'),
+                                                  SizedBox(
+                                                    width: 2.0,
+                                                  ),
+                                                  Text(
+                                                    "(*)",
+                                                    style: TextStyle(
+                                                      color:
+                                                          Colors.red.shade300,
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                               SizedBox(
                                                 height: 5,
                                               ),
@@ -390,7 +529,7 @@ class DependentProfileScreen extends StatelessWidget {
           hintStyle: TextStyle(
             color: MainColors.hintTextColor,
           ),
-          hintText: "Enter your ID Card",
+          hintText: "Enter your Social Security Number",
           counterText: "",
           errorText: model.idCard.error,
           filled: true,
