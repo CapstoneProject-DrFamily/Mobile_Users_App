@@ -3,6 +3,8 @@ import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/list_doctor_screen_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
+import 'package:drFamily_app/view_model/schedule_vm/list_doctor_schedule_view_model.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,14 +28,14 @@ class ListDoctorPage extends StatelessWidget {
           future: model.init(pickUpInfo),
           builder: (context, snapshot) {
             return (() {
-              if (model.isLoading) {
+              if (model.isLoading || model.loadBack) {
                 return Center(
                   child: CircularProgressIndicator(
                     backgroundColor: Colors.white,
                   ),
                 );
               } else if (model.isNotHave) {
-                return _buildNotHaveScreen(context);
+                return _buildNotHaveScreen(context, model);
               } else
                 return Container(
                   decoration: BoxDecoration(
@@ -293,7 +295,8 @@ class ListDoctorPage extends StatelessWidget {
     );
   }
 
-  Container _buildNotHaveScreen(BuildContext context) {
+  Container _buildNotHaveScreen(
+      BuildContext context, ListDoctorScreenViewModel model) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.25),
@@ -375,6 +378,29 @@ class ListDoctorPage extends StatelessWidget {
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
                   ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          InkWell(
+            onTap: () {
+              model.loadBackList();
+            },
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xff4ee1c7),
+              ),
+              child: Center(
+                child: Icon(
+                  EvaIcons.refreshOutline,
+                  color: Colors.white,
+                  size: 30,
                 ),
               ),
             ),

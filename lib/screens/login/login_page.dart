@@ -155,6 +155,7 @@ class LoginScreen extends StatelessWidget {
       height: (56 / 812.0) * MediaQuery.of(context).size.height,
       child: RaisedButton(
         onPressed: () {
+          FocusScope.of(context).unfocus();
           model.storePhone(context);
         },
         shape:

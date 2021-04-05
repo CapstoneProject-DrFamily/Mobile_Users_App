@@ -193,6 +193,8 @@ class VerifyOTPViewModel extends BaseModel {
   void submitOTP(BuildContext context) async {
     _smsOTP = _number1 + _number2 + _number3 + _number4 + _number5 + _number6;
     try {
+      FocusScope.of(context).unfocus();
+
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
       final AuthCredential credential = PhoneAuthProvider.getCredential(

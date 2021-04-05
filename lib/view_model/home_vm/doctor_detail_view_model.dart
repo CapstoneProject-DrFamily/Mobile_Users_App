@@ -76,6 +76,9 @@ class DoctorDetailViewModel extends BaseModel {
 
       transactionID = await newTransaction(prefs, context);
 
+      print(transactionID);
+
+      await addTransactionToFb(transactionID, _fbId, usNotiToken);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -85,10 +88,6 @@ class DoctorDetailViewModel extends BaseModel {
           ),
         ),
       );
-
-      print(transactionID);
-
-      await addTransactionToFb(transactionID, _fbId, usNotiToken);
 
       await _notifyRepo.bookDoctor(_tokenNotiDoctor);
     }

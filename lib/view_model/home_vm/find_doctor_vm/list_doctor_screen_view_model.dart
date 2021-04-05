@@ -22,6 +22,8 @@ class ListDoctorScreenViewModel extends BaseModel {
   bool _isNotHave = false;
   bool get isNotHave => _isNotHave;
 
+  bool loadBack = false;
+
   Future<void> init(UserCurrentAddress pickUpInfoRef) async {
     if (isLoading) {
       _nearByDoctorList = [];
@@ -34,6 +36,15 @@ class ListDoctorScreenViewModel extends BaseModel {
           _pickUpInfo.longtitude.toString());
       await getListDoctorNearby();
     }
+  }
+
+  void loadBackList() async {
+    loadBack = true;
+    notifyListeners();
+    _nearByDoctorList = [];
+    await getListDoctorNearby();
+    loadBack = false;
+    notifyListeners();
   }
 
   Future<void> getListDoctorNearby() async {
