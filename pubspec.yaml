@@ -68,6 +68,7 @@ dependencies:
   http_auth: ^0.3.0
   webview_flutter: ^1.0.0
   date_format: ^1.0.9
+  flutter_launcher_icons: ^0.8.0
   
 
 dev_dependencies:
