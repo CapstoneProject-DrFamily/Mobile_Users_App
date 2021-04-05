@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:drFamily_app/model/feedback_model.dart';
 import 'package:drFamily_app/model/form_parameter_model.dart';
 import 'package:drFamily_app/model/setting/profile_model.dart';
@@ -24,6 +22,8 @@ class TransactionBaseViewModel extends BaseModel {
   FeedbackModel feedback;
 
   List<String> listCheck = List();
+
+  List<String> diagnoseList = [];
 
   List<FormParameterModel> listSpeciality = [
     FormParameterModel(name: 'Cardiovascular', description: ""),
@@ -57,6 +57,10 @@ class TransactionBaseViewModel extends BaseModel {
       service = results[3];
       examinationForm = results[4];
       feedback = results[5];
+
+      diagnoseList = examinationForm.conclusion.split(";");
+
+      print("exam ${examinationForm.hematology}");
 
       initCheck(this.listCheck);
       this.init = false;
@@ -165,6 +169,19 @@ class TransactionBaseViewModel extends BaseModel {
     }
     if (this.examinationForm.evaluation != null) {
       listCheck.add(this.listSpeciality[16].name);
+    }
+    if (this.examinationForm.hematology != null) {
+      print("oke");
+      listCheck.add("Hematology");
+    }
+    if (this.examinationForm.bloodChemistry != null) {
+      listCheck.add("Serum biochemistry");
+    }
+    if (this.examinationForm.bloodChemistry != null) {
+      listCheck.add("Urine biochemistry");
+    }
+    if (this.examinationForm.bloodChemistry != null) {
+      listCheck.add("Abdominal ultrasound");
     }
   }
 

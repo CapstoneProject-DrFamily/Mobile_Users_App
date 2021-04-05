@@ -111,6 +111,7 @@ class AddDependentProfilePage extends StatelessWidget {
                           if (isCreated) {
                             Navigator.of(context).pop();
                             await CoolAlert.show(
+                              barrierDismissible: false,
                               context: context,
                               type: CoolAlertType.success,
                               text: "Add Dependent success",
@@ -119,13 +120,13 @@ class AddDependentProfilePage extends StatelessWidget {
                                 Navigator.of(context).pop();
                               },
                             );
-                            Navigator.of(context).pop();
 
                             print("out context");
                           } else {
                             Navigator.of(context).pop();
 
                             await CoolAlert.show(
+                                barrierDismissible: false,
                                 context: context,
                                 type: CoolAlertType.error,
                                 text: "Add Dependent Fail!",
@@ -133,7 +134,6 @@ class AddDependentProfilePage extends StatelessWidget {
                                 onConfirmBtnTap: () {
                                   Navigator.of(context).pop();
                                 });
-                            Navigator.of(context).pop();
                           }
                         },
                         textColor: Colors.white,
