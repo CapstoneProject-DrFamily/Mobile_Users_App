@@ -1,5 +1,6 @@
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/login/login_page.dart';
+import 'package:drFamily_app/screens/login/signup_screen.dart';
 import 'package:drFamily_app/screens/share/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
