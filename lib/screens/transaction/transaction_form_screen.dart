@@ -68,14 +68,190 @@ class TransactionFormScreen extends StatelessWidget {
               ),
             ),
             // collapsed: Text('See details'),
-            expanded: Center(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'No data',
-                style: TextStyle(color: Colors.white),
+            expanded: Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 10, right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '1.Hematology test',
+                            style: TextStyle(
+                                color: Color(0xff0d47a1),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Flexible(
+                            child: Checkbox(
+                              value: this.model.listCheck.contains("Hematology")
+                                  ? true
+                                  : false,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: this.model.listCheck.contains("Hematology")
+                          ? true
+                          : false,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child: this.model.listCheck.contains("Hematology")
+                            ? Image.network(
+                                this.model.examinationForm.hematology,
+                                width: 200,
+                                height: 250,
+                                fit: BoxFit.fill)
+                            : Text("No data"),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 10, right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '2.Serum biochemistry',
+                            style: TextStyle(
+                                color: Color(0xff0d47a1),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Flexible(
+                            child: Checkbox(
+                              value: this
+                                      .model
+                                      .listCheck
+                                      .contains("Serum biochemistry")
+                                  ? true
+                                  : false,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible:
+                          this.model.listCheck.contains("Serum biochemistry")
+                              ? true
+                              : false,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child:
+                            this.model.listCheck.contains("Serum biochemistry")
+                                ? Image.network(
+                                    this.model.examinationForm.bloodChemistry,
+                                    width: 200,
+                                    height: 250,
+                                    fit: BoxFit.fill)
+                                : Text("No data"),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 10, right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '3.Urine biochemistry',
+                            style: TextStyle(
+                                color: Color(0xff0d47a1),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Flexible(
+                            child: Checkbox(
+                              value: this
+                                      .model
+                                      .listCheck
+                                      .contains("Urine biochemistry")
+                                  ? true
+                                  : false,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible:
+                          this.model.listCheck.contains("Urine biochemistry")
+                              ? true
+                              : false,
+                      child: Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: this
+                                  .model
+                                  .listCheck
+                                  .contains("Urine biochemistry")
+                              ? Image.network(
+                                  this.model.examinationForm.urineBiochemistry,
+                                  width: 200,
+                                  height: 250,
+                                  fit: BoxFit.fill)
+                              : Text("No data")),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 10, right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '4.Abdominal ultrasound',
+                            style: TextStyle(
+                                color: Color(0xff0d47a1),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Flexible(
+                            child: Checkbox(
+                              value: this
+                                      .model
+                                      .listCheck
+                                      .contains("Abdominal ultrasound")
+                                  ? true
+                                  : false,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible:
+                          this.model.listCheck.contains("Abdominal ultrasound")
+                              ? true
+                              : false,
+                      child: Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: this
+                                  .model
+                                  .listCheck
+                                  .contains("Abdominal ultrasound")
+                              ? Image.network(
+                                  this
+                                      .model
+                                      .examinationForm
+                                      .abdominalUltrasound,
+                                  width: 200,
+                                  height: 250,
+                                  fit: BoxFit.fill)
+                              : Text("No data")),
+                    ),
+                  ],
+                ),
               ),
-            )),
+            ),
             tapHeaderToExpand: true,
             hasIcon: true,
             iconColor: Colors.white,
@@ -128,14 +304,29 @@ class TransactionFormScreen extends StatelessWidget {
                         SizedBox(
                           height: 10,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            initialValue: this.model.examinationForm.conclusion,
-                            maxLines: 5,
-                            decoration: InputDecoration.collapsed(
-                                hintText: 'Enter your text'),
-                          ),
+                        Wrap(
+                          direction: Axis.horizontal,
+                          children: [
+                            for (var item in this.model.diagnoseList)
+                              Container(
+                                margin: EdgeInsets.only(
+                                    bottom: 10, left: 5, right: 5),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                                // constraints: BoxConstraints(
+                                //   maxWidth:
+                                //       MediaQuery.of(context).size.width * 0.7,
+                                // ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Color(0xff0d47a1),
+                                ),
+                                child: Text(
+                                  item.trim(),
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                          ],
                         ),
                       ],
                     ),
@@ -164,10 +355,11 @@ class TransactionFormScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            enabled: false,
                             initialValue: this.model.examinationForm.advisory,
                             maxLines: 5,
-                            decoration: InputDecoration.collapsed(
-                                hintText: 'Enter your text'),
+                            decoration:
+                                InputDecoration.collapsed(hintText: 'Nothing'),
                           ),
                         ),
                       ],
