@@ -1,6 +1,5 @@
 import 'package:drFamily_app/Helper/common.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
-import 'package:drFamily_app/screens/schedule/doctor_detail_schedule_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
@@ -70,7 +69,7 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                             child: Stack(
                                               children: [
                                                 Container(
-                                                  height: 130,
+                                                  height: 180,
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -171,13 +170,113 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                                                         FontStyle
                                                                             .italic)),
                                                             Chip(
-                                                                label: Text('Next Available : ' +
+                                                              label: Text(
+                                                                'Next Available : ' +
                                                                     Common.convertDate(model
                                                                         .listResult[
                                                                             index]
                                                                         .schedules[
                                                                             0]
-                                                                        .appointmentTime)))
+                                                                        .appointmentTime),
+                                                              ),
+                                                            ),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Column(
+                                                                  children: [
+                                                                    Text(
+                                                                      model
+                                                                          .listResult[
+                                                                              index]
+                                                                          .doctorDetail
+                                                                          .ratingPoint
+                                                                          .toString(),
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              12),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: 5,
+                                                                    ),
+                                                                    Text(
+                                                                      "Raiting",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              12),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 25,
+                                                                ),
+                                                                Column(
+                                                                  children: [
+                                                                    Text(
+                                                                      model
+                                                                          .listResult[
+                                                                              index]
+                                                                          .doctorDetail
+                                                                          .transactionBooked
+                                                                          .toString(),
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              12),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: 5,
+                                                                    ),
+                                                                    Text(
+                                                                      "Booked",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              12),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 25,
+                                                                ),
+                                                                Column(
+                                                                  children: [
+                                                                    Text(
+                                                                      model
+                                                                          .listResult[
+                                                                              index]
+                                                                          .doctorDetail
+                                                                          .feedbackCount
+                                                                          .toString(),
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              12),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: 5,
+                                                                    ),
+                                                                    Text(
+                                                                      "FeedBacks",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              12),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
                                                           ],
                                                         ),
                                                       ),

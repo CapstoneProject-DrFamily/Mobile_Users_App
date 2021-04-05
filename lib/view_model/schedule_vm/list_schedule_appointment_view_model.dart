@@ -62,7 +62,7 @@ class ListScheduleAppointmentViewModel extends BaseModel {
 
       // int patientId = 30;
 
-      list = await scheduleRepo.getListScheduleByPatientId(patientId);
+      list = await scheduleRepo.getListScheduleByPatientIdUpComing(patientId);
 
       for (int i = 1; i < list.length; i++) {
         convert(list[i]);
