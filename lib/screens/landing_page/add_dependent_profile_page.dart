@@ -1,9 +1,11 @@
+import 'package:commons/commons.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/setting_vm/add_dependent_profile_screen_view_model.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:cool_alert/cool_alert.dart';
 
 class AddDependentProfilePage extends StatelessWidget {
   @override
@@ -90,6 +92,7 @@ class AddDependentProfilePage extends StatelessWidget {
                       ),
                     ),
                     Container(
+                      alignment: Alignment.center,
                       height: 50.0,
                       width: 300.0,
                       margin: const EdgeInsets.only(
@@ -101,24 +104,35 @@ class AddDependentProfilePage extends StatelessWidget {
                         //   model.completeProcess();
                         // },
                         onPressed: () async {
+                          waitDialog(context);
+
                           bool isCreated = await model.createDependent();
+
                           if (isCreated) {
-                            Fluttertoast.showToast(
-                              msg: "Add Dependent success",
-                              textColor: Colors.red,
-                              toastLength: Toast.LENGTH_SHORT,
-                              backgroundColor: Colors.white,
-                              gravity: ToastGravity.CENTER,
+                            Navigator.of(context).pop();
+                            await CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.success,
+                              text: "Add Dependent success",
+                              backgroundColor: Colors.lightBlue[200],
+                              onConfirmBtnTap: () {
+                                Navigator.of(context).pop();
+                              },
                             );
                             Navigator.of(context).pop();
+
+                            print("out context");
                           } else {
-                            Fluttertoast.showToast(
-                              msg: "Add Dependent fail",
-                              textColor: Colors.red,
-                              toastLength: Toast.LENGTH_SHORT,
-                              backgroundColor: Colors.white,
-                              gravity: ToastGravity.CENTER,
-                            );
+                            Navigator.of(context).pop();
+
+                            await CoolAlert.show(
+                                context: context,
+                                type: CoolAlertType.error,
+                                text: "Add Dependent Fail!",
+                                backgroundColor: Colors.lightBlue[200],
+                                onConfirmBtnTap: () {
+                                  Navigator.of(context).pop();
+                                });
                             Navigator.of(context).pop();
                           }
                         },
@@ -277,6 +291,8 @@ class AddDependentProfilePage extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
+          FocusScope.of(context).unfocus();
+
           Picker(
             adapter:
                 PickerDataAdapter<String>(pickerdata: model.relationshipList),

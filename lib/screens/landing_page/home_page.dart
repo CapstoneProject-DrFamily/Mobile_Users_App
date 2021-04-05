@@ -1,5 +1,4 @@
 import 'package:commons/commons.dart';
-import 'package:drFamily_app/screens/home/find_doctor/specialty_screen.dart';
 import 'package:drFamily_app/screens/home/time_line_book_appoinment/base_time_line_appoinemnt.dart';
 import 'package:drFamily_app/screens/home/time_line_find_doctor/base_time_line.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
@@ -78,7 +77,6 @@ class HomeScreen extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
           Container(
             child: Stack(
               children: [
@@ -86,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                   opacity: 0.6,
                   child: Container(
                     margin: EdgeInsets.only(top: 60),
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    height: MediaQuery.of(context).size.height * 0.6,
                     decoration: BoxDecoration(
                       color: Color(0xFFF1EFF1),
                       borderRadius: BorderRadius.all(
@@ -134,7 +132,7 @@ class HomeScreen extends StatelessWidget {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30))),
-            title: Center(child: new Text("Choose patient")),
+            title: Center(child: new Text("Choose a Person")),
             content: new Container(
               height: 300.0, // Change as per your requirement
               width: 300.0, // Change as per your requirement
@@ -365,7 +363,7 @@ class HomeScreen extends StatelessWidget {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30))),
-            title: Center(child: new Text("Choose patient")),
+            title: Center(child: new Text("Choose a Person")),
             content: new Container(
               height: 300.0, // Change as per your requirement
               width: 300.0, // Change as per your requirement
