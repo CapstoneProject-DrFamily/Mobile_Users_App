@@ -73,7 +73,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                       )
                     : Column(
                         children: [
-                          buildNextSchedule(model),
+                          buildNextSchedule(model, context),
                           Row(
                             children: [
                               SizedBox(
@@ -579,7 +579,8 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
     );
   }
 
-  Column buildNextSchedule(ListScheduleAppointmentViewModel model) {
+  Column buildNextSchedule(
+      ListScheduleAppointmentViewModel model, BuildContext context) {
     return Column(
       children: [
         Row(
@@ -627,7 +628,17 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    print('ok');
+                    Alert(
+                      context: context,
+                      title: "Booking information",
+                      style: AlertStyle(
+                          isCloseButton: false,
+                          isButtonVisible: false,
+                          titleStyle: TextStyle(
+                              color: Color(0xff0d47a1),
+                              fontWeight: FontWeight.bold)),
+                      content: buildInformation(model.list[0]),
+                    ).show();
                   },
                   child: Container(
                     decoration: BoxDecoration(
