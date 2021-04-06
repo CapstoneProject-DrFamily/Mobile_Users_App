@@ -87,9 +87,9 @@ class SymptomScreenViewModel extends BaseModel {
       if (_savedValue.length >= 10) {
         Fluttertoast.showToast(
           msg: "You have reach max 10 symptom",
-          textColor: Colors.red,
+          textColor: Colors.white,
           toastLength: Toast.LENGTH_LONG,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.red,
           gravity: ToastGravity.CENTER,
         );
       } else {
@@ -109,9 +109,9 @@ class SymptomScreenViewModel extends BaseModel {
     if (_savedValue.isEmpty) {
       Fluttertoast.showToast(
         msg: "Please choose Symptoms",
-        textColor: Colors.red,
+        textColor: Colors.white,
         toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.red,
         gravity: ToastGravity.CENTER,
       );
     } else {

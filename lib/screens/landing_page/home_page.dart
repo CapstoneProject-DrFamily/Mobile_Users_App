@@ -29,21 +29,7 @@ class HomeScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: CustomPaint(
-                      painter: PathPainterTop(),
-                    ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: CustomPaint(
                       painter: PathPainterBottom(),
-                    ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: CustomPaint(
-                      painter: PathPainterRight(),
                     ),
                   ),
                   Container(
@@ -877,7 +863,7 @@ class PathPainterBottom extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Color(0xffcef4e8);
+    paint.color = Color(0xFFBBDEFB);
     paint.style = PaintingStyle.fill;
     var path = Path();
     path.moveTo(0, size.height * 0.4);
@@ -889,52 +875,6 @@ class PathPainterBottom extends CustomPainter {
         size.width * 0.98, size.height * 0.8, size.width, size.height * 0.82);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
-    path.close();
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
-class PathPainterTop extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = new Paint();
-    paint.color = Color(0xFFBBDEFB);
-
-    Path path = new Path();
-    path.moveTo(0, 0);
-    path.lineTo(size.width * 0.3, 0);
-    path.quadraticBezierTo(size.width * 0.5, size.height * 0.03,
-        size.width * 0.42, size.height * 0.17);
-    path.quadraticBezierTo(
-        size.width * 0.35, size.height * 0.32, 0, size.height * 0.29);
-    path.close();
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
-class PathPainterRight extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = new Paint();
-    paint.color = Color(0xFFFFE0B2);
-
-    Path path = new Path();
-    path.moveTo(size.width, 0);
-    path.lineTo(size.width * 0.7, 0);
-    path.quadraticBezierTo(size.width * 0.5, size.height * 0.03,
-        size.width * 0.55, size.height * 0.23);
-    path.quadraticBezierTo(
-        size.width * 0.65, size.height * 0.5, size.width, size.height * 0.6);
     path.close();
     canvas.drawPath(path, paint);
   }
