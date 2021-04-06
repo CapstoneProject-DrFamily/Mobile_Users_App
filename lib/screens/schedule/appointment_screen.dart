@@ -154,8 +154,10 @@ class AppointmentScreen extends StatelessWidget {
                                                     .scheduleId,
                                                 groupValue: model.selectedValue,
                                                 onChanged: (value) {
-                                                  model
-                                                      .changeSelectedDay(value);
+                                                  model.changeSelectedDay(
+                                                      value,
+                                                      model.schedules[key]
+                                                          [index]);
                                                   print(value);
                                                 },
                                               )
@@ -196,7 +198,7 @@ class AppointmentScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (model.selectedValue != null) {
-          model.nextStep(baseTimeLineAppoinmentViewModel);
+          model.nextStep(baseTimeLineAppoinmentViewModel, context);
           // Navigator.of(context).push(MaterialPageRoute(
           //     builder: (context) => ReasonAppointmentScreen(
           //           appointmentViewModel: model,
