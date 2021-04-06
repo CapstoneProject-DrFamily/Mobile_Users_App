@@ -31,12 +31,12 @@ class DependentHealthRecordScreen extends StatelessWidget {
                   title: Text(
                     "Personal Health Record",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.blue,
                       fontFamily: AVENIR,
                     ),
                   ),
                   leading: new IconButton(
-                    icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
+                    icon: new Icon(Icons.arrow_back_ios, color: Colors.blue),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   bottom: TabBar(
@@ -82,7 +82,7 @@ class DependentHealthRecordScreen extends StatelessWidget {
 
                     Fluttertoast.showToast(
                       msg: "Update success",
-                      textColor: Colors.red,
+                      textColor: Colors.green,
                       toastLength: Toast.LENGTH_SHORT,
                       backgroundColor: Colors.white,
                       gravity: ToastGravity.CENTER,

@@ -1,3 +1,5 @@
+import 'package:commons/commons.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
@@ -87,27 +89,40 @@ class ReasonAppointmentScreen extends StatelessWidget {
       ReasonAppointmentViewModel model, BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        bool isSuccess = await model.bookingDoctor(
-            selectedValue, schedules, doctorScheduleModel);
-        if (isSuccess) {
-          Fluttertoast.showToast(
-            msg: "Booking success",
-            textColor: Colors.green,
-            toastLength: Toast.LENGTH_LONG,
-            backgroundColor: Colors.white,
-            gravity: ToastGravity.CENTER,
-          );
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => LandingScreen()),
-              (Route<dynamic> route) => false);
-        } else {
-          Fluttertoast.showToast(
-            msg: "Booking failed",
-            textColor: Colors.red,
-            toastLength: Toast.LENGTH_LONG,
-            backgroundColor: Colors.white,
-            gravity: ToastGravity.CENTER,
-          );
+        bool isBook = await _confirmBookingDialog(context);
+        if (isBook) {
+          bool isSuccess = await model.bookingDoctor(
+              selectedValue, schedules, doctorScheduleModel);
+          if (isSuccess) {
+            await CoolAlert.show(
+                barrierDismissible: false,
+                context: context,
+                type: CoolAlertType.success,
+                text: "Booking Success",
+                backgroundColor: Colors.lightBlue[200],
+                onConfirmBtnTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) => LandingScreen()));
+                });
+          } else {
+            await CoolAlert.show(
+              barrierDismissible: false,
+              context: context,
+              type: CoolAlertType.error,
+              text: "ERROR, please try again!",
+              backgroundColor: Colors.lightBlue[200],
+              onConfirmBtnTap: () {
+                Navigator.pop(context);
+
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => LandingScreen(),
+                  ),
+                );
+              },
+            );
+          }
         }
       },
       child:
@@ -275,6 +290,123 @@ class ReasonAppointmentScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         height: 50,
                         width: MediaQuery.of(alertContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "No",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future _confirmBookingDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (bookingContext) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          child: Container(
+            height: 345,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 25,
+                ),
+                Icon(
+                  Icons.info,
+                  color: Color(0xff4ee1c7),
+                  size: 90,
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Confirmation?",
+                  style: TextStyle(
+                    fontSize: 27,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'avenir',
+                    color: Color(0xff0d47a1),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  'Are you sure want to book this doctor?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'avenir',
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pop(true);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(bookingContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "Yes",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pop(false);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(bookingContext).size.width * 0.3,
                         decoration: BoxDecoration(
                           color: Colors.blueAccent,
                           borderRadius: BorderRadius.circular(30),

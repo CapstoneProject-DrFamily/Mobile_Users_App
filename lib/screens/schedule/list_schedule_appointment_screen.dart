@@ -46,7 +46,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else
-                return (model.schedules.isEmpty)
+                return (model.list.isEmpty)
                     ? Container(
                         alignment: Alignment.center,
                         child: Column(

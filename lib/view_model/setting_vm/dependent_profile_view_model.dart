@@ -218,9 +218,9 @@ class DependentProfileViewModel extends BaseModel {
     _bloodTpeController.text = _additionInfoModel.bloodType;
 
     int convertHeight = _additionInfoModel.height.toInt();
-    _heightController.text = convertHeight.toString() + "cm";
+    _heightController.text = convertHeight.toString();
 
-    _weightController.text = _additionInfoModel.weight.toString() + "kg";
+    _weightController.text = _additionInfoModel.weight.toString();
 
     this._isLoading = false;
     notifyListeners();
@@ -387,20 +387,15 @@ class DependentProfileViewModel extends BaseModel {
       print("height: " + height);
       print("weight: " + weight);
 
-      double newWeight;
-      if (_weightController.text.length <= 5) {
-        newWeight = double.parse(_weightController.text.substring(0, 3));
-      } else {
-        newWeight = double.parse(_weightController.text.substring(0, 4));
-      }
-
-      print("newWeight: " + newWeight.toString());
-
       _additionInfoModel = new AdditionInfoModel(
         patientId: patientID,
         bloodType: bloodTpeController.text,
-        height: double.parse(_heightController.text.substring(0, 3)),
-        weight: newWeight,
+        height: (_heightController.text == "")
+            ? 0
+            : double.parse(_heightController.text),
+        weight: (_weightController.text == "")
+            ? 0
+            : double.parse(_weightController.text),
         updBy: prefs.getString("usFullName"),
         updDatetime: DateTime.now().toString(),
         relationship: relationship,
