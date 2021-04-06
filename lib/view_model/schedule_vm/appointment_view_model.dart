@@ -1,7 +1,10 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AppointmentViewModel extends BaseModel {
   DoctorScheduleModel doctorScheduleModel;
@@ -9,6 +12,8 @@ class AppointmentViewModel extends BaseModel {
 
   Map<String, List<ScheduleModel>> schedules =
       Map<String, List<ScheduleModel>>();
+
+  ScheduleModel chooseSchedule;
 
   void fetchData(DoctorScheduleModel model) {
     print('doctorschedulemodel ${model.doctorDetail.doctorId}');
@@ -25,9 +30,10 @@ class AppointmentViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void changeSelectedDay(String value) {
+  void changeSelectedDay(String value, ScheduleModel chooseScheduleTemp) {
     this.selectedValue = value;
-
+    chooseSchedule = chooseScheduleTemp;
+    print("choose ${chooseSchedule.appointmentTime}");
     notifyListeners();
   }
 
@@ -47,7 +53,21 @@ class AppointmentViewModel extends BaseModel {
 
   void nextStep(
     BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel,
+    BuildContext context,
   ) {
+    print("datatime ${chooseSchedule.appointmentTime}");
+    if (DateTime.now()
+        .isAfter(DateTime.parse(chooseSchedule.appointmentTime))) {
+      CoolAlert.show(
+          barrierDismissible: false,
+          context: context,
+          type: CoolAlertType.error,
+          text: "Overtime choose",
+          backgroundColor: Colors.lightBlue[200],
+          onConfirmBtnTap: () {
+            Navigator.of(context).pop();
+          });
+    }
     print("schedule $schedules");
     baseTimeLineAppoinmentViewModel.schedules = schedules;
     baseTimeLineAppoinmentViewModel.selectedValue = selectedValue;

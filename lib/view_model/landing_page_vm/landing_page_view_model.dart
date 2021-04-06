@@ -39,6 +39,8 @@ class LandingPageViewModel extends BaseModel {
     SettingPage(),
   ];
 
+  bool isLoading = true;
+
   LandingPageViewModel() {
     if (WaitingBookingDoctorViewModel.screenStatus.contains("Changing")) {
       _currentIndex = 2;
@@ -50,7 +52,6 @@ class LandingPageViewModel extends BaseModel {
   }
 
   Future<void> init() async {
-    DateTime.now().add(Duration(seconds: 1689));
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String phone = prefs.getString("usPhone");
     int profileID = prefs.getInt("usProfileID");
@@ -81,6 +82,8 @@ class LandingPageViewModel extends BaseModel {
         profileID.toString() +
         " AccountID: " +
         userID.toString());
+    isLoading = false;
+    notifyListeners();
   }
 
   List<BottomNavyBarItem> _listItem = [

@@ -1,5 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
+import 'package:drFamily_app/screens/waiting_load_home_login.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/waiting_booking_doctor_view_model.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/landing_page_view_model.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,9 @@ class LandingScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             ),
           );
-        } else
+        } else if (model.isLoading)
+          return WaitingLoadingHomeScreen();
+        else
           return Scaffold(
             extendBody: true,
             // resizeToAvoidBottomInset: false,

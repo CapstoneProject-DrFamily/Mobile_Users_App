@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:commons/commons.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/setting_vm/dependent_profile_view_model.dart';
@@ -7,7 +9,6 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DependentProfileScreen extends StatelessWidget {
@@ -283,7 +284,62 @@ class DependentProfileScreen extends StatelessWidget {
                                               SizedBox(
                                                 height: 5,
                                               ),
-                                              _buildHeightField(model, context),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 40,
+                                                    child: TextFormField(
+                                                      controller: model
+                                                          .heightController,
+                                                      keyboardType:
+                                                          TextInputType.text,
+                                                      maxLength: 3,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        counterText: "",
+                                                        contentPadding:
+                                                            new EdgeInsets
+                                                                .symmetric(
+                                                          vertical: 14.2,
+                                                        ),
+                                                        focusedBorder:
+                                                            UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .grey),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 40,
+                                                    child: TextFormField(
+                                                      initialValue: 'cm',
+                                                      enabled: false,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        filled: false,
+                                                        contentPadding:
+                                                            new EdgeInsets
+                                                                .symmetric(
+                                                          vertical: 14.2,
+                                                        ),
+                                                        disabledBorder:
+                                                            UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide.none,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -314,7 +370,62 @@ class DependentProfileScreen extends StatelessWidget {
                                               SizedBox(
                                                 height: 5,
                                               ),
-                                              _buildWeightField(model, context),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 40,
+                                                    child: TextFormField(
+                                                      controller: model
+                                                          .weightController,
+                                                      keyboardType:
+                                                          TextInputType.text,
+                                                      maxLength: 3,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        counterText: "",
+                                                        contentPadding:
+                                                            new EdgeInsets
+                                                                .symmetric(
+                                                          vertical: 14.2,
+                                                        ),
+                                                        focusedBorder:
+                                                            UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .grey),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 40,
+                                                    child: TextFormField(
+                                                      initialValue: 'kg',
+                                                      enabled: false,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        filled: false,
+                                                        contentPadding:
+                                                            new EdgeInsets
+                                                                .symmetric(
+                                                          vertical: 14.2,
+                                                        ),
+                                                        disabledBorder:
+                                                            UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide.none,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -832,35 +943,6 @@ class DependentProfileScreen extends StatelessWidget {
             ),
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            model.changeGender(2);
-          },
-          child: Container(
-            child: Row(
-              children: [
-                model.gender == 2
-                    ? Icon(
-                        EvaIcons.radioButtonOn,
-                        color: Colors.blue,
-                        size: 25,
-                      )
-                    : Icon(
-                        EvaIcons.radioButtonOffOutline,
-                        size: 25,
-                      ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Other',
-                  style: GoogleFonts.varelaRound(
-                      fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ],
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -943,31 +1025,45 @@ class DependentProfileScreen extends StatelessWidget {
       BuildContext context, DependentProfileViewModel model) {
     return GestureDetector(
       onTap: () async {
-        bool check = await model.updateInformation();
-        print("Check: " + check.toString());
+        bool isUpdate = await _confirmBookingDialog(context);
+        if (isUpdate) {
+          waitDialog(context, message: "Updating infomation...");
 
-        if (check) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (BuildContext context) => DependentProfileScreen()));
+          bool check = await model.updateInformation();
+          print("Check: " + check.toString());
 
-          Fluttertoast.showToast(
-            msg: "Update success",
-            textColor: Colors.red,
-            toastLength: Toast.LENGTH_SHORT,
-            backgroundColor: Colors.white,
-            gravity: ToastGravity.CENTER,
-          );
-        } else {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (BuildContext context) => DependentProfileScreen()));
+          if (check) {
+            Navigator.pop(context);
 
-          Fluttertoast.showToast(
-            msg: "Update fail",
-            textColor: Colors.red,
-            toastLength: Toast.LENGTH_SHORT,
-            backgroundColor: Colors.white,
-            gravity: ToastGravity.CENTER,
-          );
+            await CoolAlert.show(
+                barrierDismissible: false,
+                context: context,
+                type: CoolAlertType.success,
+                text: "Update info Success",
+                backgroundColor: Colors.lightBlue[200],
+                onConfirmBtnTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          DependentProfileScreen()));
+                });
+          } else {
+            Navigator.pop(context);
+
+            await CoolAlert.show(
+                barrierDismissible: false,
+                context: context,
+                type: CoolAlertType.error,
+                text: "ERROR, please try again!",
+                backgroundColor: Colors.lightBlue[200],
+                onConfirmBtnTap: () {
+                  Navigator.pop(context);
+
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          DependentProfileScreen()));
+                });
+          }
         }
       },
       child: Padding(
@@ -987,6 +1083,123 @@ class DependentProfileScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Future _confirmBookingDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (bookingContext) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          child: Container(
+            height: 345,
+            width: MediaQuery.of(bookingContext).size.width * 0.8,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 25,
+                ),
+                Icon(
+                  Icons.info,
+                  color: Color(0xff4ee1c7),
+                  size: 90,
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Confirmation?",
+                  style: TextStyle(
+                    fontSize: 27,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'avenir',
+                    color: Color(0xff0d47a1),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  'Are you sure want to change?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'avenir',
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.of(bookingContext).pop(true);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(bookingContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "Yes",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.of(bookingContext).pop(false);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(bookingContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "No",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
