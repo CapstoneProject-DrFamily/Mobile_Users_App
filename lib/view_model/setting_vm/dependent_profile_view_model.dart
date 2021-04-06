@@ -240,11 +240,20 @@ class DependentProfileViewModel extends BaseModel {
   }
 
   void changeDOB(DateTime datetime) {
-    _dobController.text = datetime.year.toString() +
-        '-' +
-        _months[datetime.month - 1] +
-        '-' +
-        datetime.day.toString();
+    if (datetime.day < 10) {
+      _dobController.text = "0" +
+          datetime.day.toString() +
+          '-' +
+          _months[datetime.month - 1] +
+          '-' +
+          datetime.year.toString();
+    } else {
+      _dobController.text = datetime.day.toString() +
+          '-' +
+          _months[datetime.month - 1] +
+          '-' +
+          datetime.year.toString();
+    }
     notifyListeners();
   }
 
