@@ -43,6 +43,7 @@ class LandingPageViewModel extends BaseModel {
 
   LandingPageViewModel() {
     if (WaitingBookingDoctorViewModel.screenStatus.contains("Changing")) {
+      isLoading = false;
       _currentIndex = 2;
       _pageController = PageController(initialPage: 2);
       changingPage();

@@ -63,8 +63,10 @@ class TransactionFormScreen extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 'Examination',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
               ),
             ),
             // collapsed: Text('See details'),
@@ -277,8 +279,10 @@ class TransactionFormScreen extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 'Diagnose',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
               ),
             ),
             // collapsed: Text('See details'),
@@ -286,49 +290,52 @@ class TransactionFormScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Diagnose / Conclusion',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                  child: Container(
+                    width: double.infinity,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Diagnose / Conclusion',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Wrap(
-                          direction: Axis.horizontal,
-                          children: [
-                            for (var item in this.model.diagnoseList)
-                              Container(
-                                margin: EdgeInsets.only(
-                                    bottom: 10, left: 5, right: 5),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 10),
-                                // constraints: BoxConstraints(
-                                //   maxWidth:
-                                //       MediaQuery.of(context).size.width * 0.7,
-                                // ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Color(0xff0d47a1),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Wrap(
+                            direction: Axis.horizontal,
+                            children: [
+                              for (var item in this.model.diagnoseList)
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      bottom: 10, left: 5, right: 5),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  // constraints: BoxConstraints(
+                                  //   maxWidth:
+                                  //       MediaQuery.of(context).size.width * 0.7,
+                                  // ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: Color(0xff0d47a1),
+                                  ),
+                                  child: Text(
+                                    item.trim(),
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
-                                child: Text(
-                                  item.trim(),
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -394,8 +401,10 @@ class TransactionFormScreen extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 'Organs',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
               ),
             ),
             // collapsed: Text('See details'),
@@ -507,8 +516,10 @@ class TransactionFormScreen extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 'Clinical Diagnosis',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
               ),
             ),
             // collapsed: Text('See details'),
@@ -539,8 +550,10 @@ class TransactionFormScreen extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 'Medical History',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
               ),
             ),
             expanded: buildMedicalHistory(context, model),
@@ -570,7 +583,11 @@ class TransactionFormScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
                   '2. Clinical Diagnosis',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff0d47a1),
+                  ),
                 ),
               ),
               Padding(
@@ -580,14 +597,18 @@ class TransactionFormScreen extends StatelessWidget {
                   children: [
                     Text(
                       '2.1 ',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff0d47a1),
+                      ),
                     ),
                     Flexible(
                       child: Text(
                         'Vital Signs',
                         style: TextStyle(
-                          fontSize: 18,
+                          color: Color(0xff0d47a1),
+                          fontSize: 16,
                         ),
                       ),
                     ),
@@ -597,19 +618,18 @@ class TransactionFormScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              buildAnthropometricIndex("Pulse", "...", model, "pulseRate"),
+              buildAnthropometricIndex("Pulse", "", model, "pulseRate"),
               // buildErrorMessage(),
               buildAnthropometricIndex(
                   "Temperature", "Celsius", model, "temperature"),
               buildAnthropometricIndex(
-                  "Blood Pressure", "...", model, "bloodPressure"),
+                  "Blood Pressure", "", model, "bloodPressure"),
               buildAnthropometricIndex(
-                  "Respiratory Rate", "...", model, "respiratoryRate"),
+                  "Respiratory Rate", "", model, "respiratoryRate"),
               buildAnthropometricIndex("Weight", "kg", model, "weight"),
               buildAnthropometricIndex("Height", "cm", model, "height"),
-              buildAnthropometricIndex("BMI", "...", model, "BMI"),
-              buildAnthropometricIndex(
-                  "Hips", "...", model, "waistCircumference"),
+              buildAnthropometricIndex("BMI", "", model, "BMI"),
+              buildAnthropometricIndex("Hips", "", model, "waistCircumference"),
               Divider(
                 thickness: 0.5,
               ),
@@ -645,8 +665,11 @@ class TransactionFormScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
                       '1. Medical History',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff0d47a1),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -662,6 +685,9 @@ class TransactionFormScreen extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: TextFormField(
+                            style: TextStyle(
+                              color: Color(0xff0d47a1),
+                            ),
                             initialValue: model.examinationForm.history,
                             maxLines: 5,
                             decoration: InputDecoration.collapsed(),
@@ -691,7 +717,10 @@ class TransactionFormScreen extends StatelessWidget {
         Expanded(
             child: Text(
           label,
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(
+            fontSize: 16,
+            color: Color(0xff0d47a1),
+          ),
         )),
         Expanded(
           //   child: Container(
@@ -703,6 +732,9 @@ class TransactionFormScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Container(
               child: TextFormField(
+                style: TextStyle(
+                  color: Color(0xff0d47a1),
+                ),
                 initialValue: this.model.getFieldNumber(field) != null
                     ? this.model.getFieldNumber(field).toStringAsFixed(1)
                     : null,
@@ -748,12 +780,17 @@ class TransactionFormScreen extends StatelessWidget {
             children: [
               Text(
                 '2.2 ',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff0d47a1),
+                ),
               ),
               Flexible(
                 child: Text(
                   'Eye Sight',
                   style: TextStyle(
+                    color: Color(0xff0d47a1),
                     fontSize: 18,
                   ),
                 ),
@@ -768,13 +805,21 @@ class TransactionFormScreen extends StatelessWidget {
             children: [
               Text(
                 'No glasses',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff0d47a1),
+                ),
               ),
               buildEyeExaminationForm("Left Eye", "0 ~ 10", model, "leftEye"),
               buildEyeExaminationForm("Right Eye", "0 ~ 10", model, "rightEye"),
               Text(
                 'With glasses',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff0d47a1),
+                ),
               ),
               buildEyeExaminationForm(
                   "Left Eye", "0 ~ 10", model, "leftEyeGlassed"),
@@ -798,6 +843,7 @@ class TransactionFormScreen extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
+              color: Color(0xff0d47a1),
               fontSize: 18,
             ),
           ),
@@ -807,6 +853,9 @@ class TransactionFormScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 10, top: 10, left: 10),
             child: TextFormField(
+              style: TextStyle(
+                color: Color(0xff0d47a1),
+              ),
               initialValue: this.model.getFieldNumber(field) != null
                   ? this.model.getFieldNumber(field).toString()
                   : null,
@@ -850,12 +899,17 @@ class TransactionFormScreen extends StatelessWidget {
             children: [
               Text(
                 '2.3 ',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff0d47a1),
+                ),
               ),
               Flexible(
                 child: Text(
                   'Paraclinical',
                   style: TextStyle(
+                    color: Color(0xff0d47a1),
                     fontSize: 18,
                   ),
                 ),

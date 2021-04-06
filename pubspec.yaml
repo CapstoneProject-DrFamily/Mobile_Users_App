@@ -32,7 +32,7 @@ dependencies:
   fancy_bottom_navigation: ^0.3.2
   rflutter_alert: ^1.0.2
   settings_ui: ^0.1.1
-  scoped_model: ^1.1.0
+  scoped_model: ^1.1.0      
   get_it: ^5.0.3
   google_maps_flutter: ^1.1.1
   geolocator: ^6.1.13
