@@ -6,6 +6,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -40,6 +41,14 @@ class SignUpScreen extends StatelessWidget {
                       bool check = await model.createNewAccount(context);
                       print("Check: " + check.toString());
                       if (check) {
+                        Fluttertoast.showToast(
+                          msg: "Sign Up Successfull",
+                          textColor: Colors.white,
+                          toastLength: Toast.LENGTH_SHORT,
+                          backgroundColor: Colors.green,
+                          gravity: ToastGravity.CENTER,
+                        );
+
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
                                 builder: (context) => LandingScreen()),

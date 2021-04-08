@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:commons/commons.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/setting_vm/health_record_view_model.dart';
@@ -73,20 +75,48 @@ class HealthRecordScreen extends StatelessWidget {
                 bottomNavigationBar: GestureDetector(
                   onTap: () async {
                     // model.printCheck();
-                    bool check = await model.updateHealthRecord();
-                    print("Check: " + check.toString());
+                    bool isUpdate = await _confirmDialog(context);
+                    if (isUpdate) {
+                      waitDialog(context,
+                          message: "Updating your infomation...");
+                      bool check = await model.updateHealthRecord();
+                      print("Check: " + check.toString());
 
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            HealthRecordScreen()));
+                      if (check) {
+                        Navigator.pop(context);
 
-                    Fluttertoast.showToast(
-                      msg: "Update success",
-                      textColor: Colors.green,
-                      toastLength: Toast.LENGTH_SHORT,
-                      backgroundColor: Colors.white,
-                      gravity: ToastGravity.CENTER,
-                    );
+                        await CoolAlert.show(
+                            barrierDismissible: false,
+                            context: context,
+                            type: CoolAlertType.success,
+                            text: "Update Personal Health Record Success",
+                            backgroundColor: Colors.lightBlue[200],
+                            onConfirmBtnTap: () {
+                              Navigator.pop(context);
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          HealthRecordScreen()));
+                            });
+                      } else {
+                        Navigator.pop(context);
+
+                        await CoolAlert.show(
+                            barrierDismissible: false,
+                            context: context,
+                            type: CoolAlertType.error,
+                            text: "Update error, please try again!",
+                            backgroundColor: Colors.lightBlue[200],
+                            onConfirmBtnTap: () {
+                              Navigator.pop(context);
+
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          HealthRecordScreen()));
+                            });
+                      }
+                    }
                   },
                   child: Container(
                     margin: EdgeInsets.fromLTRB(
@@ -2933,4 +2963,121 @@ class HealthRecordScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future _confirmDialog(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (bookingContext) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12),
+          ),
+        ),
+        child: Container(
+          height: 345,
+          width: MediaQuery.of(bookingContext).size.width * 0.8,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 25,
+              ),
+              Icon(
+                Icons.info,
+                color: Color(0xff4ee1c7),
+                size: 90,
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                "Confirmation?",
+                style: TextStyle(
+                  fontSize: 27,
+                  fontWeight: FontWeight.w800,
+                  fontFamily: 'avenir',
+                  color: Color(0xff0d47a1),
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                'Are you sure want to change \n your Personal Health Record?',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'avenir',
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(
+                height: 45,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    onTap: () {
+                      Navigator.of(bookingContext).pop(true);
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: MediaQuery.of(bookingContext).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(color: Colors.blueAccent),
+                      ),
+                      child: Text(
+                        "Yes",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'avenir',
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    onTap: () {
+                      Navigator.of(bookingContext).pop(false);
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: MediaQuery.of(bookingContext).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(color: Colors.blueAccent),
+                      ),
+                      child: Text(
+                        "No",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'avenir',
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }
