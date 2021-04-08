@@ -1,3 +1,5 @@
+import 'package:commons/commons.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/setting_vm/dependent_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
@@ -278,53 +280,76 @@ class DependentScreen extends StatelessWidget {
                                                 ),
                                                 GestureDetector(
                                                   onTap: () async {
-                                                    bool isDelete = await model
-                                                        .deleteDependent(model
-                                                            .listDependent[
-                                                                index]
-                                                            .patientID);
+                                                    bool isDelete =
+                                                        await _confirmDialog(
+                                                            context);
                                                     if (isDelete) {
-                                                      Fluttertoast.showToast(
-                                                        msg:
-                                                            "Delete Dependent success",
-                                                        textColor: Colors.red,
-                                                        toastLength:
-                                                            Toast.LENGTH_SHORT,
-                                                        backgroundColor:
-                                                            Colors.white,
-                                                        gravity:
-                                                            ToastGravity.CENTER,
-                                                      );
-                                                      Navigator.of(context).pushReplacement(
-                                                          MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  DependentScreen()));
-                                                    } else {
-                                                      Fluttertoast.showToast(
-                                                        msg:
-                                                            "Delete Dependent fail",
-                                                        textColor: Colors.red,
-                                                        toastLength:
-                                                            Toast.LENGTH_SHORT,
-                                                        backgroundColor:
-                                                            Colors.white,
-                                                        gravity:
-                                                            ToastGravity.CENTER,
-                                                      );
-                                                      Navigator.of(context).pushReplacement(
-                                                          MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  DependentScreen()));
+                                                      waitDialog(context,
+                                                          message:
+                                                              "Deleting your dependent...");
+                                                      bool check = await model
+                                                          .deleteDependent(model
+                                                              .listDependent[
+                                                                  index]
+                                                              .patientID);
+                                                      print("Check: " +
+                                                          check.toString());
+                                                      if (check) {
+                                                        Navigator.pop(context);
+
+                                                        await CoolAlert.show(
+                                                            barrierDismissible:
+                                                                false,
+                                                            context: context,
+                                                            type: CoolAlertType
+                                                                .success,
+                                                            text:
+                                                                "Delete Dependent Success",
+                                                            backgroundColor:
+                                                                Colors.lightBlue[
+                                                                    200],
+                                                            onConfirmBtnTap:
+                                                                () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pushReplacement(MaterialPageRoute(
+                                                                      builder: (BuildContext
+                                                                              context) =>
+                                                                          DependentScreen()));
+                                                            });
+                                                      } else {
+                                                        Navigator.pop(context);
+
+                                                        await CoolAlert.show(
+                                                            barrierDismissible:
+                                                                false,
+                                                            context: context,
+                                                            type: CoolAlertType
+                                                                .error,
+                                                            text:
+                                                                "Delete error, please try again!",
+                                                            backgroundColor:
+                                                                Colors.lightBlue[
+                                                                    200],
+                                                            onConfirmBtnTap:
+                                                                () {
+                                                              Navigator.pop(
+                                                                  context);
+
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pushReplacement(MaterialPageRoute(
+                                                                      builder: (BuildContext
+                                                                              context) =>
+                                                                          DependentScreen()));
+                                                            });
+                                                      }
                                                     }
                                                   },
                                                   child: Container(
                                                     width: 250,
-                                                    // MediaQuery.of(context)
-                                                    //         .size
-                                                    //         .width *
-                                                    //     0.62,
                                                     height:
                                                         MediaQuery.of(context)
                                                                 .size
@@ -423,6 +448,129 @@ class DependentScreen extends StatelessWidget {
                     );
         },
       ),
+    );
+  }
+
+  Future _confirmDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (bookingContext) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 25,
+                ),
+                Icon(
+                  Icons.info,
+                  color: Color(0xff4ee1c7),
+                  size: 90,
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Confirmation?",
+                  style: TextStyle(
+                    fontSize: 27,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'avenir',
+                    color: Color(0xff0d47a1),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Text(
+                    'Are you sure want to delete your dependent?',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'avenir',
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pop(true);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(bookingContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "Yes",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pop(false);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(bookingContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "No",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

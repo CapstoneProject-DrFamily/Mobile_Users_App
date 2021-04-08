@@ -741,7 +741,7 @@ class ProfileScreen extends StatelessWidget {
               color: Colors.blue,
             ),
           ),
-          fillColor: Colors.white,
+          fillColor: Colors.grey.shade100,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
         ),
