@@ -59,6 +59,8 @@ class LandingPageViewModel extends BaseModel {
     print('profile $profileID');
     int userID = prefs.getInt("usAccountID");
 
+    print("userID" + userID.toString());
+
     _firebaseuser = await FirebaseAuth.instance.currentUser();
     String userId = _firebaseuser.uid;
     PushNotifycationService pushNotifycationService = PushNotifycationService();

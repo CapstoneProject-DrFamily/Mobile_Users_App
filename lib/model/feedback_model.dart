@@ -21,6 +21,8 @@ class FeedbackModel {
       patientId: json['patientId'] as int,
       doctorId: json['doctorId'] as int,
       note: json['note'] as String,
+      insBy: json['insBy'] as String,
+      updBy: json['updBy'] as String,
     );
   }
 

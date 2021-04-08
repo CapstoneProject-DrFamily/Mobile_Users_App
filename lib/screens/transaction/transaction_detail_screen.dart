@@ -62,9 +62,9 @@ class TransactionDetailScreen extends StatelessWidget {
                                   Icons.star,
                                   color: Colors.amber,
                                 ),
-                                // onRatingUpdate: (rating) {
-                                //   // model.changeRating(rating);
-                                // },
+                                onRatingUpdate: (rating) {
+                                  // model.changeRating(rating);
+                                },
                               ),
                               SizedBox(
                                 height: 20,
