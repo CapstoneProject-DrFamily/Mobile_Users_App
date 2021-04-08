@@ -61,7 +61,7 @@ class TransactionPrescriptionScreen extends StatelessWidget {
                 ? true
                 : false,
             child: Text(
-              'No data',
+              'No medicine',
               style: TextStyle(fontSize: 20),
             ),
           ),
@@ -89,9 +89,7 @@ class TransactionPrescriptionScreen extends StatelessWidget {
                               child: Text(
                                 model.list[index].medicine.name,
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                             // collapsed: Text('See details'),

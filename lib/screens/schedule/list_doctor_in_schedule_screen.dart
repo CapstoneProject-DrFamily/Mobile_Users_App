@@ -198,11 +198,10 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                                                   Column(
                                                                     children: [
                                                                       Text(
-                                                                        model
-                                                                            .listResult[index]
-                                                                            .doctorDetail
-                                                                            .ratingPoint
-                                                                            .toString(),
+                                                                        model.listResult[index].doctorDetail.ratingPoint ==
+                                                                                null
+                                                                            ? "0"
+                                                                            : model.listResult[index].doctorDetail.ratingPoint.toString(),
                                                                         style: TextStyle(
                                                                             color:
                                                                                 Colors.white,
@@ -213,7 +212,7 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                                                             5,
                                                                       ),
                                                                       Text(
-                                                                        "Raiting",
+                                                                        "Rating",
                                                                         style: TextStyle(
                                                                             color:
                                                                                 Colors.white,
@@ -271,7 +270,7 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                                                             5,
                                                                       ),
                                                                       Text(
-                                                                        "FeedBacks",
+                                                                        "Feedbacks",
                                                                         style: TextStyle(
                                                                             color:
                                                                                 Colors.white,
