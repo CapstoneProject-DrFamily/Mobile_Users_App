@@ -35,6 +35,9 @@ class SpecialtyServiceScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Container(
+                          child: Text("Service"),
+                        ),
+                        Container(
                           margin: EdgeInsets.only(top: 10),
                           padding: EdgeInsets.only(left: 7),
                           height: 60,

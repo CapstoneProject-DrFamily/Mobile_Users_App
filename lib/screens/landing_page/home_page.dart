@@ -80,10 +80,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     GestureDetector(
                       child: _buildDoctorFunction(
-                          context, 'Find a Doctor', FIND_DOCTOR, 150, 190),
+                          context, 'Find Doctor', FIND_DOCTOR, 150, 190),
                       onTap: () {
                         _buildDialogListDependent(context, model);
                       },
@@ -324,7 +325,14 @@ class HomeScreen extends StatelessWidget {
                         //new popup
                         homeViewModel.choosePatient(
                             model.listDependent[model.patientChoose].patientID);
-                        _buildDialogChooseType(context, homeViewModel);
+                        homeViewModel.initTransaction(2);
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BaseTimeLineScreen(),
+                          ),
+                        );
                       },
                     ),
                     TextButton(

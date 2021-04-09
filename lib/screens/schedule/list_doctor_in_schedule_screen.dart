@@ -4,6 +4,7 @@ import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
 import 'package:drFamily_app/view_model/schedule_vm/list_doctor_schedule_view_model.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,7 +26,7 @@ class ListDoctorScheduleScreen extends StatelessWidget {
             body: FutureBuilder(
               future: model.fetchData(specialityId),
               builder: (context, snapshot) {
-                if (model.init) {
+                if (model.init || model.loadBack) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
@@ -42,18 +43,20 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                       Container(
                         child: Column(
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'These time slots are in Vietnam timezone (GMT+7:00).',
-                                style: TextStyle(
-                                  color: Color(0xff0d47a1),
-                                ),
-                              ),
-                            ),
+                            (model.listResult == [])
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'These time slots are in Vietnam timezone (GMT+7:00).',
+                                      style: TextStyle(
+                                        color: Color(0xff0d47a1),
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
                             Expanded(
                               child: model.listResult.length == 0
-                                  ? _buildNotHaveScreen(context)
+                                  ? _buildNotHaveScreen(context, model)
                                   : Container(
                                       child: ListView.builder(
                                         itemCount: model.listResult.length,
@@ -305,7 +308,8 @@ class ListDoctorScheduleScreen extends StatelessWidget {
     );
   }
 
-  Container _buildNotHaveScreen(BuildContext context) {
+  Container _buildNotHaveScreen(
+      BuildContext context, ListDoctorScheduleViewModel model) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.25),
@@ -361,6 +365,29 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
                   ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          InkWell(
+            onTap: () {
+              model.loadBackList(specialityId);
+            },
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xff4ee1c7),
+              ),
+              child: Center(
+                child: Icon(
+                  EvaIcons.refreshOutline,
+                  color: Colors.white,
+                  size: 30,
                 ),
               ),
             ),

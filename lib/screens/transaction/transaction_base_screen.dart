@@ -23,7 +23,7 @@ class TransactionBaseScreen extends StatelessWidget {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            'Transaction Detail',
+            'Record Detail',
             style: TextStyle(color: Color(0xff0d47a1)),
           ),
         ),
@@ -100,14 +100,23 @@ class TransactionBaseScreen extends StatelessWidget {
                                         color: Colors.green,
                                       ),
                                     )
-                                  : Text(
-                                      "Cancel",
-                                      style: GoogleFonts.varelaRound(
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 13,
-                                        color: Colors.red,
-                                      ),
-                                    ),
+                                  : (model.transaction.status == 4)
+                                      ? Text(
+                                          "Cancel",
+                                          style: GoogleFonts.varelaRound(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 13,
+                                            color: Colors.red,
+                                          ),
+                                        )
+                                      : Text(
+                                          "UnPaid",
+                                          style: GoogleFonts.varelaRound(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 13,
+                                            color: Colors.orange,
+                                          ),
+                                        ),
                             ),
                           ],
                         ),

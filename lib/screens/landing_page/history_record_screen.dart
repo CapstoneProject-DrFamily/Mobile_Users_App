@@ -408,14 +408,14 @@ class _ArticleDescription extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: Colors.yellow[800]),
+                          border: Border.all(color: Colors.green[900]),
                         ),
                         child: Text(
                           "Checking",
                           style: GoogleFonts.varelaRound(
                             fontWeight: FontWeight.normal,
                             fontSize: 13,
-                            color: Colors.yellow[800],
+                            color: Colors.green[900],
                           ),
                         ),
                       )
@@ -439,25 +439,47 @@ class _ArticleDescription extends StatelessWidget {
                               ),
                             ),
                           )
-                        : Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * 0.7,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(color: Colors.red),
-                            ),
-                            child: Text(
-                              "Cancel",
-                              style: GoogleFonts.varelaRound(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 13,
-                                color: Colors.red,
+                        : (status == 4)
+                            ? Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(color: Colors.red),
+                                ),
+                                child: Text(
+                                  "Cancel",
+                                  style: GoogleFonts.varelaRound(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(color: Colors.orange),
+                                ),
+                                child: Text(
+                                  "UnPaid",
+                                  style: GoogleFonts.varelaRound(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13,
+                                    color: Colors.orange,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
           ],
         ),
         const Padding(padding: EdgeInsets.only(bottom: 2.0)),

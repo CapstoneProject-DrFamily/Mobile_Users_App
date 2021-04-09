@@ -25,9 +25,11 @@ class ScheduleRepo extends IScheduleRepo {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
+    print("json ${schedule.toJson()}");
+
     var response = await http.put(urlAPI,
         headers: header, body: jsonEncode(schedule.toJson()));
-
+    print("update schedule status ${response.statusCode}");
     if (response.statusCode == 200) {
       return true;
     } else
