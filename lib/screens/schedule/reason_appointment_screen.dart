@@ -1,4 +1,3 @@
-import 'package:commons/commons.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
@@ -6,7 +5,6 @@ import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/schedule_vm/reason_appointment_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ReasonAppointmentScreen extends StatelessWidget {
   final String selectedValue;
@@ -24,60 +22,65 @@ class ReasonAppointmentScreen extends StatelessWidget {
         builder: (context, child, model) {
       return Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                      ),
-                      child: Text(
-                        'Reason for Appointment',
-                        style: TextStyle(
-                          fontSize: 30,
-                          color: Color(0xff0d47a1),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).requestFocus(new FocusNode());
+            },
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                        ),
+                        child: Text(
+                          'Reason for Appointment',
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Color(0xff0d47a1),
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Flexible(
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, right: 20, left: 20),
-                      child: Text(
-                        'Please describe your symptoms, questions, or condition so our care providers may provide you with the appropriate care.',
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Flexible(
-                    child: Padding(
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Padding(
                         padding:
                             const EdgeInsets.only(top: 20, right: 20, left: 20),
-                        child: TextFormField(
-                          maxLines: 5,
-                          onChanged: (value) {
-                            model.note = value;
-                          },
-                          decoration: InputDecoration(
-                              hintText: 'Enter your reason here',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12))),
-                        )),
-                  )
-                ],
-              ),
-            ],
+                        child: Text(
+                          'Please describe your symptoms, questions, or condition so our care providers may provide you with the appropriate care.',
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 20, right: 20, left: 20),
+                          child: TextFormField(
+                            maxLines: 5,
+                            onChanged: (value) {
+                              model.note = value;
+                            },
+                            decoration: InputDecoration(
+                                hintText: 'Enter your reason here',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12))),
+                          )),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: _buildContinueButtom(model, context),
@@ -92,8 +95,9 @@ class ReasonAppointmentScreen extends StatelessWidget {
         bool isBook = await _confirmBookingDialog(context);
         if (isBook) {
           bool isSuccess = await model.bookingDoctor(
-              selectedValue, schedules, doctorScheduleModel);
+              selectedValue, schedules, doctorScheduleModel, context);
           if (isSuccess) {
+            Navigator.pop(context);
             await CoolAlert.show(
                 barrierDismissible: false,
                 context: context,
@@ -106,6 +110,8 @@ class ReasonAppointmentScreen extends StatelessWidget {
                       builder: (BuildContext context) => LandingScreen()));
                 });
           } else {
+            Navigator.pop(context);
+
             await CoolAlert.show(
               barrierDismissible: false,
               context: context,

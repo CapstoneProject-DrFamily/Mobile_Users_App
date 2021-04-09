@@ -64,14 +64,13 @@ class DoctorRepo extends IDoctorRepo {
   Future<List<DoctorScheduleModel>> getDoctorsBySpeciality(
       int specialityId) async {
     List<DoctorScheduleModel> listDoctor = [];
-    String urlAPI = APIHelper.URI_PREFIX_API;
+    String urlAPI = APIHelper.DOCTOR_SPECIALTY + '$specialityId?PageSize=50';
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
-    var uri = Uri.http(urlAPI, "/api/v1/Doctors/specialties/$specialityId");
-
-    var response = await http.get(uri, headers: header);
+    var response = await http.get(urlAPI, headers: header);
+    print("status ${response.statusCode}");
     Map<String, dynamic> data = json.decode(response.body);
 
     for (int i = 0; i < data['doctors'].length; i++) {

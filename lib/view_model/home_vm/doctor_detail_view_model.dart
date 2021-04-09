@@ -7,12 +7,11 @@ import 'package:drFamily_app/repository/doctor_repo.dart';
 import 'package:drFamily_app/repository/feedback_repo.dart';
 import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
-import 'package:drFamily_app/screens/home/find_doctor/waiting_booking_doctor_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DoctorDetailViewModel extends BaseModel {
@@ -42,63 +41,15 @@ class DoctorDetailViewModel extends BaseModel {
 
   Future<void> getDoctorDetail(int doctorId, String token, String fbID) async {
     _doctor = await _doctorRepo.getDoctor(doctorId);
+    await fetchFeedback(doctorId);
     _fbId = fbID;
     _tokenNotiDoctor = token;
     print('notiToken: $_tokenNotiDoctor - fbId: $fbID');
   }
 
-  Future<void> confirmBooking(BuildContext context) async {
-    bool isOnline = false;
-    _doctorRequest =
-        FirebaseDatabase.instance.reference().child("Doctor Request");
-
-    await _doctorRequest.child(_fbId).once().then(
-      (DataSnapshot dataSnapshot) {
-        if (dataSnapshot.value == null) {
-          isOnline = false;
-        } else {
-          var status = dataSnapshot.value["doctor_status"];
-          if (status == "waiting") {
-            isOnline = true;
-          } else {
-            isOnline = false;
-          }
-        }
-      },
-    );
-
-    if (!isOnline) {
-      waitDialog(context, duration: Duration(milliseconds: 500));
-      Fluttertoast.showToast(
-        msg: "Doctor now is not online",
-        textColor: Colors.white,
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.red,
-        gravity: ToastGravity.CENTER,
-      );
-      Navigator.pop(context);
-    } else {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      var usNotiToken = prefs.getString("usNotiToken");
-      String transactionID;
-
-      transactionID = await newTransaction(prefs, context);
-
-      print(transactionID);
-
-      await addTransactionToFb(transactionID, _fbId, usNotiToken);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => WaitingBookingDoctorScreen(
-            token: _tokenNotiDoctor,
-            doctorFbId: _fbId,
-          ),
-        ),
-      );
-
-      await _notifyRepo.bookDoctor(_tokenNotiDoctor);
-    }
+  Future<void> confirmBooking(
+      BuildContext context, BaseTimeLineViewModel baseTimeLineViewModel) async {
+    baseTimeLineViewModel.nextStep();
   }
 
   Future<String> newTransaction(

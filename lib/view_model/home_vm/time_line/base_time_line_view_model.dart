@@ -5,6 +5,7 @@ import 'package:drFamily_app/screens/home/find_doctor/map_page.dart';
 import 'package:drFamily_app/screens/home/time_line_find_doctor/specialty_service_screen.dart';
 import 'package:drFamily_app/screens/home/time_line_find_doctor/symptoms_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/screens/home/time_line_find_doctor/reason_booking_real_time_screen.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,12 +25,14 @@ class BaseTimeLineViewModel extends BaseModel {
   int id;
   String notiToken;
   String fbId;
+  int doctorId;
 
   List<String> appStepText = [
     "Choose Specialty",
     "Your Location",
     "Meet Our Doctor",
-    "Doctor Info"
+    "Doctor Info",
+    ""
   ];
 
   String sympton = "Choose Symptoms";
@@ -38,7 +41,8 @@ class BaseTimeLineViewModel extends BaseModel {
     EvaIcons.maximizeOutline,
     Icons.location_on,
     Icons.person_search,
-    Icons.person_pin_outlined
+    Icons.person_pin_outlined,
+    Icons.sticky_note_2_outlined,
   ];
   //1: symptoms
   //2: specialty
@@ -66,6 +70,9 @@ class BaseTimeLineViewModel extends BaseModel {
   }
 
   void backStep(int index) {
+    if (index <= 2) {
+      oldStep.removeWhere((element) => element == 3);
+    }
     initStep = index;
     notifyListeners();
   }
@@ -88,6 +95,14 @@ class BaseTimeLineViewModel extends BaseModel {
         break;
       case 3:
         return DoctorDetailScreen(
+          id: id,
+          token: notiToken,
+          fbId: fbId,
+          baseTimeLineViewModel: model,
+        );
+        break;
+      case 4:
+        return ReasonBookingRealTimeScreen(
           id: id,
           token: notiToken,
           fbId: fbId,
