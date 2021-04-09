@@ -77,9 +77,9 @@ class WaitingBookingDoctorViewModel extends BaseModel {
           HelperMethod.disablUpdateDoctorTransaction();
           Fluttertoast.showToast(
             msg: "Doctor has gone offline",
-            textColor: Colors.red,
+            textColor: Colors.white,
             toastLength: Toast.LENGTH_LONG,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.red,
             gravity: ToastGravity.CENTER,
           );
           Get.back();
@@ -87,9 +87,9 @@ class WaitingBookingDoctorViewModel extends BaseModel {
           HelperMethod.disablUpdateDoctorTransaction();
           Fluttertoast.showToast(
             msg: "Doctor has Cancel your booking",
-            textColor: Colors.red,
+            textColor: Colors.white,
             toastLength: Toast.LENGTH_LONG,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.red,
             gravity: ToastGravity.CENTER,
           );
           Get.back();
@@ -97,9 +97,9 @@ class WaitingBookingDoctorViewModel extends BaseModel {
           HelperMethod.disablUpdateDoctorTransaction();
           Fluttertoast.showToast(
             msg: "Doctor have already been booked",
-            textColor: Colors.red,
+            textColor: Colors.white,
             toastLength: Toast.LENGTH_LONG,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.red,
             gravity: ToastGravity.CENTER,
           );
           Get.back();
