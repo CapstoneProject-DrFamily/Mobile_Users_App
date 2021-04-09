@@ -108,18 +108,18 @@ class RatingBaseScreen extends StatelessWidget {
                     if (isSucces) {
                       Fluttertoast.showToast(
                         msg: "Send feedback success",
-                        textColor: Colors.green,
+                        textColor: Colors.white,
                         toastLength: Toast.LENGTH_LONG,
-                        backgroundColor: Colors.white,
+                        backgroundColor: Colors.green,
                         gravity: ToastGravity.CENTER,
                       );
                       Navigator.of(context).pop(isSucces);
                     } else {
                       Fluttertoast.showToast(
                         msg: "Send feedback faild",
-                        textColor: Colors.red,
+                        textColor: Colors.white,
                         toastLength: Toast.LENGTH_LONG,
-                        backgroundColor: Colors.white,
+                        backgroundColor: Colors.red,
                         gravity: ToastGravity.CENTER,
                       );
                     }

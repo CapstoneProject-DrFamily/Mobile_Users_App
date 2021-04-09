@@ -71,9 +71,9 @@ class DoctorDetailViewModel extends BaseModel {
       waitDialog(context, duration: Duration(milliseconds: 500));
       Fluttertoast.showToast(
         msg: "Doctor now is not online",
-        textColor: Colors.red,
+        textColor: Colors.white,
         toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.red,
         gravity: ToastGravity.CENTER,
       );
       Navigator.pop(context);

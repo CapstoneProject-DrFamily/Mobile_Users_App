@@ -46,9 +46,9 @@ class PushNotifycationService {
   Future<void> cancelBooking() async {
     Fluttertoast.showToast(
       msg: "Doctor have Cancel your request",
-      textColor: Colors.red,
+      textColor: Colors.white,
       toastLength: Toast.LENGTH_LONG,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.red,
       gravity: ToastGravity.CENTER,
     );
     // Get.back();
@@ -57,9 +57,9 @@ class PushNotifycationService {
   Future<void> acceptBooking() async {
     Fluttertoast.showToast(
       msg: "Doctor have Accept your request",
-      textColor: Colors.green,
+      textColor: Colors.white,
       toastLength: Toast.LENGTH_LONG,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.green,
       gravity: ToastGravity.CENTER,
     );
   }
@@ -67,9 +67,9 @@ class PushNotifycationService {
   Future<void> arrivedBooking() async {
     Fluttertoast.showToast(
       msg: "Doctor have Arrived",
-      textColor: Colors.green,
+      textColor: Colors.white,
       toastLength: Toast.LENGTH_LONG,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.green,
       gravity: ToastGravity.CENTER,
     );
   }

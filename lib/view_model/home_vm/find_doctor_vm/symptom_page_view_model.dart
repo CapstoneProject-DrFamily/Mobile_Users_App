@@ -93,9 +93,9 @@ class SymptomePageViewModel extends BaseModel {
     if (_savedValue.isEmpty) {
       Fluttertoast.showToast(
         msg: "Please choose Symptoms",
-        textColor: Colors.red,
+        textColor: Colors.white,
         toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.red,
         gravity: ToastGravity.CENTER,
       );
     } else {

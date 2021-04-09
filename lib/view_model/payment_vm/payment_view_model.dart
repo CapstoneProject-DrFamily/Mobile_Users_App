@@ -162,9 +162,9 @@ class PaymentViewModel extends BaseModel {
         );
         Fluttertoast.showToast(
           msg: "Payment success",
-          textColor: Colors.red,
+          textColor: Colors.white,
           toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.red,
           gravity: ToastGravity.CENTER,
         );
       } else {
