@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:commons/commons.dart';
 import 'package:drFamily_app/model/doctor_detail_model.dart';
+import 'package:drFamily_app/model/feedback_model.dart';
 import 'package:drFamily_app/repository/doctor_repo.dart';
+import 'package:drFamily_app/repository/feedback_repo.dart';
 import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/home/find_doctor/waiting_booking_doctor_screen.dart';
@@ -17,6 +19,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DoctorDetailViewModel extends BaseModel {
   final IDoctorRepo _doctorRepo = DoctorRepo();
   final ITransactionRepo _transactionRepo = TransactionRepo();
+  final IFeedbackRepo _feedbackRepo = FeedbackRepo();
+  bool loadingFeedback = true;
+  bool loadingMore = false;
+  List<FeedbackModel> listFeedback;
+  bool hasNextPage = true;
+  int page = 1;
 
   INotifyRepo _notifyRepo = NotifyRepo();
 
@@ -109,6 +117,34 @@ class DoctorDetailViewModel extends BaseModel {
         .child("transaction")
         .child(transactionId)
         .set({"status": "waiting", "usNotiToken": usNotitoken});
+  }
+
+  Future<void> fetchFeedback(int doctorId) async {
+    if (this.loadingFeedback) {
+      List<dynamic> result =
+          await _feedbackRepo.getListFeedback(doctorId, this.page, 5);
+      this.listFeedback = result[0];
+      this.hasNextPage = result[1];
+      print('has next page :' + this.hasNextPage.toString());
+
+      this.loadingFeedback = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> nextPage(int doctorId) async {
+    this.loadingMore = true;
+    notifyListeners();
+    this.page = this.page++;
+    List<dynamic> result =
+        await _feedbackRepo.getListFeedback(doctorId, this.page, 5);
+    List<FeedbackModel> listTemp = result[0];
+    this.hasNextPage = result[1];
+    for (int i = 0; i < listTemp.length; i++) {
+      this.listFeedback.add(listTemp[i]);
+    }
+    this.loadingMore = false;
+    notifyListeners();
   }
 }
 

@@ -245,49 +245,16 @@ class TransactionBaseViewModel extends BaseModel {
 
   Widget buildWidget(context) {
     if (this.feedback != null) {
-      if (this.feedback.ratingPoint == 5) {
-        return Visibility(
-          visible: this.feedback.note.isEmpty ? false : true,
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Column(
-              children: [
-                Row(
-                  children: [Flexible(child: Text('User like most about : '))],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [Flexible(child: Text(this.feedback.note))],
-                ),
-              ],
+      return Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Column(
+          children: [
+            Row(
+              children: [Flexible(child: Text(this.feedback.note))],
             ),
-          ),
-        );
-      } else {
-        return Visibility(
-          visible: this.feedback.note.isEmpty ? false : true,
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Flexible(child: Text('Improve for better service : '))
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [Flexible(child: Text(this.feedback.note))],
-                ),
-              ],
-            ),
-          ),
-        );
-      }
+          ],
+        ),
+      );
     } else {
       return Container(
           child: RaisedButton(

@@ -47,18 +47,20 @@ class RatingBaseViewModel extends BaseModel {
     isLoading = true;
     notifyListeners();
 
-    this.note = "";
-    for (int i = 0; i < list.length; i++) {
-      this.note = this.note + list[i].trim() + ", ";
-    }
+    // this.note = "";
+    // for (int i = 0; i < list.length; i++) {
+    //   this.note = this.note + list[i].trim() + ", ";
+    // }
 
-    if (this.other.isNotEmpty) {
-      this.note = this.note + this.other;
-    } else {
-      if (list.length != 0) {
-        this.note = this.note.substring(0, this.note.length - 2);
-      }
-    }
+    // if (this.other.isNotEmpty) {
+    //   this.note = this.note + this.other;
+    // } else {
+    //   if (list.length != 0) {
+    //     this.note = this.note.substring(0, this.note.length - 2);
+    //   }
+    // }
+    //
+    this.note = this.other;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String name = prefs.getString("usFullName");
 

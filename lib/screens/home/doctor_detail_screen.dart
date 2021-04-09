@@ -5,6 +5,7 @@ import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_mo
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class DoctorDetailScreen extends StatelessWidget {
   final int id;
@@ -269,11 +270,170 @@ class DoctorDetailScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: FutureBuilder(
+                      future: model.fetchFeedback(this.id),
+                      builder: (context, snapshot) {
+                        if (model.loadingFeedback) {
+                          return Container(
+                            color: Colors.white,
+                            child: ListTile(
+                              title: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return buildFeedback(model);
+                        }
+                      }),
+                )
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Column buildFeedback(DoctorDetailViewModel model) {
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          height: 30,
+        ),
+        Container(
+          child: Text(
+            'Feedback',
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+        Container(
+          color: Colors.white,
+          child: ListTile(
+            title: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: model.listFeedback.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 80,
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(0, 0),
+                                      blurRadius: 10,
+                                      color: Colors.black.withOpacity(0.15),
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      'https://firebasestorage.googleapis.com/v0/b/capstoneproject-5c703.appspot.com/o/DoctorStorage%2FdefaultImg.png?alt=media&token=cf5abb21-7349-44f3-add1-91288989bde8',
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child:
+                                          Text(model.listFeedback[index].insBy),
+                                    ),
+                                    Container(
+                                      child: RatingBar.builder(
+                                        itemSize: 20,
+                                        ignoreGestures: true,
+                                        initialRating: model
+                                            .listFeedback[index].ratingPoint,
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: false,
+                                        itemCount: 5,
+                                        glowColor: Colors.amber,
+                                        itemPadding: EdgeInsets.symmetric(
+                                            horizontal: 4.0),
+                                        itemBuilder: (context, _) => Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        onRatingUpdate: (rating) {
+                                          // model.changeRating(rating);
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        model.listFeedback[index].note,
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+            subtitle: model.hasNextPage
+                ? Center(
+                    child: Container(
+                        height: 40,
+                        child: RaisedButton(
+                          onPressed: () async {
+                            model.nextPage(this.id);
+                          },
+                          child: model.loadingMore
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CircularProgressIndicator(
+                                    backgroundColor: Colors.white,
+                                  ),
+                                )
+                              : Text('More'),
+                        )))
+                : Center(
+                    child: Container(
+                        height: 40,
+                        child: RaisedButton(
+                          child: model.loadingMore
+                              ? Container(
+                                  child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CircularProgressIndicator(
+                                    backgroundColor: Colors.white,
+                                  ),
+                                ))
+                              : Text('More'),
+                        ))),
+          ),
+        ),
+      ],
     );
   }
 
