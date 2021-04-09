@@ -226,9 +226,9 @@ class VerifyOTPViewModel extends BaseModel {
 
                 Fluttertoast.showToast(
                   msg: "Createing your account",
-                  textColor: Colors.red,
+                  textColor: Colors.white,
                   toastLength: Toast.LENGTH_SHORT,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.red,
                   gravity: ToastGravity.CENTER,
                 );
               }
@@ -241,9 +241,9 @@ class VerifyOTPViewModel extends BaseModel {
 
               Fluttertoast.showToast(
                 msg: "Your account have been Block or try logged in Doctor app",
-                textColor: Colors.red,
+                textColor: Colors.white,
                 toastLength: Toast.LENGTH_LONG,
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.red,
                 gravity: ToastGravity.CENTER,
               );
             }
@@ -256,9 +256,9 @@ class VerifyOTPViewModel extends BaseModel {
       FocusScope.of(context).unfocus();
       Fluttertoast.showToast(
         msg: "Invalid OTP",
-        textColor: Colors.red,
+        textColor: Colors.white,
         toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.red,
         gravity: ToastGravity.CENTER,
       );
     }
@@ -328,9 +328,9 @@ class VerifyOTPViewModel extends BaseModel {
       } else if (waiting == true && _userModel.profileId == null) {
         Fluttertoast.showToast(
           msg: "Createing your account",
-          textColor: Colors.red,
+          textColor: Colors.white,
           toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.red,
           gravity: ToastGravity.CENTER,
         );
       }
@@ -343,9 +343,9 @@ class VerifyOTPViewModel extends BaseModel {
 
       Fluttertoast.showToast(
         msg: "Your account have been Block or try logged in Doctor app",
-        textColor: Colors.red,
+        textColor: Colors.white,
         toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.red,
         gravity: ToastGravity.CENTER,
       );
     }

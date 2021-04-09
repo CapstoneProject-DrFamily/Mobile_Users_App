@@ -228,9 +228,9 @@ class TimeLineExamineViewModel extends BaseModel {
             notifyListeners();
             Fluttertoast.showToast(
               msg: "Your have done this transaction",
-              textColor: Colors.green,
+              textColor: Colors.white,
               toastLength: Toast.LENGTH_SHORT,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.green,
               gravity: ToastGravity.CENTER,
             );
             Get.off(
