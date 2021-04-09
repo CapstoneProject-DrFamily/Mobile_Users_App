@@ -308,9 +308,9 @@ class MapTrackingScreenViewModel extends BaseModel {
           _transactionMapModel.transactionId, notiToken);
       Fluttertoast.showToast(
         msg: "You have Canceled",
-        textColor: Colors.red,
+        textColor: Colors.white,
         toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.red,
         gravity: ToastGravity.CENTER,
       );
       Navigator.pop(context);
@@ -332,9 +332,9 @@ class MapTrackingScreenViewModel extends BaseModel {
 
         Fluttertoast.showToast(
           msg: "Doctor have Cancel Booking",
-          textColor: Colors.red,
+          textColor: Colors.white,
           toastLength: Toast.LENGTH_LONG,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.red,
           gravity: ToastGravity.CENTER,
         );
         Get.back();
