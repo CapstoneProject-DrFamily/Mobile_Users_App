@@ -181,7 +181,7 @@ class ListDoctorPage extends StatelessWidget {
                                                                 height: 5,
                                                               ),
                                                               Text(
-                                                                "Raiting",
+                                                                "Rating",
                                                                 style: TextStyle(
                                                                     color: Colors
                                                                         .white,

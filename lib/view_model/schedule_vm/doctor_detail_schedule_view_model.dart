@@ -50,7 +50,8 @@ class DoctorDetailScheduleViewModel extends BaseModel {
   Future<void> nextPage(DoctorScheduleModel model) async {
     this.loadingMore = true;
     notifyListeners();
-    this.page = this.page++;
+    this.page = this.page + 1;
+    print("page " + this.page.toString());
     List<dynamic> result = await _feedbackRepo.getListFeedback(
         model.doctorDetail.doctorId, this.page, 5);
     List<FeedbackModel> listTemp = result[0];
