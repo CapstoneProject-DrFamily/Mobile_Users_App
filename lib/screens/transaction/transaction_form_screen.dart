@@ -304,7 +304,10 @@ class TransactionFormScreen extends StatelessWidget {
                             child: Text(
                               'Diagnose / Conclusion',
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff0d47a1),
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -353,7 +356,10 @@ class TransactionFormScreen extends StatelessWidget {
                           child: Text(
                             'Doctor Advice',
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff0d47a1),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -364,6 +370,10 @@ class TransactionFormScreen extends StatelessWidget {
                           child: TextFormField(
                             enabled: false,
                             initialValue: this.model.examinationForm.advisory,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color(0xff0d47a1),
+                            ),
                             maxLines: 5,
                             decoration:
                                 InputDecoration.collapsed(hintText: 'Nothing'),
@@ -432,7 +442,11 @@ class TransactionFormScreen extends StatelessWidget {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     this.model.listSpeciality[index].name,
-                                    style: TextStyle(fontSize: 18),
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff0d47a1),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -618,18 +632,19 @@ class TransactionFormScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              buildAnthropometricIndex("Pulse", "", model, "pulseRate"),
+              buildAnthropometricIndex("Pulse", "BPM", model, "pulseRate"),
               // buildErrorMessage(),
               buildAnthropometricIndex(
                   "Temperature", "Celsius", model, "temperature"),
               buildAnthropometricIndex(
-                  "Blood Pressure", "", model, "bloodPressure"),
+                  "Blood Pressure", "mm/Hg", model, "bloodPressure"),
               buildAnthropometricIndex(
-                  "Respiratory Rate", "", model, "respiratoryRate"),
+                  "Respiratory Rate", "BRPM", model, "respiratoryRate"),
               buildAnthropometricIndex("Weight", "kg", model, "weight"),
               buildAnthropometricIndex("Height", "cm", model, "height"),
-              buildAnthropometricIndex("BMI", "", model, "BMI"),
-              buildAnthropometricIndex("Hips", "", model, "waistCircumference"),
+              buildAnthropometricIndex("BMI", "kg/m2", model, "BMI"),
+              buildAnthropometricIndex(
+                  "Hips", "cm", model, "waistCircumference"),
               Divider(
                 thickness: 0.5,
               ),
@@ -735,9 +750,13 @@ class TransactionFormScreen extends StatelessWidget {
                 style: TextStyle(
                   color: Color(0xff0d47a1),
                 ),
-                initialValue: this.model.getFieldNumber(field) != null
-                    ? this.model.getFieldNumber(field).toStringAsFixed(1)
-                    : null,
+                initialValue: field == "bloodPressure"
+                    ? this.model.examinationForm.bloodPressure != null
+                        ? this.model.examinationForm.bloodPressure
+                        : null
+                    : this.model.getFieldNumber(field) != null
+                        ? this.model.getFieldNumber(field).toStringAsFixed(0)
+                        : null,
                 enabled: false,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
@@ -923,13 +942,19 @@ class TransactionFormScreen extends StatelessWidget {
             children: [
               Text(
                 '2.3.1 ',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff0d47a1),
+                ),
               ),
               Flexible(
                 child: Text(
                   'Full body',
                   style: TextStyle(
                     fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -940,7 +965,11 @@ class TransactionFormScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             'Mucosocutaneous',
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff0d47a1),
+            ),
           ),
         ),
         Padding(
@@ -959,7 +988,11 @@ class TransactionFormScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             'Other',
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff0d47a1),
+            ),
           ),
         ),
         Padding(

@@ -27,7 +27,7 @@ class ListScheduleAppointmentViewModel extends BaseModel {
   bool _isFirst = true;
   bool get isFirst => _isFirst;
 
-  bool _isLoading = true;
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
   bool _isNotHave = false;
   bool get isNotHave => _isNotHave;
@@ -42,6 +42,14 @@ class ListScheduleAppointmentViewModel extends BaseModel {
     _fullUserName = fullName;
     _profileId = profileId;
     _patientId = await profileRepo.getPatientId(_profileId.toString());
+
+    list = await scheduleRepo.getListScheduleByPatientIdUpComing(_patientId);
+
+    this.schedules = Map<String, List<PatientScheduleModel>>();
+
+    for (int i = 1; i < list.length; i++) {
+      convert(list[i]);
+    }
 
     // _listTransaction = await transactionRepo.getListTransactionHistory(
     //     _patientId.toString(), -1);

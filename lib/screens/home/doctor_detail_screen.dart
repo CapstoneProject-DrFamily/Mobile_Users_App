@@ -411,20 +411,7 @@ class DoctorDetailScreen extends StatelessWidget {
                                 )
                               : Text('More'),
                         )))
-                : Center(
-                    child: Container(
-                        height: 40,
-                        child: RaisedButton(
-                          child: model.loadingMore
-                              ? Container(
-                                  child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CircularProgressIndicator(
-                                    backgroundColor: Colors.white,
-                                  ),
-                                ))
-                              : Text('More'),
-                        ))),
+                : Container(),
           ),
         ),
       ],
