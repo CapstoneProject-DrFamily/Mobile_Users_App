@@ -27,7 +27,7 @@ class DoctorDetailScreen extends StatelessWidget {
         return FutureBuilder(
           future: model.getDoctorDetail(id, token, fbId),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
+            if (!model.isLoading) {
               return Scaffold(
                 bottomNavigationBar: _buildSaveButtom(model, context),
                 backgroundColor: Colors.grey.shade300,

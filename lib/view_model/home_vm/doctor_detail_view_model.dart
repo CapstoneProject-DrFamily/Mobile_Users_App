@@ -29,7 +29,7 @@ class DoctorDetailViewModel extends BaseModel {
   DoctorDetailModel _doctor;
   DoctorDetailModel get doctor => _doctor;
 
-  bool _isLoading = false;
+  bool _isLoading = true;
   bool get isLoading => _isLoading;
 
   String _tokenNotiDoctor;
@@ -40,11 +40,15 @@ class DoctorDetailViewModel extends BaseModel {
   DoctorDetailViewModel();
 
   Future<void> getDoctorDetail(int doctorId, String token, String fbID) async {
-    _doctor = await _doctorRepo.getDoctor(doctorId);
-    await fetchFeedback(doctorId);
-    _fbId = fbID;
-    _tokenNotiDoctor = token;
-    print('notiToken: $_tokenNotiDoctor - fbId: $fbID');
+    if (_isLoading) {
+      _doctor = await _doctorRepo.getDoctor(doctorId);
+      await fetchFeedback(doctorId);
+      _fbId = fbID;
+      _tokenNotiDoctor = token;
+      print('notiToken: $_tokenNotiDoctor - fbId: $fbID');
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> confirmBooking(
