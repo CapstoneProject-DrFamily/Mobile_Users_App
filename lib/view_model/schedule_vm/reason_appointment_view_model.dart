@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:commons/commons.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/model/transaction/transaction_model.dart';
@@ -7,6 +8,7 @@ import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/repository/schedule_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,10 +22,12 @@ class ReasonAppointmentViewModel extends BaseModel {
   Future<bool> bookingDoctor(
       String selectedValue,
       Map<String, List<ScheduleModel>> schedules,
-      DoctorScheduleModel doctorScheduleModel) async {
+      DoctorScheduleModel doctorScheduleModel,
+      BuildContext context) async {
     bool booking = false;
     isLoading = true;
     notifyListeners();
+    waitDialog(context, message: "Setting up schedule...");
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -43,7 +47,7 @@ class ReasonAppointmentViewModel extends BaseModel {
     transactionModel.note = this.note.isEmpty ? "Nothing" : this.note;
 
     String data = jsonEncode(transactionModel.toJson());
-    print(data);
+    print('transaction $data');
     bool isUpdated = await _transactionRepo.updateTransaction(data);
 
     if (!isUpdated) {
@@ -72,14 +76,15 @@ class ReasonAppointmentViewModel extends BaseModel {
         status: true,
         updDatetime: transactionModel.dateStart);
 
+    print('Schedule $schedule');
+
     bool isSuccess = await _scheduleRepo.updateSchedule(schedule);
+    print("isSucces $isSuccess");
     if (isSuccess) {
       notifyRepo.bookScheduleDoctor(doctorScheduleModel.notiToken,
           prefs.getString('usFullName'), formattedDate);
       booking = true;
     }
-    isLoading = false;
-    notifyListeners();
     return booking;
   }
 }

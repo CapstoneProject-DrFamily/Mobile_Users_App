@@ -278,22 +278,7 @@ class DoctorDetailScreen extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: FutureBuilder(
-                      future: model.fetchFeedback(this.id),
-                      builder: (context, snapshot) {
-                        if (model.loadingFeedback) {
-                          return Container(
-                            color: Colors.white,
-                            child: ListTile(
-                              title: Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            ),
-                          );
-                        } else {
-                          return buildFeedback(model);
-                        }
-                      }),
+                  child: buildFeedback(model),
                 )
               ],
             ),

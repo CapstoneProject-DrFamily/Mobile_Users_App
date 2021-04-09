@@ -1,6 +1,7 @@
 import 'package:drFamily_app/view_model/checkout_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/doctor_detail_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line/reason_booking_real_time_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/specialty_service_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/symptom_screen_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
@@ -107,4 +108,6 @@ void setupLocator() {
       .registerFactory<SymptomScreenViewModel>(() => SymptomScreenViewModel());
   locator.registerFactory<BaseTimeLineAppoinmentViewModel>(
       () => BaseTimeLineAppoinmentViewModel());
+  locator.registerFactory<ReasonBookingRealTimeViewModel>(
+      () => ReasonBookingRealTimeViewModel());
 }

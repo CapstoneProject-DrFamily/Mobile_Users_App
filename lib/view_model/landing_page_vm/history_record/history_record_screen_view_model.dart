@@ -2,6 +2,7 @@ import 'package:drFamily_app/Helper/helper_method.dart';
 import 'package:drFamily_app/model/transaction_history_model.dart';
 import 'package:drFamily_app/repository/setting/profile_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
+import 'package:drFamily_app/screens/checkout_screen.dart';
 import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
@@ -26,7 +27,14 @@ class HistoryRecordScreenViewModel extends BaseModel {
   List<TransactionHistoryModel> _listTransaction = [];
   List<TransactionHistoryModel> get listTransaction => _listTransaction;
 
-  List _historyTime = ['All', 'On Going', 'Checking', 'Done', 'Cancel'];
+  List _historyTime = [
+    'All',
+    'On Going',
+    'Checking',
+    'UnPaid',
+    'Done',
+    'Cancel'
+  ];
   List get historyTime => _historyTime;
 
   int _status = 0;
@@ -161,7 +169,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
           _status = status;
           notifyListeners();
           _listTransaction = await transactionRepo.getListTransactionHistory(
-              _patientId.toString(), 3);
+              _patientId.toString(), 5);
           _loadingList = false;
 
           if (_listTransaction == null) {
@@ -173,6 +181,24 @@ class HistoryRecordScreenViewModel extends BaseModel {
 
         break;
       case 4:
+        {
+          _isNotHave = false;
+
+          _loadingList = true;
+          _status = status;
+          notifyListeners();
+          _listTransaction = await transactionRepo.getListTransactionHistory(
+              _patientId.toString(), 3);
+          _loadingList = false;
+          if (_listTransaction == null) {
+            _isNotHave = true;
+          }
+
+          notifyListeners();
+        }
+
+        break;
+      case 5:
         {
           _isNotHave = false;
 
@@ -258,6 +284,18 @@ class HistoryRecordScreenViewModel extends BaseModel {
             MaterialPageRoute(
               builder: (context) =>
                   TransactionBaseScreen(transactionId: transactionId),
+            ),
+          );
+        }
+        break;
+      case 5:
+        {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CheckOutScreen(
+                transactionId: transactionId,
+              ),
             ),
           );
         }

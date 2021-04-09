@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:drFamily_app/Helper/validate.dart';
 import 'package:drFamily_app/model/sign_up/signup_model.dart';
+import 'package:drFamily_app/repository/app_config_repo.dart';
 import 'package:drFamily_app/repository/setting/dependent_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddDependentProfileScreenViewModel extends BaseModel {
+  IAppConfigRepo _appConfigRepo = AppConfigRepo();
   IDependentRepo _dependentRepo = DependentRepo();
   SignUpModel _signUpModel;
 
@@ -20,17 +22,8 @@ class AddDependentProfileScreenViewModel extends BaseModel {
   TextEditingController _relationshipController = TextEditingController();
   TextEditingController get relationshipController => _relationshipController;
   //listrealtion
-  List<String> _relationshipList = [
-    'Father',
-    'Mother',
-    'Grandmother',
-    'Grandfather',
-    'Sister',
-    'Brother',
-    'Child',
-    'Other',
-  ];
-  List<String> get relationshipList => _relationshipList;
+  List<dynamic> _relationshipList = [];
+  List<dynamic> get relationshipList => _relationshipList;
 
   //string value text field
   String _relationshipValue;
@@ -59,7 +52,13 @@ class AddDependentProfileScreenViewModel extends BaseModel {
       _relationshipValue = _relationshipController.text;
       notifyListeners();
     });
+    init();
   }
+
+  void init() async {
+    _relationshipList = await _appConfigRepo.appConfigListRelationShip();
+  }
+
   //function choose relationship
   void chooseRelationship(String newValue) {
     _relationshipController.text = newValue;

@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:core';
+import 'package:drFamily_app/model/transaction/transaction_model.dart';
 import 'package:drFamily_app/repository/paypal_services_repo.dart';
+import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/screens/transaction/transaction_base_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentViewModel extends BaseModel {
   IPaypalServicesRepo paypalServicesRepo = PaypalServicesRepo();
+  ITransactionRepo _transactionRepo = TransactionRepo();
   String checkoutUrl;
   String executeUrl;
   String accessToken;
@@ -102,11 +106,18 @@ class PaymentViewModel extends BaseModel {
     return temp;
   }
 
+  TransactionModel transactionModel;
+
   getData(String transactionId, String name, double price) async {
     if (init) {
       _transactionId = transactionId;
       _name = name;
       _price = price;
+
+      transactionModel = await _transactionRepo.getTransaction(transactionId);
+
+      print(
+          "transactionModel ${transactionModel.transactionId} - ${transactionModel.location} - ${transactionModel.estimatedTime}");
 
       Future.delayed(
         Duration.zero,
@@ -151,9 +162,22 @@ class PaymentViewModel extends BaseModel {
       if (payerID != null) {
         await paypalServicesRepo
             .executePayment(executeUrl, payerID, accessToken)
-            .then((id) {
+            .then((id) async {
+          TransactionModel updateTransactionModel = TransactionModel(
+              transactionId: transactionModel.transactionId,
+              doctorId: transactionModel.doctorId,
+              patientId: transactionModel.patientId,
+              estimatedTime: transactionModel.estimatedTime,
+              location: transactionModel.location,
+              note: transactionModel.note,
+              status: 3);
+
+          String transactionJson = jsonEncode(updateTransactionModel.toJson());
+
+          await _transactionRepo.updateTransaction(transactionJson);
           Navigator.of(context).pop();
         });
+
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (BuildContext context) =>
@@ -164,7 +188,7 @@ class PaymentViewModel extends BaseModel {
           msg: "Payment success",
           textColor: Colors.white,
           toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.green,
           gravity: ToastGravity.CENTER,
         );
       } else {
