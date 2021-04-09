@@ -77,9 +77,6 @@ class TransactionBaseViewModel extends BaseModel {
       case 'temperature':
         return this.examinationForm.temperature;
         break;
-      case 'bloodPressure':
-        return this.examinationForm.bloodPressure;
-        break;
       case 'respiratoryRate':
         return this.examinationForm.respiratoryRate;
         break;
