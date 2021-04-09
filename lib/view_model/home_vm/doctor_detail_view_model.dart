@@ -48,64 +48,9 @@ class DoctorDetailViewModel extends BaseModel {
     print('notiToken: $_tokenNotiDoctor - fbId: $fbID');
   }
 
-<<<<<<< HEAD
   Future<void> confirmBooking(
       BuildContext context, BaseTimeLineViewModel baseTimeLineViewModel) async {
     baseTimeLineViewModel.nextStep();
-=======
-  Future<void> confirmBooking(BuildContext context) async {
-    bool isOnline = false;
-    _doctorRequest =
-        FirebaseDatabase.instance.reference().child("Doctor Request");
-
-    await _doctorRequest.child(_fbId).once().then(
-      (DataSnapshot dataSnapshot) {
-        if (dataSnapshot.value == null) {
-          isOnline = false;
-        } else {
-          var status = dataSnapshot.value["doctor_status"];
-          if (status == "waiting") {
-            isOnline = true;
-          } else {
-            isOnline = false;
-          }
-        }
-      },
-    );
-
-    if (!isOnline) {
-      waitDialog(context, duration: Duration(milliseconds: 500));
-      Fluttertoast.showToast(
-        msg: "Doctor now is not online",
-        textColor: Colors.white,
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.red,
-        gravity: ToastGravity.CENTER,
-      );
-      Navigator.pop(context);
-    } else {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      var usNotiToken = prefs.getString("usNotiToken");
-      String transactionID;
-
-      transactionID = await newTransaction(prefs, context);
-
-      print(transactionID);
-
-      await addTransactionToFb(transactionID, _fbId, usNotiToken);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => WaitingBookingDoctorScreen(
-            token: _tokenNotiDoctor,
-            doctorFbId: _fbId,
-          ),
-        ),
-      );
-
-      await _notifyRepo.bookDoctor(_tokenNotiDoctor);
-    }
->>>>>>> b44df2fe15545f57d8b579ba7264c8fac0e340d9
   }
 
   Future<String> newTransaction(
