@@ -1,6 +1,7 @@
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/doctor_detail_view_model.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,14 @@ import 'package:flutter/material.dart';
 class DoctorDetailScreen extends StatelessWidget {
   final int id;
   final String token, fbId;
+  final BaseTimeLineViewModel baseTimeLineViewModel;
 
   DoctorDetailScreen(
-      {Key key, @required this.id, @required this.token, this.fbId})
+      {Key key,
+      @required this.id,
+      @required this.token,
+      this.fbId,
+      this.baseTimeLineViewModel})
       : super(key: key);
 
   @override
@@ -332,7 +338,6 @@ class DoctorDetailScreen extends StatelessWidget {
                       ),
                       onTap: () {
                         Navigator.pop(bookingContext);
-                        model.confirmBooking(context);
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -540,7 +545,7 @@ class DoctorDetailScreen extends StatelessWidget {
       DoctorDetailViewModel model, BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _confirmBookingDialog(context, model);
+        model.confirmBooking(context, baseTimeLineViewModel);
       },
       child: Padding(
         padding: const EdgeInsets.all(4.0),
