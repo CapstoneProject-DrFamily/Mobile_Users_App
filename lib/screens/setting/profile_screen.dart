@@ -706,6 +706,10 @@ class ProfileScreen extends StatelessWidget {
           fillColor: Colors.white,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+          prefixIcon: Icon(
+            Icons.mail,
+            color: Colors.blue,
+          ),
         ),
       ),
     );
@@ -718,7 +722,6 @@ class ProfileScreen extends StatelessWidget {
         keyboardType: TextInputType.phone,
         controller: model.phoneNumController,
         readOnly: true,
-        // onChanged: (value) => model.changePhoneNum(value),
         style: GoogleFonts.varelaRound(
           fontWeight: FontWeight.normal,
           fontSize: 16,
@@ -744,6 +747,10 @@ class ProfileScreen extends StatelessWidget {
           fillColor: Colors.grey.shade100,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+          prefixIcon: Icon(
+            Icons.phone,
+            color: Colors.blue,
+          ),
         ),
       ),
     );
@@ -781,6 +788,10 @@ class ProfileScreen extends StatelessWidget {
             fontSize: 16,
           ),
           decoration: InputDecoration(
+            prefixIcon: Icon(
+              EvaIcons.calendar,
+              color: Colors.blue,
+            ),
             hintStyle: TextStyle(
               color: MainColors.hintTextColor,
             ),
@@ -802,10 +813,6 @@ class ProfileScreen extends StatelessWidget {
             fillColor: Colors.white,
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-            suffixIcon: Icon(
-              EvaIcons.calendar,
-              color: Colors.blue,
-            ),
           ),
         ),
       ),
