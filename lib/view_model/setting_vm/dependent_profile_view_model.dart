@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:drFamily_app/Helper/validate.dart';
+import 'package:drFamily_app/screens/map_choose_profile.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
@@ -31,11 +32,13 @@ class DependentProfileViewModel extends BaseModel {
   TextEditingController _bloodTpeController = TextEditingController();
   TextEditingController _heightController = TextEditingController();
   TextEditingController _weightController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
 
   String _height = "";
   String _weight = "";
   String _currentImage = DEFAULT_IMG;
   String _selectGender;
+  String location = "";
 
   Validate _fullName = Validate(null, null);
   Validate _email = Validate(null, null);
@@ -83,6 +86,7 @@ class DependentProfileViewModel extends BaseModel {
   TextEditingController get bloodTpeController => _bloodTpeController;
   TextEditingController get heightController => _heightController;
   TextEditingController get weightController => _weightController;
+  TextEditingController get locationController => _locationController;
 
   String get currentImage => _currentImage;
   String get height => _height;
@@ -222,6 +226,18 @@ class DependentProfileViewModel extends BaseModel {
 
     _weightController.text = _additionInfoModel.weight.toString();
 
+    if (_additionInfoModel.location == null) {
+      _locationController.text = "Not choose yet";
+    } else {
+      location = _additionInfoModel.location;
+      _locationController.text = _additionInfoModel.location
+          .toString()
+          .split(";")[1]
+          .trim()
+          .split(":")[1]
+          .trim();
+    }
+
     this._isLoading = false;
     notifyListeners();
   }
@@ -356,7 +372,7 @@ class DependentProfileViewModel extends BaseModel {
 
     print('isReady: $_isReady');
 
-    bool check;
+    bool check = false;
     if (_isReady == true) {
       String uploadImage;
 
@@ -399,6 +415,7 @@ class DependentProfileViewModel extends BaseModel {
         updBy: prefs.getString("usFullName"),
         updDatetime: DateTime.now().toString(),
         relationship: relationship,
+        location: location,
       );
 
       String updateAdditionInfoJson = jsonEncode(_additionInfoModel.toJson());
@@ -407,5 +424,23 @@ class DependentProfileViewModel extends BaseModel {
       check = await _profileRepo.updateAdditionInfo(updateAdditionInfoJson);
     }
     return check;
+  }
+
+  void chooseMapLocation(BuildContext context) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MapChooseProfileScreen(),
+      ),
+    ).then((value) {
+      print("value $value");
+      if (value != null) {
+        location = value;
+
+        _locationController.text =
+            value.toString().split(";")[1].trim().split(":")[1].trim();
+        notifyListeners();
+      }
+    });
   }
 }
