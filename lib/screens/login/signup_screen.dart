@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -36,6 +37,7 @@ class SignUpScreen extends StatelessWidget {
                   _buildListGender(context, model),
                   _dobField(context, model),
                   _emailField(context, model),
+                  _locationField(context, model),
                   GestureDetector(
                     onTap: () async {
                       bool check = await model.createNewAccount(context);
@@ -53,6 +55,15 @@ class SignUpScreen extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => LandingScreen()),
                             (Route<dynamic> route) => false);
+                      } else {
+                        Navigator.pop(context);
+                        Fluttertoast.showToast(
+                          msg: "Sign Up Fail!",
+                          textColor: Colors.white,
+                          toastLength: Toast.LENGTH_SHORT,
+                          backgroundColor: Colors.red,
+                          gravity: ToastGravity.CENTER,
+                        );
                       }
                     },
                     child: Container(
@@ -84,6 +95,55 @@ class SignUpScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _locationField(BuildContext context, SignUpViewModel model) {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 30.0,
+        left: 30.0,
+        right: 20.0,
+      ),
+      child: GestureDetector(
+        onTap: () {
+          //open map
+          model.chooseMapLocation(context);
+        },
+        child: TextFormField(
+          enabled: false,
+          controller: model.locationController,
+          keyboardType: TextInputType.phone,
+          maxLines: null,
+          textCapitalization: TextCapitalization.none,
+          decoration: InputDecoration(
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: BorderSide(
+                color: Colors.grey,
+              ),
+            ),
+            errorText: model.errorLocation,
+            errorStyle: TextStyle(
+              color: Colors.red, // or any other color
+            ),
+            counterText: '',
+            filled: true,
+            fillColor: Colors.white,
+            hintText: 'Choose location...',
+            hintStyle: TextStyle(
+              color: MainColors.hintTextColor,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            suffixIcon: Icon(
+              Icons.location_on,
+              color: Colors.blue,
+            ),
+          ),
+        ),
+      ),
     );
   }
 

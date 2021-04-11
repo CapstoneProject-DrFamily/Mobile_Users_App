@@ -4,10 +4,12 @@ import 'package:commons/commons.dart';
 import 'package:drFamily_app/Helper/validate.dart';
 import 'package:drFamily_app/model/sign_up/signup_model.dart';
 import 'package:drFamily_app/repository/sign_up/sign_up_repo.dart';
+import 'package:drFamily_app/screens/map_choose_profile.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
@@ -25,12 +27,17 @@ class SignUpViewModel extends BaseModel {
   TextEditingController _genderController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _idCardController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
 
   TextEditingController get fullNameController => _fullNameController;
   TextEditingController get dobController => _dobController;
   TextEditingController get genderController => _genderController;
   TextEditingController get emailController => _emailController;
   TextEditingController get idCardController => _idCardController;
+  TextEditingController get locationController => _locationController;
+
+  String location;
+  String errorLocation;
 
   List<String> _genderList = [
     'Male',
@@ -208,7 +215,12 @@ class SignUpViewModel extends BaseModel {
       _isReady = false;
     }
 
-    bool check;
+    if (location == null) {
+      _isReady = false;
+      errorLocation = "Please Choose Your Location";
+    }
+
+    bool check = false;
     if (_isReady == true) {
       String currentImage;
 
@@ -236,12 +248,30 @@ class SignUpViewModel extends BaseModel {
       check = await _signUpRepo.createProfile(addProfileJson);
       if (check == true) check = await _signUpRepo.updateUser();
 
-      if (check == true) check = await _signUpRepo.createPatient();
+      if (check == true) check = await _signUpRepo.createPatient(location);
 
       if (check == true) check = await _signUpRepo.createHealthRecord();
 
       Navigator.pop(context);
     }
     return check;
+  }
+
+  void chooseMapLocation(BuildContext context) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MapChooseProfileScreen(),
+      ),
+    ).then((value) {
+      print("value $value");
+      if (value != null) {
+        location = value;
+
+        _locationController.text =
+            value.toString().split(";")[1].trim().split(":")[1].trim();
+        notifyListeners();
+      }
+    });
   }
 }

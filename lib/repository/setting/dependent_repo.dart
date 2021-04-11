@@ -11,7 +11,7 @@ abstract class IDependentRepo {
   Future<bool> deleteDependent(int patientID);
   Future<bool> createDependentProfile(String createDependentProfileJson);
   Future<bool> createHealthRecord();
-  Future<bool> createPatient(String relationship);
+  Future<bool> createPatient(String relationship, String location);
 }
 
 class DependentRepo extends IDependentRepo {
@@ -118,7 +118,7 @@ class DependentRepo extends IDependentRepo {
   }
 
   @override
-  Future<bool> createPatient(String relationship) async {
+  Future<bool> createPatient(String relationship, String location) async {
     // final SharedPreferences prefs = await SharedPreferences.getInstance();
     // int accountID = prefs.getInt("usAccountID");
 
@@ -128,11 +128,13 @@ class DependentRepo extends IDependentRepo {
     };
 
     _patientCreateModel = new PatientCreateModel(
-        patientId: profileId,
-        height: 0,
-        weight: 0,
-        bloodType: null,
-        relationship: relationship);
+      patientId: profileId,
+      height: 0,
+      weight: 0,
+      bloodType: null,
+      relationship: relationship,
+      location: location,
+    );
     String createPatientJson = jsonEncode(_patientCreateModel.toJson());
     print("CreatePatientJson: " + createPatientJson);
 
