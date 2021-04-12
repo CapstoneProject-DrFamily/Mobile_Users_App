@@ -232,6 +232,29 @@ class DependentProfileScreen extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
+                                      _buildTitle('Home Location'),
+                                      SizedBox(
+                                        width: 2.0,
+                                      ),
+                                      Text(
+                                        "(*)",
+                                        style: TextStyle(
+                                          color: Colors.red.shade300,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  _locationField(context, model),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    children: [
                                       _buildTitle('Blood Type'),
                                       SizedBox(
                                         width: 2.0,
@@ -450,6 +473,51 @@ class DependentProfileScreen extends StatelessWidget {
                   ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _locationField(BuildContext context, DependentProfileViewModel model) {
+    return Container(
+      padding: const EdgeInsets.only(left: 8.0, right: 8),
+      child: GestureDetector(
+        onTap: () {
+          //open map
+          model.chooseMapLocation(context);
+        },
+        child: TextFormField(
+          enabled: false,
+          controller: model.locationController,
+          keyboardType: TextInputType.phone,
+          maxLines: null,
+          textCapitalization: TextCapitalization.none,
+          decoration: InputDecoration(
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: BorderSide(
+                color: Colors.blue,
+              ),
+            ),
+            // errorText: model.errorLocation,
+            errorStyle: TextStyle(
+              color: Colors.red, // or any other color
+            ),
+            counterText: '',
+            filled: true,
+            fillColor: Colors.white,
+            hintText: 'Choose location...',
+            hintStyle: TextStyle(
+              color: MainColors.hintTextColor,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            suffixIcon: Icon(
+              Icons.location_on,
+              color: Colors.blue,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -1058,10 +1126,6 @@ class DependentProfileScreen extends StatelessWidget {
                 backgroundColor: Colors.lightBlue[200],
                 onConfirmBtnTap: () {
                   Navigator.pop(context);
-
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          DependentProfileScreen()));
                 });
           }
         }

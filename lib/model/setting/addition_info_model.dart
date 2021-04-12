@@ -1,5 +1,5 @@
 class AdditionInfoModel {
-  String bloodType, relationship, updBy, updDatetime;
+  String bloodType, relationship, updBy, updDatetime, location;
   double height, weight;
   int patientId;
 
@@ -10,7 +10,8 @@ class AdditionInfoModel {
       this.weight,
       this.updBy,
       this.updDatetime,
-      this.relationship});
+      this.relationship,
+      this.location});
 
   factory AdditionInfoModel.fromJson(Map<String, dynamic> json) {
     return AdditionInfoModel(
@@ -21,6 +22,7 @@ class AdditionInfoModel {
       updBy: json['updBy'] as String,
       updDatetime: json['updDatetime'] as String,
       relationship: json['relationship'] as String,
+      location: json['location'] as String,
     );
   }
 
@@ -30,5 +32,6 @@ class AdditionInfoModel {
         "weight": weight,
         "bloodType": bloodType,
         "relationship": relationship,
+        "location": location,
       };
 }

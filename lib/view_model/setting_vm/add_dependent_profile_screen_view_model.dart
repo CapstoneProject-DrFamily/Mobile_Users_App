@@ -4,8 +4,10 @@ import 'package:drFamily_app/Helper/validate.dart';
 import 'package:drFamily_app/model/sign_up/signup_model.dart';
 import 'package:drFamily_app/repository/app_config_repo.dart';
 import 'package:drFamily_app/repository/setting/dependent_repo.dart';
+import 'package:drFamily_app/screens/map_choose_profile.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +23,10 @@ class AddDependentProfileScreenViewModel extends BaseModel {
   TextEditingController get phoneController => _phoneController;
   TextEditingController _relationshipController = TextEditingController();
   TextEditingController get relationshipController => _relationshipController;
+
+  TextEditingController _locationChooseController = TextEditingController();
+  TextEditingController get locationChooseController =>
+      _locationChooseController;
   //listrealtion
   List<dynamic> _relationshipList = [];
   List<dynamic> get relationshipList => _relationshipList;
@@ -37,6 +43,9 @@ class AddDependentProfileScreenViewModel extends BaseModel {
   Validate _phone = Validate(null, null);
   Validate get fullName => _fullName;
   Validate get phone => _phone;
+
+  String location;
+  String errorLocation;
 
   //Constructor
   AddDependentProfileScreenViewModel() {
@@ -107,6 +116,13 @@ class AddDependentProfileScreenViewModel extends BaseModel {
       _isReady = false;
     }
 
+    if (location == null) {
+      errorLocation = "Please Choose Location";
+      _isReady = false;
+    }
+
+    print(_isReady);
+
     bool check;
     if (_isReady == true) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -129,11 +145,32 @@ class AddDependentProfileScreenViewModel extends BaseModel {
       check = await _dependentRepo.createDependentProfile(addProfileJson);
 
       if (check == true)
-        check = await _dependentRepo.createPatient(_relationshipValue);
+        check =
+            await _dependentRepo.createPatient(_relationshipValue, location);
 
       if (check == true) check = await _dependentRepo.createHealthRecord();
+    } else {
+      return false;
     }
 
     return check;
+  }
+
+  void chooseMapLocation(BuildContext context) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MapChooseProfileScreen(),
+      ),
+    ).then((value) {
+      print("value $value");
+      if (value != null) {
+        location = value;
+
+        _locationChooseController.text =
+            value.toString().split(";")[1].trim().split(":")[1].trim();
+        notifyListeners();
+      }
+    });
   }
 }

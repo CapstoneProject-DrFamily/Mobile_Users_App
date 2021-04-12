@@ -13,7 +13,7 @@ abstract class ISignUpRepo {
   Future<bool> createProfile(String createProfileJson);
   Future<bool> updateUser();
   Future<bool> createHealthRecord();
-  Future<bool> createPatient();
+  Future<bool> createPatient(String location);
 }
 
 class SignUpRepo extends ISignUpRepo {
@@ -123,7 +123,7 @@ class SignUpRepo extends ISignUpRepo {
   }
 
   @override
-  Future<bool> createPatient() async {
+  Future<bool> createPatient(String location) async {
     String urlAPI = APIHelper.CREATE_PATIENT_API;
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
@@ -135,6 +135,7 @@ class SignUpRepo extends ISignUpRepo {
       weight: 0,
       bloodType: null,
       relationship: "Owner",
+      location: location,
     );
     String createPatientJson = jsonEncode(_patientCreateModel.toJson());
     print("CreatePatientJson: " + createPatientJson);
