@@ -167,7 +167,7 @@ class MapScreen extends StatelessWidget {
         alignment: Alignment.bottomRight,
         child: FloatingActionButton(
           onPressed: () {
-            model.locatePosition();
+            model.getCurrentPosition();
           },
           backgroundColor: Colors.white,
           child: Icon(

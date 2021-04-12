@@ -614,7 +614,7 @@ class PathPainterBottom extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Color(0xFFBBDEFB);
+    paint.color = Color(0xFFBBDEFB).withOpacity(0.5);
     paint.style = PaintingStyle.fill;
     var path = Path();
     path.moveTo(0, size.height * 0.4);
