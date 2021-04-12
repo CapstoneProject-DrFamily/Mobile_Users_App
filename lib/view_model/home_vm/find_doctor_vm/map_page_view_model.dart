@@ -170,6 +170,30 @@ class MapPageViewModel extends BaseModel {
     notifyListeners();
   }
 
+  void getCurrentPosition() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    this._currentPosition = position;
+
+    LatLng latLngPosition = LatLng(position.latitude, position.longitude);
+    print("Position: " +
+        position.latitude.toString() +
+        " " +
+        position.longitude.toString());
+    _markers = HashSet<Marker>();
+    _markers.add(Marker(markerId: MarkerId("0"), position: latLngPosition));
+
+    CameraPosition cameraPosition =
+        new CameraPosition(target: latLngPosition, zoom: 16);
+    _controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+
+    _pickUpInfo = await _mapRepo.searchCoordinateAddress(latLngPosition);
+
+    _addressController.text = _pickUpInfo.placeName;
+
+    _isEnable = true;
+  }
+
   Future<void> handleTap(LatLng tappedPoint) async {
     _currentSearch = "";
 

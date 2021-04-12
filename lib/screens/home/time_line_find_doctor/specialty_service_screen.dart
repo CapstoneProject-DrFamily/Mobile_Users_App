@@ -35,9 +35,6 @@ class SpecialtyServiceScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Container(
-                          child: Text("Service"),
-                        ),
-                        Container(
                           margin: EdgeInsets.only(top: 10),
                           padding: EdgeInsets.only(left: 7),
                           height: 60,
@@ -82,6 +79,12 @@ class SpecialtyServiceScreen extends StatelessWidget {
                               );
                             },
                           ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          child: Text("Description Specialty"),
                         ),
                         Expanded(
                           child: Container(
@@ -206,7 +209,7 @@ class PathPainterBottom extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Color(0xFFBBDEFB);
+    paint.color = Color(0xFFBBDEFB).withOpacity(0.5);
     paint.style = PaintingStyle.fill;
     var path = Path();
     path.moveTo(0, size.height * 0.4);
