@@ -98,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                           BOOK_APPOINTMENT, 130, 170),
                     ),
                     _buildDoctorFunction(
-                        context, 'Your own Doctor', YOUR_DOCTOR, 140, 180),
+                        context, 'Old Doctor', YOUR_DOCTOR, 140, 180),
                     // _buildDoctorFunction(context, 'Medicine Schedule',
                     //     MEDICINE_SCHEDULE, 140, 180),
                   ],
@@ -324,7 +324,9 @@ class HomeScreen extends StatelessWidget {
                         await Future.delayed(Duration(milliseconds: 500));
                         //new popup
                         homeViewModel.choosePatient(
-                            model.listDependent[model.patientChoose].patientID);
+                            model.listDependent[model.patientChoose].patientID,
+                            model.listDependent[model.patientChoose]
+                                .dependentName);
                         homeViewModel.initTransaction(2);
 
                         Navigator.push(
@@ -546,7 +548,9 @@ class HomeScreen extends StatelessWidget {
                       child: Text('Next'),
                       onPressed: () async {
                         homeViewModel.choosePatient(
-                            model.listDependent[model.patientChoose].patientID);
+                            model.listDependent[model.patientChoose].patientID,
+                            model.listDependent[model.patientChoose]
+                                .dependentName);
                         //booking screen specialty
                         Navigator.push(
                           context,
