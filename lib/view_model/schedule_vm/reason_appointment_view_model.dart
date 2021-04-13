@@ -66,12 +66,12 @@ class ReasonAppointmentViewModel extends BaseModel {
 
     print("Appointment time :" + appointmentTime);
     String formattedDate =
-        DateFormat('yyyy-MM-dd HH:mm:').format(DateTime.parse(appointmentTime));
+        DateFormat('dd-MM-yyyy HH:mm:').format(DateTime.parse(appointmentTime));
 
     ScheduleModel schedule = ScheduleModel(
         appointmentTime: appointmentTime,
         doctorId: doctorScheduleModel.doctorDetail.doctorId,
-        updBy: prefs.getString('usFullName'),
+        updBy: prefs.getString('usPatientName'),
         scheduleId: selectedValue,
         status: true,
         updDatetime: transactionModel.dateStart);
@@ -82,7 +82,7 @@ class ReasonAppointmentViewModel extends BaseModel {
     print("isSucces $isSuccess");
     if (isSuccess) {
       notifyRepo.bookScheduleDoctor(doctorScheduleModel.notiToken,
-          prefs.getString('usFullName'), formattedDate);
+          prefs.getString('usPatientName'), formattedDate);
       booking = true;
     }
     return booking;

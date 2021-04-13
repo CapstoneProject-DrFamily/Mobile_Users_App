@@ -26,11 +26,13 @@ class HomeViewModel extends BaseModel {
     prefs.setInt("usPatientID", profileId);
   }
 
-  Future<void> choosePatient(int patientId) async {
+  Future<void> choosePatient(int patientId, String patientName) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     print(patientId);
     _patientID = patientId;
     prefs.setInt("usPatientID", _patientID);
+    prefs.setString("usPatientName", patientName);
+
     notifyListeners();
   }
 
