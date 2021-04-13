@@ -3,7 +3,6 @@ import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/list_doctor_screen_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
-import 'package:drFamily_app/view_model/schedule_vm/list_doctor_schedule_view_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -523,6 +522,7 @@ Future _confirmDialog(BuildContext context) {
                       height: 50,
                       width: MediaQuery.of(alertContext).size.width * 0.3,
                       decoration: BoxDecoration(
+                        color: Colors.blueAccent,
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(color: Colors.blueAccent),
                       ),
@@ -532,7 +532,7 @@ Future _confirmDialog(BuildContext context) {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'avenir',
-                          color: Colors.blueAccent,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -549,7 +549,6 @@ Future _confirmDialog(BuildContext context) {
                       height: 50,
                       width: MediaQuery.of(alertContext).size.width * 0.3,
                       decoration: BoxDecoration(
-                        color: Colors.blueAccent,
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(color: Colors.blueAccent),
                       ),
@@ -559,7 +558,7 @@ Future _confirmDialog(BuildContext context) {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'avenir',
-                          color: Colors.white,
+                          color: Colors.blueAccent,
                         ),
                       ),
                     ),
