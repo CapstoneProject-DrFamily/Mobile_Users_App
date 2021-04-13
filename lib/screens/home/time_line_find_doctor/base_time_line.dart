@@ -125,6 +125,7 @@ class BaseTimeLineScreen extends StatelessWidget {
                         height: 50,
                         width: MediaQuery.of(bookingContext).size.width * 0.3,
                         decoration: BoxDecoration(
+                          color: Colors.blueAccent,
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(color: Colors.blueAccent),
                         ),
@@ -134,7 +135,7 @@ class BaseTimeLineScreen extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'avenir',
-                            color: Colors.blueAccent,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -151,7 +152,6 @@ class BaseTimeLineScreen extends StatelessWidget {
                         height: 50,
                         width: MediaQuery.of(bookingContext).size.width * 0.3,
                         decoration: BoxDecoration(
-                          color: Colors.blueAccent,
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(color: Colors.blueAccent),
                         ),
@@ -161,7 +161,7 @@ class BaseTimeLineScreen extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'avenir',
-                            color: Colors.white,
+                            color: Colors.blueAccent,
                           ),
                         ),
                       ),
