@@ -41,7 +41,7 @@ class SpecialtyServiceScreen extends StatelessWidget {
                           child: ListView.builder(
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
-                            itemCount: model.listDislay.length,
+                            itemCount: model.listSpecialty.length,
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
@@ -61,13 +61,13 @@ class SpecialtyServiceScreen extends StatelessWidget {
                                     children: [
                                       Container(
                                         child: SvgPicture.network(
-                                          model.listDislay[index].image,
+                                          model.listSpecialty[index].image,
                                           width: 30,
                                           height: 30,
                                         ),
                                       ),
                                       Text(
-                                        model.listDislay[index].name,
+                                        model.listSpecialty[index].name,
                                         style: TextStyle(
                                             color: (model.chooseIndex == index)
                                                 ? Colors.white
@@ -84,7 +84,13 @@ class SpecialtyServiceScreen extends StatelessWidget {
                           height: 15,
                         ),
                         Container(
-                          child: Text("Description Specialty"),
+                          padding: EdgeInsets.only(left: 18),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "${model.listSpecialty[model.chooseIndex].description}",
+                            style: TextStyle(
+                                color: Color(0xff0d47a1), fontSize: 18),
+                          ),
                         ),
                         Expanded(
                           child: Container(
@@ -93,102 +99,127 @@ class SpecialtyServiceScreen extends StatelessWidget {
                             child: ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
-                              itemCount: model.listDislay[model.chooseIndex]
+                              itemCount: model.listSpecialty[model.chooseIndex]
                                   .listService.length,
                               itemBuilder: (context, index) {
-                                return Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                  ),
-                                  elevation: 8.0,
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 15),
-                                  child: InkWell(
-                                    onTap: () {
-                                      model.chooseSpecialty(
-                                          baseTimeLineViewModel,
-                                          model.listDislay[model.chooseIndex]
-                                              .specialtyId,
-                                          model.listDislay[model.chooseIndex]
-                                              .name,
-                                          model.listDislay[model.chooseIndex]
-                                              .listService[index].serviceId,
-                                          baseTimeLineAppoinmentViewModel);
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Colors.grey, blurRadius: 2)
-                                        ],
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(15)),
-                                      ),
-                                      child: ListTile(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 20.0, vertical: 10),
-                                        leading: Container(
-                                          padding: EdgeInsets.only(right: 16),
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              right: BorderSide(width: 1),
+                                return (model.listSpecialty[model.chooseIndex]
+                                        .listService[index].disabled)
+                                    ? Container()
+                                    : Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        elevation: 8.0,
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 15),
+                                        child: InkWell(
+                                          onTap: () {
+                                            model.chooseSpecialty(
+                                                baseTimeLineViewModel,
+                                                model
+                                                    .listSpecialty[
+                                                        model.chooseIndex]
+                                                    .specialtyId,
+                                                model
+                                                    .listSpecialty[
+                                                        model.chooseIndex]
+                                                    .name,
+                                                model
+                                                    .listSpecialty[
+                                                        model.chooseIndex]
+                                                    .listService[index]
+                                                    .serviceId,
+                                                baseTimeLineAppoinmentViewModel);
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Colors.grey,
+                                                    blurRadius: 2)
+                                              ],
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15)),
                                             ),
-                                          ),
-                                          child: SvgPicture.network(
-                                            model.listDislay[model.chooseIndex]
-                                                .image,
-                                            width: 60,
-                                            height: 60,
-                                          ),
-                                        ),
-                                        title: Text(
-                                          model.listDislay[model.chooseIndex]
-                                              .listService[index].serviceName,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        subtitle: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Original Price",
-                                              style: TextStyle(
-                                                fontStyle: FontStyle.italic,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.normal,
-                                                fontFamily: 'avenir',
-                                                color: Colors.grey,
+                                            child: ListTile(
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 20.0,
+                                                      vertical: 10),
+                                              leading: Container(
+                                                padding:
+                                                    EdgeInsets.only(right: 16),
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    right: BorderSide(width: 1),
+                                                  ),
+                                                ),
+                                                child: SvgPicture.network(
+                                                  model
+                                                      .listSpecialty[
+                                                          model.chooseIndex]
+                                                      .image,
+                                                  width: 60,
+                                                  height: 60,
+                                                ),
+                                              ),
+                                              title: Text(
+                                                model
+                                                    .listSpecialty[
+                                                        model.chooseIndex]
+                                                    .listService[index]
+                                                    .serviceName,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              subtitle: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Original Price",
+                                                    style: TextStyle(
+                                                      fontStyle:
+                                                          FontStyle.italic,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      fontFamily: 'avenir',
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 3,
+                                                  ),
+                                                  Text(
+                                                    NumberFormat.currency(
+                                                            locale: 'vi')
+                                                        .format(model
+                                                            .listSpecialty[model
+                                                                .chooseIndex]
+                                                            .listService[index]
+                                                            .servicePrice),
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff0d47a1),
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ],
+                                              ),
+                                              trailing: Icon(
+                                                Icons.keyboard_arrow_right,
+                                                color: Colors.black,
+                                                size: 30,
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: 3,
-                                            ),
-                                            Text(
-                                              NumberFormat.currency(
-                                                      locale: 'vi')
-                                                  .format(model
-                                                      .listDislay[
-                                                          model.chooseIndex]
-                                                      .listService[index]
-                                                      .servicePrice),
-                                              style: TextStyle(
-                                                  color: Color(0xff0d47a1),
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
+                                          ),
                                         ),
-                                        trailing: Icon(
-                                          Icons.keyboard_arrow_right,
-                                          color: Colors.black,
-                                          size: 30,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
+                                      );
                               },
                             ),
                           ),
