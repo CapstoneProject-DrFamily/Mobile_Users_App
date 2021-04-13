@@ -109,7 +109,6 @@ class HealthRecordScreen extends StatelessWidget {
                             backgroundColor: Colors.lightBlue[200],
                             onConfirmBtnTap: () {
                               Navigator.pop(context);
-
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                       builder: (BuildContext context) =>
@@ -3031,6 +3030,7 @@ Future _confirmDialog(BuildContext context) {
                       height: 50,
                       width: MediaQuery.of(bookingContext).size.width * 0.3,
                       decoration: BoxDecoration(
+                        color: Colors.blueAccent,
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(color: Colors.blueAccent),
                       ),
@@ -3040,7 +3040,7 @@ Future _confirmDialog(BuildContext context) {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'avenir',
-                          color: Colors.blueAccent,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -3057,7 +3057,6 @@ Future _confirmDialog(BuildContext context) {
                       height: 50,
                       width: MediaQuery.of(bookingContext).size.width * 0.3,
                       decoration: BoxDecoration(
-                        color: Colors.blueAccent,
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(color: Colors.blueAccent),
                       ),
@@ -3067,7 +3066,7 @@ Future _confirmDialog(BuildContext context) {
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'avenir',
-                          color: Colors.white,
+                          color: Colors.blueAccent,
                         ),
                       ),
                     ),

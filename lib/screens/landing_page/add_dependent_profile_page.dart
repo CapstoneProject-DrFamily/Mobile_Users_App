@@ -125,9 +125,6 @@ class AddDependentProfilePage extends StatelessWidget {
             ),
             child: RaisedButton(
               color: Colors.lightBlue,
-              // onPressed: () {
-              //   model.completeProcess();
-              // },
               onPressed: () async {
                 waitDialog(context);
 
