@@ -8,8 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SpecialtyServiceViewModel extends BaseModel {
   final ISpecialtyRepo _specialtyRepo = SpecialtyRepo();
 
-  List<SpecialtyServiceModel> listDislay = [];
-
   List<SpecialtyServiceModel> listSpecialty = [];
 
   bool initSpecialty = true;
@@ -20,16 +18,6 @@ class SpecialtyServiceViewModel extends BaseModel {
     if (this.initSpecialty) {
       listSpecialty = await _specialtyRepo.getAll();
       print("Specialty $listSpecialty");
-
-      int index =
-          listSpecialty.indexWhere((element) => element.specialtyId == 11);
-      var specialtyDefault = listSpecialty[index];
-      listSpecialty.removeAt(index);
-      listDislay.add(specialtyDefault);
-
-      for (var item in listSpecialty) {
-        listDislay.add(item);
-      }
 
       this.initSpecialty = false;
     }
