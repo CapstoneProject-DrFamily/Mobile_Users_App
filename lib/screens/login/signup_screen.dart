@@ -1,3 +1,5 @@
+import 'package:commons/commons.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/themes/colors.dart';
@@ -40,30 +42,39 @@ class SignUpScreen extends StatelessWidget {
                   _locationField(context, model),
                   GestureDetector(
                     onTap: () async {
-                      bool check = await model.createNewAccount(context);
-                      print("Check: " + check.toString());
-                      if (check) {
-                        Fluttertoast.showToast(
-                          msg: "Sign Up Successfull",
-                          textColor: Colors.white,
-                          toastLength: Toast.LENGTH_SHORT,
-                          backgroundColor: Colors.green,
-                          gravity: ToastGravity.CENTER,
-                        );
+                      bool isConfirm = await _confirmDialog(context);
+                      waitDialog(context, message: "Creating your account...");
+                      if (isConfirm) {
+                        Navigator.of(context).pop();
+                        bool check = await model.createNewAccount(context);
+                        print("Check: " + check.toString());
+                        if (check) {
+                          await CoolAlert.show(
+                            barrierDismissible: false,
+                            context: context,
+                            type: CoolAlertType.success,
+                            text: "Sign Up success",
+                            backgroundColor: Colors.lightBlue[200],
+                            onConfirmBtnTap: () {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => LandingScreen()),
+                                  (Route<dynamic> route) => false);
+                            },
+                          );
+                        } else {
+                          Navigator.of(context).pop();
 
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => LandingScreen()),
-                            (Route<dynamic> route) => false);
-                      } else {
-                        Navigator.pop(context);
-                        Fluttertoast.showToast(
-                          msg: "Sign Up Fail!",
-                          textColor: Colors.white,
-                          toastLength: Toast.LENGTH_SHORT,
-                          backgroundColor: Colors.red,
-                          gravity: ToastGravity.CENTER,
-                        );
+                          await CoolAlert.show(
+                              barrierDismissible: false,
+                              context: context,
+                              type: CoolAlertType.error,
+                              text: "Sign Up Fail!",
+                              backgroundColor: Colors.lightBlue[200],
+                              onConfirmBtnTap: () {
+                                Navigator.of(context).pop();
+                              });
+                        }
                       }
                     },
                     child: Container(
@@ -388,6 +399,128 @@ class SignUpScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Future _confirmDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (alertContext) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          child: Container(
+            height: 380,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 25,
+                ),
+                Icon(
+                  Icons.info,
+                  color: Color(0xff4ee1c7),
+                  size: 90,
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Confirm action",
+                  style: TextStyle(
+                    fontSize: 27,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'avenir',
+                    color: Color(0xff0d47a1),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Expanded(
+                  child: Text(
+                    'Are you sure all your information are correct?',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'avenir',
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.of(alertContext).pop(true);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(alertContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "Yes",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.pop(alertContext);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(alertContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "No",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

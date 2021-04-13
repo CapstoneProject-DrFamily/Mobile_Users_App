@@ -74,7 +74,7 @@ class DependentHealthRecordScreen extends StatelessWidget {
                 ),
                 bottomNavigationBar: GestureDetector(
                   onTap: () async {
-                    bool isUpdate = await _confirmBookingDialog(context);
+                    bool isUpdate = await _confirmDialog(context);
                     if (isUpdate) {
                       waitDialog(context,
                           message: "Updating your infomation...");
@@ -2963,7 +2963,7 @@ class DependentHealthRecordScreen extends StatelessWidget {
     );
   }
 
-  Future _confirmBookingDialog(BuildContext context) {
+  Future _confirmDialog(BuildContext context) {
     return showDialog(
       context: context,
       builder: (bookingContext) {
@@ -3029,6 +3029,7 @@ class DependentHealthRecordScreen extends StatelessWidget {
                         height: 50,
                         width: MediaQuery.of(bookingContext).size.width * 0.3,
                         decoration: BoxDecoration(
+                          color: Colors.blueAccent,
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(color: Colors.blueAccent),
                         ),
@@ -3038,7 +3039,7 @@ class DependentHealthRecordScreen extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'avenir',
-                            color: Colors.blueAccent,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -3055,7 +3056,6 @@ class DependentHealthRecordScreen extends StatelessWidget {
                         height: 50,
                         width: MediaQuery.of(bookingContext).size.width * 0.3,
                         decoration: BoxDecoration(
-                          color: Colors.blueAccent,
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(color: Colors.blueAccent),
                         ),
@@ -3065,7 +3065,7 @@ class DependentHealthRecordScreen extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'avenir',
-                            color: Colors.white,
+                            color: Colors.blueAccent,
                           ),
                         ),
                       ),
