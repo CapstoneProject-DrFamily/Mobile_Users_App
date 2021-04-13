@@ -226,7 +226,8 @@ class DependentProfileViewModel extends BaseModel {
 
     _weightController.text = _additionInfoModel.weight.toString();
 
-    if (_additionInfoModel.location == null) {
+    if (_additionInfoModel.location == null ||
+        _additionInfoModel.location == "") {
       _locationController.text = "Not choose yet";
     } else {
       location = _additionInfoModel.location;

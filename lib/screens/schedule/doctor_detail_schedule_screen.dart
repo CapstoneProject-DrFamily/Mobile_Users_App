@@ -1,6 +1,5 @@
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
-import 'package:drFamily_app/screens/schedule/appointment_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
 import 'package:drFamily_app/view_model/schedule_vm/doctor_detail_schedule_view_model.dart';
@@ -628,6 +627,7 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
                         height: 50,
                         width: MediaQuery.of(alertContext).size.width * 0.3,
                         decoration: BoxDecoration(
+                          color: Colors.blueAccent,
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(color: Colors.blueAccent),
                         ),
@@ -637,7 +637,7 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'avenir',
-                            color: Colors.blueAccent,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -654,7 +654,6 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
                         height: 50,
                         width: MediaQuery.of(alertContext).size.width * 0.3,
                         decoration: BoxDecoration(
-                          color: Colors.blueAccent,
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(color: Colors.blueAccent),
                         ),
@@ -664,7 +663,7 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'avenir',
-                            color: Colors.white,
+                            color: Colors.blueAccent,
                           ),
                         ),
                       ),
