@@ -43,6 +43,7 @@ class ReasonBookingRealTimeViewModel extends BaseModel {
     );
 
     if (!isOnline) {
+      print("offline");
       waitDialog(context, duration: Duration(milliseconds: 500));
       Navigator.of(context).pop();
 
@@ -56,6 +57,10 @@ class ReasonBookingRealTimeViewModel extends BaseModel {
             Navigator.of(context).pop();
           });
     } else {
+      print("online");
+
+      waitDialog(context);
+
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var usNotiToken = prefs.getString("usNotiToken");
       String transactionID;
@@ -65,6 +70,9 @@ class ReasonBookingRealTimeViewModel extends BaseModel {
       print(transactionID);
 
       await addTransactionToFb(transactionID, fbId, usNotiToken);
+
+      Navigator.of(context).pop();
+
       Navigator.push(
         context,
         MaterialPageRoute(
