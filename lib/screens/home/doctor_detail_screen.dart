@@ -256,7 +256,7 @@ class DoctorDetailScreen extends StatelessWidget {
                         ),
                       ),
                       ListTile(
-                        title: Text("Description"),
+                        title: Text("Extra Information"),
                         subtitle: Text(model.doctor.doctorDescription),
                         leading: SizedBox(
                           height: 40,
