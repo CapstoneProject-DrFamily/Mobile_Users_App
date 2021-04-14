@@ -240,24 +240,24 @@ class MapTrackingScreenViewModel extends BaseModel {
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed));
     _markers.add(patientLocation);
 
-    await _doctorRequest
-        .child(doctorFBid)
-        .once()
-        .then((DataSnapshot dataSnapshot) {
-      if (dataSnapshot.value == null) {
-      } else {
-        var latitude = double.parse(dataSnapshot.value['pickup']["latitude"]);
-        var longitude =
-            double.parse(dataSnapshot.value['pickup']["longtitude"]);
-        LatLng doctorLatLng = LatLng(latitude, longitude);
-        Marker currentDoctorLocation = Marker(
-            markerId: MarkerId("doctorLocation"),
-            position: doctorLatLng,
-            icon: BitmapDescriptor.defaultMarkerWithHue(
-                BitmapDescriptor.hueGreen));
-        _markers.add(currentDoctorLocation);
-      }
-    });
+    // await _doctorRequest
+    //     .child(doctorFBid)
+    //     .once()
+    //     .then((DataSnapshot dataSnapshot) {
+    //   if (dataSnapshot.value == null) {
+    //   } else {
+    //     var latitude = double.parse(dataSnapshot.value['pickup']["latitude"]);
+    //     var longitude =
+    //         double.parse(dataSnapshot.value['pickup']["longtitude"]);
+    //     LatLng doctorLatLng = LatLng(latitude, longitude);
+    //     Marker currentDoctorLocation = Marker(
+    //         markerId: MarkerId("doctorLocation"),
+    //         position: doctorLatLng,
+    //         icon: BitmapDescriptor.defaultMarkerWithHue(
+    //             BitmapDescriptor.hueGreen));
+    //     _markers.add(currentDoctorLocation);
+    //   }
+    // });
 
     notifyListeners();
   }
