@@ -192,6 +192,8 @@ class TransactionRepo extends ITransactionRepo {
     };
     var response = await http.get(urlAPI, headers: header);
 
+    print("status ${response.statusCode}");
+
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
       TransactionModel transaction = TransactionModel.fromJson(data);

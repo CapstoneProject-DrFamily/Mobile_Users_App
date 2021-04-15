@@ -1,4 +1,5 @@
 import 'package:commons/commons.dart';
+import 'package:drFamily_app/screens/home/old_doctor/old_doctor_screen.dart';
 import 'package:drFamily_app/screens/home/time_line_book_appoinment/base_time_line_appoinemnt.dart';
 import 'package:drFamily_app/screens/home/time_line_find_doctor/base_time_line.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
@@ -97,8 +98,18 @@ class HomeScreen extends StatelessWidget {
                       child: _buildDoctorFunction(context, 'Book Appointment',
                           BOOK_APPOINTMENT, 130, 170),
                     ),
-                    _buildDoctorFunction(
-                        context, 'Old Doctor', YOUR_DOCTOR, 140, 180),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OldDoctorScreen(),
+                          ),
+                        );
+                      },
+                      child: _buildDoctorFunction(
+                          context, 'Old Doctor', YOUR_DOCTOR, 140, 180),
+                    ),
                     // _buildDoctorFunction(context, 'Medicine Schedule',
                     //     MEDICINE_SCHEDULE, 140, 180),
                   ],

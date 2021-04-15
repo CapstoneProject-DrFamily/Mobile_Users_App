@@ -167,18 +167,12 @@ class TransactionBaseViewModel extends BaseModel {
     if (this.examinationForm.evaluation != null) {
       listCheck.add(this.listSpeciality[16].name);
     }
-    if (this.examinationForm.hematology != null) {
-      print("oke");
-      listCheck.add("Hematology");
-    }
+    print("examination ${examinationForm.bloodChemistry}");
     if (this.examinationForm.bloodChemistry != null) {
       listCheck.add("Serum biochemistry");
     }
-    if (this.examinationForm.bloodChemistry != null) {
+    if (this.examinationForm.urineBiochemistry != null) {
       listCheck.add("Urine biochemistry");
-    }
-    if (this.examinationForm.bloodChemistry != null) {
-      listCheck.add("Abdominal ultrasound");
     }
   }
 
