@@ -27,7 +27,7 @@ class BaseTimeLineAppoinmentViewModel extends BaseModel {
 
   DoctorScheduleModel doctorScheduleModel;
 
-  String selectedValue;
+  int selectedValue;
 
   Map<String, List<ScheduleModel>> schedules = {};
 

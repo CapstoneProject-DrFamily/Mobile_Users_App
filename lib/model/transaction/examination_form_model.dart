@@ -26,7 +26,6 @@ class ExaminationHistoryModel {
       urineBiochemistry,
       abdominalUltrasound,
       conclusion,
-      bloodPressure,
       advisory;
 
   String insBy, updBy;

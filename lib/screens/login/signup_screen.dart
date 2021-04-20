@@ -43,12 +43,15 @@ class SignUpScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () async {
                       bool isConfirm = await _confirmDialog(context);
-                      waitDialog(context, message: "Creating your account...");
                       if (isConfirm) {
-                        Navigator.of(context).pop();
+                        waitDialog(context,
+                            message: "Creating your account...");
+
                         bool check = await model.createNewAccount(context);
                         print("Check: " + check.toString());
                         if (check) {
+                          Navigator.of(context).pop();
+
                           await CoolAlert.show(
                             barrierDismissible: false,
                             context: context,
@@ -490,7 +493,7 @@ class SignUpScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       onTap: () {
-                        Navigator.pop(alertContext);
+                        Navigator.of(alertContext).pop(false);
                       },
                       child: Container(
                         alignment: Alignment.center,

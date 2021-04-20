@@ -76,13 +76,17 @@ class DoctorRepo extends IDoctorRepo {
     for (int i = 0; i < data['doctors'].length; i++) {
       DoctorSpecialtyModel speciality =
           DoctorSpecialtyModel.fromJson(data['doctors'][i]['specialty']);
+      print(speciality);
       DoctorDetailModel doctorDetailModel =
           DoctorDetailModel.fromJson(data['doctors'][i]);
+      print(doctorDetailModel);
       ProfileModel profile =
           ProfileModel.fromJson(data['doctors'][i]['doctorNavigation']);
-
+      print(profile);
       List<ScheduleModel> listSchedule = [];
       for (int k = 0; k < data['doctors'][i]['schedules'].length; k++) {
+        print(data['doctors'][i]['schedules'][k]);
+
         ScheduleModel schedule =
             ScheduleModel.fromJson(data['doctors'][i]['schedules'][k]);
 

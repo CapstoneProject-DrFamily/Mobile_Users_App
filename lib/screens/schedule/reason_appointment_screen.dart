@@ -7,7 +7,7 @@ import 'package:drFamily_app/view_model/schedule_vm/reason_appointment_view_mode
 import 'package:flutter/material.dart';
 
 class ReasonAppointmentScreen extends StatelessWidget {
-  final String selectedValue;
+  final int selectedValue;
   final Map<String, List<ScheduleModel>> schedules;
   final DoctorScheduleModel doctorScheduleModel;
 
