@@ -54,17 +54,26 @@ class ScheduleRepo extends IScheduleRepo {
       for (int i = 0; i < data['schedules'].length; i++) {
         DoctorInformationModel doctor =
             DoctorInformationModel.fromJson(data['schedules'][i]['doctor']);
+        print(doctor);
         ProfileModel profile = ProfileModel.fromJson(
             data['schedules'][i]['doctor']['doctorNavigation']);
+        print(profile);
         DoctorSpecialtyModel speciality = DoctorSpecialtyModel.fromJson(
             data['schedules'][i]['doctor']['specialty']);
+        print(speciality);
+
         ServiceModel service = ServiceModel.fromJson(
-            data['schedules'][i]['scheduleNavigation']['service']);
+            data['schedules'][i]['transactions'][0]['service']);
+        print(service);
+
         ScheduleModel schedule = ScheduleModel.fromJson(data['schedules'][i]);
 
-        TransactionModel transaction = TransactionModel.fromJson(
-            data['schedules'][i]['scheduleNavigation']);
-        print(doctor.toJson());
+        print(schedule);
+
+        TransactionModel transaction =
+            TransactionModel.fromJson(data['schedules'][i]['transactions'][0]);
+
+        print(transaction);
         PatientScheduleModel model = PatientScheduleModel(
             doctor: doctor,
             profile: profile,

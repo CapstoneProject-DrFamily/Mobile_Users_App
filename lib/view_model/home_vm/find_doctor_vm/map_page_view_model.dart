@@ -126,7 +126,7 @@ class MapPageViewModel extends BaseModel {
 
     _currentSearch = "";
 
-    if (location != null) {
+    if (location != null && location != "") {
       addressController.text =
           location.toString().split(";")[1].trim().split(":")[1].trim();
       locationDone = location;

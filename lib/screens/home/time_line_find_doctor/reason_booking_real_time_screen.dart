@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class ReasonBookingRealTimeScreen extends StatelessWidget {
   final int id;
   final String token, fbId;
+  final _formKey = GlobalKey<FormState>();
 
   ReasonBookingRealTimeScreen(
       {@required this.fbId, @required this.id, @required this.token});
@@ -61,9 +62,16 @@ class ReasonBookingRealTimeScreen extends StatelessWidget {
                               top: 20, right: 20, left: 20),
                           child: TextFormField(
                             maxLines: 5,
-                            maxLength: 255,
+                            maxLength: 50,
                             onChanged: (value) {
                               model.note = value;
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter note for doctor';
+                              }
+
+                              return null;
                             },
                             decoration: InputDecoration(
                                 counterText: "",
@@ -88,7 +96,9 @@ class ReasonBookingRealTimeScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         //confirm
-        _confirmBookingDialog(context, model);
+        if (_formKey.currentState.validate()) {
+          _confirmBookingDialog(context, model);
+        }
       },
       child:
           // model.loadingProfile
