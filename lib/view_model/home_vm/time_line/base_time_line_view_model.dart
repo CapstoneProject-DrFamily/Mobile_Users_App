@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseTimeLineViewModel extends BaseModel {
+  bool initMap = false;
+
   bool init = true;
 
   int initStep = 0;

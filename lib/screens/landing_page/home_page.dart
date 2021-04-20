@@ -98,18 +98,18 @@ class HomeScreen extends StatelessWidget {
                       child: _buildDoctorFunction(context, 'Book Appointment',
                           BOOK_APPOINTMENT, 130, 170),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OldDoctorScreen(),
-                          ),
-                        );
-                      },
-                      child: _buildDoctorFunction(
-                          context, 'Old Doctor', YOUR_DOCTOR, 140, 180),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => OldDoctorScreen(),
+                    //       ),
+                    //     );
+                    //   },
+                    //   child: _buildDoctorFunction(
+                    //       context, 'Old Doctor', YOUR_DOCTOR, 140, 180),
+                    // ),
                     // _buildDoctorFunction(context, 'Medicine Schedule',
                     //     MEDICINE_SCHEDULE, 140, 180),
                   ],
@@ -130,7 +130,7 @@ class HomeScreen extends StatelessWidget {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30))),
-            title: Center(child: new Text("Choose a Person")),
+            title: Center(child: new Text("Choose person")),
             content: new Container(
               height: 300.0, // Change as per your requirement
               width: 300.0, // Change as per your requirement
@@ -370,7 +370,7 @@ class HomeScreen extends StatelessWidget {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30))),
-            title: Center(child: new Text("Choose a Person")),
+            title: Center(child: new Text("Choose person")),
             content: new Container(
               height: 300.0, // Change as per your requirement
               width: 300.0, // Change as per your requirement
@@ -487,9 +487,18 @@ class HomeScreen extends StatelessWidget {
                                                   Expanded(
                                                     flex: 3,
                                                     child: ListTile(
-                                                      leading: Icon(
-                                                        Icons.account_circle,
-                                                        size: 50,
+                                                      leading: CircleAvatar(
+                                                        backgroundImage: model
+                                                                    .listDependent[
+                                                                        index]
+                                                                    .dependentImage ==
+                                                                null
+                                                            ? NetworkImage(
+                                                                DEFAULT_IMG)
+                                                            : NetworkImage(model
+                                                                .listDependent[
+                                                                    index]
+                                                                .dependentImage),
                                                       ),
                                                       title: Text(model
                                                           .listDependent[index]
