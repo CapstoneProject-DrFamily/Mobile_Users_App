@@ -34,40 +34,6 @@ class PaymentPayPalScreen extends StatelessWidget {
                       navigationDelegate: (NavigationRequest request) {
                         model.excute(context, request);
                         return NavigationDecision.navigate;
-                        // if (request.url.contains(model.returnURL)) {
-                        //   final uri = Uri.parse(request.url);
-                        //   final payerID = uri.queryParameters['PayerID'];
-                        //   if (payerID != null) {
-                        //     model.paypalServicesRepo
-                        //         .executePayment(model.executeUrl, payerID,
-                        //             model.accessToken)
-                        //         .then((id) {
-                        //       print(model.executeUrl);
-                        //       Navigator.of(context).pop();
-                        //       Navigator.of(context).pushReplacement(
-                        //         MaterialPageRoute(
-                        //           builder: (BuildContext context) =>
-                        //               TransactionBaseScreen(
-                        //                   transactionId: transactionId),
-                        //         ),
-                        //       );
-                        //       Fluttertoast.showToast(
-                        //         msg: "Payment success",
-                        //         textColor: Colors.red,
-                        //         toastLength: Toast.LENGTH_SHORT,
-                        //         backgroundColor: Colors.white,
-                        //         gravity: ToastGravity.CENTER,
-                        //       );
-                        //     });
-                        //   } else {
-                        //     Navigator.of(context).pop();
-                        //   }
-                        //   Navigator.of(context).pop();
-                        // }
-                        // if (request.url.contains(model.cancelURL)) {
-                        //   Navigator.of(context).pop();
-                        // }
-                        // return NavigationDecision.navigate;
                       },
                     )
                   : Center(
