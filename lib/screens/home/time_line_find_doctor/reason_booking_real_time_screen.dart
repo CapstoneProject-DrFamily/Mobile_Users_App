@@ -67,7 +67,7 @@ class ReasonBookingRealTimeScreen extends StatelessWidget {
                             },
                             decoration: InputDecoration(
                                 counterText: "",
-                                hintText: 'Enter your reason here',
+                                hintText: 'Enter your describe here',
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12))),
                           )),

@@ -70,7 +70,11 @@ class MapPageViewModel extends BaseModel {
   bool _isEnable = false;
   bool get isEnable => _isEnable;
 
+  bool init = false;
+
   MapPageViewModel() {
+    print("init ${init.toString()}");
+
     KeyboardVisibilityNotification().addNewListener(
       onChange: (bool visible) {
         _currentSearch = "";
@@ -80,6 +84,11 @@ class MapPageViewModel extends BaseModel {
 
     _addressController.addListener(() {
       _addressText = _addressController.text;
+      if (_addressController.text.length == 0) {
+        _isEnable = false;
+      } else {
+        _isEnable = true;
+      }
       notifyListeners();
     });
     initMap();
@@ -91,6 +100,7 @@ class MapPageViewModel extends BaseModel {
         notifyListeners();
       });
     });
+    init = true;
   }
 
   void initMap() async {}
