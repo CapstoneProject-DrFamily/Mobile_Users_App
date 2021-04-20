@@ -33,26 +33,35 @@ class ReasonAppointmentViewModel extends BaseModel {
 
     int patientid = prefs.getInt('usPatientID');
     print(patientid);
-    TransactionModel transactionModel =
-        await _transactionRepo.getTransaction('selectedValue');
+    var transactionID = await newTransaction(
+        doctorScheduleModel.doctorDetail.doctorId,
+        selectedValue,
+        prefs,
+        context);
+    print(transactionID);
+    if (transactionID == null) {
+      return booking;
+    }
+    // TransactionModel transactionModel =
+    //     await _transactionRepo.getTransaction('selectedValue');
 
     // check if get transaction success
-    if (transactionModel == null) {
-      return booking;
-    }
+    // if (transactionModel == null) {
+    //   return booking;
+    // }
 
     // update transaction
-    transactionModel.patientId = patientid;
-    transactionModel.location = prefs.getString("usLocation");
-    transactionModel.note = this.note.isEmpty ? "Nothing" : this.note;
+    // transactionModel.patientId = patientid;
+    // transactionModel.location = prefs.getString("usLocation");
+    // transactionModel.note = this.note.isEmpty ? "Nothing" : this.note;
 
-    String data = jsonEncode(transactionModel.toJson());
-    print('transaction $data');
-    bool isUpdated = await _transactionRepo.updateTransaction(data);
+    // String data = jsonEncode(transactionModel.toJson());
+    // print('transaction $data');
+    // bool isUpdated = await _transactionRepo.updateTransaction(data);
 
-    if (!isUpdated) {
-      return booking;
-    }
+    // if (!isUpdated) {
+    //   return booking;
+    // }
 
     String appointmentTime;
     schedules.forEach((key, value) {
@@ -74,7 +83,7 @@ class ReasonAppointmentViewModel extends BaseModel {
         updBy: prefs.getString('usPatientName'),
         scheduleId: selectedValue,
         status: true,
-        updDatetime: transactionModel.dateStart);
+        updDatetime: DateTime.now().toString());
 
     print('Schedule $schedule');
 
@@ -86,5 +95,44 @@ class ReasonAppointmentViewModel extends BaseModel {
       booking = true;
     }
     return booking;
+  }
+
+  Future<String> newTransaction(
+    int doctorId,
+    int scheduleId,
+    SharedPreferences prefs,
+    BuildContext context,
+  ) async {
+    waitDialog(
+      context,
+    );
+
+    var usServiceID = prefs.getInt("usServiceID");
+
+    String transaction;
+
+    var usPatientID = prefs.getInt("usPatientID");
+    var usLocation = prefs.getString("usLocation");
+    var doctorID = doctorId;
+
+    transaction = jsonEncode({
+      "doctorId": doctorID,
+      "patientId": usPatientID,
+      "status": 0,
+      "location": usLocation,
+      "note": note,
+      "scheduleId": scheduleId,
+      "serviceId": usServiceID,
+    });
+
+    print("transaction: " + transaction);
+
+    String transactionID = await _transactionRepo.addTransaction(transaction);
+
+    prefs.setString("usTransaction", transactionID);
+
+    Navigator.pop(context);
+
+    return transactionID;
   }
 }

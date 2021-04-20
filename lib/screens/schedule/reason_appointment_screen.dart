@@ -10,6 +10,7 @@ class ReasonAppointmentScreen extends StatelessWidget {
   final int selectedValue;
   final Map<String, List<ScheduleModel>> schedules;
   final DoctorScheduleModel doctorScheduleModel;
+  final _formKey = GlobalKey<FormState>();
 
   ReasonAppointmentScreen(
       {@required this.doctorScheduleModel,
@@ -66,15 +67,26 @@ class ReasonAppointmentScreen extends StatelessWidget {
                       child: Padding(
                           padding: const EdgeInsets.only(
                               top: 20, right: 20, left: 20),
-                          child: TextFormField(
-                            maxLines: 5,
-                            onChanged: (value) {
-                              model.note = value;
-                            },
-                            decoration: InputDecoration(
-                                hintText: 'Enter your reason here',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12))),
+                          child: Form(
+                            key: _formKey,
+                            child: TextFormField(
+                              maxLines: 5,
+                              maxLength: 50,
+                              onChanged: (value) {
+                                model.note = value;
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your reason';
+                                }
+
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                  hintText: 'Enter your reason here',
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12))),
+                            ),
                           )),
                     )
                   ],
@@ -92,42 +104,44 @@ class ReasonAppointmentScreen extends StatelessWidget {
       ReasonAppointmentViewModel model, BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        bool isBook = await _confirmBookingDialog(context);
-        if (isBook) {
-          bool isSuccess = await model.bookingDoctor(
-              selectedValue, schedules, doctorScheduleModel, context);
-          if (isSuccess) {
-            Navigator.pop(context);
-            await CoolAlert.show(
+        if (_formKey.currentState.validate()) {
+          bool isBook = await _confirmBookingDialog(context);
+          if (isBook) {
+            bool isSuccess = await model.bookingDoctor(
+                selectedValue, schedules, doctorScheduleModel, context);
+            if (isSuccess) {
+              Navigator.pop(context);
+              await CoolAlert.show(
+                  barrierDismissible: false,
+                  context: context,
+                  type: CoolAlertType.success,
+                  text: "Booking Success",
+                  backgroundColor: Colors.lightBlue[200],
+                  onConfirmBtnTap: () {
+                    Navigator.pop(context);
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => LandingScreen()));
+                  });
+            } else {
+              Navigator.pop(context);
+
+              await CoolAlert.show(
                 barrierDismissible: false,
                 context: context,
-                type: CoolAlertType.success,
-                text: "Booking Success",
+                type: CoolAlertType.error,
+                text: "ERROR, please try again!",
                 backgroundColor: Colors.lightBlue[200],
                 onConfirmBtnTap: () {
                   Navigator.pop(context);
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => LandingScreen()));
-                });
-          } else {
-            Navigator.pop(context);
 
-            await CoolAlert.show(
-              barrierDismissible: false,
-              context: context,
-              type: CoolAlertType.error,
-              text: "ERROR, please try again!",
-              backgroundColor: Colors.lightBlue[200],
-              onConfirmBtnTap: () {
-                Navigator.pop(context);
-
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => LandingScreen(),
-                  ),
-                );
-              },
-            );
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => LandingScreen(),
+                    ),
+                  );
+                },
+              );
+            }
           }
         }
       },
