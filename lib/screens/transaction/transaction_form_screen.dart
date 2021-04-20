@@ -667,10 +667,14 @@ class TransactionFormScreen extends StatelessWidget {
                 ),
                 initialValue: field == "bloodPressure"
                     ? this.model.examinationForm.bloodPressure != null
-                        ? this.model.examinationForm.bloodPressure
+                        ? this.model.examinationForm.bloodPressure +
+                            " " +
+                            hintText
                         : null
                     : this.model.getFieldNumber(field) != null
-                        ? this.model.getFieldNumber(field).toStringAsFixed(0)
+                        ? this.model.getFieldNumber(field).toStringAsFixed(0) +
+                            " " +
+                            hintText
                         : null,
                 enabled: false,
                 textAlign: TextAlign.center,

@@ -44,8 +44,8 @@ class ReasonBookingRealTimeViewModel extends BaseModel {
 
     if (!isOnline) {
       print("offline");
-      waitDialog(context, duration: Duration(milliseconds: 500));
-      Navigator.of(context).pop();
+      // waitDialog(context, duration: Duration(milliseconds: 500));
+      // Navigator.of(context).pop();
 
       await CoolAlert.show(
           barrierDismissible: false,

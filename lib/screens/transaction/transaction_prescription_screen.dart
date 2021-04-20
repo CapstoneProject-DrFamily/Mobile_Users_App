@@ -62,7 +62,10 @@ class TransactionPrescriptionScreen extends StatelessWidget {
                 : false,
             child: Text(
               'No medicine',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                fontSize: 20,
+                color: Color(0xff0d47a1),
+              ),
             ),
           ),
           ListView.builder(

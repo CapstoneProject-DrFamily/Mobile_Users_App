@@ -20,7 +20,7 @@ class ReasonAppointmentViewModel extends BaseModel {
   bool isLoading = false;
 
   Future<bool> bookingDoctor(
-      String selectedValue,
+      int selectedValue,
       Map<String, List<ScheduleModel>> schedules,
       DoctorScheduleModel doctorScheduleModel,
       BuildContext context) async {
@@ -34,7 +34,7 @@ class ReasonAppointmentViewModel extends BaseModel {
     int patientid = prefs.getInt('usPatientID');
     print(patientid);
     TransactionModel transactionModel =
-        await _transactionRepo.getTransaction(selectedValue);
+        await _transactionRepo.getTransaction('selectedValue');
 
     // check if get transaction success
     if (transactionModel == null) {

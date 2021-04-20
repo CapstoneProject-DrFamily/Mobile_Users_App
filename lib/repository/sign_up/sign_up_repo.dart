@@ -72,11 +72,25 @@ class SignUpRepo extends ISignUpRepo {
         password: null,
         roleId: 2,
         waiting: 0);
-    String updateUserJson = jsonEncode(_userUpdateModel.toJson());
-    print("UpdUserJson: " + updateUserJson);
+
+    // String updateUserJson = jsonEncode(_userUpdateModel.toJson());
+
+    var data = {
+      'userModel': {
+        "disable": 0,
+        "updBy": phone,
+        "updDate": DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        "accountId": accountId,
+        "username": phone,
+        "password": null,
+        "roleId": 2,
+        "waiting": 0
+      }
+    };
+    print("userModel: " + jsonEncode(data));
 
     var response =
-        await http.put(urlAPI, headers: header, body: updateUserJson);
+        await http.put(urlAPI, headers: header, body: jsonEncode(data));
 
     print("Status code: " + response.statusCode.toString());
 

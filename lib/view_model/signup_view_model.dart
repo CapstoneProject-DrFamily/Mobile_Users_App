@@ -42,7 +42,6 @@ class SignUpViewModel extends BaseModel {
   List<String> _genderList = [
     'Male',
     'Female',
-    'Other',
   ];
   List<String> get genderList => _genderList;
 
@@ -74,6 +73,8 @@ class SignUpViewModel extends BaseModel {
   String get dob => _dob;
   String get gender => _gender;
   String get defaultImage => _defaultImage;
+
+  String dobadd;
 
   File _image;
   File get image => _image;
@@ -120,6 +121,11 @@ class SignUpViewModel extends BaseModel {
           '-' +
           datetime.year.toString();
     }
+    dobadd = datetime.year.toString() +
+        "-" +
+        _months[datetime.month - 1] +
+        "-" +
+        datetime.day.toString();
     notifyListeners();
   }
 
@@ -233,7 +239,7 @@ class SignUpViewModel extends BaseModel {
 
       _signUpModel = new SignUpModel(
         fullName: _fullNameController.text,
-        dob: _dob,
+        dob: dobadd,
         gender: _gender,
         phone: phone,
         image: currentImage,

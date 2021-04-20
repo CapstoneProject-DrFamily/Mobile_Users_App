@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class AppointmentViewModel extends BaseModel {
   DoctorScheduleModel doctorScheduleModel;
-  String selectedValue;
+  int selectedValue;
 
   Map<String, List<ScheduleModel>> schedules =
       Map<String, List<ScheduleModel>>();
@@ -30,7 +30,7 @@ class AppointmentViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void changeSelectedDay(String value, ScheduleModel chooseScheduleTemp) {
+  void changeSelectedDay(int value, ScheduleModel chooseScheduleTemp) {
     this.selectedValue = value;
     chooseSchedule = chooseScheduleTemp;
     print("choose ${chooseSchedule.appointmentTime}");

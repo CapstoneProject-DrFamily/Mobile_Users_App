@@ -59,6 +59,10 @@ class DoctorDetailScheduleViewModel extends BaseModel {
     for (int i = 0; i < listTemp.length; i++) {
       this.listFeedback.add(listTemp[i]);
     }
+    for (int i = 0; i < this.listFeedback.length; i++) {
+      print(this.listFeedback[i].toJson());
+    }
+
     this.loadingMore = false;
     notifyListeners();
   }
