@@ -98,18 +98,18 @@ class HomeScreen extends StatelessWidget {
                       child: _buildDoctorFunction(context, 'Book Appointment',
                           BOOK_APPOINTMENT, 130, 170),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OldDoctorScreen(),
-                          ),
-                        );
-                      },
-                      child: _buildDoctorFunction(
-                          context, 'Old Doctor', YOUR_DOCTOR, 140, 180),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => OldDoctorScreen(),
+                    //       ),
+                    //     );
+                    //   },
+                    //   child: _buildDoctorFunction(
+                    //       context, 'Old Doctor', YOUR_DOCTOR, 140, 180),
+                    // ),
                     // _buildDoctorFunction(context, 'Medicine Schedule',
                     //     MEDICINE_SCHEDULE, 140, 180),
                   ],
