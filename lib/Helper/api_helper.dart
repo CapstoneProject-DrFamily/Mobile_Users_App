@@ -61,7 +61,7 @@ class APIHelper {
 
   //API Service
   static const String SERVICE_API = '$PREFIX_API/api/v1/Services';
-  static const String APP_CONFIG = '$PREFIX_API/api/AppConfigs/1';
+  static const String APP_CONFIG = '$PREFIX_API/api/v1/AppConfigs/1';
 
   //Doctor
   static const String DOCTOR_SPECIALTY =

@@ -1,4 +1,5 @@
 import 'package:drFamily_app/screens/setting/dependent_screen.dart';
+import 'package:drFamily_app/screens/setting/policy_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/setting_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
@@ -41,6 +42,24 @@ class SettingPage extends StatelessWidget {
                         child: ListTile(
                           leading: Icon(Icons.people),
                           title: Text("Dependent"),
+                          trailing: Icon(Icons.keyboard_arrow_right),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PolicyScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        color: Colors.white,
+                        child: ListTile(
+                          leading: Icon(Icons.policy),
+                          title: Text("Policy"),
                           trailing: Icon(Icons.keyboard_arrow_right),
                         ),
                       ),
