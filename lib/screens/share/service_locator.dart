@@ -32,6 +32,7 @@ import 'package:drFamily_app/view_model/prescription_view_model.dart';
 import 'package:drFamily_app/view_model/progress_page_view_model.dart';
 import 'package:drFamily_app/view_model/setting_vm/add_dependent_profile_screen_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/list_doctor_screen_view_model.dart';
+import 'package:drFamily_app/view_model/setting_vm/policy_view_model.dart';
 import 'package:drFamily_app/view_model/setting_vm/profile_screen_view_model.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/sign_in_view_model.dart';
 import 'package:drFamily_app/view_model/sign_in_vm/verify_otp_view_model.dart';
@@ -117,4 +118,6 @@ void setupLocator() {
 
   locator.registerFactory<OldDoctorScreenViewModel>(
       () => OldDoctorScreenViewModel());
+
+  locator.registerFactory<PolicyViewModel>(() => PolicyViewModel());
 }
