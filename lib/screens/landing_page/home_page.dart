@@ -54,6 +54,9 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SizedBox(
+            height: 15,
+          ),
           Text(
             'Welcome ${model.name} \nyour Health is our Mission',
             style: TextStyle(
@@ -83,12 +86,18 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 80,
+                    ),
                     GestureDetector(
                       child: _buildDoctorFunction(
                           context, 'Find Doctor', FIND_DOCTOR, 150, 190),
                       onTap: () {
                         _buildDialogListDependent(context, model);
                       },
+                    ),
+                    SizedBox(
+                      height: 35,
                     ),
                     GestureDetector(
                       onTap: () async {

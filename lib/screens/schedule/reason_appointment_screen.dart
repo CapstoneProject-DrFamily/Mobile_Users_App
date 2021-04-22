@@ -84,6 +84,7 @@ class ReasonAppointmentScreen extends StatelessWidget {
                               },
                               decoration: InputDecoration(
                                   hintText: 'Enter your reason here',
+                                  counterText: "",
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12))),
                             ),

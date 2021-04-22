@@ -58,8 +58,10 @@ class ReasonBookingRealTimeScreen extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 20, right: 20, left: 20),
+                        padding:
+                            const EdgeInsets.only(top: 20, right: 20, left: 20),
+                        child: Form(
+                          key: _formKey,
                           child: TextFormField(
                             maxLines: 5,
                             maxLength: 50,
@@ -78,8 +80,10 @@ class ReasonBookingRealTimeScreen extends StatelessWidget {
                                 hintText: 'Enter your describe here',
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12))),
-                          )),
-                    )
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],
