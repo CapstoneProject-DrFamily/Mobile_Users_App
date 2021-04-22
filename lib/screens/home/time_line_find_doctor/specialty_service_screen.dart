@@ -80,18 +80,7 @@ class SpecialtyServiceScreen extends StatelessWidget {
                             },
                           ),
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(left: 18),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "${model.listSpecialty[model.chooseIndex].description}",
-                            style: TextStyle(
-                                color: Color(0xff0d47a1), fontSize: 18),
-                          ),
-                        ),
+                      
                         Expanded(
                           child: Container(
                             margin: EdgeInsets.only(top: 10),
