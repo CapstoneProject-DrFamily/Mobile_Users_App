@@ -116,7 +116,7 @@ class ReasonBookingRealTimeScreen extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
             gradient: LinearGradient(
-              colors: [Color(0xff374ABE), Color(0xff64B6FF).withOpacity(0.4)],
+              colors: [Color(0xff374ABE), Color(0xff64B6FF)],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),
