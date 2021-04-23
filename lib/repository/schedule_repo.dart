@@ -14,6 +14,7 @@ abstract class IScheduleRepo {
   Future<bool> updateSchedule(ScheduleModel schedule);
   Future<List<PatientScheduleModel>> getListScheduleByPatientIdUpComing(
       int patientId);
+  Future<ScheduleModel> getSchedule(int scheduleId);
 }
 
 class ScheduleRepo extends IScheduleRepo {
@@ -86,5 +87,26 @@ class ScheduleRepo extends IScheduleRepo {
       }
     }
     return list;
+  }
+
+  @override
+  Future<ScheduleModel> getSchedule(int scheduleId) async {
+    ScheduleModel schedule;
+
+    String urlAPI = APIHelper.SCHEDULE_API;
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+    var response = await http.get(
+      urlAPI + "/$scheduleId",
+      headers: header,
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      schedule = ScheduleModel.fromJson(data);
+    }
+
+    return schedule;
   }
 }

@@ -76,14 +76,14 @@ class ListDoctorPage extends StatelessWidget {
                                                     Colors.lightBlue
                                                         .withOpacity(0.2),
                                                     Colors.lightBlue[100]
-                                                        .withOpacity(0.2)
+                                                        .withOpacity(0.6)
                                                   ],
                                                   begin: Alignment.topLeft,
                                                   end: Alignment.bottomRight),
                                               boxShadow: [
                                                 BoxShadow(
                                                     color: MainColors.blueBegin,
-                                                    blurRadius: 12,
+                                                    blurRadius: 3,
                                                     offset: Offset(0, 6))
                                               ],
                                             ),

@@ -472,7 +472,7 @@ class _ArticleDescription extends StatelessWidget {
                                   border: Border.all(color: Colors.orange),
                                 ),
                                 child: Text(
-                                  "UnPaid",
+                                  "Unpaid",
                                   style: GoogleFonts.varelaRound(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 13,
