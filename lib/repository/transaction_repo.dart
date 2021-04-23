@@ -196,6 +196,7 @@ class TransactionRepo extends ITransactionRepo {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
+      print("data $data");
       TransactionModel transaction = TransactionModel.fromJson(data);
 
       ProfileModel profileDoctor =

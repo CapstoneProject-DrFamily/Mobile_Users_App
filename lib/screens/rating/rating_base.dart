@@ -85,10 +85,15 @@ class RatingBaseScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
+                      maxLines: 5,
+                      maxLength: 255,
                       onChanged: (value) {
                         model.other = value;
                       },
-                      decoration: InputDecoration(hintText: 'Note (Optional)'),
+                      decoration: InputDecoration(
+                        hintText: 'Note (Optional)',
+                        counterText: "",
+                      ),
                     ),
                   ],
                 ),
