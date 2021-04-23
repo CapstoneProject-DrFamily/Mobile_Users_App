@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
             height: 15,
           ),
           Text(
-            'Welcome ${model.name} \nyour Health is our Mission',
+            'Welcome ${model.name} \nYour Health Is Our Mission',
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w800,

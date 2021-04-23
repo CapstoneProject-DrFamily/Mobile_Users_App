@@ -22,7 +22,7 @@ class BaseTimeLineAppoinmentScreen extends StatelessWidget {
               ),
             ),
             leading: new IconButton(
-              icon: new Icon(Icons.arrow_back_ios, color: Color(0xff0d47a1)),
+              icon: new Icon(Icons.clear, color: Color(0xff0d47a1)),
               onPressed: () => _confirmDialog(baseTimeLineAppoinmentContext),
             ),
             centerTitle: true,

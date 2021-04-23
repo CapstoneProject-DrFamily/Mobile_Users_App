@@ -80,7 +80,6 @@ class SpecialtyServiceScreen extends StatelessWidget {
                             },
                           ),
                         ),
-                      
                         Expanded(
                           child: Container(
                             margin: EdgeInsets.only(top: 10),
@@ -199,11 +198,6 @@ class SpecialtyServiceScreen extends StatelessWidget {
                                                             FontWeight.bold),
                                                   ),
                                                 ],
-                                              ),
-                                              trailing: Icon(
-                                                Icons.keyboard_arrow_right,
-                                                color: Colors.black,
-                                                size: 30,
                                               ),
                                             ),
                                           ),

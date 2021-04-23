@@ -289,7 +289,9 @@ class TransactionDetailScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(this.model.transaction.reasonCancel),
+                            (this.model.transaction.reasonCancel == null)
+                                ? Text("Nothing")
+                                : Text(this.model.transaction.reasonCancel),
                           ],
                         ),
                       )

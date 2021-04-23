@@ -198,14 +198,18 @@ class TransactionRepo extends ITransactionRepo {
       Map<String, dynamic> data = jsonDecode(response.body);
       print("data $data");
       TransactionModel transaction = TransactionModel.fromJson(data);
-
       ProfileModel profileDoctor =
           ProfileModel.fromJson(data['doctor']['doctorNavigation']);
       String doctorSpeciality = data['doctor']['specialty']['name'];
 
       ServiceModel service = ServiceModel.fromJson(data['service']);
-      ExaminationHistoryModel examination =
-          ExaminationHistoryModel.fromJson(data['examinationHistory']);
+      ExaminationHistoryModel examination;
+      if (data['examinationHistory'] != null) {
+        examination =
+            ExaminationHistoryModel.fromJson(data['examinationHistory']);
+      } else {
+        examination = ExaminationHistoryModel();
+      }
 
       // FEEDBACK
       FeedbackModel feedback;
@@ -215,6 +219,13 @@ class TransactionRepo extends ITransactionRepo {
         data = jsonDecode(response.body);
         feedback = FeedbackModel.fromJson(data);
       }
+
+      print(transaction);
+      print(profileDoctor);
+      print(doctorSpeciality);
+      print(service);
+      print(examination);
+      print(feedback);
 
       list.add(transaction);
       list.add(profileDoctor);
