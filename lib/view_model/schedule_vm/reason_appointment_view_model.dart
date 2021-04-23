@@ -29,6 +29,17 @@ class ReasonAppointmentViewModel extends BaseModel {
     notifyListeners();
     waitDialog(context, message: "Setting up schedule...");
 
+    ScheduleModel scheduleModel =
+        await _scheduleRepo.getSchedule(selectedValue);
+
+    if (scheduleModel == null) {
+      return booking;
+    } else {
+      if (scheduleModel.status == true) {
+        return booking;
+      }
+    }
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     int patientid = prefs.getInt('usPatientID');
