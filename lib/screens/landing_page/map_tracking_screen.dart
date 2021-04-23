@@ -6,15 +6,26 @@ import 'package:intl/intl.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class MapTrackingScreen extends StatelessWidget {
+class MapTrackingScreen extends StatefulWidget {
+  MapTrackingScreen({Key key, this.model}) : super(key: key);
   final MapTrackingScreenViewModel model;
 
-  MapTrackingScreen({@required this.model});
+  @override
+  _MapTrackingScreenState createState() => _MapTrackingScreenState();
+}
+
+class _MapTrackingScreenState extends State<MapTrackingScreen>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
 
   @override
   Widget build(BuildContext context) {
     return ScopedModel<MapTrackingScreenViewModel>(
-      model: model,
+      model: widget.model,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: ScopedModelDescendant<MapTrackingScreenViewModel>(
@@ -565,5 +576,14 @@ class MapTrackingScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print("change life");
+    print("state $state");
+    if (state == AppLifecycleState.resumed) {
+      widget.model.controller.setMapStyle("[]");
+    }
   }
 }

@@ -440,7 +440,7 @@ class CheckOutScreen extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              "PAY NOW!",
+              "PAY NOW",
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
