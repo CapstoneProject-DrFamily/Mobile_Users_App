@@ -1,6 +1,6 @@
 class TransactionModel {
   int doctorId, patientId, prescriptionId, status, examId;
-  String transactionId, location, note, estimatedTime;
+  String transactionId, location, note, estimatedTime, reasonCancel;
   String dateStart, dateEnd;
 
   TransactionModel(
@@ -14,7 +14,8 @@ class TransactionModel {
       this.note,
       this.estimatedTime,
       this.dateStart,
-      this.dateEnd});
+      this.dateEnd,
+      this.reasonCancel});
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
     return TransactionModel(
@@ -29,6 +30,7 @@ class TransactionModel {
       estimatedTime: json['estimatedTime'] as String,
       dateStart: json['dateStart'] as String,
       dateEnd: json['dateEnd'] as String,
+      reasonCancel: json['reasonCancel'] as String,
     );
   }
 

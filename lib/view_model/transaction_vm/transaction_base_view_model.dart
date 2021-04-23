@@ -58,9 +58,18 @@ class TransactionBaseViewModel extends BaseModel {
       examinationForm = results[4];
       feedback = results[5];
 
-      diagnoseList = examinationForm.conclusion.split(";");
+      print(transaction);
+      print(profileDoctor);
+      print(doctorSpeciality);
+      print(service);
+      print(transaction);
+      print(examinationForm);
+      print(feedback);
 
-      print("exam ${examinationForm.hematology}");
+      if (examinationForm.conclusion != null) {
+        diagnoseList = examinationForm.conclusion.split(";");
+        print("exam ${examinationForm.hematology}");
+      }
 
       initCheck(this.listCheck);
       this.init = false;

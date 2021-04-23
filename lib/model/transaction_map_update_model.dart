@@ -1,6 +1,6 @@
 class TransactionMapUpdateModel {
-  final String transactionId, estimatedTime, location, note;
-  final int doctorId, patientId, prescriptionId, status, examId;
+  String transactionId, estimatedTime, location, note, reasonCancel;
+  int doctorId, patientId, prescriptionId, status, examId;
 
   TransactionMapUpdateModel({
     this.doctorId,
@@ -12,6 +12,7 @@ class TransactionMapUpdateModel {
     this.prescriptionId,
     this.status,
     this.transactionId,
+    this.reasonCancel,
   });
 
   Map<String, dynamic> toJson() => {
@@ -24,5 +25,6 @@ class TransactionMapUpdateModel {
         "location": this.location,
         "note": this.note,
         "examId": this.examId,
+        "reasonCancel": this.reasonCancel,
       };
 }

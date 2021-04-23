@@ -79,6 +79,8 @@ class MapTrackingScreenViewModel extends BaseModel {
 
   int _doctorPhoneNum;
 
+  String reasonCancel;
+
   MapTrackingScreenViewModel(String transactionId, String doctorFBID) {
     _transactionID = transactionId;
     WaitingBookingDoctorViewModel.screenStatus = "Map";
@@ -295,7 +297,8 @@ class MapTrackingScreenViewModel extends BaseModel {
         note: _transactionMapModel.transactionNote,
         patientId: _transactionMapModel.patientId,
         status: 4,
-        transactionId: _transactionMapModel.transactionId);
+        transactionId: _transactionMapModel.transactionId,
+        reasonCancel: reasonCancel);
     String transactionJson = jsonEncode(transaction.toJson());
     bool cancel = await _transactionRepo.updateTransaction(transactionJson);
 

@@ -242,7 +242,7 @@ class TransactionDetailScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Note',
+                        'Reason Book',
                         style: TextStyle(
                           color: Color(0xff0d47a1),
                           fontSize: 20,
@@ -263,6 +263,37 @@ class TransactionDetailScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                (this.model.transaction.status == 4)
+                    ? Row(
+                        children: [
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Reason Cancel',
+                              style: TextStyle(
+                                color: Color(0xff0d47a1),
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Container(),
+                (this.model.transaction.status == 4)
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            top: 10, left: 30, right: 30, bottom: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(this.model.transaction.reasonCancel),
+                          ],
+                        ),
+                      )
+                    : Container(),
               ],
             ),
           ),
