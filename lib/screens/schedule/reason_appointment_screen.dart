@@ -3,6 +3,7 @@ import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.d
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
+import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
 import 'package:drFamily_app/view_model/schedule_vm/reason_appointment_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +11,14 @@ class ReasonAppointmentScreen extends StatelessWidget {
   final int selectedValue;
   final Map<String, List<ScheduleModel>> schedules;
   final DoctorScheduleModel doctorScheduleModel;
+  final BaseTimeLineAppoinmentViewModel baseTimeLineViewModel;
   final _formKey = GlobalKey<FormState>();
 
   ReasonAppointmentScreen(
       {@required this.doctorScheduleModel,
       @required this.schedules,
-      @required this.selectedValue});
+      @required this.selectedValue,
+      @required this.baseTimeLineViewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -130,16 +133,12 @@ class ReasonAppointmentScreen extends StatelessWidget {
                 barrierDismissible: false,
                 context: context,
                 type: CoolAlertType.error,
-                text: "ERROR, please try again!",
+                text: "ERROR, this schedule has already booked!",
                 backgroundColor: Colors.lightBlue[200],
                 onConfirmBtnTap: () {
                   Navigator.pop(context);
 
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => LandingScreen(),
-                    ),
-                  );
+                  baseTimeLineViewModel.backStep(2);
                 },
               );
             }

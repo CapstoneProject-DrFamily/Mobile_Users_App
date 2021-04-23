@@ -60,7 +60,7 @@ class BaseTimeLineAppoinmentScreen extends StatelessWidget {
             ),
           ),
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
+            width: MediaQuery.of(bookingContext).size.width * 0.8,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -111,7 +111,7 @@ class BaseTimeLineAppoinmentScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pop(bookingContext);
                         Navigator.pop(context);
                       },
                       child: Container(

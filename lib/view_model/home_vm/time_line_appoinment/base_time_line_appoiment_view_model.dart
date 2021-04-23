@@ -104,6 +104,7 @@ class BaseTimeLineAppoinmentViewModel extends BaseModel {
           doctorScheduleModel: doctorScheduleModel,
           schedules: schedules,
           selectedValue: selectedValue,
+          baseTimeLineViewModel: model,
         );
         break;
       default:

@@ -89,7 +89,7 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                                             Colors
                                                                 .lightBlue[100]
                                                                 .withOpacity(
-                                                                    0.2)
+                                                                    0.6)
                                                           ],
                                                           begin:
                                                               Alignment.topLeft,
@@ -99,7 +99,7 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                                         BoxShadow(
                                                             color: MainColors
                                                                 .blueBegin,
-                                                            blurRadius: 12,
+                                                            blurRadius: 3,
                                                             offset:
                                                                 Offset(0, 6))
                                                       ],
@@ -204,7 +204,7 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                                                         model.listResult[index].doctorDetail.ratingPoint ==
                                                                                 null
                                                                             ? "0"
-                                                                            : model.listResult[index].doctorDetail.ratingPoint.toString(),
+                                                                            : model.listResult[index].doctorDetail.ratingPoint.toStringAsFixed(1),
                                                                         style: TextStyle(
                                                                             color:
                                                                                 Colors.white,

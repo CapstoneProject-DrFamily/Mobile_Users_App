@@ -31,7 +31,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
     'All',
     'On Going',
     'Checking',
-    'UnPaid',
+    'Unpaid',
     'Done',
     'Cancel'
   ];
