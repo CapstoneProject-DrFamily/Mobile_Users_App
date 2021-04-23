@@ -377,7 +377,7 @@ class ListDoctorPage extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.pop(context);
+              baseTimeLineViewModel.backStep(0);
             },
             child: Container(
               width: MediaQuery.of(context).size.width * 0.5,
