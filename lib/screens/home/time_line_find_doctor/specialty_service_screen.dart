@@ -118,7 +118,12 @@ class SpecialtyServiceScreen extends StatelessWidget {
                                                         model.chooseIndex]
                                                     .listService[index]
                                                     .serviceId,
-                                                baseTimeLineAppoinmentViewModel);
+                                                baseTimeLineAppoinmentViewModel,
+                                                model
+                                                    .listSpecialty[
+                                                        model.chooseIndex]
+                                                    .listService[index]
+                                                    .isDefault);
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(

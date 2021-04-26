@@ -2,7 +2,7 @@ class ServiceSpecialtyModel {
   final int serviceId, specialtyId;
   final String serviceName, serviceDescription, serviceImage;
   final double servicePrice;
-  final bool disabled;
+  final bool disabled, isDefault;
 
   ServiceSpecialtyModel(
       {this.disabled,
@@ -11,7 +11,8 @@ class ServiceSpecialtyModel {
       this.serviceName,
       this.servicePrice,
       this.specialtyId,
-      this.serviceImage});
+      this.serviceImage,
+      this.isDefault});
 
   factory ServiceSpecialtyModel.fromJson(Map<String, dynamic> json) {
     return ServiceSpecialtyModel(
@@ -22,6 +23,7 @@ class ServiceSpecialtyModel {
       specialtyId: json['specialtyId'] as int,
       servicePrice: json['servicePrice'] as double,
       disabled: json['disabled'] as bool,
+      isDefault: json['isDefault'] as bool,
     );
   }
 }

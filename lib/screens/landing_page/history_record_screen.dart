@@ -53,7 +53,7 @@ class HistoryRecordScreen extends StatelessWidget {
                                             Radius.circular(30))),
                                     title: Center(
                                       child: new Text(
-                                        "Change Patients",
+                                        "Choose Person",
                                         style: GoogleFonts.varelaRound(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 22,

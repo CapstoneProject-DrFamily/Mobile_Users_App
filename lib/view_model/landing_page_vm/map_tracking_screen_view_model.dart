@@ -322,7 +322,9 @@ class MapTrackingScreenViewModel extends BaseModel {
   }
 
   void callPhone(BuildContext context) async {
-    await launch('tel://$_doctorPhoneNum');
+    String newPhone = "0" + _doctorPhoneNum.toString().substring(2);
+    print('phone $newPhone');
+    await launch('tel://$newPhone');
   }
 
   void getTransactionCancelUpdate() {
