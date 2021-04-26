@@ -1,5 +1,6 @@
 import 'package:drFamily_app/model/doctor_model.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
+import 'package:drFamily_app/repository/app_config_repo.dart';
 import 'package:drFamily_app/screens/home/doctor_detail_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
@@ -8,6 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ListDoctorScreenViewModel extends BaseModel {
+  final IAppConfigRepo _appConfigRepo = AppConfigRepo();
   DatabaseReference _doctorRequest;
 
   List<DoctorModel> _nearByDoctorList = [];
@@ -34,6 +36,7 @@ class ListDoctorScreenViewModel extends BaseModel {
           _pickUpInfo.latitude.toString() +
           " longtitude: " +
           _pickUpInfo.longtitude.toString());
+
       await getListDoctorNearby();
     }
   }
@@ -49,7 +52,10 @@ class ListDoctorScreenViewModel extends BaseModel {
 
   Future<void> getListDoctorNearby() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    int distance = await _appConfigRepo.getDistance();
+    print("distance $distance");
     int serviceID = prefs.getInt("usServiceID");
+    bool isDefault = prefs.getBool("isServiceDefault");
 
     _doctorRequest =
         FirebaseDatabase.instance.reference().child("Doctor Request");
@@ -74,8 +80,9 @@ class ListDoctorScreenViewModel extends BaseModel {
               var doctorStatus = values['doctor_status'];
               var doctorSpecialty = values['doctor_specialty'];
 
-              if (serviceID == 1) {
-                if ((distance / 1000) <= 5 && doctorStatus == "waiting") {
+              if (isDefault) {
+                if ((distance / 1000) <= distance &&
+                    doctorStatus == "waiting") {
                   DoctorModel tDoctor = DoctorModel(
                     fbId: key,
                     notitoken: values['token'],
@@ -99,7 +106,7 @@ class ListDoctorScreenViewModel extends BaseModel {
                 }
               } else {
                 var specialtyName = prefs.getString("chooseSpecialty");
-                if ((distance / 1000) <= 5 &&
+                if ((distance / 1000) <= distance &&
                     doctorStatus == "waiting" &&
                     doctorSpecialty == specialtyName) {
                   DoctorModel tDoctor = DoctorModel(

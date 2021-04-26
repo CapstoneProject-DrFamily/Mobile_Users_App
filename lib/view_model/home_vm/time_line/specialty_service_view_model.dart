@@ -33,16 +33,19 @@ class SpecialtyServiceViewModel extends BaseModel {
       int specialtyID,
       String specialtyName,
       int serviceId,
-      BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel) async {
+      BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel,
+      bool isServiceDefault) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String service = prefs.getString("usTransactionStatus");
     print(baseTimeLineViewModel);
     print('serviceId: $serviceId');
+    print('isDefault: $isServiceDefault');
 
     prefs.setInt("usServiceID", serviceId);
     prefs.setString("chooseSpecialty", specialtyName);
     prefs.setInt("chooseSpecialtyId", specialtyID);
+    prefs.setBool("isServiceDefault", isServiceDefault);
 
     //next page
     if (service == "booking") {

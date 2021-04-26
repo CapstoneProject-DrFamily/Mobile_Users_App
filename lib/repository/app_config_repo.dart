@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 abstract class IAppConfigRepo {
   Future<List<dynamic>> appConfigListRelationShip();
   Future<String> getPolicy();
+  Future<int> getDistance();
 }
 
 class AppConfigRepo extends IAppConfigRepo {
@@ -40,5 +41,22 @@ class AppConfigRepo extends IAppConfigRepo {
     } else {
       return null;
     }
+  }
+
+  @override
+  Future<int> getDistance() async {
+    String urlAPI = APIHelper.APP_CONFIG;
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    var response = await http.get(urlAPI, headers: header);
+    print("statuscode ${response.statusCode}");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+
+      return data['distances'][0];
+    } else
+      return null;
   }
 }

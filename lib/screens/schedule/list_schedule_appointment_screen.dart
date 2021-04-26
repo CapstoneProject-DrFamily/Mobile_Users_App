@@ -305,7 +305,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(30))),
             title: Center(
               child: new Text(
-                "Change Patients",
+                "Choose Person",
                 style: GoogleFonts.varelaRound(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
@@ -319,8 +319,9 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
               child: popUpPatientModel.isLoading
                   ? Center(
                       child: CircularProgressIndicator(
-                      backgroundColor: Colors.white,
-                    ))
+                        backgroundColor: Colors.white,
+                      ),
+                    )
                   : SingleChildScrollView(
                       child: Column(
                         children: [
@@ -349,9 +350,19 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                                             Expanded(
                                               flex: 3,
                                               child: ListTile(
-                                                leading: Icon(
-                                                  Icons.account_circle,
-                                                  size: 50,
+                                                leading: CircleAvatar(
+                                                  backgroundImage: popUpPatientModel
+                                                              .listDependent[
+                                                                  index]
+                                                              .dependentImage ==
+                                                          null
+                                                      ? NetworkImage(
+                                                          DEFAULT_IMG)
+                                                      : NetworkImage(
+                                                          popUpPatientModel
+                                                              .listDependent[
+                                                                  index]
+                                                              .dependentImage),
                                                 ),
                                                 title: Text(popUpPatientModel
                                                     .listDependent[index]
