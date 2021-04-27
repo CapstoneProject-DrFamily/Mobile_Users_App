@@ -186,9 +186,31 @@ class MapTrackingScreenViewModel extends BaseModel {
     var doctorId = transactionMapModel.doctorId;
     _doctorPhoneNum = await _doctorRepo.getDoctorPhoneNum(doctorId);
     getWhenDoctorCome();
-
+    getWhenDoctorChecking();
     _isLoading = false;
     notifyListeners();
+  }
+
+  void getWhenDoctorChecking() {
+    updateDoctorTransactionChecking = _transactionRequest
+        .child(_transactionMapModel.transactionId)
+        .onChildChanged
+        .listen(
+      (event) {
+        if (event.snapshot.key == "transaction_status") {
+          print("come");
+          HelperMethod.disableupdateDoctorTransactionChecking();
+
+          HelperMethod.disabltransactionStatusUpdate();
+          HelperMethod.disableUpdateDoctorLocation();
+          HelperMethod.disableTransactionMapUpdates();
+
+          TimeLineExamineScreen.transactionID =
+              _transactionMapModel.transactionId;
+          Get.off(TimeLineExamineScreen());
+        }
+      },
+    );
   }
 
   void getWhenDoctorCome() {
@@ -198,13 +220,100 @@ class MapTrackingScreenViewModel extends BaseModel {
         .listen((event) {
       print('doctor come ${event.snapshot.value}');
       if (event.snapshot.key == "transaction_status") {
-        HelperMethod.disabltransactionStatusUpdate();
-        HelperMethod.disableUpdateDoctorLocation();
-        HelperMethod.disableTransactionMapUpdates();
+        Get.dialog(
+          Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
+              ),
+            ),
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Icon(
+                    Icons.info,
+                    color: Color(0xff4ee1c7),
+                    size: 90,
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    "Doctor Has Come!",
+                    style: TextStyle(
+                      fontSize: 27,
+                      fontWeight: FontWeight.w800,
+                      fontFamily: 'avenir',
+                      color: Color(0xff0d47a1),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    'Please go check',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'avenir',
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 45,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 50,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            color: Colors.blueAccent,
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(color: Colors.blueAccent),
+                          ),
+                          child: Text(
+                            "Oke",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'avenir',
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+        // HelperMethod.disabltransactionStatusUpdate();
+        // HelperMethod.disableUpdateDoctorLocation();
+        // HelperMethod.disableTransactionMapUpdates();
 
-        TimeLineExamineScreen.transactionID =
-            _transactionMapModel.transactionId;
-        Get.off(TimeLineExamineScreen());
+        // TimeLineExamineScreen.transactionID =
+        //     _transactionMapModel.transactionId;
+        // Get.off(TimeLineExamineScreen());
       }
     });
   }
@@ -286,6 +395,8 @@ class MapTrackingScreenViewModel extends BaseModel {
   }
 
   void cancelTransaction(BuildContext context) async {
+    HelperMethod.disableupdateDoctorTransactionChecking();
+
     HelperMethod.disabltransactionStatusUpdate();
     HelperMethod.disableUpdateDoctorLocation();
     HelperMethod.disableTransactionMapUpdates();
@@ -331,6 +442,7 @@ class MapTrackingScreenViewModel extends BaseModel {
     transactionMapStreamSubscription =
         _transactionRequest.child(_transactionID).onChildRemoved.listen(
       (event) {
+        HelperMethod.disableupdateDoctorTransactionChecking();
         HelperMethod.disabltransactionStatusUpdate();
         HelperMethod.disableUpdateDoctorLocation();
         HelperMethod.disableTransactionMapUpdates();

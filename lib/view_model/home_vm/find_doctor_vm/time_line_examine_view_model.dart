@@ -2,6 +2,7 @@ import 'package:drFamily_app/global_variable.dart';
 import 'package:drFamily_app/screens/checkout_screen.dart';
 import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/screens/transaction/transaction_base_screen.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/waiting_booking_doctor_view_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -170,7 +171,7 @@ class TimeLineExamineViewModel extends BaseModel {
     transactionStatusUpdate = _transactionRequest
         .child(_transactionId)
         .onChildChanged
-        .listen((event) {
+        .listen((event) async {
       print("change");
       print("event value: " + event.snapshot.value);
       var transactionStatus = event.snapshot.value;
@@ -239,6 +240,92 @@ class TimeLineExamineViewModel extends BaseModel {
               ),
             );
           }
+          break;
+        case "cancel":
+          {
+            var result = await Get.dialog(
+              Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                ),
+                child: Container(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Icon(
+                        Icons.info,
+                        color: Color(0xff4ee1c7),
+                        size: 90,
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Text(
+                        "Doctor Has Cacel!",
+                        style: TextStyle(
+                          fontSize: 27,
+                          fontWeight: FontWeight.w800,
+                          fontFamily: 'avenir',
+                          color: Color(0xff0d47a1),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            onTap: () {
+                              Get.back(result: true);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 50,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                color: Colors.blueAccent,
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: Colors.blueAccent),
+                              ),
+                              child: Text(
+                                "Oke",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'avenir',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+
+            print("result $result");
+            Get.off(
+              TransactionBaseScreen(
+                transactionId: _transactionId,
+              ),
+            );
+          }
+
           break;
         default:
       }

@@ -149,11 +149,12 @@ class SpecialtyServiceScreen extends StatelessWidget {
                                                     right: BorderSide(width: 1),
                                                   ),
                                                 ),
-                                                child: SvgPicture.network(
+                                                child: Image.network(
                                                   model
                                                       .listSpecialty[
                                                           model.chooseIndex]
-                                                      .image,
+                                                      .listService[index]
+                                                      .serviceImage,
                                                   width: 60,
                                                   height: 60,
                                                 ),
@@ -165,7 +166,7 @@ class SpecialtyServiceScreen extends StatelessWidget {
                                                     .listService[index]
                                                     .serviceName,
                                                 style: TextStyle(
-                                                    color: Colors.black,
+                                                    color: Color(0xff0d47a1),
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
@@ -201,6 +202,16 @@ class SpecialtyServiceScreen extends StatelessWidget {
                                                             Color(0xff0d47a1),
                                                         fontWeight:
                                                             FontWeight.bold),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(
+                                                    "${model.listSpecialty[model.chooseIndex].listService[index].serviceDescription}",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.normal),
                                                   ),
                                                 ],
                                               ),

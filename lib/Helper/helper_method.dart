@@ -32,4 +32,12 @@ class HelperMethod {
   static void enableTransactionMapUpdates() {
     transactionMapStreamSubscription.resume();
   }
+
+  static void disableupdateDoctorTransactionChecking() {
+    updateDoctorTransactionChecking.pause();
+  }
+
+  static void enableupdateDoctorTransactionChecking() {
+    updateDoctorTransactionChecking.resume();
+  }
 }

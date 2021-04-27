@@ -26,21 +26,34 @@ class UserRepo extends IUserRepo {
     phone = "84" + phone;
     int accountId = sharedPreferences.getInt('usAccountID');
 
-    UserUpdateModel _userUpdateModel = new UserUpdateModel(
-        disable: 0,
-        updBy: phone,
-        updDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-        accountId: accountId,
-        username: phone,
-        password: null,
-        roleId: 2,
-        waiting: 0,
-        notiToken: notiToken);
-    String updateUserJson = jsonEncode(_userUpdateModel.toJson());
-    print("UpdUserJson: " + updateUserJson);
+    // UserUpdateModel _userUpdateModel = new UserUpdateModel(
+    //     disable: 0,
+    //     updBy: phone,
+    //     updDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+    //     accountId: accountId,
+    //     username: phone,
+    //     password: null,
+    //     roleId: 2,
+    //     waiting: 0,
+    //     notiToken: notiToken);
+
+    var data = {
+      'userModel': {
+        "disable": 0,
+        "updBy": phone,
+        "updDate": DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        "accountId": accountId,
+        "username": phone,
+        "password": null,
+        "roleId": 2,
+        "waiting": 0,
+        "notiToken": notiToken,
+      }
+    };
+    print("UpdUserJson: " + jsonEncode(data));
 
     var response =
-        await http.put(urlAPI, headers: header, body: updateUserJson);
+        await http.put(urlAPI, headers: header, body: jsonEncode(data));
 
     print("Status code: " + response.statusCode.toString());
 
