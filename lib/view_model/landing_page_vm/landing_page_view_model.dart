@@ -11,6 +11,7 @@ import 'package:drFamily_app/screens/setting/setting_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/waiting_booking_doctor_view_model.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/map_tracking_screen_view_model.dart';
+import 'package:drFamily_app/widgets/common/local_notify.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,17 @@ class LandingPageViewModel extends BaseModel {
       changingPage();
     } else {
       init();
+      localNotifyManager.setOnNotificationReceive(onNotificationReceive);
+      localNotifyManager.setOnNotificationClick(onNotificationClick);
     }
+  }
+
+  onNotificationReceive(ReceiveNotification notification) {
+    print("notification Receive: ${notification.id}");
+  }
+
+  onNotificationClick(String payload) {
+    print("payload $payload");
   }
 
   Future<void> init() async {

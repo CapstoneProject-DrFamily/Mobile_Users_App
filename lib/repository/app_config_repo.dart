@@ -7,6 +7,7 @@ abstract class IAppConfigRepo {
   Future<List<dynamic>> appConfigListRelationShip();
   Future<String> getPolicy();
   Future<int> getDistance();
+  Future<int> getTimeNoty();
 }
 
 class AppConfigRepo extends IAppConfigRepo {
@@ -56,6 +57,21 @@ class AppConfigRepo extends IAppConfigRepo {
       Map<String, dynamic> data = json.decode(response.body);
 
       return data['distances'][0];
+    } else
+      return null;
+  }
+
+  @override
+  Future<int> getTimeNoty() async {
+    String urlAPI = APIHelper.APP_CONFIG_DOCTOR;
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    var response = await http.get(urlAPI, headers: header);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      return data['appointmentNotifyTime'];
     } else
       return null;
   }

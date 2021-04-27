@@ -3,17 +3,19 @@ import 'dart:convert';
 import 'package:commons/commons.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
-import 'package:drFamily_app/model/transaction/transaction_model.dart';
+import 'package:drFamily_app/repository/app_config_repo.dart';
 import 'package:drFamily_app/repository/notify_repo.dart';
 import 'package:drFamily_app/repository/schedule_repo.dart';
 import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/widgets/common/local_notify.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReasonAppointmentViewModel extends BaseModel {
   final INotifyRepo notifyRepo = NotifyRepo();
+  final IAppConfigRepo _appConfigRepo = AppConfigRepo();
   String note = "";
   final ITransactionRepo _transactionRepo = TransactionRepo();
   final IScheduleRepo _scheduleRepo = ScheduleRepo();
@@ -39,6 +41,18 @@ class ReasonAppointmentViewModel extends BaseModel {
         return booking;
       }
     }
+
+    String timeFormat = DateFormat("dd-MM-yyyy - HH:mm")
+        .format(DateTime.parse(scheduleModel.appointmentTime))
+        .toString();
+
+    int timeNoti = await _appConfigRepo.getTimeNoty();
+
+    localNotifyManager.scheduleNotification(
+        DateTime.parse(scheduleModel.appointmentTime),
+        "It's almost time for the appointment",
+        "Doctor ${doctorScheduleModel.doctorDetail.doctorName} will come at $timeFormat",
+        timeNoti);
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
