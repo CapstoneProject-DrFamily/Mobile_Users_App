@@ -65,12 +65,12 @@ class PushNotifycationService {
   }
 
   Future<void> arrivedBooking() async {
-    Fluttertoast.showToast(
-      msg: "Doctor have Arrived",
-      textColor: Colors.white,
-      toastLength: Toast.LENGTH_LONG,
-      backgroundColor: Colors.green,
-      gravity: ToastGravity.CENTER,
-    );
+    // Fluttertoast.showToast(
+    //   msg: "Doctor have Arrived",
+    //   textColor: Colors.white,
+    //   toastLength: Toast.LENGTH_LONG,
+    //   backgroundColor: Colors.green,
+    //   gravity: ToastGravity.CENTER,
+    // );
   }
 }

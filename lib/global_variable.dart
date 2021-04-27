@@ -9,3 +9,5 @@ StreamSubscription<Event> transactionStatusUpdate;
 StreamSubscription<Event> updateDoctorTransaction;
 
 StreamSubscription<Event> transactionMapStreamSubscription;
+
+StreamSubscription<Event> updateDoctorTransactionChecking;

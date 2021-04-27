@@ -337,7 +337,7 @@ class HistoryRecordScreen extends StatelessWidget {
                                                   .listTransaction[index]
                                                   .serviceName,
                                               dateTimeBook: DateFormat(
-                                                      "yyyy-MM-dd - hh:mm")
+                                                      "dd-MM-yyyy - HH:mm")
                                                   .format(DateTime.parse(model
                                                       .listTransaction[index]
                                                       .dateTimeStart))

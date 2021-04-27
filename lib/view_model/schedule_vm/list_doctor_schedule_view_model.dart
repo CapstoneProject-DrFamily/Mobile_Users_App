@@ -15,8 +15,17 @@ class ListDoctorScheduleViewModel extends BaseModel {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       print("specialityId $specialityId");
       int patientid = prefs.getInt('usPatientID');
-      print("lits doctor : " + patientid.toString());
-      this.listResult = await _doctorRepo.getDoctorsBySpeciality(specialityId);
+      var isDefault = prefs.getBool("isServiceDefault");
+      print("patientID : " +
+          patientid.toString() +
+          "isDefaultService" +
+          isDefault.toString());
+      if (isDefault) {
+        this.listResult = await _doctorRepo.getDoctorsBySpeciality(-1);
+      } else {
+        this.listResult =
+            await _doctorRepo.getDoctorsBySpeciality(specialityId);
+      }
       print(this.listResult.length);
       this.init = false;
       notifyListeners();
