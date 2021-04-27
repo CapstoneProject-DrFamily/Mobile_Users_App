@@ -60,7 +60,7 @@ class SpecialtyServiceScreen extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Container(
-                                        child: SvgPicture.network(
+                                        child: Image.network(
                                           model.listSpecialty[index].image,
                                           width: 30,
                                           height: 30,

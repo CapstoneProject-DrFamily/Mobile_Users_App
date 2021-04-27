@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 
 abstract class IScheduleRepo {
   Future<bool> updateSchedule(ScheduleModel schedule);
+  Future<bool> updateSchedules(String scheduleUpdateJson);
   Future<List<PatientScheduleModel>> getListScheduleByPatientIdUpComing(
       int patientId);
   Future<ScheduleModel> getSchedule(int scheduleId);
@@ -46,7 +47,7 @@ class ScheduleRepo extends IScheduleRepo {
       HttpHeaders.contentTypeHeader: "application/json",
     };
     var response = await http.get(
-      urlAPI + "/patients/$patientId/Overtime",
+      urlAPI + "/patients/$patientId/Upcoming",
       headers: header,
     );
 
@@ -108,5 +109,23 @@ class ScheduleRepo extends IScheduleRepo {
     }
 
     return schedule;
+  }
+
+  @override
+  Future<bool> updateSchedules(String scheduleUpdateJson) async {
+    bool isSuccess = false;
+    String urlAPI = APIHelper.SCHEDULE_API;
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    var response =
+        await http.put(urlAPI, headers: header, body: scheduleUpdateJson);
+
+    if (response.statusCode == 200) {
+      isSuccess = true;
+    }
+
+    return isSuccess;
   }
 }
