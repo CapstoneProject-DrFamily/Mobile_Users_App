@@ -72,8 +72,8 @@ class LocalNotifyManager {
         payload: 'New PayLoad');
   }
 
-  Future<void> scheduleNotification(DateTime datetimeSchedule, String title,
-      String body, int minuteToNoti) async {
+  Future<void> scheduleNotification(int scheduleID, DateTime datetimeSchedule,
+      String title, String body, int minuteToNoti) async {
     var scheduleNotificationDateTime =
         datetimeSchedule.subtract(Duration(minutes: minuteToNoti));
 
@@ -86,7 +86,7 @@ class LocalNotifyManager {
     var iosChannel = IOSNotificationDetails();
     var platformChannel =
         NotificationDetails(android: androidChannel, iOS: iosChannel);
-    await flutterLocalNotificationsPlugin.schedule(0, "Schedule Title",
+    await flutterLocalNotificationsPlugin.schedule(scheduleID, "Schedule Title",
         "Schedule Body", scheduleNotificationDateTime, platformChannel,
         payload: 'New PayLoad');
   }

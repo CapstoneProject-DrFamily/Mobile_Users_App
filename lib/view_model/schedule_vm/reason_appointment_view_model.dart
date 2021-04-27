@@ -49,6 +49,7 @@ class ReasonAppointmentViewModel extends BaseModel {
     int timeNoti = await _appConfigRepo.getTimeNoty();
 
     localNotifyManager.scheduleNotification(
+        scheduleModel.scheduleId,
         DateTime.parse(scheduleModel.appointmentTime),
         "It's almost time for the appointment",
         "Doctor ${doctorScheduleModel.doctorDetail.doctorName} will come at $timeFormat",

@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 abstract class IPatientRepo {
   Future<List<DependentModel>> getDependent(int accountID);
   Future<String> getPatientLocation(int patientId);
+  Future<String> getPatientName(int patientId);
 }
 
 class PatientRepo extends IPatientRepo {
@@ -46,6 +47,22 @@ class PatientRepo extends IPatientRepo {
     if (response.statusCode == 200) {
       String location = json.decode(response.body)['location'];
       return location;
+    } else
+      return null;
+  }
+
+  @override
+  Future<String> getPatientName(int patientId) async {
+    String urlAPI = APIHelper.PATIENT_API + '/$patientId';
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+    var response = await http.get(urlAPI, headers: header);
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      String name = json.decode(response.body)['patientNavigation']['fullName'];
+      return name;
     } else
       return null;
   }

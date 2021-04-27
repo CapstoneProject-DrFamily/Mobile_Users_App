@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ListScheduleAppointmentScreen extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BaseView<ListScheduleAppointmentViewModel>(
@@ -65,7 +66,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Text(
-                                    "You don't have any Appoiment",
+                                    "You don't have any appointment",
                                     style: GoogleFonts.varelaRound(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 14,
@@ -180,8 +181,10 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                                                                                 false,
                                                                             titleStyle:
                                                                                 TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold)),
-                                                                        content:
-                                                                            buildInformation(model.schedules[key][index]),
+                                                                        content: buildInformation(
+                                                                            model.schedules[key][index],
+                                                                            context,
+                                                                            model),
                                                                       ).show();
                                                                     },
                                                                     child:
@@ -544,7 +547,8 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
     );
   }
 
-  Column buildInformation(PatientScheduleModel patientModel) {
+  Column buildInformation(PatientScheduleModel patientModel,
+      BuildContext context, ListScheduleAppointmentViewModel pageModel) {
     return Column(
       children: [
         SizedBox(
@@ -679,6 +683,36 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              child: Text("Cancel appointment",
+                  style: TextStyle(fontSize: 14, color: Colors.white)),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                  padding:
+                      MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.red)))),
+              onPressed: () async {
+                await _confirmCancelBookingDialog(
+                  context,
+                  pageModel,
+                  patientModel.schedule.scheduleId,
+                  patientModel.schedule.appointmentTime,
+                  patientModel.transaction.location,
+                  patientModel.transaction.note,
+                  patientModel.doctor.doctorId,
+                  patientModel.transaction.transactionId,
+                );
+              },
+            ),
+          ],
+        )
       ],
     );
   }
@@ -741,7 +775,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                           titleStyle: TextStyle(
                               color: Color(0xff0d47a1),
                               fontWeight: FontWeight.bold)),
-                      content: buildInformation(model.list[0]),
+                      content: buildInformation(model.list[0], context, model),
                     ).show();
                   },
                   child: Container(
@@ -814,6 +848,185 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Future _confirmCancelBookingDialog(
+    BuildContext context,
+    ListScheduleAppointmentViewModel model,
+    scheduleId,
+    time,
+    location,
+    note,
+    doctorId,
+    transactionId,
+  ) {
+    return showDialog(
+      context: context,
+      builder: (bookingContext) {
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: Container(
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              child: Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                ),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Icon(
+                        Icons.info,
+                        color: Color(0xff4ee1c7),
+                        size: 90,
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Text(
+                        "Confirmation?",
+                        style: TextStyle(
+                          fontSize: 27,
+                          fontWeight: FontWeight.w800,
+                          fontFamily: 'avenir',
+                          color: Color(0xff0d47a1),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Text(
+                        'Are you sure you want to cancel this appointment?',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: 'avenir',
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: Form(
+                          key: _formKey,
+                          child: TextFormField(
+                            maxLines: 5,
+                            maxLength: 255,
+                            onChanged: (value) {
+                              model.reasonCancel = value;
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your reason';
+                              }
+
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                                hintText: 'Enter your reason here',
+                                counterText: "",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12))),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 45,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            onTap: () async {
+                              if (_formKey.currentState.validate()) {
+                                Navigator.pop(bookingContext);
+                                await model.cancelBooking(
+                                    context,
+                                    scheduleId,
+                                    time,
+                                    location,
+                                    note,
+                                    doctorId,
+                                    transactionId);
+                              }
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 50,
+                              width: MediaQuery.of(bookingContext).size.width *
+                                  0.3,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: Colors.blueAccent),
+                              ),
+                              child: Text(
+                                "Yes",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'avenir',
+                                  color: Colors.blueAccent,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            onTap: () {
+                              Navigator.pop(bookingContext);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 50,
+                              width: MediaQuery.of(bookingContext).size.width *
+                                  0.3,
+                              decoration: BoxDecoration(
+                                color: Colors.blueAccent,
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: Colors.blueAccent),
+                              ),
+                              child: Text(
+                                "No",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'avenir',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
