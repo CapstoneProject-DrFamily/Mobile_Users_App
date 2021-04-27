@@ -332,66 +332,166 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                             itemBuilder: (dialogContex, index) => Row(
                               children: [
                                 Expanded(
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(40),
-                                    ),
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(40),
-                                      onTap: () {
-                                        popUpPatientModel.choosePatient(
-                                            index,
-                                            popUpPatientModel
-                                                .listDependent[index]);
-                                      },
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              flex: 3,
-                                              child: ListTile(
-                                                leading: CircleAvatar(
-                                                  backgroundImage: popUpPatientModel
-                                                              .listDependent[
-                                                                  index]
-                                                              .dependentImage ==
-                                                          null
-                                                      ? NetworkImage(
-                                                          DEFAULT_IMG)
-                                                      : NetworkImage(
+                                  child: popUpPatientModel.listDependent[index]
+                                              .dependentRelationShip ==
+                                          "Owner"
+                                      ? Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                          child: InkWell(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                            onTap: () {
+                                              popUpPatientModel.choosePatient(
+                                                  index,
+                                                  popUpPatientModel
+                                                      .listDependent[index]);
+                                            },
+                                            child: Container(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: ListTile(
+                                                      leading: CircleAvatar(
+                                                        backgroundImage: popUpPatientModel
+                                                                    .listDependent[
+                                                                        index]
+                                                                    .dependentImage ==
+                                                                null
+                                                            ? NetworkImage(
+                                                                DEFAULT_IMG)
+                                                            : NetworkImage(
+                                                                popUpPatientModel
+                                                                    .listDependent[
+                                                                        index]
+                                                                    .dependentImage),
+                                                      ),
+                                                      title: Text(
                                                           popUpPatientModel
                                                               .listDependent[
                                                                   index]
-                                                              .dependentImage),
-                                                ),
-                                                title: Text(popUpPatientModel
-                                                    .listDependent[index]
-                                                    .dependentName),
-                                                subtitle: Text(popUpPatientModel
-                                                    .listDependent[index]
-                                                    .dependentRelationShip),
-                                              ),
-                                            ),
-                                            index ==
-                                                    popUpPatientModel
-                                                        .patientChoose
-                                                ? Expanded(
-                                                    child: Icon(
-                                                      EvaIcons.radioButtonOn,
-                                                      color: Color(0xff0d47a1),
-                                                    ),
-                                                  )
-                                                : Expanded(
-                                                    child: Icon(
-                                                      EvaIcons
-                                                          .radioButtonOffOutline,
+                                                              .dependentName),
+                                                      subtitle: Row(
+                                                        children: [
+                                                          Text(
+                                                            popUpPatientModel
+                                                                .listDependent[
+                                                                    index]
+                                                                .dependentRelationShip,
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Color(
+                                                                  0xff0d47a1),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 7.0,
+                                                          ),
+                                                          Icon(
+                                                            EvaIcons
+                                                                .awardOutline,
+                                                            color: Color(
+                                                                0xff0d47a1),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
-                                          ],
+                                                  index ==
+                                                          popUpPatientModel
+                                                              .patientChoose
+                                                      ? Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOn,
+                                                            color: Color(
+                                                                0xff0d47a1),
+                                                          ),
+                                                        )
+                                                      : Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOffOutline,
+                                                          ),
+                                                        ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                          child: InkWell(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                            onTap: () {
+                                              popUpPatientModel.choosePatient(
+                                                  index,
+                                                  popUpPatientModel
+                                                      .listDependent[index]);
+                                            },
+                                            child: Container(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: ListTile(
+                                                      leading: CircleAvatar(
+                                                        backgroundImage: popUpPatientModel
+                                                                    .listDependent[
+                                                                        index]
+                                                                    .dependentImage ==
+                                                                null
+                                                            ? NetworkImage(
+                                                                DEFAULT_IMG)
+                                                            : NetworkImage(
+                                                                popUpPatientModel
+                                                                    .listDependent[
+                                                                        index]
+                                                                    .dependentImage),
+                                                      ),
+                                                      title: Text(
+                                                          popUpPatientModel
+                                                              .listDependent[
+                                                                  index]
+                                                              .dependentName),
+                                                      subtitle: Text(
+                                                          popUpPatientModel
+                                                              .listDependent[
+                                                                  index]
+                                                              .dependentRelationShip),
+                                                    ),
+                                                  ),
+                                                  index ==
+                                                          popUpPatientModel
+                                                              .patientChoose
+                                                      ? Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOn,
+                                                            color: Color(
+                                                                0xff0d47a1),
+                                                          ),
+                                                        )
+                                                      : Expanded(
+                                                          child: Icon(
+                                                            EvaIcons
+                                                                .radioButtonOffOutline,
+                                                          ),
+                                                        ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
                                 ),
                               ],
                             ),
