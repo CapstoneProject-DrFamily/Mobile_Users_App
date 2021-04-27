@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 class PushNotifycationService {
   final FirebaseMessaging fcm = FirebaseMessaging();
@@ -21,6 +22,98 @@ class PushNotifycationService {
             await arrivedBooking();
           }
           print('booking');
+        } else if (typeNoti.endsWith("schedule")) {
+          String status = message['data']['status'];
+          String info = message['notification']['body'];
+          if (status == "cancel") {
+            Get.dialog(
+              Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                ),
+                child: Container(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Icon(
+                        Icons.info,
+                        color: Color(0xff4ee1c7),
+                        size: 90,
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Text(
+                        "Appointment Cancel!",
+                        style: TextStyle(
+                          fontSize: 27,
+                          fontWeight: FontWeight.w800,
+                          fontFamily: 'avenir',
+                          color: Color(0xff0d47a1),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Text(
+                        '$info!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: 'avenir',
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 45,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 50,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                color: Colors.blueAccent,
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: Colors.blueAccent),
+                              ),
+                              child: Text(
+                                "Oke",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'avenir',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
         }
       },
       // onBackgroundMessage: myBackgroundMessageHandler,
