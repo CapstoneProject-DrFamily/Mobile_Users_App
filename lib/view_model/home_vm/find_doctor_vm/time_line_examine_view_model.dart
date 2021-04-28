@@ -1,7 +1,9 @@
+import 'package:drFamily_app/Helper/helper_method.dart';
 import 'package:drFamily_app/global_variable.dart';
 import 'package:drFamily_app/screens/checkout_screen.dart';
 import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/screens/transaction/awaiting_sample_screen.dart';
 import 'package:drFamily_app/screens/transaction/transaction_base_screen.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/waiting_booking_doctor_view_model.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -175,159 +177,248 @@ class TimeLineExamineViewModel extends BaseModel {
       print("change");
       print("event value: " + event.snapshot.value);
       var transactionStatus = event.snapshot.value;
-      switch (transactionStatus) {
-        case "Take Sample":
-          {
-            firstStep = colorDone;
-            firstStepBeforeLine = colorDone;
-            firstStepSubText = "Doctor has done Analysis.";
-            firstStatus = false;
-
-            secondStep = colorInprocess;
-            secondStepBeforeLine = colorDone;
-            secondStepAfterLine = colorInprocess;
-            secondStepSubText = "Doctor is taking sample.";
-            secondStatus = false;
-            notifyListeners();
-          }
-          break;
-        case "Diagnose":
-          secondStep = colorDone;
-          secondStepAfterLine = colorDone;
-          secondStepSubText = "Your sample has been taken.";
-          secondStatus = false;
-
-          thirdStep = colorInprocess;
-          thirdStepBeforeLine = colorDone;
-          thirdStepAfterLine = colorInprocess;
-          thirdStepSubText = "Doctor is diagnosing.";
-          thirdStatus = false;
-          notifyListeners();
-
-          break;
-        case "Prescription":
-          {
-            thirdStep = colorDone;
-            thirdStepBeforeLine = colorDone;
-            thirdStepAfterLine = colorDone;
-            thirdStepSubText = "Doctor has done diagnosis.";
-            thirdStatus = false;
-
-            fourthStep = colorInprocess;
-            fourthStepBeforeLine = colorDone;
-            fourthStepSubText = "Doctor is preparing prescription.";
-            fourthStatus = false;
-            notifyListeners();
-          }
-          break;
-        case "done":
-          {
-            fourthStep = colorDone;
-            fourthStepBeforeLine = colorDone;
-            fourthStepSubText = "Your prescription is ready for pickup.";
-            fourthStatus = false;
-            notifyListeners();
-            Fluttertoast.showToast(
-              msg: "Your have done this transaction",
-              textColor: Colors.white,
-              toastLength: Toast.LENGTH_SHORT,
-              backgroundColor: Colors.green,
-              gravity: ToastGravity.CENTER,
-            );
-            Get.off(
-              CheckOutScreen(
-                transactionId: _transactionId,
+      if (transactionStatus.toString().contains("waiting")) {
+        var result = await Get.dialog(
+          Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
               ),
-            );
-          }
-          break;
-        case "cancel":
-          {
-            var result = await Get.dialog(
-              Dialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(12),
+            ),
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 25,
                   ),
-                ),
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                  Icon(
+                    Icons.info,
+                    color: Color(0xff4ee1c7),
+                    size: 90,
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Doctor examinate sample please wait!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 27,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: 'avenir',
+                        color: Color(0xff0d47a1),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Icon(
-                        Icons.info,
-                        color: Color(0xff4ee1c7),
-                        size: 90,
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Text(
-                        "Doctor Has Cacel!",
-                        style: TextStyle(
-                          fontSize: 27,
-                          fontWeight: FontWeight.w800,
-                          fontFamily: 'avenir',
-                          color: Color(0xff0d47a1),
+                      InkWell(
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          InkWell(
-                            customBorder: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            onTap: () {
-                              Get.back(result: true);
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 50,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                color: Colors.blueAccent,
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(color: Colors.blueAccent),
-                              ),
-                              child: Text(
-                                "Oke",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'avenir',
-                                  color: Colors.white,
-                                ),
-                              ),
+                        onTap: () {
+                          Get.back(result: true);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 50,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            color: Colors.blueAccent,
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(color: Colors.blueAccent),
+                          ),
+                          child: Text(
+                            "Oke",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'avenir',
+                              color: Colors.white,
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 25,
+                        ),
                       ),
                     ],
                   ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+        HelperMethod.disabltransactionStatusUpdate();
+
+        print("result $result");
+        Get.off(
+          AwaitingSampleScreen(transactionID: _transactionId),
+        );
+      } else {
+        switch (transactionStatus) {
+          case "Take Sample":
+            {
+              firstStep = colorDone;
+              firstStepBeforeLine = colorDone;
+              firstStepSubText = "Doctor has done Analysis.";
+              firstStatus = false;
+
+              secondStep = colorInprocess;
+              secondStepBeforeLine = colorDone;
+              secondStepAfterLine = colorInprocess;
+              secondStepSubText = "Doctor is taking sample.";
+              secondStatus = false;
+              notifyListeners();
+            }
+            break;
+          case "Diagnose":
+            secondStep = colorDone;
+            secondStepAfterLine = colorDone;
+            secondStepSubText = "Your sample has been taken.";
+            secondStatus = false;
+
+            thirdStep = colorInprocess;
+            thirdStepBeforeLine = colorDone;
+            thirdStepAfterLine = colorInprocess;
+            thirdStepSubText = "Doctor is diagnosing.";
+            thirdStatus = false;
+            notifyListeners();
+
+            break;
+          case "Prescription":
+            {
+              thirdStep = colorDone;
+              thirdStepBeforeLine = colorDone;
+              thirdStepAfterLine = colorDone;
+              thirdStepSubText = "Doctor has done diagnosis.";
+              thirdStatus = false;
+
+              fourthStep = colorInprocess;
+              fourthStepBeforeLine = colorDone;
+              fourthStepSubText = "Doctor is preparing prescription.";
+              fourthStatus = false;
+              notifyListeners();
+            }
+            break;
+          case "done":
+            {
+              fourthStep = colorDone;
+              fourthStepBeforeLine = colorDone;
+              fourthStepSubText = "Your prescription is ready for pickup.";
+              fourthStatus = false;
+              notifyListeners();
+              HelperMethod.disabltransactionStatusUpdate();
+              Fluttertoast.showToast(
+                msg: "Doctor has done checking",
+                textColor: Colors.white,
+                toastLength: Toast.LENGTH_SHORT,
+                backgroundColor: Colors.green,
+                gravity: ToastGravity.CENTER,
+              );
+              Get.off(
+                CheckOutScreen(
+                  transactionId: _transactionId,
                 ),
-              ),
-            );
+              );
+            }
+            break;
+          case "cancel":
+            {
+              var result = await Get.dialog(
+                Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12),
+                    ),
+                  ),
+                  child: Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          height: 25,
+                        ),
+                        Icon(
+                          Icons.info,
+                          color: Color(0xff4ee1c7),
+                          size: 90,
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        Text(
+                          "Doctor Has Cacel!",
+                          style: TextStyle(
+                            fontSize: 27,
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'avenir',
+                            color: Color(0xff0d47a1),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                              customBorder: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              onTap: () {
+                                Get.back(result: true);
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: 50,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                  color: Colors.blueAccent,
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(color: Colors.blueAccent),
+                                ),
+                                child: Text(
+                                  "Oke",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'avenir',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+              HelperMethod.disabltransactionStatusUpdate();
+              print("result $result");
+              Get.off(
+                TransactionBaseScreen(
+                  transactionId: _transactionId,
+                ),
+              );
+            }
 
-            print("result $result");
-            Get.off(
-              TransactionBaseScreen(
-                transactionId: _transactionId,
-              ),
-            );
-          }
+            break;
 
-          break;
-        default:
+          default:
+        }
       }
       notifyListeners();
     });

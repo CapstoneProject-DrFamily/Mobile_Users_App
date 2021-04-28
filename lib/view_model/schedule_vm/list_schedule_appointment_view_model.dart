@@ -169,12 +169,14 @@ class ListScheduleAppointmentViewModel extends BaseModel {
   Future<void> fetchData() async {
     if (init) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      int patientId = prefs.getInt('usPatientID');
-      print(patientId);
+      _patientId = prefs.getInt('usPatientID');
+      var userName = prefs.getString('usFullName');
+      _fullUserName = userName;
+      print(_patientId);
 
       // int patientId = 30;
 
-      list = await scheduleRepo.getListScheduleByPatientIdUpComing(patientId);
+      list = await scheduleRepo.getListScheduleByPatientIdUpComing(_patientId);
 
       for (int i = 1; i < list.length; i++) {
         convert(list[i]);
@@ -183,6 +185,13 @@ class ListScheduleAppointmentViewModel extends BaseModel {
       init = false;
       notifyListeners();
     }
+  }
+
+  Future<void> loadBackData() async {
+    init = true;
+    list = [];
+    schedules = {};
+    notifyListeners();
   }
 
   void convert(PatientScheduleModel model) {

@@ -11,3 +11,5 @@ StreamSubscription<Event> updateDoctorTransaction;
 StreamSubscription<Event> transactionMapStreamSubscription;
 
 StreamSubscription<Event> updateDoctorTransactionChecking;
+
+StreamSubscription<Event> updateDoctorTransactionSample;
