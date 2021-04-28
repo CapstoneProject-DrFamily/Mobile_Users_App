@@ -48,26 +48,11 @@ class ReasonAppointmentViewModel extends BaseModel {
 
     int timeNoti = await _appConfigRepo.getTimeNoty();
 
-    localNotifyManager.scheduleNotification(
-        scheduleModel.scheduleId,
-        DateTime.parse(scheduleModel.appointmentTime),
-        "It's almost time for the appointment",
-        "Doctor ${doctorScheduleModel.doctorDetail.doctorName} will come at $timeFormat",
-        timeNoti);
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     int patientid = prefs.getInt('usPatientID');
     print(patientid);
-    var transactionID = await newTransaction(
-        doctorScheduleModel.doctorDetail.doctorId,
-        selectedValue,
-        prefs,
-        context);
-    print(transactionID);
-    if (transactionID == null) {
-      return booking;
-    }
+
     // TransactionModel transactionModel =
     //     await _transactionRepo.getTransaction('selectedValue');
 
@@ -116,9 +101,26 @@ class ReasonAppointmentViewModel extends BaseModel {
     bool isSuccess = await _scheduleRepo.updateSchedule(schedule);
     print("isSucces $isSuccess");
     if (isSuccess) {
-      notifyRepo.bookScheduleDoctor(doctorScheduleModel.notiToken,
-          prefs.getString('usPatientName'), formattedDate);
-      booking = true;
+      var transactionID = await newTransaction(
+          doctorScheduleModel.doctorDetail.doctorId,
+          selectedValue,
+          prefs,
+          context);
+      print(transactionID);
+      if (transactionID == null) {
+        return booking;
+      } else {
+        localNotifyManager.scheduleNotification(
+            scheduleModel.scheduleId,
+            DateTime.parse(scheduleModel.appointmentTime),
+            "It's almost time for the appointment",
+            "Doctor ${doctorScheduleModel.doctorDetail.doctorName} will come at $timeFormat",
+            timeNoti);
+
+        notifyRepo.bookScheduleDoctor(doctorScheduleModel.notiToken,
+            prefs.getString('usPatientName'), formattedDate);
+        booking = true;
+      }
     }
     return booking;
   }

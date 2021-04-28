@@ -21,7 +21,7 @@ abstract class IScheduleRepo {
 class ScheduleRepo extends IScheduleRepo {
   @override
   Future<bool> updateSchedule(ScheduleModel schedule) async {
-    String urlAPI = APIHelper.SCHEDULE_API;
+    String urlAPI = APIHelper.SCHEDULE_API + "/BookingSchedule";
 
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
