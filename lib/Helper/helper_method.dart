@@ -40,4 +40,12 @@ class HelperMethod {
   static void enableupdateDoctorTransactionChecking() {
     updateDoctorTransactionChecking.resume();
   }
+
+  static void disableupdateDoctorTransactionSample() {
+    updateDoctorTransactionSample.pause();
+  }
+
+  static void enableupdateDoctorTransactionSample() {
+    updateDoctorTransactionSample.resume();
+  }
 }

@@ -6,6 +6,7 @@ import 'package:drFamily_app/screens/checkout_screen.dart';
 import 'package:drFamily_app/screens/home/find_doctor/time_line_examine_page.dart';
 import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
+import 'package:drFamily_app/screens/transaction/awaiting_sample_screen.dart';
 import 'package:drFamily_app/screens/transaction/transaction_base_screen.dart';
 import 'package:drFamily_app/view_model/landing_page_vm/map_tracking_screen_view_model.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -31,9 +32,10 @@ class HistoryRecordScreenViewModel extends BaseModel {
     'All',
     'On Going',
     'Checking',
+    'Awaiting Sample',
     'Unpaid',
     'Done',
-    'Cancel'
+    'Cancel',
   ];
   List get historyTime => _historyTime;
 
@@ -169,7 +171,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
           _status = status;
           notifyListeners();
           _listTransaction = await transactionRepo.getListTransactionHistory(
-              _patientId.toString(), 5);
+              _patientId.toString(), 6);
           _loadingList = false;
 
           if (_listTransaction == null) {
@@ -188,7 +190,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
           _status = status;
           notifyListeners();
           _listTransaction = await transactionRepo.getListTransactionHistory(
-              _patientId.toString(), 3);
+              _patientId.toString(), 5);
           _loadingList = false;
           if (_listTransaction == null) {
             _isNotHave = true;
@@ -199,6 +201,24 @@ class HistoryRecordScreenViewModel extends BaseModel {
 
         break;
       case 5:
+        {
+          _isNotHave = false;
+
+          _loadingList = true;
+          _status = status;
+          notifyListeners();
+          _listTransaction = await transactionRepo.getListTransactionHistory(
+              _patientId.toString(), 3);
+          _loadingList = false;
+          if (_listTransaction == null) {
+            _isNotHave = true;
+          }
+
+          notifyListeners();
+        }
+
+        break;
+      case 6:
         {
           _isNotHave = false;
 
@@ -222,6 +242,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
 
   void chooseTransaction(
       BuildContext context, String transactionId, int transactionStatus) async {
+    print("transaction $transactionStatus");
     switch (transactionStatus) {
       case 1:
         {
@@ -249,6 +270,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
             HelperMethod.disabltransactionStatusUpdate();
             HelperMethod.disableUpdateDoctorLocation();
             HelperMethod.disableTransactionMapUpdates();
+            _isFirst = true;
             await initHistory();
           });
         }
@@ -262,6 +284,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
               builder: (context) => TimeLineExamineScreen(),
             ),
           ).then((value) async {
+            _isFirst = true;
             await initHistory();
           });
         }
@@ -297,10 +320,34 @@ class HistoryRecordScreenViewModel extends BaseModel {
                 transactionId: transactionId,
               ),
             ),
-          );
+          ).then((value) async {
+            _isFirst = true;
+            await initHistory();
+          });
+        }
+        break;
+      case 6:
+        {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AwaitingSampleScreen(
+                transactionID: transactionId,
+              ),
+            ),
+          ).then((value) async {
+            _isFirst = true;
+
+            await initHistory();
+          });
         }
         break;
       default:
     }
+  }
+
+  Future<void> loadBackData() async {
+    _isFirst = true;
+    notifyListeners();
   }
 }

@@ -86,8 +86,9 @@ class LocalNotifyManager {
     var iosChannel = IOSNotificationDetails();
     var platformChannel =
         NotificationDetails(android: androidChannel, iOS: iosChannel);
-    await flutterLocalNotificationsPlugin.schedule(scheduleID, "Schedule Title",
-        "Schedule Body", scheduleNotificationDateTime, platformChannel,
+
+    await flutterLocalNotificationsPlugin.schedule(
+        scheduleID, title, body, scheduleNotificationDateTime, platformChannel,
         payload: 'New PayLoad');
   }
 }

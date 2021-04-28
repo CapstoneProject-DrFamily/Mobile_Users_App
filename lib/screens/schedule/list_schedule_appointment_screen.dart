@@ -17,282 +17,591 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<ListScheduleAppointmentViewModel>(
       builder: (context, child, model) {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            centerTitle: true,
-            title: Text(
-              'List Schedule',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.varelaRound(
-                fontWeight: FontWeight.w600,
-                fontSize: 20,
-                color: Color(0xff0d47a1),
-              ),
-            ),
-            actions: [
-              IconButton(
-                  icon: Icon(EvaIcons.flip2Outline, color: Colors.black87),
-                  onPressed: () {
-                    buildChoosePatient(context, model);
-                  }),
-            ],
-          ),
-          body: model.isLoading
-              ? Center(
+        if (model.isLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else
+          return FutureBuilder(
+            future: model.fetchData(),
+            builder: (context, snapshot) {
+              if (model.init) {
+                return Center(
                   child: CircularProgressIndicator(),
-                )
-              : FutureBuilder(
-                  future: model.fetchData(),
-                  builder: (context, snapshot) {
-                    if (model.init) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else
-                      return (model.list.isEmpty)
-                          ? Container(
-                              alignment: Alignment.center,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    NOT_FOUND_RECORDS,
-                                    width: 80,
-                                    height: 80,
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    "You don't have any appointment",
-                                    style: GoogleFonts.varelaRound(
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff0d47a1),
-                                        fontStyle: FontStyle.italic),
-                                  ),
-                                ],
+                );
+              } else
+                return Scaffold(
+                  appBar: AppBar(
+                    backgroundColor: Colors.white,
+                    elevation: 0,
+                    centerTitle: true,
+                    title: Text(
+                      model.fullUserName,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.varelaRound(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                        color: Color(0xff0d47a1),
+                      ),
+                    ),
+                    leading: GestureDetector(
+                      onTap: () {
+                        model.loadBackData();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: Center(
+                          child: Icon(
+                            EvaIcons.refreshOutline,
+                            color: Colors.black,
+                            size: 23,
+                          ),
+                        ),
+                      ),
+                    ),
+                    actions: [
+                      IconButton(
+                        icon:
+                            Icon(EvaIcons.flip2Outline, color: Colors.black87),
+                        onPressed: () {
+                          buildChoosePatient(context, model);
+                        },
+                      ),
+                    ],
+                  ),
+                  body: (model.list.isEmpty)
+                      ? Container(
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                NOT_FOUND_RECORDS,
+                                width: 80,
+                                height: 80,
                               ),
-                            )
-                          : Column(
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "You don't have any appointment",
+                                style: GoogleFonts.varelaRound(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
+                                    color: Color(0xff0d47a1),
+                                    fontStyle: FontStyle.italic),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Column(
+                          children: [
+                            buildNextSchedule(model, context),
+                            Row(
                               children: [
-                                buildNextSchedule(model, context),
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        'List upcoming appointment',
-                                        style: TextStyle(
-                                            color: Color(0xff0d47a1),
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
+                                SizedBox(
+                                  width: 5,
                                 ),
-                                Expanded(
-                                  child: ListView.builder(
-                                    itemCount: model.schedules.length,
-                                    itemBuilder: (context, index) {
-                                      String key =
-                                          model.schedules.keys.elementAt(index);
-                                      return Container(
-                                        padding: EdgeInsets.only(
-                                            top: 20,
-                                            left: 20,
-                                            right: 20,
-                                            bottom: 0),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey
-                                                    .withOpacity(0.3),
-                                                spreadRadius: 3,
-                                                blurRadius: 4,
-                                                offset: Offset(0,
-                                                    3), // changes position of shadow
-                                              ),
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: Colors.white,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'List upcoming appointment',
+                                    style: TextStyle(
+                                        color: Color(0xff0d47a1),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: model.schedules.length,
+                                itemBuilder: (context, index) {
+                                  String key =
+                                      model.schedules.keys.elementAt(index);
+                                  return Container(
+                                    padding: EdgeInsets.only(
+                                        top: 20,
+                                        left: 20,
+                                        right: 20,
+                                        bottom: 0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.3),
+                                            spreadRadius: 3,
+                                            blurRadius: 4,
+                                            offset: Offset(0,
+                                                3), // changes position of shadow
                                           ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: ExpandablePanel(
-                                              header: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0),
-                                                child: Text(
-                                                  Common.convertSchedule(key),
-                                                  style: TextStyle(
-                                                    color: Color(0xff0d47a1),
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.white,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: ExpandablePanel(
+                                          header: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Text(
+                                              Common.convertSchedule(key),
+                                              style: TextStyle(
+                                                color: Color(0xff0d47a1),
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                              expanded: Container(
-                                                // padding: EdgeInsets.only(
-                                                //     top: 5,
-                                                //     left: 20,
-                                                //     right: 20,
-                                                //     bottom: 30),
-                                                child: Container(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      ListView.builder(
-                                                          shrinkWrap: true,
-                                                          physics:
-                                                              ClampingScrollPhysics(),
-                                                          itemCount: model
-                                                              .schedules[key]
-                                                              .length,
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  int index) {
-                                                            return Container(
-                                                              child: Column(
-                                                                children: [
-                                                                  InkWell(
-                                                                    onTap: () {
-                                                                      Alert(
-                                                                        context:
-                                                                            context,
-                                                                        title:
-                                                                            "Booking information",
-                                                                        style: AlertStyle(
-                                                                            isCloseButton:
-                                                                                false,
-                                                                            isButtonVisible:
-                                                                                false,
-                                                                            titleStyle:
-                                                                                TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold)),
-                                                                        content: buildInformation(
-                                                                            model.schedules[key][index],
-                                                                            context,
-                                                                            model),
-                                                                      ).show();
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(12),
-                                                                        color: Color(0xffe6eafb)
-                                                                            .withOpacity(0.8),
-                                                                      ),
-                                                                      child:
-                                                                          Row(
-                                                                        children: [
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            Common.convertTime(model.schedules[key][index].schedule.appointmentTime),
-                                                                            style:
-                                                                                TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          Expanded(
-                                                                            child:
-                                                                                Column(
-                                                                              children: [
-                                                                                ListTile(
-                                                                                  leading: CircleAvatar(
-                                                                                    backgroundImage: NetworkImage(model.schedules[key][index].profile.image),
-                                                                                    radius: 30,
-                                                                                    backgroundColor: Colors.white,
-                                                                                  ),
-                                                                                  title: Text(
-                                                                                    model.schedules[key][index].profile.fullName,
-                                                                                    style: TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold),
-                                                                                  ),
-                                                                                  subtitle: Text(
-                                                                                    model.schedules[key][index].specialty.name,
-                                                                                    style: TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
-                                                                                  ),
-                                                                                )
-                                                                              ],
-                                                                            ),
-                                                                            //     Text(
-                                                                            //   'sa',
-                                                                            //   style: TextStyle(
-                                                                            //     color: Color(
-                                                                            //         0xff0d47a1),
-                                                                            //   ),
-                                                                            // )
-                                                                          ),
-                                                                          Icon(
-                                                                              Icons.info,
-                                                                              color: Color(0xff0d47a1)),
-                                                                          SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 10,
-                                                                  )
-                                                                  // index !=
-                                                                  //         (model.schedules[key]
-                                                                  //                 .length -
-                                                                  //             1)
-                                                                  //     ? Divider(
-                                                                  //         thickness: 2,
-                                                                  //         endIndent: 50,
-                                                                  //         indent: 50,
-                                                                  //       )
-                                                                  //     : Container(),
-                                                                ],
-                                                              ),
-                                                            );
-                                                          }),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              tapHeaderToExpand: true,
-                                              hasIcon: true,
-                                              iconColor: Colors.black,
                                             ),
                                           ),
+                                          expanded: Container(
+                                            // padding: EdgeInsets.only(
+                                            //     top: 5,
+                                            //     left: 20,
+                                            //     right: 20,
+                                            //     bottom: 30),
+                                            child: Container(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  ListView.builder(
+                                                      shrinkWrap: true,
+                                                      physics:
+                                                          ClampingScrollPhysics(),
+                                                      itemCount: model
+                                                          .schedules[key]
+                                                          .length,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return Container(
+                                                          child: Column(
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  Alert(
+                                                                    context:
+                                                                        context,
+                                                                    title:
+                                                                        "Booking information",
+                                                                    style: AlertStyle(
+                                                                        isCloseButton:
+                                                                            false,
+                                                                        isButtonVisible:
+                                                                            false,
+                                                                        titleStyle: TextStyle(
+                                                                            color:
+                                                                                Color(0xff0d47a1),
+                                                                            fontWeight: FontWeight.bold)),
+                                                                    content: buildInformation(
+                                                                        model.schedules[key]
+                                                                            [
+                                                                            index],
+                                                                        context,
+                                                                        model),
+                                                                  ).show();
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            12),
+                                                                    color: Color(
+                                                                            0xffe6eafb)
+                                                                        .withOpacity(
+                                                                            0.8),
+                                                                  ),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                      Text(
+                                                                        Common.convertTime(model
+                                                                            .schedules[key][index]
+                                                                            .schedule
+                                                                            .appointmentTime),
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Color(0xff0d47a1),
+                                                                            fontWeight: FontWeight.bold),
+                                                                      ),
+                                                                      Expanded(
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            ListTile(
+                                                                              leading: CircleAvatar(
+                                                                                backgroundImage: NetworkImage(model.schedules[key][index].profile.image),
+                                                                                radius: 30,
+                                                                                backgroundColor: Colors.white,
+                                                                              ),
+                                                                              title: Text(
+                                                                                model.schedules[key][index].profile.fullName,
+                                                                                style: TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold),
+                                                                              ),
+                                                                              subtitle: Text(
+                                                                                model.schedules[key][index].specialty.name,
+                                                                                style: TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+                                                                              ),
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                        //     Text(
+                                                                        //   'sa',
+                                                                        //   style: TextStyle(
+                                                                        //     color: Color(
+                                                                        //         0xff0d47a1),
+                                                                        //   ),
+                                                                        // )
+                                                                      ),
+                                                                      Icon(
+                                                                          Icons
+                                                                              .info,
+                                                                          color:
+                                                                              Color(0xff0d47a1)),
+                                                                      SizedBox(
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              )
+                                                              // index !=
+                                                              //         (model.schedules[key]
+                                                              //                 .length -
+                                                              //             1)
+                                                              //     ? Divider(
+                                                              //         thickness: 2,
+                                                              //         endIndent: 50,
+                                                              //         indent: 50,
+                                                              //       )
+                                                              //     : Container(),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      }),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          tapHeaderToExpand: true,
+                                          hasIcon: true,
+                                          iconColor: Colors.black,
                                         ),
-                                      );
-                                    },
-                                  ),
-                                ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
 
-                                // Flexible(
-                                //   child: ListView.builder(
-                                //     itemCount: 100,
-                                //     itemBuilder: (context, index) {
-                                //       return Text('sa');
-                                //     },
-                                //   ),
-                                // ),
-                              ],
-                            );
-                  },
-                ),
-        );
+                            // Flexible(
+                            //   child: ListView.builder(
+                            //     itemCount: 100,
+                            //     itemBuilder: (context, index) {
+                            //       return Text('sa');
+                            //     },
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                );
+            },
+          );
+        // Scaffold(
+        //   appBar: AppBar(
+        //     backgroundColor: Colors.white,
+        //     elevation: 0,
+        //     centerTitle: true,
+        //     leading: GestureDetector(
+        //       onTap: () {
+        //         model.loadBackData();
+        //       },
+        //       child: Padding(
+        //         padding: const EdgeInsets.only(right: 15),
+        //         child: Center(
+        //           child: Icon(
+        //             EvaIcons.refreshOutline,
+        //             color: Colors.black,
+        //             size: 23,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     actions: [
+        //       IconButton(
+        //           icon: Icon(EvaIcons.flip2Outline, color: Colors.black87),
+        //           onPressed: () {
+        //             buildChoosePatient(context, model);
+        //           }),
+        //     ],
+        //   ),
+        //   body: Container(),
+        // model.isLoading
+        //     ? Center(
+        //         child: CircularProgressIndicator(),
+        //       )
+        //     : FutureBuilder(
+        //         future: model.fetchData(),
+        //         builder: (context, snapshot) {
+        //           if (model.init) {
+        //             return Center(
+        //               child: CircularProgressIndicator(),
+        //             );
+        //           } else
+        //             return (model.list.isEmpty)
+        //                 ? Container(
+        //                     alignment: Alignment.center,
+        //                     child: Column(
+        //                       mainAxisAlignment: MainAxisAlignment.center,
+        //                       children: [
+        //                         SvgPicture.asset(
+        //                           NOT_FOUND_RECORDS,
+        //                           width: 80,
+        //                           height: 80,
+        //                         ),
+        //                         SizedBox(
+        //                           height: 5,
+        //                         ),
+        //                         Text(
+        //                           "You don't have any appointment",
+        //                           style: GoogleFonts.varelaRound(
+        //                               fontWeight: FontWeight.normal,
+        //                               fontSize: 14,
+        //                               color: Color(0xff0d47a1),
+        //                               fontStyle: FontStyle.italic),
+        //                         ),
+        //                       ],
+        //                     ),
+        //                   )
+        //                 : Column(
+        //                     children: [
+
+        //                       buildNextSchedule(model, context),
+        //                       Row(
+        //                         children: [
+        //                           SizedBox(
+        //                             width: 5,
+        //                           ),
+        //                           Padding(
+        //                             padding: const EdgeInsets.all(8.0),
+        //                             child: Text(
+        //                               'List upcoming appointment',
+        //                               style: TextStyle(
+        //                                   color: Color(0xff0d47a1),
+        //                                   fontSize: 20,
+        //                                   fontWeight: FontWeight.bold),
+        //                             ),
+        //                           ),
+        //                         ],
+        //                       ),
+        //                       Expanded(
+        //                         child: ListView.builder(
+        //                           itemCount: model.schedules.length,
+        //                           itemBuilder: (context, index) {
+        //                             String key =
+        //                                 model.schedules.keys.elementAt(index);
+        //                             return Container(
+        //                               padding: EdgeInsets.only(
+        //                                   top: 20,
+        //                                   left: 20,
+        //                                   right: 20,
+        //                                   bottom: 0),
+        //                               child: Container(
+        //                                 decoration: BoxDecoration(
+        //                                   boxShadow: [
+        //                                     BoxShadow(
+        //                                       color: Colors.grey
+        //                                           .withOpacity(0.3),
+        //                                       spreadRadius: 3,
+        //                                       blurRadius: 4,
+        //                                       offset: Offset(0,
+        //                                           3), // changes position of shadow
+        //                                     ),
+        //                                   ],
+        //                                   borderRadius:
+        //                                       BorderRadius.circular(20),
+        //                                   color: Colors.white,
+        //                                 ),
+        //                                 child: Padding(
+        //                                   padding: const EdgeInsets.all(5.0),
+        //                                   child: ExpandablePanel(
+        //                                     header: Padding(
+        //                                       padding:
+        //                                           const EdgeInsets.all(10.0),
+        //                                       child: Text(
+        //                                         Common.convertSchedule(key),
+        //                                         style: TextStyle(
+        //                                           color: Color(0xff0d47a1),
+        //                                           fontWeight: FontWeight.bold,
+        //                                         ),
+        //                                       ),
+        //                                     ),
+        //                                     expanded: Container(
+        //                                       // padding: EdgeInsets.only(
+        //                                       //     top: 5,
+        //                                       //     left: 20,
+        //                                       //     right: 20,
+        //                                       //     bottom: 30),
+        //                                       child: Container(
+        //                                         child: Column(
+        //                                           crossAxisAlignment:
+        //                                               CrossAxisAlignment
+        //                                                   .start,
+        //                                           children: [
+        //                                             SizedBox(
+        //                                               height: 5,
+        //                                             ),
+        //                                             ListView.builder(
+        //                                                 shrinkWrap: true,
+        //                                                 physics:
+        //                                                     ClampingScrollPhysics(),
+        //                                                 itemCount: model
+        //                                                     .schedules[key]
+        //                                                     .length,
+        //                                                 itemBuilder:
+        //                                                     (BuildContext
+        //                                                             context,
+        //                                                         int index) {
+        //                                                   return Container(
+        //                                                     child: Column(
+        //                                                       children: [
+        //                                                         InkWell(
+        //                                                           onTap: () {
+        //                                                             Alert(
+        //                                                               context:
+        //                                                                   context,
+        //                                                               title:
+        //                                                                   "Booking information",
+        //                                                               style: AlertStyle(
+        //                                                                   isCloseButton:
+        //                                                                       false,
+        //                                                                   isButtonVisible:
+        //                                                                       false,
+        //                                                                   titleStyle:
+        //                                                                       TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold)),
+        //                                                               content: buildInformation(
+        //                                                                   model.schedules[key][index],
+        //                                                                   context,
+        //                                                                   model),
+        //                                                             ).show();
+        //                                                           },
+        //                                                           child:
+        //                                                               Container(
+        //                                                             decoration:
+        //                                                                 BoxDecoration(
+        //                                                               borderRadius:
+        //                                                                   BorderRadius.circular(12),
+        //                                                               color: Color(0xffe6eafb)
+        //                                                                   .withOpacity(0.8),
+        //                                                             ),
+        //                                                             child:
+        //                                                                 Row(
+        //                                                               children: [
+        //                                                                 SizedBox(
+        //                                                                   width:
+        //                                                                       10,
+        //                                                                 ),
+        //                                                                 Text(
+        //                                                                   Common.convertTime(model.schedules[key][index].schedule.appointmentTime),
+        //                                                                   style:
+        //                                                                       TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold),
+        //                                                                 ),
+        //                                                                 Expanded(
+        //                                                                   child:
+        //                                                                       Column(
+        //                                                                     children: [
+        //                                                                       ListTile(
+        //                                                                         leading: CircleAvatar(
+        //                                                                           backgroundImage: NetworkImage(model.schedules[key][index].profile.image),
+        //                                                                           radius: 30,
+        //                                                                           backgroundColor: Colors.white,
+        //                                                                         ),
+        //                                                                         title: Text(
+        //                                                                           model.schedules[key][index].profile.fullName,
+        //                                                                           style: TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold),
+        //                                                                         ),
+        //                                                                         subtitle: Text(
+        //                                                                           model.schedules[key][index].specialty.name,
+        //                                                                           style: TextStyle(color: Color(0xff0d47a1), fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+        //                                                                         ),
+        //                                                                       )
+        //                                                                     ],
+        //                                                                   ),
+        //                                                                   //     Text(
+        //                                                                   //   'sa',
+        //                                                                   //   style: TextStyle(
+        //                                                                   //     color: Color(
+        //                                                                   //         0xff0d47a1),
+        //                                                                   //   ),
+        //                                                                   // )
+        //                                                                 ),
+        //                                                                 Icon(
+        //                                                                     Icons.info,
+        //                                                                     color: Color(0xff0d47a1)),
+        //                                                                 SizedBox(
+        //                                                                   width:
+        //                                                                       10,
+        //                                                                 ),
+        //                                                               ],
+        //                                                             ),
+        //                                                           ),
+        //                                                         ),
+        //                                                         SizedBox(
+        //                                                           height: 10,
+        //                                                         )
+        //                                                         // index !=
+        //                                                         //         (model.schedules[key]
+        //                                                         //                 .length -
+        //                                                         //             1)
+        //                                                         //     ? Divider(
+        //                                                         //         thickness: 2,
+        //                                                         //         endIndent: 50,
+        //                                                         //         indent: 50,
+        //                                                         //       )
+        //                                                         //     : Container(),
+        //                                                       ],
+        //                                                     ),
+        //                                                   );
+        //                                                 }),
+        //                                           ],
+        //                                         ),
+        //                                       ),
+        //                                     ),
+        //                                     tapHeaderToExpand: true,
+        //                                     hasIcon: true,
+        //                                     iconColor: Colors.black,
+        //                                   ),
+        //                                 ),
+        //                               ),
+        //                             );
+        //                           },
+        //                         ),
+        //                       ),
+
+        //                       // Flexible(
+        //                       //   child: ListView.builder(
+        //                       //     itemCount: 100,
+        //                       //     itemBuilder: (context, index) {
+        //                       //       return Text('sa');
+        //                       //     },
+        //                       //   ),
+        //                       // ),
+        //                     ],
+        //                   );
+        //         },
+        //       ),
       },
     );
   }

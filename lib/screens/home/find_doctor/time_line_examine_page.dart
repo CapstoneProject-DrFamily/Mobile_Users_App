@@ -1,3 +1,4 @@
+import 'package:drFamily_app/Helper/helper_method.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/find_doctor_vm/time_line_examine_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
@@ -20,7 +21,10 @@ class TimeLineExamineScreen extends StatelessWidget {
             title: Text(''), // You can add title here
             leading: new IconButton(
               icon: new Icon(Icons.arrow_back_ios, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () {
+                HelperMethod.disabltransactionStatusUpdate();
+                Navigator.of(context).pop();
+              },
             ),
           ),
           backgroundColor: Color(0xffF9F9F9),

@@ -52,8 +52,8 @@ class ListDoctorScreenViewModel extends BaseModel {
 
   Future<void> getListDoctorNearby() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    int distance = await _appConfigRepo.getDistance();
-    print("distance $distance");
+    int distanceBetween = await _appConfigRepo.getDistance();
+    print("distance $distanceBetween");
     int serviceID = prefs.getInt("usServiceID");
     bool isDefault = prefs.getBool("isServiceDefault");
 
@@ -81,7 +81,7 @@ class ListDoctorScreenViewModel extends BaseModel {
               var doctorSpecialty = values['doctor_specialty'];
 
               if (isDefault) {
-                if ((distance / 1000) <= distance &&
+                if ((distance / 1000) <= distanceBetween &&
                     doctorStatus == "waiting") {
                   DoctorModel tDoctor = DoctorModel(
                     fbId: key,
