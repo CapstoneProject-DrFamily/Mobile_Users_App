@@ -41,7 +41,7 @@ class ReasonAppointmentScreen extends StatelessWidget {
                           right: 20,
                         ),
                         child: Text(
-                          'Reason for Appointment',
+                          'Note for Doctor',
                           style: TextStyle(
                             fontSize: 30,
                             color: Color(0xff0d47a1),
@@ -80,13 +80,13 @@ class ReasonAppointmentScreen extends StatelessWidget {
                               },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter your reason';
+                                  return 'Please enter note for doctor';
                                 }
 
                                 return null;
                               },
                               decoration: InputDecoration(
-                                  hintText: 'Enter your reason here',
+                                  hintText: 'Enter your describe here',
                                   counterText: "",
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12))),

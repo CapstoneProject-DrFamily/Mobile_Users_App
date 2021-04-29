@@ -170,10 +170,11 @@ class PaymentViewModel extends BaseModel {
               estimatedTime: transactionModel.estimatedTime,
               location: transactionModel.location,
               note: transactionModel.note,
-              status: 3);
+              status: 3,
+              scheduleId: transactionModel.scheduleId);
 
           String transactionJson = jsonEncode(updateTransactionModel.toJson());
-
+          print("transaction $transactionJson");
           await _transactionRepo.updateTransaction(transactionJson);
           Navigator.of(context).pop();
         });

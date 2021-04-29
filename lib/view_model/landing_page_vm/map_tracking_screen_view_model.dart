@@ -81,6 +81,8 @@ class MapTrackingScreenViewModel extends BaseModel {
 
   String reasonCancel;
 
+  bool isDialog = false;
+
   MapTrackingScreenViewModel(String transactionId, String doctorFBID) {
     _transactionID = transactionId;
     WaitingBookingDoctorViewModel.screenStatus = "Map";
@@ -207,6 +209,9 @@ class MapTrackingScreenViewModel extends BaseModel {
 
           TimeLineExamineScreen.transactionID =
               _transactionMapModel.transactionId;
+          if (isDialog) {
+            Get.back();
+          }
           Get.off(TimeLineExamineScreen());
         }
       },
@@ -220,6 +225,7 @@ class MapTrackingScreenViewModel extends BaseModel {
         .listen((event) {
       print('doctor come ${event.snapshot.value}');
       if (event.snapshot.key == "transaction_status") {
+        isDialog = true;
         Get.dialog(
           Dialog(
             shape: RoundedRectangleBorder(
@@ -242,13 +248,17 @@ class MapTrackingScreenViewModel extends BaseModel {
                   SizedBox(
                     height: 25,
                   ),
-                  Text(
-                    "Doctor Has Come Please Go Check!",
-                    style: TextStyle(
-                      fontSize: 27,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: 'avenir',
-                      color: Color(0xff0d47a1),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "The doctor has arrived!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 27,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: 'avenir',
+                        color: Color(0xff0d47a1),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -262,6 +272,7 @@ class MapTrackingScreenViewModel extends BaseModel {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         onTap: () {
+                          isDialog = false;
                           Get.back();
                         },
                         child: Container(
@@ -441,6 +452,9 @@ class MapTrackingScreenViewModel extends BaseModel {
           backgroundColor: Colors.red,
           gravity: ToastGravity.CENTER,
         );
+        if (isDialog) {
+          Get.back();
+        }
         Get.back();
       },
     );
