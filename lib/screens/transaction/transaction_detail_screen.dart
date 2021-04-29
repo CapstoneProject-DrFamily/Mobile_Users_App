@@ -242,7 +242,7 @@ class TransactionDetailScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Reason Book',
+                        'Note for Doctor',
                         style: TextStyle(
                           color: Color(0xff0d47a1),
                           fontSize: 20,
@@ -272,7 +272,7 @@ class TransactionDetailScreen extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'Reason Cancel',
+                              'Reason for cancel',
                               style: TextStyle(
                                 color: Color(0xff0d47a1),
                                 fontSize: 20,

@@ -1,5 +1,5 @@
 class TransactionModel {
-  int doctorId, patientId, prescriptionId, status, examId;
+  int doctorId, patientId, prescriptionId, status, examId, scheduleId;
   String transactionId, location, note, estimatedTime, reasonCancel;
   String dateStart, dateEnd;
 
@@ -15,13 +15,15 @@ class TransactionModel {
       this.estimatedTime,
       this.dateStart,
       this.dateEnd,
-      this.reasonCancel});
+      this.reasonCancel,
+      this.scheduleId});
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
     return TransactionModel(
       transactionId: json['transactionId'] as String,
       doctorId: json['doctorId'] as int,
       patientId: json['patientId'] as int,
+      scheduleId: json['scheduleId'] as int,
       prescriptionId: json['prescriptionId'] as int,
       status: json['status'] as int,
       examId: json['examId'] as int,
@@ -46,5 +48,6 @@ class TransactionModel {
         "estimatedTime": estimatedTime,
         "dateStart": dateStart,
         "dateEnd": dateEnd,
+        "scheduleId": scheduleId,
       };
 }

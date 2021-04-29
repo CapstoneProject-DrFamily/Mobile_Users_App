@@ -356,17 +356,17 @@ class DependentProfileViewModel extends BaseModel {
   Future<bool> updateInformation() async {
     _isReady = true;
 
-    if (_fullName.value == null) {
+    if (_fullName.value == null || _fullName.value == "") {
       checkFullName(null);
       _isReady = false;
     }
 
-    if (_idCard.value == null) {
+    if (_idCard.value == null || _idCard.value == "") {
       checkIDCard(null);
       _isReady = false;
     }
 
-    if (_email.value == null) {
+    if (_email.value == null || _email.value == "") {
       checkEmail(null);
       _isReady = false;
     }

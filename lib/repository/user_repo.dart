@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class IUserRepo {
   Future<bool> updateUser(String notiToken);
+  Future<bool> getStatusUser(int userID);
 }
 
 class UserRepo extends IUserRepo {
@@ -64,5 +65,21 @@ class UserRepo extends IUserRepo {
       isUpdated = false;
       return isUpdated;
     }
+  }
+
+  @override
+  Future<bool> getStatusUser(int userID) async {
+    String urlAPI = APIHelper.UPDATE_USER_API + '/$userID';
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+    var response = await http.get(urlAPI, headers: header);
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      bool disable = json.decode(response.body)['disabled'];
+      return disable;
+    } else
+      return null;
   }
 }

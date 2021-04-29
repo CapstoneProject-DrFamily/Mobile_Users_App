@@ -2,6 +2,7 @@ import 'package:drFamily_app/Helper/helper_method.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/transaction_vm/awaiting_sample_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class AwaitingSampleScreen extends StatelessWidget {
@@ -114,6 +115,23 @@ class AwaitingSampleScreen extends StatelessWidget {
                           backgroundColor: Colors.blue
                               .withOpacity(0), //You can make this transparent
                           elevation: 0.0, //No shadow
+                          actions: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                model.callPhone();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 15),
+                                child: Center(
+                                  child: Icon(
+                                    EvaIcons.phone,
+                                    color: Colors.black,
+                                    size: 23,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

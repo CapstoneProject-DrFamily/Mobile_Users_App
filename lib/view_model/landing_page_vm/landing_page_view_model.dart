@@ -7,6 +7,7 @@ import 'package:drFamily_app/screens/landing_page/home_page.dart';
 import 'package:drFamily_app/screens/landing_page/map_tracking_screen.dart';
 import 'package:drFamily_app/model/home/landing_model.dart';
 import 'package:drFamily_app/repository/langding/landing_repo.dart';
+import 'package:drFamily_app/screens/login/login_page.dart';
 import 'package:drFamily_app/screens/schedule/list_schedule_appointment_screen.dart';
 import 'package:drFamily_app/screens/setting/setting_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
@@ -71,34 +72,45 @@ class LandingPageViewModel extends BaseModel {
     print('profile $profileID');
     int userID = prefs.getInt("usAccountID");
 
-    print("userID" + userID.toString());
+    bool status = await _userRepo.getStatusUser(userID);
+    print("isNotAvailible $status");
 
-    _firebaseuser = await FirebaseAuth.instance.currentUser();
-    String userId = _firebaseuser.uid;
-    PushNotifycationService pushNotifycationService = PushNotifycationService();
+    if (status == true) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
+      Get.offAll(LoginScreen());
+    } else {
+      print("userID" + userID.toString());
 
-    await pushNotifycationService.initialize();
-    String tokenNotifycation = await pushNotifycationService.getToken();
+      _firebaseuser = await FirebaseAuth.instance.currentUser();
+      String userId = _firebaseuser.uid;
+      PushNotifycationService pushNotifycationService =
+          PushNotifycationService();
 
-    _userRepo.updateUser(tokenNotifycation);
+      await pushNotifycationService.initialize();
+      String tokenNotifycation = await pushNotifycationService.getToken();
 
-    prefs.setString("usNotiToken", tokenNotifycation);
+      _userRepo.updateUser(tokenNotifycation);
 
-    _landingModel = await _langdingRepo.getPatientProfile(profileID.toString());
-    _fullName = _landingModel.fullName;
-    _img = _landingModel.image;
+      prefs.setString("usNotiToken", tokenNotifycation);
 
-    prefs.setString("usFullName", fullName);
-    prefs.setString("usImg", img);
+      _landingModel =
+          await _langdingRepo.getPatientProfile(profileID.toString());
+      _fullName = _landingModel.fullName;
+      _img = _landingModel.image;
 
-    print("Phone: " +
-        phone +
-        " ProfileID: " +
-        profileID.toString() +
-        " AccountID: " +
-        userID.toString());
-    isLoading = false;
-    notifyListeners();
+      prefs.setString("usFullName", fullName);
+      prefs.setString("usImg", img);
+
+      print("Phone: " +
+          phone +
+          " ProfileID: " +
+          profileID.toString() +
+          " AccountID: " +
+          userID.toString());
+      isLoading = false;
+      notifyListeners();
+    }
   }
 
   List<BottomNavyBarItem> _listItem = [
