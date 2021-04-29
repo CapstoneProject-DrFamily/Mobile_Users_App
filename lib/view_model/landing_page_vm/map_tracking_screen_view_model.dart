@@ -243,25 +243,12 @@ class MapTrackingScreenViewModel extends BaseModel {
                     height: 25,
                   ),
                   Text(
-                    "Doctor Has Come!",
+                    "Doctor Has Come Please Go Check!",
                     style: TextStyle(
                       fontSize: 27,
                       fontWeight: FontWeight.w800,
                       fontFamily: 'avenir',
                       color: Color(0xff0d47a1),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Text(
-                    'Please go check',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                      fontFamily: 'avenir',
-                      color: Colors.black,
                     ),
                   ),
                   SizedBox(
