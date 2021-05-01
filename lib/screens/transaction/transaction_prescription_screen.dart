@@ -282,6 +282,7 @@ class TransactionPrescriptionScreen extends StatelessWidget {
                                           ),
                                         ),
                                         Expanded(
+                                          flex: 2,
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 8, right: 8),
@@ -292,9 +293,6 @@ class TransactionPrescriptionScreen extends StatelessWidget {
                                                   color: Colors.white),
                                             ),
                                           ),
-                                        ),
-                                        Expanded(
-                                          child: Container(),
                                         ),
                                       ],
                                     ),
