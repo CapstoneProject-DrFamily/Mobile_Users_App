@@ -882,6 +882,7 @@ class TransactionFormScreen extends StatelessWidget {
           width: 15,
         ),
         Expanded(
+          flex: 2,
           child: Text(
             label,
             style: TextStyle(
@@ -891,42 +892,45 @@ class TransactionFormScreen extends StatelessWidget {
           ),
         ),
         Expanded(
-            child: Container(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 10, top: 10, left: 10),
-            child: TextFormField(
-              style: TextStyle(
-                color: Color(0xff0d47a1),
-              ),
-              initialValue: this.model.getFieldNumber(field) != null
-                  ? this.model.getFieldNumber(field).toString()
-                  : null,
-              enabled: false,
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.grey, width: 2),
-                  borderRadius: BorderRadius.circular(20.0),
+          flex: 2,
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10, top: 10, left: 10),
+              child: TextFormField(
+                style: TextStyle(
+                  color: Color(0xff0d47a1),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: MainColors.blueBegin, width: 2),
-                  borderRadius: BorderRadius.circular(20.0),
+                initialValue: this.model.getFieldNumber(field) != null
+                    ? this.model.getFieldNumber(field).toStringAsFixed(0) +
+                        " / 10"
+                    : null,
+                enabled: false,
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.grey, width: 2),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: MainColors.blueBegin, width: 2),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.red, width: 2),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.red, width: 2),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  hintText: hintText,
                 ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.red, width: 2),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.red, width: 2),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                hintText: hintText,
               ),
             ),
           ),
-        )),
+        ),
       ],
     );
   }
