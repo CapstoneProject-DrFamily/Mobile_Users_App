@@ -299,13 +299,15 @@ class HealthRecordViewModel extends BaseModel {
 
   Future<bool> updateHealthRecord() async {
     double birthWeight, birthHeight;
-    if (_birthWeightController.text == null) {
+    if (_birthWeightController.text == null ||
+        _birthWeightController.text == "") {
       birthWeight = 0;
     } else {
       birthWeight = double.parse(_birthWeightController.text);
     }
 
-    if (_birthHeightController.text == null) {
+    if (_birthHeightController.text == null ||
+        _birthHeightController.text == "") {
       birthHeight = 0;
     } else {
       birthHeight = double.parse(_birthHeightController.text);
