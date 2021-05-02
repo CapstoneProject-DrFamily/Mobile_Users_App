@@ -114,7 +114,7 @@ class ReasonAppointmentViewModel extends BaseModel {
             scheduleModel.scheduleId,
             DateTime.parse(scheduleModel.appointmentTime),
             "It's almost time for the appointment",
-            "Doctor ${doctorScheduleModel.doctorDetail.doctorName} will come at $timeFormat",
+            "You have an appointment with doctor ${doctorScheduleModel.doctorDetail.doctorName} at $timeFormat",
             timeNoti);
 
         notifyRepo.bookScheduleDoctor(doctorScheduleModel.notiToken,
