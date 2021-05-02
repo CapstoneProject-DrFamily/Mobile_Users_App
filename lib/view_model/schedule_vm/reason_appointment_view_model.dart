@@ -119,7 +119,7 @@ class ReasonAppointmentViewModel extends BaseModel {
             timeNoti);
 
         notifyRepo.bookScheduleDoctor(doctorScheduleModel.notiToken,
-            prefs.getString('usPatientName'), formattedDate);
+            prefs.getString('usPatientName'), timeFormat);
         booking = true;
       }
     }
