@@ -87,6 +87,7 @@ class ReasonAppointmentViewModel extends BaseModel {
     print("Appointment time :" + appointmentTime);
     String formattedDate = DateFormat('dd-MM-yyyy - HH:mm')
         .format(DateTime.parse(appointmentTime));
+    print("appoitnment Time format $formattedDate");
 
     ScheduleModel schedule = ScheduleModel(
         appointmentTime: appointmentTime,
@@ -118,7 +119,7 @@ class ReasonAppointmentViewModel extends BaseModel {
             timeNoti);
 
         notifyRepo.bookScheduleDoctor(doctorScheduleModel.notiToken,
-            prefs.getString('usPatientName'), formattedDate);
+            prefs.getString('usPatientName'), timeFormat);
         booking = true;
       }
     }
