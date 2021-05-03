@@ -78,10 +78,10 @@ class TransactionRepo extends ITransactionRepo {
 
       Map<String, dynamic> transactionJson = jsonDecode(response.body);
 
-      List<SymptomTempModel> listSymptom =
-          (transactionJson['symptomDetails'] as List)
-              .map((data) => SymptomTempModel.fromJson(data))
-              .toList();
+      // List<SymptomTempModel> listSymptom =
+      //     (transactionJson['symptomDetails'] as List)
+      //         .map((data) => SymptomTempModel.fromJson(data))
+      //         .toList();
 
       String locationTemp = transactionJson['location'];
 
@@ -120,7 +120,7 @@ class TransactionRepo extends ITransactionRepo {
         latitude: double.parse(latitude),
         placeName: placeName,
         longitude: double.parse(longitude),
-        patientSymptom: listSymptom,
+        // patientSymptom: listSymptom,
         transactionNote: transactionNote,
         doctorId: doctorId,
         location: location,
