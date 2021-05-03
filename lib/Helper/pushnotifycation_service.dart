@@ -93,7 +93,7 @@ class PushNotifycationService {
                                 border: Border.all(color: Colors.blueAccent),
                               ),
                               child: Text(
-                                "Oke",
+                                "Ok",
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
