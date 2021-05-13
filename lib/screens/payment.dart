@@ -1,8 +1,6 @@
 import 'package:drFamily_app/screens/share/base_view.dart';
-import 'package:drFamily_app/screens/transaction/transaction_base_screen.dart';
 import 'package:drFamily_app/view_model/payment_vm/payment_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentPayPalScreen extends StatelessWidget {

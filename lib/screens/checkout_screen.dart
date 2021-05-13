@@ -123,7 +123,7 @@ class CheckOutScreen extends StatelessWidget {
                           SizedBox(
                             height: 30.0,
                           ),
-                          _buildContinuteButton(context, model),
+                          _buildPayButton(context, model),
                         ],
                       ),
                     );
@@ -415,7 +415,7 @@ class CheckOutScreen extends StatelessWidget {
     );
   }
 
-  GestureDetector _buildContinuteButton(
+  GestureDetector _buildPayButton(
       BuildContext context, CheckOutViewModel model) {
     return GestureDetector(
       onTap: () {
