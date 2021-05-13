@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:drFamily_app/Helper/validate.dart';
+import 'package:drFamily_app/repository/patient_repo.dart';
 import 'package:drFamily_app/screens/map_choose_profile.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
@@ -14,6 +15,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreenViewModel extends BaseModel {
   final IProfileRepo _profileRepo = ProfileRepo();
+  final IPatientRepo _patientRepo = PatientRepo();
+
   ProfileModel _profileModel;
   AdditionInfoModel _additionInfoModel;
 
@@ -182,6 +185,7 @@ class ProfileScreenViewModel extends BaseModel {
     this._isLoading = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     profileID = prefs.getInt("usProfileID");
+    print("patientID $profileID");
 
     //Get user profile
     _profileModel = await _profileRepo.getBasicInfo(profileID.toString());
@@ -378,42 +382,68 @@ class ProfileScreenViewModel extends BaseModel {
       accountId = prefs.getInt("usAccountID");
       print("accountId " + accountId.toString());
 
-      _profileModel = new ProfileModel(
-          profileId: profileID,
-          fullName: fullNameController.text,
-          dob: dobController.text,
-          gender: selectGender,
-          phone: phoneNumController.text,
-          image: uploadImage,
-          email: emailController.text,
-          idCard: idCardController.text,
-          accountID: accountId);
+      var height = (_heightController.text == "")
+          ? 0
+          : double.parse(_heightController.text);
+      var weight = (_weightController.text == "")
+          ? 0
+          : double.parse(_weightController.text);
 
-      String updateBasicInfoJson = jsonEncode(_profileModel.toJson());
-      print(updateBasicInfoJson + "\n");
+      var jsonPatientUpdate = {
+        "id": profileID,
+        "fullname": fullNameController.text,
+        "birthday": dobController.text,
+        "image": uploadImage,
+        "idCard": idCardController.text,
+        "email": emailController.text,
+        "gender": selectGender,
+        "location": location,
+        "relationship": relationship,
+        "height": height,
+        "weight": weight,
+        "bloodType": bloodTpeController.text,
+        "accountId": accountId,
+      };
 
-      check = await _profileRepo.updateBasicInfo(updateBasicInfoJson);
+      check =
+          await _patientRepo.updatePatientInfo(jsonEncode(jsonPatientUpdate));
 
-      print("height: " + height);
-      print("weight: " + weight);
+      // _profileModel = new ProfileModel(
+      //     profileId: profileID,
+      //     fullName: fullNameController.text,
+      //     dob: dobController.text,
+      //     gender: selectGender,
+      //     phone: phoneNumController.text,
+      //     image: uploadImage,
+      //     email: emailController.text,
+      //     idCard: idCardController.text,
+      //     accountID: accountId);
 
-      _additionInfoModel = new AdditionInfoModel(
-        patientId: patientID,
-        height: (_heightController.text == "")
-            ? 0
-            : double.parse(_heightController.text),
-        weight: (_weightController.text == "")
-            ? 0
-            : double.parse(_weightController.text),
-        bloodType: bloodTpeController.text,
-        relationship: relationship,
-        location: location,
-      );
+      // String updateBasicInfoJson = jsonEncode(_profileModel.toJson());
+      // print(updateBasicInfoJson + "\n");
 
-      String updateAdditionInfoJson = jsonEncode(_additionInfoModel.toJson());
-      print("updateAdditionInfoJson: " + updateAdditionInfoJson);
+      // check = await _profileRepo.updateBasicInfo(updateBasicInfoJson);
 
-      check = await _profileRepo.updateAdditionInfo(updateAdditionInfoJson);
+      // print("height: " + height);
+      // print("weight: " + weight);
+
+      // _additionInfoModel = new AdditionInfoModel(
+      //   patientId: patientID,
+      //   height: (_heightController.text == "")
+      //       ? 0
+      //       : double.parse(_heightController.text),
+      //   weight: (_weightController.text == "")
+      //       ? 0
+      //       : double.parse(_weightController.text),
+      //   bloodType: bloodTpeController.text,
+      //   relationship: relationship,
+      //   location: location,
+      // );
+
+      // String updateAdditionInfoJson = jsonEncode(_additionInfoModel.toJson());
+      // print("updateAdditionInfoJson: " + updateAdditionInfoJson);
+
+      // check = await _profileRepo.updateAdditionInfo(updateAdditionInfoJson);
     }
     return check;
   }

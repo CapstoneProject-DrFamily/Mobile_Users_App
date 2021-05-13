@@ -16,7 +16,7 @@ abstract class IProfileRepo {
 class ProfileRepo extends IProfileRepo {
   @override
   Future<ProfileModel> getBasicInfo(String profileID) async {
-    String urlAPI = APIHelper.GET_PROFILE_BY_ID_API + profileID;
+    String urlAPI = APIHelper.GET_PATIENT_BY_ID_API + profileID;
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
@@ -30,9 +30,7 @@ class ProfileRepo extends IProfileRepo {
     if (response.statusCode == 200) {
       Map<String, dynamic> map = json.decode(response.body);
       profileModel = ProfileModel.fromJson(map);
-      var additionModel = map['patient'];
-      profileModel.additionInfoModel =
-          AdditionInfoModel.fromJson(additionModel);
+      profileModel.additionInfoModel = AdditionInfoModel.fromJson(map);
       return profileModel;
     } else
       return null;
