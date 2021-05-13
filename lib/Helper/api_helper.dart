@@ -31,7 +31,7 @@ class APIHelper {
   //API Health Record
   static const String HEALTHRECORD_API = '$PREFIX_API/api/v1/HealthRecords';
   static const String GET_HEALTHRECORD_BY_ID_API =
-      '$PREFIX_API/api/v1/HealthRecords/';
+      '$PREFIX_API/api/v1/HealthRecords?';
   // static const String UPDATE_HEALTHRECORD_API =
   //     '$PREFIX_API/api/v1/HealthRecords';
 

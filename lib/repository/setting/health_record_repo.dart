@@ -5,15 +5,21 @@ import 'package:http/http.dart' as http;
 import 'package:drFamily_app/Helper/api_helper.dart';
 
 abstract class IHealthRecordRepo {
-  Future<HealthRecordModel> getHealthRecordByID(int healthRecordID);
-  Future<bool> updateHealthRecord(String updateHealthRecordJson);
+  Future<HealthRecordModel> getCurrentHealthRecordByID(
+      int patientID, bool isOldRecord);
+  Future<bool> storedOldHealthRecord(int oldHealthRecordID);
+  Future<bool> createNewHealthRecord(String createNewHealthRecordJson);
 }
 
 class HealthRecordRepo extends IHealthRecordRepo {
   @override
-  Future<HealthRecordModel> getHealthRecordByID(int healthRecordID) async {
-    String urlAPI =
-        APIHelper.GET_HEALTHRECORD_BY_ID_API + healthRecordID.toString();
+  Future<HealthRecordModel> getCurrentHealthRecordByID(
+      int patientID, bool isOldRecord) async {
+    String urlAPI = APIHelper.GET_HEALTHRECORD_BY_ID_API +
+        'patientId=' +
+        patientID.toString() +
+        '&isOldRecord=' +
+        isOldRecord.toString();
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
@@ -22,10 +28,14 @@ class HealthRecordRepo extends IHealthRecordRepo {
     print("Status Heal: " + response.statusCode.toString());
     print("Json Health: " + response.body);
 
+    List<HealthRecordModel> listHealthRecord;
+
     HealthRecordModel healthRecordModel;
     if (response.statusCode == 200) {
-      Map<String, dynamic> map = json.decode(response.body);
-      healthRecordModel = HealthRecordModel.fromJson(map);
+      listHealthRecord = (json.decode(response.body) as List)
+          .map((data) => HealthRecordModel.fromJson(data))
+          .toList();
+      healthRecordModel = listHealthRecord.first;
       return healthRecordModel;
     } else {
       return null;
@@ -33,22 +43,38 @@ class HealthRecordRepo extends IHealthRecordRepo {
   }
 
   @override
-  Future<bool> updateHealthRecord(String updateHealthRecordJson) async {
+  Future<bool> storedOldHealthRecord(int oldHealthRecordID) async {
+    String urlAPI =
+        APIHelper.HEALTHRECORD_API + "/" + oldHealthRecordID.toString();
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    var response = await http.delete(urlAPI, headers: header);
+    print("Status storedOldHealthRecord: " + response.statusCode.toString());
+
+    if (response.statusCode == 204) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> createNewHealthRecord(String createNewHealthRecordJson) async {
     String urlAPI = APIHelper.HEALTHRECORD_API;
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
-    var response =
-        await http.put(urlAPI, headers: header, body: updateHealthRecordJson);
+    var response = await http.post(urlAPI,
+        headers: header, body: createNewHealthRecordJson);
     print("Status updateHealthRecord: " + response.statusCode.toString());
 
-    bool isUpdated = true;
-    if (response.statusCode == 200) {
-      return isUpdated;
+    if (response.statusCode == 201) {
+      return true;
     } else {
-      isUpdated = false;
-      return isUpdated;
+      return false;
     }
   }
 }

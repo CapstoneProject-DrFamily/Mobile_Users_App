@@ -1,6 +1,7 @@
 class HealthRecordModel {
-  int healthRecordID;
+  int healthRecordID, patientID, disable;
   double birthWeight, birthHeight;
+  String insBy, insDatetime;
   String conditionAtBirth, birthDefects, otherDefects;
   String medicineAllergy, chemicalAllergy, foodAllergy, otherAllergy;
   String disease, cancer, tuberculosis, otherDiseases;
@@ -60,11 +61,15 @@ class HealthRecordModel {
       this.exposureElement,
       this.contactTime,
       this.toiletType,
-      this.otherRisks});
+      this.otherRisks,
+      this.patientID,
+      this.disable,
+      this.insBy,
+      this.insDatetime});
 
   factory HealthRecordModel.fromJson(Map<String, dynamic> json) {
     return HealthRecordModel(
-      healthRecordID: json['recordId'] as int,
+      healthRecordID: json['id'] as int,
       conditionAtBirth: json['conditionAtBirth'] as String,
       birthWeight: json['birthWeight'] as double,
       birthHeight: json['birthHeight'] as double,
@@ -107,7 +112,6 @@ class HealthRecordModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "recordId": this.healthRecordID,
         "conditionAtBirth": this.conditionAtBirth,
         "birthWeight": this.birthWeight,
         "birthHeight": this.birthHeight,
@@ -147,5 +151,9 @@ class HealthRecordModel {
         "contactTime": this.contactTime,
         "toiletType": this.toiletType,
         "otherRisks": this.otherRisks,
+        "patientId": this.patientID,
+        "disable": this.disable,
+        "insBy": this.insBy,
+        "insDatetime": insDatetime,
       };
 }

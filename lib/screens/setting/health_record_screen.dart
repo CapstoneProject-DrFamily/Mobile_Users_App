@@ -73,7 +73,6 @@ class HealthRecordScreen extends StatelessWidget {
                 ),
                 bottomNavigationBar: GestureDetector(
                   onTap: () async {
-                    // model.printCheck();
                     bool isUpdate = await _confirmDialog(context);
                     if (isUpdate) {
                       waitDialog(context,
@@ -1289,7 +1288,7 @@ class HealthRecordScreen extends StatelessWidget {
                         width: 40,
                         child: TextFormField(
                           controller: model.birthWeightController,
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
                           maxLength: 3,
                           decoration: InputDecoration(
                             counterText: "",
@@ -1325,7 +1324,7 @@ class HealthRecordScreen extends StatelessWidget {
                         width: 40,
                         child: TextFormField(
                           controller: model.birthHeightController,
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
                           maxLength: 3,
                           decoration: InputDecoration(
                             counterText: "",

@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DependentHealthRecordViewModel extends BaseModel {
   final IHealthRecordRepo _healthRecordRepo = HealthRecordRepo();
   final IProfileRepo _profileRepo = ProfileRepo();
+  List<HealthRecordModel> _listHealthRecordModel;
   HealthRecordModel _healthRecordModel;
   ProfileModel _profileModel;
   AdditionInfoModel _additionInfoModel;
@@ -130,10 +131,10 @@ class DependentHealthRecordViewModel extends BaseModel {
   //----------------------------------------
 
   DependentHealthRecordViewModel() {
-    getHealthRecordByID();
+    getCurrentHealthRecordByID();
   }
 
-  void getHealthRecordByID() async {
+  void getCurrentHealthRecordByID() async {
     this._isLoading = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     dependentProfileID = prefs.getInt("dependentProfileID");
@@ -142,8 +143,8 @@ class DependentHealthRecordViewModel extends BaseModel {
         await _profileRepo.getBasicInfo(dependentProfileID.toString());
     _additionInfoModel = _profileModel.additionInfoModel;
 
-    _healthRecordModel =
-        await _healthRecordRepo.getHealthRecordByID(dependentProfileID);
+    _healthRecordModel = await _healthRecordRepo.getCurrentHealthRecordByID(
+        dependentProfileID, false);
 
     _conditionAtBirthController.text = _healthRecordModel.conditionAtBirth;
     _conditionAtBirth = _conditionAtBirthController.text;
@@ -347,7 +348,7 @@ class DependentHealthRecordViewModel extends BaseModel {
     print("updateHealthRecordJson: " + updateHealthRecordJson);
 
     bool isUpdated =
-        await _healthRecordRepo.updateHealthRecord(updateHealthRecordJson);
+        await _healthRecordRepo.createNewHealthRecord(updateHealthRecordJson);
 
     return isUpdated;
   }
