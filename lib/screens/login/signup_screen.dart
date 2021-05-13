@@ -8,8 +8,6 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -34,11 +32,158 @@ class SignUpScreen extends StatelessWidget {
                     height: 20,
                   ),
                   _imageField(context, model),
+                  Row(
+                    children: [
+                      _buildTitle('Full name'),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Text(
+                        "*",
+                        style: TextStyle(
+                          color: Colors.red.shade300,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                   _nameField(context, model),
+                  Row(
+                    children: [
+                      _buildTitle('ID Card'),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Text(
+                        "*",
+                        style: TextStyle(
+                          color: Colors.red.shade300,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                   _idCardField(context, model),
+                  Row(
+                    children: [
+                      _buildTitle('Gender'),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Text(
+                        "*",
+                        style: TextStyle(
+                          color: Colors.red.shade300,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                   _buildListGender(context, model),
+                  Row(
+                    children: [
+                      _buildTitle('DOB'),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Text(
+                        "*",
+                        style: TextStyle(
+                          color: Colors.red.shade300,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                   _dobField(context, model),
+                  Row(
+                    children: [
+                      _buildTitle('Email'),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Text(
+                        "*",
+                        style: TextStyle(
+                          color: Colors.red.shade300,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                   _emailField(context, model),
+                  Row(
+                    children: [
+                      _buildTitle('Height (cm)'),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Text(
+                        "*",
+                        style: TextStyle(
+                          color: Colors.red.shade300,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  _heightField(context, model),
+                  Row(
+                    children: [
+                      _buildTitle('Weight (kg)'),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Text(
+                        "*",
+                        style: TextStyle(
+                          color: Colors.red.shade300,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  _weightField(context, model),
+                  Row(
+                    children: [
+                      _buildTitle('Blood Type'),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Text(
+                        "*",
+                        style: TextStyle(
+                          color: Colors.red.shade300,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  _buildListBooldType(context, model),
+                  Row(
+                    children: [
+                      _buildTitle('Home address'),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Text(
+                        "*",
+                        style: TextStyle(
+                          color: Colors.red.shade300,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                   _locationField(context, model),
                   GestureDetector(
                     onTap: () async {
@@ -82,8 +227,8 @@ class SignUpScreen extends StatelessWidget {
                     },
                     child: Container(
                       margin: EdgeInsets.only(
-                        top: 30,
-                        bottom: 15,
+                        top: 10.0,
+                        bottom: 20.0,
                       ),
                       width: MediaQuery.of(context).size.width * 0.8,
                       height: MediaQuery.of(context).size.height / 14,
@@ -115,9 +260,10 @@ class SignUpScreen extends StatelessWidget {
   Widget _locationField(BuildContext context, SignUpViewModel model) {
     return Container(
       margin: const EdgeInsets.only(
-        top: 30.0,
+        top: 2.0,
         left: 30.0,
         right: 20.0,
+        bottom: 15.0,
       ),
       child: GestureDetector(
         onTap: () {
@@ -144,7 +290,7 @@ class SignUpScreen extends StatelessWidget {
             counterText: '',
             filled: true,
             fillColor: Colors.white,
-            hintText: 'Choose location...',
+            hintText: 'Choose location',
             hintStyle: TextStyle(
               color: MainColors.hintTextColor,
             ),
@@ -195,9 +341,10 @@ class SignUpScreen extends StatelessWidget {
   Widget _nameField(BuildContext context, SignUpViewModel model) {
     return Container(
       margin: const EdgeInsets.only(
-        top: 30.0,
+        top: 2.0,
         left: 30.0,
         right: 20.0,
+        bottom: 15.0,
       ),
       child: TextFormField(
         controller: model.fullNameController,
@@ -210,7 +357,7 @@ class SignUpScreen extends StatelessWidget {
           errorText: model.fullName.error,
           filled: true,
           fillColor: Colors.white,
-          labelText: 'Enter name',
+          hintText: 'Input your full name',
           hintStyle: TextStyle(
             color: MainColors.hintTextColor,
           ),
@@ -225,9 +372,10 @@ class SignUpScreen extends StatelessWidget {
   Widget _idCardField(BuildContext context, SignUpViewModel model) {
     return Container(
       margin: const EdgeInsets.only(
-        top: 15.0,
+        top: 2.0,
         left: 30.0,
         right: 20.0,
+        bottom: 15.0,
       ),
       child: TextFormField(
         controller: model.idCardController,
@@ -241,7 +389,7 @@ class SignUpScreen extends StatelessWidget {
           counterText: "",
           filled: true,
           fillColor: Colors.white,
-          labelText: 'Enter Social Security Number',
+          hintText: 'Enter Social Security Number',
           hintStyle: TextStyle(
             color: MainColors.hintTextColor,
           ),
@@ -256,9 +404,10 @@ class SignUpScreen extends StatelessWidget {
   Widget _buildListGender(BuildContext context, SignUpViewModel model) {
     return Container(
       margin: const EdgeInsets.only(
-        top: 15.0,
+        top: 2.0,
         left: 30.0,
         right: 20.0,
+        bottom: 15.0,
       ),
       child: GestureDetector(
         onTap: () {
@@ -284,16 +433,16 @@ class SignUpScreen extends StatelessWidget {
             filled: true,
             enabled: false,
             fillColor: Colors.white,
-            labelText: 'Choose Gender',
+            hintText: 'Choose Gender',
             hintStyle: TextStyle(
               color: MainColors.hintTextColor,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
             ),
             suffixIcon: Icon(
               Icons.arrow_drop_down,
               color: Colors.blue,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
             disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
@@ -310,9 +459,10 @@ class SignUpScreen extends StatelessWidget {
   Widget _dobField(BuildContext context, SignUpViewModel model) {
     return Container(
       margin: const EdgeInsets.only(
-        top: 15.0,
+        top: 2.0,
         left: 30.0,
         right: 20.0,
+        bottom: 15.0,
       ),
       child: GestureDetector(
         onTap: () {
@@ -343,7 +493,7 @@ class SignUpScreen extends StatelessWidget {
             fontSize: 16,
           ),
           decoration: InputDecoration(
-            labelText: 'Choose Your Birthday',
+            hintText: 'Choose Your Birthday',
             hintStyle: TextStyle(
               color: MainColors.hintTextColor,
             ),
@@ -377,9 +527,10 @@ class SignUpScreen extends StatelessWidget {
   Widget _emailField(BuildContext context, SignUpViewModel model) {
     return Container(
       margin: const EdgeInsets.only(
-        top: 15.0,
+        top: 2.0,
         left: 30.0,
         right: 20.0,
+        bottom: 15.0,
       ),
       child: TextFormField(
         controller: model.emailController,
@@ -393,7 +544,6 @@ class SignUpScreen extends StatelessWidget {
           filled: true,
           fillColor: Colors.white,
           hintText: 'abc@gmail.com',
-          labelText: 'Enter email',
           hintStyle: TextStyle(
             color: MainColors.hintTextColor,
           ),
@@ -401,6 +551,139 @@ class SignUpScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _heightField(BuildContext context, SignUpViewModel model) {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 2.0,
+        left: 30.0,
+        right: 20.0,
+        bottom: 15.0,
+      ),
+      child: TextFormField(
+        controller: model.heightController,
+        onChanged: (text) {
+          model.checkHeight(text);
+        },
+        keyboardType: TextInputType.number,
+        textCapitalization: TextCapitalization.none,
+        maxLength: 3,
+        decoration: InputDecoration(
+          errorText: model.height.error,
+          counterText: "",
+          filled: true,
+          fillColor: Colors.white,
+          hintText: 'Input your height (cm)',
+          hintStyle: TextStyle(
+            color: MainColors.hintTextColor,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _weightField(BuildContext context, SignUpViewModel model) {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 2.0,
+        left: 30.0,
+        right: 20.0,
+        bottom: 15.0,
+      ),
+      child: TextFormField(
+        controller: model.weightController,
+        onChanged: (text) {
+          model.checkWeight(text);
+        },
+        keyboardType: TextInputType.number,
+        textCapitalization: TextCapitalization.none,
+        maxLength: 3,
+        decoration: InputDecoration(
+          errorText: model.height.error,
+          counterText: "",
+          filled: true,
+          fillColor: Colors.white,
+          hintText: 'Input your weight (kg)',
+          hintStyle: TextStyle(
+            color: MainColors.hintTextColor,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildListBooldType(BuildContext context, SignUpViewModel model) {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 2.0,
+        left: 30.0,
+        right: 20.0,
+        bottom: 15.0,
+      ),
+      child: GestureDetector(
+        onTap: () {
+          Picker(
+            adapter: PickerDataAdapter<String>(pickerdata: model.listBloodType),
+            changeToFirst: false,
+            selecteds: [0],
+            hideHeader: false,
+            textAlign: TextAlign.center,
+            textStyle: const TextStyle(color: Colors.black, fontSize: 22),
+            selectedTextStyle: TextStyle(color: Colors.blue),
+            columnPadding: const EdgeInsets.all(8.0),
+            onConfirm: (Picker picker, List value) {
+              print(value.toString());
+              print(picker.adapter.text);
+              model.chooseBloodType(picker.getSelectedValues().first);
+            },
+          ).showModal(context);
+        },
+        child: TextFormField(
+          controller: model.bloodTypeController,
+          decoration: InputDecoration(
+            filled: true,
+            enabled: false,
+            fillColor: Colors.white,
+            hintText: 'Choose Blood type',
+            hintStyle: TextStyle(
+              color: MainColors.hintTextColor,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            suffixIcon: Icon(
+              Icons.arrow_drop_down,
+              color: Colors.blue,
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding _buildTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 30.0,
+      ),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
       ),
     );
   }

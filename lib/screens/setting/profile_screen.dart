@@ -72,7 +72,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -95,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -118,7 +118,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -141,7 +141,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -164,7 +164,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -243,7 +243,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -276,7 +276,7 @@ class ProfileScreen extends StatelessWidget {
                                                     width: 2.0,
                                                   ),
                                                   Text(
-                                                    "(*)",
+                                                    "*",
                                                     style: TextStyle(
                                                       color:
                                                           Colors.red.shade300,
@@ -303,7 +303,7 @@ class ProfileScreen extends StatelessWidget {
                                                       controller: model
                                                           .heightController,
                                                       keyboardType:
-                                                          TextInputType.text,
+                                                          TextInputType.number,
                                                       maxLength: 3,
                                                       decoration:
                                                           InputDecoration(
@@ -362,7 +362,7 @@ class ProfileScreen extends StatelessWidget {
                                                     width: 2.0,
                                                   ),
                                                   Text(
-                                                    "(*)",
+                                                    "*",
                                                     style: TextStyle(
                                                       color:
                                                           Colors.red.shade300,
@@ -389,7 +389,7 @@ class ProfileScreen extends StatelessWidget {
                                                       controller: model
                                                           .weightController,
                                                       keyboardType:
-                                                          TextInputType.text,
+                                                          TextInputType.number,
                                                       maxLength: 3,
                                                       decoration:
                                                           InputDecoration(

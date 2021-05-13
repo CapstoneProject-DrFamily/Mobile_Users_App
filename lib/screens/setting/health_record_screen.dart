@@ -8,7 +8,6 @@ import 'package:drFamily_app/widgets/common/fonts.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HealthRecordScreen extends StatelessWidget {

@@ -34,7 +34,7 @@ class HealthRecordRepo extends IHealthRecordRepo {
 
   @override
   Future<bool> updateHealthRecord(String updateHealthRecordJson) async {
-    String urlAPI = APIHelper.UPDATE_HEALTHRECORD_API;
+    String urlAPI = APIHelper.HEALTHRECORD_API;
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };

@@ -1,9 +1,14 @@
 class HealthRecordModel {
-  final int healthRecordID;
+  final int patientID, disable;
   final String insBy, insDatetime;
 
-  HealthRecordModel({this.healthRecordID, this.insBy, this.insDatetime});
+  HealthRecordModel(
+      {this.patientID, this.insBy, this.insDatetime, this.disable});
 
-  Map<String, dynamic> toJson() =>
-      {"recordId": healthRecordID, "insBy": insBy, "insDatetime": insDatetime};
+  Map<String, dynamic> toJson() => {
+        "patientId": patientID,
+        "insBy": insBy,
+        "insDatetime": insDatetime,
+        "disable": disable
+      };
 }

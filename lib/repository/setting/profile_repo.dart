@@ -16,7 +16,7 @@ abstract class IProfileRepo {
 class ProfileRepo extends IProfileRepo {
   @override
   Future<ProfileModel> getBasicInfo(String profileID) async {
-    String urlAPI = APIHelper.GET_PATIENT_BY_ID_API + profileID;
+    String urlAPI = APIHelper.PATIENT_BY_ID_API + profileID;
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };

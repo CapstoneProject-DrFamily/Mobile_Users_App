@@ -70,7 +70,7 @@ class PatientRepo extends IPatientRepo {
 
   @override
   Future<bool> updatePatientInfo(String updatePatientInfoJson) async {
-    String urlAPI = APIHelper.UPDATE_PROFILE_API;
+    String urlAPI = APIHelper.PATIENT_API;
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };

@@ -10,7 +10,6 @@ import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +27,9 @@ class SignUpViewModel extends BaseModel {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _idCardController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
+  TextEditingController _bloodTypeController = TextEditingController();
+  TextEditingController _heightController = TextEditingController();
+  TextEditingController _weightController = TextEditingController();
 
   TextEditingController get fullNameController => _fullNameController;
   TextEditingController get dobController => _dobController;
@@ -35,6 +37,9 @@ class SignUpViewModel extends BaseModel {
   TextEditingController get emailController => _emailController;
   TextEditingController get idCardController => _idCardController;
   TextEditingController get locationController => _locationController;
+  TextEditingController get bloodTypeController => _bloodTypeController;
+  TextEditingController get heightController => _heightController;
+  TextEditingController get weightController => _weightController;
 
   String location;
   String errorLocation;
@@ -60,9 +65,23 @@ class SignUpViewModel extends BaseModel {
     '12'
   ];
 
+  List<String> listBloodType = [
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'O+',
+    'O-',
+    'AB+',
+    'AB-',
+  ];
+
   Validate _fullName = Validate(null, null);
   Validate _email = Validate(null, null);
   Validate _idCard = Validate(null, null);
+  Validate _height = Validate(null, null);
+  Validate _weight = Validate(null, null);
+  Validate _bloodType = Validate(null, null);
   String _dob;
   String _gender;
   String _defaultImage = DEFAULT_IMG;
@@ -70,6 +89,9 @@ class SignUpViewModel extends BaseModel {
   Validate get fullName => _fullName;
   Validate get email => _email;
   Validate get idCard => _idCard;
+  Validate get height => _height;
+  Validate get weight => _weight;
+  Validate get bloodType => _bloodType;
   String get dob => _dob;
   String get gender => _gender;
   String get defaultImage => _defaultImage;
@@ -102,6 +124,13 @@ class SignUpViewModel extends BaseModel {
         await SharedPreferences.getInstance();
     phone = sharedPreferences.getString('usPhone');
     accountID = sharedPreferences.getInt('usAccountID');
+    notifyListeners();
+  }
+
+  //function choose Blood type
+  void chooseBloodType(String newValue) {
+    _bloodTypeController.text = newValue;
+    _bloodType = Validate(newValue, null);
     notifyListeners();
   }
 
@@ -174,6 +203,37 @@ class SignUpViewModel extends BaseModel {
     notifyListeners();
   }
 
+  void checkHeight(String height) {
+    print(height);
+    if (height == null || height.length == 0) {
+      _height = Validate(null, "Height can't be blank");
+    } else if (double.parse(height) <= 0) {
+      _height = Validate(null, "Height must be greater than zero");
+    } else {
+      _height = Validate(height, null);
+    }
+    notifyListeners();
+  }
+
+  void checkWeight(String weight) {
+    print(weight);
+    if (weight == null || weight.length == 0) {
+      _weight = Validate(null, "Weight can't be blank");
+    } else if (double.parse(weight) <= 0) {
+      _weight = Validate(null, "Weight must be greater than zero");
+    } else {
+      _weight = Validate(weight, null);
+    }
+    notifyListeners();
+  }
+
+  void checkBloodType() {
+    if (_bloodTypeController.text.isEmpty) {
+      _bloodType = Validate(null, "Blood type is require.");
+    }
+    notifyListeners();
+  }
+
   void printCheck() {
     print(_image.toString());
     print(_fullName.value);
@@ -221,6 +281,18 @@ class SignUpViewModel extends BaseModel {
       _isReady = false;
     }
 
+    if (_height.value == null) {
+      checkHeight(null);
+      _isReady = false;
+    }
+
+    if (_weight.value == null) {
+      checkWeight(null);
+      _isReady = false;
+    }
+
+    if (_bloodType.value == null) _isReady = false;
+
     if (location == null) {
       _isReady = false;
       errorLocation = "Please Choose Your Location";
@@ -240,21 +312,25 @@ class SignUpViewModel extends BaseModel {
       _signUpModel = new SignUpModel(
         fullName: _fullNameController.text,
         dob: dobadd,
-        gender: _gender,
-        phone: phone,
         image: currentImage,
-        email: _emailController.text,
         idCard: _idCardController.text,
+        email: _emailController.text,
+        gender: _gender,
+        location: location,
+        relationship: "Owner",
+        height: double.parse(_heightController.text),
+        weight: double.parse(_weightController.text),
+        bloodType: bloodTypeController.text,
         accountID: accountID,
       );
 
-      String addProfileJson = jsonEncode(_signUpModel.toJson());
-      print(addProfileJson + "\n");
+      String createPatientJson = jsonEncode(_signUpModel.toJson());
+      print(createPatientJson + "\n");
 
-      check = await _signUpRepo.createProfile(addProfileJson);
-      if (check == true) check = await _signUpRepo.updateUser();
+      check = await _signUpRepo.updateUser();
 
-      if (check == true) check = await _signUpRepo.createPatient(location);
+      if (check == true)
+        check = await _signUpRepo.createPatient(createPatientJson);
 
       if (check == true) check = await _signUpRepo.createHealthRecord();
 

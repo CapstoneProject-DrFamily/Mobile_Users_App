@@ -16,11 +16,11 @@ class APIHelper {
 
   //API Patient
   static const String PATIENT_API = '$PREFIX_API/api/v1/Patients';
-  static const String CREATE_PATIENT_API = '$PREFIX_API/api/v1/Patients';
-  static const String GET_PATIENT_BY_ID_API = '$PREFIX_API/api/v1/Patients/';
-  static const String UPDATE_PATIENT_API = '$PREFIX_API/api/v1/Patients';
-  static const String GET_DEPENDENT_API = '$PREFIX_API/api/v1/Patients/';
-  static const String DELETE_DEPENDENT_API = '$PREFIX_API/api/v1/Patients/';
+  static const String PATIENT_BY_ID_API = '$PREFIX_API/api/v1/Patients/';
+  // static const String CREATE_PATIENT_API = '$PREFIX_API/api/v1/Patients';
+  // static const String UPDATE_PATIENT_API = '$PREFIX_API/api/v1/Patients';
+  // static const String GET_DEPENDENT_API = '$PREFIX_API/api/v1/Patients/';
+  // static const String DELETE_DEPENDENT_API = '$PREFIX_API/api/v1/Patients/';
 
   //API Symptom
   static const String SYMPTOM_API = '$PREFIX_API/api/v1/Symptoms';
@@ -29,12 +29,11 @@ class APIHelper {
   static const String SPECIALTY_API = '$PREFIX_API/api/v1/Specialties';
 
   //API Health Record
-  static const String CREATE_HEALTHRECORD_API =
-      '$PREFIX_API/api/v1/HealthRecords';
+  static const String HEALTHRECORD_API = '$PREFIX_API/api/v1/HealthRecords';
   static const String GET_HEALTHRECORD_BY_ID_API =
       '$PREFIX_API/api/v1/HealthRecords/';
-  static const String UPDATE_HEALTHRECORD_API =
-      '$PREFIX_API/api/v1/HealthRecords';
+  // static const String UPDATE_HEALTHRECORD_API =
+  //     '$PREFIX_API/api/v1/HealthRecords';
 
   //API Transaction
   static const String TRANSACTION_API = '$PREFIX_API/api/v1/Transactions';

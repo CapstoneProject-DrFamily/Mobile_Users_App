@@ -4,6 +4,7 @@ import 'package:drFamily_app/Helper/validate.dart';
 import 'package:drFamily_app/repository/patient_repo.dart';
 import 'package:drFamily_app/screens/map_choose_profile.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 import 'package:drFamily_app/model/setting/addition_info_model.dart';
 import 'package:drFamily_app/model/setting/profile_model.dart';
@@ -39,13 +40,13 @@ class ProfileScreenViewModel extends BaseModel {
   Validate _fullName = Validate(null, null);
   Validate _email = Validate(null, null);
   Validate _idCard = Validate(null, null);
-  String _dob = "";
   String _phoneNum = "";
   String _currentImage = "";
   String _height = "";
   String _weight = "";
   String _selectGender;
   String location = "";
+  String dob;
 
   int _gender = 0;
   List _months = [
@@ -94,7 +95,6 @@ class ProfileScreenViewModel extends BaseModel {
   Validate get fullName => _fullName;
   Validate get email => _email;
   Validate get idCard => _idCard;
-  String get dob => _dob;
   String get phoneNum => _phoneNum;
   String get currentImage => _currentImage;
   String get height => _height;
@@ -266,6 +266,11 @@ class ProfileScreenViewModel extends BaseModel {
           '-' +
           datetime.year.toString();
     }
+    dob = datetime.year.toString() +
+        "-" +
+        _months[datetime.month - 1] +
+        "-" +
+        datetime.day.toString();
     notifyListeners();
   }
 
@@ -390,7 +395,7 @@ class ProfileScreenViewModel extends BaseModel {
       var jsonPatientUpdate = {
         "id": profileID,
         "fullname": fullNameController.text,
-        "birthday": dobController.text,
+        "birthday": dob,
         "image": uploadImage,
         "idCard": idCardController.text,
         "email": emailController.text,
@@ -402,6 +407,8 @@ class ProfileScreenViewModel extends BaseModel {
         "bloodType": bloodTypeController.text,
         "accountId": accountId,
       };
+
+      print("jsonUpdate $jsonPatientUpdate");
 
       check =
           await _patientRepo.updatePatientInfo(jsonEncode(jsonPatientUpdate));
