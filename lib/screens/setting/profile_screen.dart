@@ -11,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -74,7 +72,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -97,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -120,7 +118,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -143,7 +141,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -166,7 +164,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -245,7 +243,7 @@ class ProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -278,7 +276,7 @@ class ProfileScreen extends StatelessWidget {
                                                     width: 2.0,
                                                   ),
                                                   Text(
-                                                    "(*)",
+                                                    "*",
                                                     style: TextStyle(
                                                       color:
                                                           Colors.red.shade300,
@@ -305,7 +303,7 @@ class ProfileScreen extends StatelessWidget {
                                                       controller: model
                                                           .heightController,
                                                       keyboardType:
-                                                          TextInputType.text,
+                                                          TextInputType.number,
                                                       maxLength: 3,
                                                       decoration:
                                                           InputDecoration(
@@ -364,7 +362,7 @@ class ProfileScreen extends StatelessWidget {
                                                     width: 2.0,
                                                   ),
                                                   Text(
-                                                    "(*)",
+                                                    "*",
                                                     style: TextStyle(
                                                       color:
                                                           Colors.red.shade300,
@@ -391,7 +389,7 @@ class ProfileScreen extends StatelessWidget {
                                                       controller: model
                                                           .weightController,
                                                       keyboardType:
-                                                          TextInputType.text,
+                                                          TextInputType.number,
                                                       maxLength: 3,
                                                       decoration:
                                                           InputDecoration(
@@ -636,7 +634,7 @@ class ProfileScreen extends StatelessWidget {
               }).showModal(context);
         },
         child: TextFormField(
-          controller: model.bloodTpeController,
+          controller: model.bloodTypeController,
           // onChanged: (value) => model.changePhoneNum(value),
           style: GoogleFonts.varelaRound(
             fontWeight: FontWeight.normal,

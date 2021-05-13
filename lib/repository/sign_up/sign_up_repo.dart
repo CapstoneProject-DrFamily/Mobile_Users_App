@@ -1,52 +1,25 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:drFamily_app/Helper/api_helper.dart';
 import 'package:drFamily_app/model/sign_up/health_record_create_model.dart';
-import 'package:drFamily_app/model/sign_up/patient_create_model.dart';
 import 'package:drFamily_app/model/sign_up/user_update_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ISignUpRepo {
-  Future<bool> createProfile(String createProfileJson);
   Future<bool> updateUser();
-  Future<bool> createHealthRecord();
   Future<bool> createPatient(String location);
+  Future<bool> createHealthRecord();
 }
 
 class SignUpRepo extends ISignUpRepo {
   UserUpdateModel _userUpdateModel;
   HealthRecordModel _healthRecordModel;
-  PatientCreateModel _patientCreateModel;
-  int profileId, accountId, healthRecordId;
+  // PatientCreateModel _patientCreateModel;
+  // SignUpModel _signUpModel;
+  int profileId, accountId, patientId, healthRecordId;
   String phone, formatPhone;
-
-  @override
-  Future<bool> createProfile(String createProfileJson) async {
-    String urlAPI = APIHelper.CREATE_PROFILE_API;
-    Map<String, String> header = {
-      HttpHeaders.contentTypeHeader: "application/json",
-    };
-
-    var response =
-        await http.post(urlAPI, headers: header, body: createProfileJson);
-    print("Status code: " + response.statusCode.toString());
-    bool isCreated = true;
-
-    if (response.statusCode == 201) {
-      String jSonData = response.body;
-      var decodeData = jsonDecode(jSonData);
-      profileId = decodeData["profileId"];
-
-      print("ProfileId: " + profileId.toString());
-      return isCreated;
-    } else {
-      isCreated = false;
-      return isCreated;
-    }
-  }
 
   @override
   Future<bool> updateUser() async {
@@ -72,8 +45,6 @@ class SignUpRepo extends ISignUpRepo {
         password: null,
         roleId: 2,
         waiting: 0);
-
-    // String updateUserJson = jsonEncode(_userUpdateModel.toJson());
 
     var data = {
       'userModel': {
@@ -104,16 +75,54 @@ class SignUpRepo extends ISignUpRepo {
   }
 
   @override
+  Future<bool> createPatient(String createPatientJson) async {
+    String urlAPI = APIHelper.PATIENT_API;
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    // _patientCreateModel = new PatientCreateModel(
+    //   patientId: profileId,
+    //   height: 0,
+    //   weight: 0,
+    //   bloodType: null,
+    //   relationship: "Owner",
+    //   location: location,
+    // );
+    // String createPatientJson = jsonEncode(_patientCreateModel.toJson());
+    // print("CreatePatientJson: " + createPatientJson);
+
+    var response =
+        await http.post(urlAPI, headers: header, body: createPatientJson);
+    print("Status code createPatient: " + response.statusCode.toString());
+
+    bool isCreated = true;
+    if (response.statusCode == 201) {
+      String jSonData = response.body;
+      var decodeData = jsonDecode(jSonData);
+      patientId = decodeData["id"];
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.setInt("usPatientID", patientId);
+      return isCreated;
+    } else {
+      isCreated = false;
+      return isCreated;
+    }
+  }
+
+  @override
   Future<bool> createHealthRecord() async {
-    String urlAPI = APIHelper.CREATE_HEALTHRECORD_API;
+    String urlAPI = APIHelper.HEALTHRECORD_API;
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
     _healthRecordModel = new HealthRecordModel(
-        healthRecordID: profileId,
+        patientID: patientId,
         insBy: "Owner",
-        insDatetime: DateTime.now().toString());
+        insDatetime: DateTime.now().toString(),
+        disable: 0);
 
     String createHealthRecordJson = jsonEncode(_healthRecordModel.toJson());
     print("CreateHealthRecordJson: " + createHealthRecordJson);
@@ -129,37 +138,6 @@ class SignUpRepo extends ISignUpRepo {
       healthRecordId = decodeData["recordId"];
 
       print("RecordId: " + healthRecordId.toString());
-      return isCreated;
-    } else {
-      isCreated = false;
-      return isCreated;
-    }
-  }
-
-  @override
-  Future<bool> createPatient(String location) async {
-    String urlAPI = APIHelper.CREATE_PATIENT_API;
-    Map<String, String> header = {
-      HttpHeaders.contentTypeHeader: "application/json",
-    };
-
-    _patientCreateModel = new PatientCreateModel(
-      patientId: profileId,
-      height: 0,
-      weight: 0,
-      bloodType: null,
-      relationship: "Owner",
-      location: location,
-    );
-    String createPatientJson = jsonEncode(_patientCreateModel.toJson());
-    print("CreatePatientJson: " + createPatientJson);
-
-    var response =
-        await http.post(urlAPI, headers: header, body: createPatientJson);
-    print("Status code createPatient: " + response.statusCode.toString());
-
-    bool isCreated = true;
-    if (response.statusCode == 201) {
       return isCreated;
     } else {
       isCreated = false;

@@ -11,7 +11,7 @@ abstract class ILangdingRepo {
 class LangdingRepo extends ILangdingRepo {
   @override
   Future<LandingModel> getPatientProfile(String profileID) async {
-    String urlAPI = APIHelper.GET_PATIENT_BY_ID_API + profileID;
+    String urlAPI = APIHelper.PATIENT_BY_ID_API + profileID;
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };

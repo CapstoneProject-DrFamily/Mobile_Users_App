@@ -23,7 +23,7 @@ class DependentRepo extends IDependentRepo {
   @override
   Future<List<DependentModel>> getListDependent(int accountID) async {
     String urlAPI =
-        APIHelper.GET_DEPENDENT_API + accountID.toString() + "/Dependents";
+        APIHelper.PATIENT_BY_ID_API + accountID.toString() + "/Dependents";
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
@@ -46,7 +46,7 @@ class DependentRepo extends IDependentRepo {
   @override
   Future<bool> deleteDependent(int patientID) async {
     print("patientID: " + patientID.toString());
-    String urlAPI = APIHelper.DELETE_DEPENDENT_API + patientID.toString();
+    String urlAPI = APIHelper.PATIENT_BY_ID_API + patientID.toString();
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
@@ -88,13 +88,13 @@ class DependentRepo extends IDependentRepo {
 
   @override
   Future<bool> createHealthRecord() async {
-    String urlAPI = APIHelper.CREATE_HEALTHRECORD_API;
+    String urlAPI = APIHelper.HEALTHRECORD_API;
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
-    _healthRecordModel = new HealthRecordModel(
-        healthRecordID: profileId, insBy: null, insDatetime: null);
+    // _healthRecordModel = new HealthRecordModel(
+    //     healthRecordID: profileId, insBy: null, insDatetime: null);
 
     String createHealthRecordJson = jsonEncode(_healthRecordModel.toJson());
     print("CreateHealthRecordJson: " + createHealthRecordJson);
@@ -122,7 +122,7 @@ class DependentRepo extends IDependentRepo {
     // final SharedPreferences prefs = await SharedPreferences.getInstance();
     // int accountID = prefs.getInt("usAccountID");
 
-    String urlAPI = APIHelper.CREATE_PATIENT_API;
+    String urlAPI = APIHelper.PATIENT_API;
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };

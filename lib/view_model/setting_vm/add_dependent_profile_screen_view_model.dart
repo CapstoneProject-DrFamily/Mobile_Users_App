@@ -132,7 +132,7 @@ class AddDependentProfileScreenViewModel extends BaseModel {
         fullName: _fullNameController.text,
         dob: DateFormat('yyyy-MM-dd').format(DateTime.now()),
         gender: null,
-        phone: _phoneController.text,
+        // phone: _phoneController.text,
         image: null,
         email: null,
         idCard: null,

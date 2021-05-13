@@ -20,6 +20,7 @@ Future<void> main() async {
     theme: ThemeData(fontFamily: 'VarelaRound'),
     debugShowCheckedModeBanner: false,
     home:
+        // SignUpScreen(),
         // CheckOutScreen(
         //     transactionId: 'TS-05845786-c0e8-4b64-a322-9bd535ca55f6'),
         (profileID == 0 || profileID == null) ? LoginScreen() : LandingScreen(),

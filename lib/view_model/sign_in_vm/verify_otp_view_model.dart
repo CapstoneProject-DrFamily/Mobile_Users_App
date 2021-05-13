@@ -208,6 +208,7 @@ class VerifyOTPViewModel extends BaseModel {
 
             if (_userModel != null) {
               prefs.setInt("usProfileID", _userModel.profileId);
+              prefs.setInt("usPatientID", _userModel.profileId);
               prefs.setString("usToken", _userModel.token);
               prefs.setString("usRole", _userModel.role);
               prefs.setInt("usAccountID", _userModel.userId);

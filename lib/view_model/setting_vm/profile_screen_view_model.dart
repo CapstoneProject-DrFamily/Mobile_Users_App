@@ -4,6 +4,7 @@ import 'package:drFamily_app/Helper/validate.dart';
 import 'package:drFamily_app/repository/patient_repo.dart';
 import 'package:drFamily_app/screens/map_choose_profile.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 import 'package:drFamily_app/model/setting/addition_info_model.dart';
 import 'package:drFamily_app/model/setting/profile_model.dart';
@@ -31,7 +32,7 @@ class ProfileScreenViewModel extends BaseModel {
   TextEditingController _phoneNumController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _idCardController = TextEditingController();
-  TextEditingController _bloodTpeController = TextEditingController();
+  TextEditingController _bloodTypeController = TextEditingController();
   TextEditingController _heightController = TextEditingController();
   TextEditingController _weightController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
@@ -39,14 +40,13 @@ class ProfileScreenViewModel extends BaseModel {
   Validate _fullName = Validate(null, null);
   Validate _email = Validate(null, null);
   Validate _idCard = Validate(null, null);
-  String _dob = "";
   String _phoneNum = "";
   String _currentImage = "";
-  String _bloodType = "";
   String _height = "";
   String _weight = "";
   String _selectGender;
   String location = "";
+  String dob;
 
   int _gender = 0;
   List _months = [
@@ -87,7 +87,7 @@ class ProfileScreenViewModel extends BaseModel {
   TextEditingController get phoneNumController => _phoneNumController;
   TextEditingController get emailController => _emailController;
   TextEditingController get idCardController => _idCardController;
-  TextEditingController get bloodTpeController => _bloodTpeController;
+  TextEditingController get bloodTypeController => _bloodTypeController;
   TextEditingController get heightController => _heightController;
   TextEditingController get weightController => _weightController;
   TextEditingController get locationController => _locationController;
@@ -95,10 +95,8 @@ class ProfileScreenViewModel extends BaseModel {
   Validate get fullName => _fullName;
   Validate get email => _email;
   Validate get idCard => _idCard;
-  String get dob => _dob;
   String get phoneNum => _phoneNum;
   String get currentImage => _currentImage;
-  String get bloodType => _bloodType;
   String get height => _height;
   String get weight => _weight;
   String get selectGender => _selectGender;
@@ -216,7 +214,7 @@ class ProfileScreenViewModel extends BaseModel {
     relationship = _additionInfoModel.relationship;
     // accountId = _additionInfoModel.accountId;
 
-    _bloodTpeController.text = _additionInfoModel.bloodType;
+    _bloodTypeController.text = _additionInfoModel.bloodType;
 
     int convertHeight = _additionInfoModel.height.toInt();
     _heightController.text = convertHeight.toString();
@@ -268,11 +266,16 @@ class ProfileScreenViewModel extends BaseModel {
           '-' +
           datetime.year.toString();
     }
+    dob = datetime.year.toString() +
+        "-" +
+        _months[datetime.month - 1] +
+        "-" +
+        datetime.day.toString();
     notifyListeners();
   }
 
   void changeBloodType(String type) {
-    _bloodTpeController.text = type;
+    _bloodTypeController.text = type;
     notifyListeners();
   }
 
@@ -392,7 +395,7 @@ class ProfileScreenViewModel extends BaseModel {
       var jsonPatientUpdate = {
         "id": profileID,
         "fullname": fullNameController.text,
-        "birthday": dobController.text,
+        "birthday": dob,
         "image": uploadImage,
         "idCard": idCardController.text,
         "email": emailController.text,
@@ -401,9 +404,11 @@ class ProfileScreenViewModel extends BaseModel {
         "relationship": relationship,
         "height": height,
         "weight": weight,
-        "bloodType": bloodTpeController.text,
+        "bloodType": bloodTypeController.text,
         "accountId": accountId,
       };
+
+      print("jsonUpdate $jsonPatientUpdate");
 
       check =
           await _patientRepo.updatePatientInfo(jsonEncode(jsonPatientUpdate));

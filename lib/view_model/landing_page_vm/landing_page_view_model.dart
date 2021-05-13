@@ -68,8 +68,11 @@ class LandingPageViewModel extends BaseModel {
   Future<void> init() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String phone = prefs.getString("usPhone");
+    int patientID = prefs.getInt("usPatientID");
     int profileID = prefs.getInt("usProfileID");
-    print('profile $profileID');
+
+    print('profile $patientID');
+
     int userID = prefs.getInt("usAccountID");
 
     bool status = await _userRepo.getStatusUser(userID);
@@ -94,6 +97,8 @@ class LandingPageViewModel extends BaseModel {
 
       prefs.setString("usNotiToken", tokenNotifycation);
 
+      print("patientID ${profileID}");
+
       _landingModel =
           await _langdingRepo.getPatientProfile(profileID.toString());
       _fullName = _landingModel.fullName;
@@ -104,8 +109,8 @@ class LandingPageViewModel extends BaseModel {
 
       print("Phone: " +
           phone +
-          " ProfileID: " +
-          profileID.toString() +
+          " PatientID: " +
+          patientID.toString() +
           " AccountID: " +
           userID.toString());
       isLoading = false;
