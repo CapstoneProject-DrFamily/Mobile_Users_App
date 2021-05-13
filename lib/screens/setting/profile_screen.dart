@@ -11,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -659,7 +657,7 @@ class ProfileScreen extends StatelessWidget {
               }).showModal(context);
         },
         child: TextFormField(
-          controller: model.bloodTpeController,
+          controller: model.bloodTypeController,
           // onChanged: (value) => model.changePhoneNum(value),
           style: GoogleFonts.varelaRound(
             fontWeight: FontWeight.normal,

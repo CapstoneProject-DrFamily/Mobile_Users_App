@@ -28,7 +28,7 @@ class ProfileScreenViewModel extends BaseModel {
   TextEditingController _phoneNumController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _idCardController = TextEditingController();
-  TextEditingController _bloodTpeController = TextEditingController();
+  TextEditingController _bloodTypeController = TextEditingController();
   TextEditingController _heightController = TextEditingController();
   TextEditingController _weightController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
@@ -39,7 +39,6 @@ class ProfileScreenViewModel extends BaseModel {
   String _dob = "";
   String _phoneNum = "";
   String _currentImage = "";
-  String _bloodType = "";
   String _height = "";
   String _weight = "";
   String _selectGender;
@@ -84,7 +83,7 @@ class ProfileScreenViewModel extends BaseModel {
   TextEditingController get phoneNumController => _phoneNumController;
   TextEditingController get emailController => _emailController;
   TextEditingController get idCardController => _idCardController;
-  TextEditingController get bloodTpeController => _bloodTpeController;
+  TextEditingController get bloodTypeController => _bloodTypeController;
   TextEditingController get heightController => _heightController;
   TextEditingController get weightController => _weightController;
   TextEditingController get locationController => _locationController;
@@ -95,7 +94,6 @@ class ProfileScreenViewModel extends BaseModel {
   String get dob => _dob;
   String get phoneNum => _phoneNum;
   String get currentImage => _currentImage;
-  String get bloodType => _bloodType;
   String get height => _height;
   String get weight => _weight;
   String get selectGender => _selectGender;
@@ -212,7 +210,7 @@ class ProfileScreenViewModel extends BaseModel {
     relationship = _additionInfoModel.relationship;
     // accountId = _additionInfoModel.accountId;
 
-    _bloodTpeController.text = _additionInfoModel.bloodType;
+    _bloodTypeController.text = _additionInfoModel.bloodType;
 
     int convertHeight = _additionInfoModel.height.toInt();
     _heightController.text = convertHeight.toString();
@@ -268,7 +266,7 @@ class ProfileScreenViewModel extends BaseModel {
   }
 
   void changeBloodType(String type) {
-    _bloodTpeController.text = type;
+    _bloodTypeController.text = type;
     notifyListeners();
   }
 
@@ -405,7 +403,7 @@ class ProfileScreenViewModel extends BaseModel {
         weight: (_weightController.text == "")
             ? 0
             : double.parse(_weightController.text),
-        bloodType: bloodTpeController.text,
+        bloodType: bloodTypeController.text,
         relationship: relationship,
         location: location,
       );
