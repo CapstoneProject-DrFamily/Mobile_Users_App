@@ -5,7 +5,7 @@ class LandingModel {
 
   factory LandingModel.fromJson(Map<String, dynamic> json) {
     return LandingModel(
-      fullName: json['fullName'] as String,
+      fullName: json['fullname'] as String,
       image: json['image'] as String,
     );
   }

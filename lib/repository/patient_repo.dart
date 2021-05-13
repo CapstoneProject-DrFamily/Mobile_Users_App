@@ -9,6 +9,7 @@ abstract class IPatientRepo {
   Future<List<DependentModel>> getDependent(int accountID);
   Future<String> getPatientLocation(int patientId);
   Future<String> getPatientName(int patientId);
+  Future<bool> updatePatientInfo(String updatePatientInfoJson);
 }
 
 class PatientRepo extends IPatientRepo {
@@ -65,5 +66,25 @@ class PatientRepo extends IPatientRepo {
       return name;
     } else
       return null;
+  }
+
+  @override
+  Future<bool> updatePatientInfo(String updatePatientInfoJson) async {
+    String urlAPI = APIHelper.UPDATE_PROFILE_API;
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    var response =
+        await http.put(urlAPI, headers: header, body: updatePatientInfoJson);
+    print("Status updatePatientBasic: " + response.statusCode.toString());
+
+    bool isUpdated = true;
+    if (response.statusCode == 200) {
+      return isUpdated;
+    } else {
+      isUpdated = false;
+      return isUpdated;
+    }
   }
 }
