@@ -15,7 +15,7 @@ class AdditionInfoModel {
 
   factory AdditionInfoModel.fromJson(Map<String, dynamic> json) {
     return AdditionInfoModel(
-      patientId: json['patientId'] as int,
+      patientId: json['id'] as int,
       bloodType: json['bloodType'] as String,
       height: json['height'] as double,
       weight: json['weight'] as double,

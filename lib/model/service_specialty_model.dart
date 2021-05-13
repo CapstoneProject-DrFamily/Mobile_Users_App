@@ -16,12 +16,12 @@ class ServiceSpecialtyModel {
 
   factory ServiceSpecialtyModel.fromJson(Map<String, dynamic> json) {
     return ServiceSpecialtyModel(
-      serviceId: json['serviceId'] as int,
-      serviceName: json['serviceName'] as String,
-      serviceDescription: json['serviceDescription'] as String,
+      serviceId: json['id'] as int,
+      serviceName: json['name'] as String,
+      serviceDescription: json['description'] as String,
       serviceImage: json['image'] as String,
       specialtyId: json['specialtyId'] as int,
-      servicePrice: json['servicePrice'] as double,
+      servicePrice: json['price'] as double,
       disabled: json['disabled'] as bool,
       isDefault: json['isDefault'] as bool,
     );
