@@ -55,16 +55,6 @@ class PaymentViewModel extends BaseModel {
     // checkout invoice details
     String totalAmount = _price.toString();
     String subTotalAmount = _price.toString();
-    String userFirstName = 'Juned';
-    String userLastName = 'Raza';
-    String shippingCost = '0';
-    int shippingDiscountCost = 0;
-    String addressCity = 'Delhi';
-    String addressStreet = 'Abc road';
-    String addressZipCode = '123456';
-    String addressCountry = 'VietNam';
-    String addressState = 'HoChiMinh';
-    String addressPhoneNumber = '+84909784009';
 
     Map<String, dynamic> temp = {
       "intent": "sale",
@@ -76,8 +66,6 @@ class PaymentViewModel extends BaseModel {
             "currency": defaultCurrency["currency"],
             "details": {
               "subtotal": subTotalAmount,
-              "shipping": shippingCost,
-              "shipping_discount": ((-1.0) * shippingDiscountCost).toString()
             }
           },
           "description": "The payment transaction description.",
@@ -86,17 +74,6 @@ class PaymentViewModel extends BaseModel {
           },
           "item_list": {
             "items": items,
-            if (isEnableShipping && isEnableAddress)
-              "shipping_address": {
-                "recipient_name": userFirstName + " " + userLastName,
-                "line1": addressStreet,
-                "line2": "",
-                "city": addressCity,
-                "country_code": addressCountry,
-                "postal_code": addressZipCode,
-                "phone": addressPhoneNumber,
-                "state": addressState
-              },
           }
         }
       ],
