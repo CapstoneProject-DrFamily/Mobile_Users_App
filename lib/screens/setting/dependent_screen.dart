@@ -152,11 +152,11 @@ class DependentScreen extends StatelessWidget {
                                                             await SharedPreferences
                                                                 .getInstance();
                                                         prefs.setInt(
-                                                            "dependentProfileID",
+                                                            "dependentPatientID",
                                                             model
                                                                 .listDependent[
                                                                     index]
-                                                                .profileID);
+                                                                .patientID);
                                                         model
                                                             .seeDetail(context);
                                                       },
@@ -217,11 +217,11 @@ class DependentScreen extends StatelessWidget {
                                                             await SharedPreferences
                                                                 .getInstance();
                                                         prefs.setInt(
-                                                            "dependentProfileID",
+                                                            "dependentPatientID",
                                                             model
                                                                 .listDependent[
                                                                     index]
-                                                                .profileID);
+                                                                .patientID);
                                                         model.seeHealthRecord(
                                                             context);
                                                       },

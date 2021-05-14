@@ -18,7 +18,7 @@ class DependentProfileViewModel extends BaseModel {
   ProfileModel _profileModel;
   AdditionInfoModel _additionInfoModel;
 
-  int profileID, patientID, recordId, accountId;
+  int dependentPatientID, patientID, recordId, accountId;
   String relationship;
 
   File _image;
@@ -29,7 +29,7 @@ class DependentProfileViewModel extends BaseModel {
   TextEditingController _phoneNumController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _idCardController = TextEditingController();
-  TextEditingController _bloodTpeController = TextEditingController();
+  TextEditingController _bloodTypeController = TextEditingController();
   TextEditingController _heightController = TextEditingController();
   TextEditingController _weightController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
@@ -39,6 +39,7 @@ class DependentProfileViewModel extends BaseModel {
   String _currentImage = DEFAULT_IMG;
   String _selectGender;
   String location = "";
+  String dob;
 
   Validate _fullName = Validate(null, null);
   Validate _email = Validate(null, null);
@@ -46,18 +47,18 @@ class DependentProfileViewModel extends BaseModel {
 
   int _gender = 0;
   List _months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+    '06',
+    '07',
+    '08',
+    '09',
+    '10',
+    '11',
+    '12'
   ];
 
   List<String> listBloodType = [
@@ -83,7 +84,7 @@ class DependentProfileViewModel extends BaseModel {
   TextEditingController get phoneNumController => _phoneNumController;
   TextEditingController get emailController => _emailController;
   TextEditingController get idCardController => _idCardController;
-  TextEditingController get bloodTpeController => _bloodTpeController;
+  TextEditingController get bloodTypeController => _bloodTypeController;
   TextEditingController get heightController => _heightController;
   TextEditingController get weightController => _weightController;
   TextEditingController get locationController => _locationController;
@@ -186,14 +187,16 @@ class DependentProfileViewModel extends BaseModel {
   void getDependentProfile() async {
     this._isLoading = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    profileID = prefs.getInt("dependentProfileID");
+    dependentPatientID = prefs.getInt("dependentPatientID");
     accountId = prefs.getInt("usAccountID");
 
     //Get user profile
-    _profileModel = await _profileRepo.getBasicInfo(profileID.toString());
+    _profileModel =
+        await _profileRepo.getBasicInfo(dependentPatientID.toString());
     fullNameController.text = _profileModel.fullName;
 
-    DateTime date = DateTime.parse(_profileModel.dob);
+    DateTime date =
+        DateTime.parse(_profileModel.dob == null ? "" : _profileModel.dob);
     changeDOB(date);
 
     if (_profileModel.gender == "Male") {
@@ -219,15 +222,16 @@ class DependentProfileViewModel extends BaseModel {
     patientID = _additionInfoModel.patientId;
     relationship = _additionInfoModel.relationship;
 
-    _bloodTpeController.text = _additionInfoModel.bloodType;
+    _bloodTypeController.text = _additionInfoModel.bloodType;
 
-    int convertHeight = (_additionInfoModel.height == null)
-        ? 0
-        : _additionInfoModel.height.toInt();
-    _heightController.text = convertHeight.toString();
+    // int convertHeight = _additionInfoModel.height.toInt();
+    // _heightController.text = convertHeight.toString();
+    _heightController.text = _additionInfoModel.height.toString() == "null"
+        ? ""
+        : _additionInfoModel.height.toString();
 
-    _weightController.text = (_additionInfoModel.weight == null)
-        ? "0.0"
+    _weightController.text = _additionInfoModel.weight.toString() == "null"
+        ? ""
         : _additionInfoModel.weight.toString();
 
     if (_additionInfoModel.location == null ||
@@ -275,11 +279,16 @@ class DependentProfileViewModel extends BaseModel {
           '-' +
           datetime.year.toString();
     }
+    dob = datetime.year.toString() +
+        "-" +
+        _months[datetime.month - 1] +
+        "-" +
+        datetime.day.toString();
     notifyListeners();
   }
 
   void changeBloodType(String type) {
-    _bloodTpeController.text = type;
+    _bloodTypeController.text = type;
     notifyListeners();
   }
 
@@ -388,6 +397,7 @@ class DependentProfileViewModel extends BaseModel {
         uploadImage = currentImage;
       }
 
+<<<<<<< HEAD
       _profileModel = new ProfileModel(
           profileId: profileID,
           fullName: fullNameController.text,
@@ -427,6 +437,67 @@ class DependentProfileViewModel extends BaseModel {
       print("updateAdditionInfoJson: " + updateAdditionInfoJson);
 
       check = await _profileRepo.updateAdditionInfo(updateAdditionInfoJson);
+=======
+      var jsonDependentProfileUpdate = {
+        "id": dependentPatientID,
+        "fullname": fullNameController.text,
+        "birthday": dob,
+        "image": uploadImage,
+        "idCard": idCardController.text,
+        "email": emailController.text,
+        "gender": selectGender,
+        "location": location,
+        "relationship": relationship,
+        "height": height,
+        "weight": weight,
+        "bloodType": bloodTypeController.text,
+        "accountId": accountId,
+      };
+
+      print("jsonUpdate $jsonDependentProfileUpdate");
+
+      check = await _profileRepo
+          .updateDependentInfo(jsonEncode(jsonDependentProfileUpdate));
+
+      // _profileModel = new ProfileModel(
+      //     profileId: dependentPatientID,
+      //     fullName: fullNameController.text,
+      //     dob: dobController.text,
+      //     gender: selectGender,
+      //     image: uploadImage,
+      //     email: emailController.text,
+      //     idCard: idCardController.text,
+      //     accountID: accountId);
+
+      // String updateBasicInfoJson = jsonEncode(_profileModel.toJson());
+      // print(updateBasicInfoJson + "\n");
+
+      // check = await _profileRepo.updateBasicInfo(updateBasicInfoJson);
+
+      // final SharedPreferences prefs = await SharedPreferences.getInstance();
+      // print("height: " + height);
+      // print("weight: " + weight);
+
+      // _additionInfoModel = new AdditionInfoModel(
+      //   patientId: patientID,
+      //   bloodType: _bloodTypeController.text,
+      //   height: (_heightController.text == "")
+      //       ? 0
+      //       : double.parse(_heightController.text),
+      //   weight: (_weightController.text == "")
+      //       ? 0
+      //       : double.parse(_weightController.text),
+      //   updBy: prefs.getString("usFullName"),
+      //   updDatetime: DateTime.now().toString(),
+      //   relationship: relationship,
+      //   location: location,
+      // );
+
+      // String updateAdditionInfoJson = jsonEncode(_additionInfoModel.toJson());
+      // print("updateAdditionInfoJson: " + updateAdditionInfoJson);
+
+      // check = await _profileRepo.updateAdditionInfo(updateAdditionInfoJson);
+>>>>>>> 046d725bdb84b34960dcc8e6c9367dc6f8cd1717
     }
     return check;
   }

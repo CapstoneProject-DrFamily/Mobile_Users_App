@@ -17,7 +17,7 @@ class DependentHealthRecordViewModel extends BaseModel {
   ProfileModel _profileModel;
   AdditionInfoModel _additionInfoModel;
 
-  int dependentProfileID, healthRecordID;
+  int dependentPatientID, currentHealthRecordID;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -137,14 +137,15 @@ class DependentHealthRecordViewModel extends BaseModel {
   void getCurrentHealthRecordByID() async {
     this._isLoading = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    dependentProfileID = prefs.getInt("dependentProfileID");
+    dependentPatientID = prefs.getInt("dependentPatientID");
 
-    _profileModel =
-        await _profileRepo.getBasicInfo(dependentProfileID.toString());
-    _additionInfoModel = _profileModel.additionInfoModel;
+    // _profileModel =
+    //     await _profileRepo.getBasicInfo(dependentPatientID.toString());
+    // _additionInfoModel = _profileModel.additionInfoModel;
 
     _healthRecordModel = await _healthRecordRepo.getCurrentHealthRecordByID(
-        dependentProfileID, false);
+        dependentPatientID, false);
+    currentHealthRecordID = _healthRecordModel.healthRecordID;
 
     _conditionAtBirthController.text = _healthRecordModel.conditionAtBirth;
     _conditionAtBirth = _conditionAtBirthController.text;
@@ -303,53 +304,106 @@ class DependentHealthRecordViewModel extends BaseModel {
     }
 
     _healthRecordModel = new HealthRecordModel(
-      healthRecordID: dependentProfileID,
-      conditionAtBirth: _conditionAtBirthController.text,
-      birthWeight: birthWeight,
-      birthHeight: birthHeight,
-      birthDefects: _birthDefectsController.text,
-      otherDefects: _otherDefectsController.text,
-      medicineAllergy: _medicineAllergyController.text,
-      chemicalAllergy: _chemicalAllergyController.text,
-      foodAllergy: _foodAllergyController.text,
-      otherAllergy: _otherAllergyController.text,
-      disease: _diseaseController.text,
-      cancer: _cancerController.text,
-      tuberculosis: _tuberculosisController.text,
-      otherDiseases: _otherDiseasesController.text,
-      hearing: _hearingController.text,
-      eyesight: _eyesightController.text,
-      hand: _handController.text,
-      leg: _legController.text,
-      scoliosis: _scoliosisController.text,
-      cleftLip: _cleftLipController.text,
-      otherDisabilities: _otherDisabilitiesController.text,
-      surgeryHistory: _surgeryHistoryController.text,
-      medicineAllergyFamily: _medicineAllergyFamilyController.text,
-      chemicalAllergyFamily: _chemicalAllergyFamilyController.text,
-      foodAllergyFamily: _foodAllergyFamilyController.text,
-      otherAllergyFamily: _otherAllergyFamilyController.text,
-      diseaseFamily: _diseaseFamilyController.text,
-      cancerFamily: _cancerFamilyController.text,
-      tuberculosisFamily: _tuberculosisFamilyController.text,
-      otherDiseasesFamily: _otherDiseasesFamilyController.text,
-      other: _otherController.text,
-      smokingFrequency: strCigarette,
-      drinkingFrequency: strWine,
-      drugFrequency: strDrug,
-      activityFrequency: strActivity,
-      exposureElement: _exposureElementController.text,
-      contactTime: _contactTimeController.text,
-      toiletType: _toiletTypeController.text,
-      otherRisks: _otherRisksController.text,
-    );
+        // healthRecordID: dependentPatientID,
+        conditionAtBirth: _conditionAtBirthController.text,
+        birthWeight: birthWeight,
+        birthHeight: birthHeight,
+        birthDefects: _birthDefectsController.text == ""
+            ? null
+            : _birthDefectsController.text,
+        otherDefects: _otherDefectsController.text == ""
+            ? null
+            : _otherDefectsController.text,
+        medicineAllergy: _medicineAllergyController.text == ""
+            ? null
+            : _medicineAllergyController.text,
+        chemicalAllergy: _chemicalAllergyController.text == ""
+            ? null
+            : _chemicalAllergyController.text,
+        foodAllergy: _foodAllergyController.text == ""
+            ? null
+            : _foodAllergyController.text,
+        otherAllergy: _otherAllergyController.text == ""
+            ? null
+            : _otherAllergyController.text,
+        disease: _diseaseController.text == "" ? null : _diseaseController.text,
+        cancer: _cancerController.text == "" ? null : _cancerController.text,
+        tuberculosis: _tuberculosisController.text == ""
+            ? null
+            : _tuberculosisController.text,
+        otherDiseases: _otherDiseasesController.text == ""
+            ? null
+            : _otherDiseasesController.text,
+        hearing: _hearingController.text == "" ? null : _hearingController.text,
+        eyesight:
+            _eyesightController.text == "" ? null : _eyesightController.text,
+        hand: _handController.text == "" ? null : _handController.text,
+        leg: _legController.text == "" ? null : _legController.text,
+        scoliosis:
+            _scoliosisController.text == "" ? null : _scoliosisController.text,
+        cleftLip:
+            _cleftLipController.text == "" ? null : _cleftLipController.text,
+        otherDisabilities: _otherDisabilitiesController.text == ""
+            ? null
+            : _otherDisabilitiesController.text,
+        surgeryHistory: _surgeryHistoryController.text == ""
+            ? null
+            : _surgeryHistoryController.text,
+        medicineAllergyFamily: _medicineAllergyFamilyController.text == ""
+            ? null
+            : _medicineAllergyFamilyController.text,
+        chemicalAllergyFamily: _chemicalAllergyFamilyController.text == ""
+            ? null
+            : _chemicalAllergyFamilyController.text,
+        foodAllergyFamily: _foodAllergyFamilyController.text == ""
+            ? null
+            : _foodAllergyFamilyController.text,
+        otherAllergyFamily: _otherAllergyFamilyController.text == ""
+            ? null
+            : _otherAllergyFamilyController.text,
+        diseaseFamily: _diseaseFamilyController.text == ""
+            ? null
+            : _diseaseFamilyController.text,
+        cancerFamily: _cancerFamilyController.text == ""
+            ? null
+            : _cancerFamilyController.text,
+        tuberculosisFamily: _tuberculosisFamilyController.text == ""
+            ? null
+            : _tuberculosisFamilyController.text,
+        otherDiseasesFamily: _otherDiseasesFamilyController.text == ""
+            ? null
+            : _otherDiseasesFamilyController.text,
+        other: _otherController.text == "" ? null : _otherController.text,
+        smokingFrequency: strCigarette,
+        drinkingFrequency: strWine,
+        drugFrequency: strDrug,
+        activityFrequency: strActivity,
+        exposureElement: _exposureElementController.text == ""
+            ? null
+            : _exposureElementController.text,
+        contactTime: _contactTimeController.text == ""
+            ? null
+            : _contactTimeController.text,
+        toiletType: _toiletTypeController.text == ""
+            ? null
+            : _toiletTypeController.text,
+        otherRisks: _otherRisksController.text == ""
+            ? null
+            : _otherRisksController.text,
+        patientID: dependentPatientID,
+        disable: 0,
+        insBy: "Owner",
+        insDatetime: DateTime.now().toString());
 
-    String updateHealthRecordJson = json.encode(_healthRecordModel.toJson());
-    print("updateHealthRecordJson: " + updateHealthRecordJson);
+    String createNewHealthRecordJson = json.encode(_healthRecordModel.toJson());
+    print("updateHealthRecordJson: " + createNewHealthRecordJson);
 
     bool isUpdated =
-        await _healthRecordRepo.createNewHealthRecord(updateHealthRecordJson);
-
+        await _healthRecordRepo.storedOldHealthRecord(currentHealthRecordID);
+    if (isUpdated == true) {
+      isUpdated = await _healthRecordRepo
+          .createNewHealthRecord(createNewHealthRecordJson);
+    }
     return isUpdated;
   }
 }
