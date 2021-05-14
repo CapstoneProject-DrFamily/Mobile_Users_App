@@ -66,6 +66,22 @@ class AddDependentProfilePage extends StatelessWidget {
                                   Container(
                                     margin: const EdgeInsets.only(
                                       top: 20.0,
+                                      right: 290.0,
+                                    ),
+                                    child: Text(
+                                      "Gender",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'avenir',
+                                        fontSize: 17,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                  _genderField(context, model),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                      top: 20.0,
                                       right: 300.0,
                                     ),
                                     child: Text(
@@ -273,6 +289,61 @@ class AddDependentProfilePage extends StatelessWidget {
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _genderField(
+      BuildContext context, AddDependentProfileScreenViewModel model) {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 10.0,
+        left: 30.0,
+        right: 20.0,
+      ),
+      child: GestureDetector(
+        onTap: () {
+          Picker(
+            adapter: PickerDataAdapter<String>(pickerdata: model.genderList),
+            changeToFirst: false,
+            selecteds: [0],
+            hideHeader: false,
+            textAlign: TextAlign.center,
+            textStyle: const TextStyle(color: Colors.black, fontSize: 22),
+            selectedTextStyle: TextStyle(color: Colors.blue),
+            columnPadding: const EdgeInsets.all(8.0),
+            onConfirm: (Picker picker, List value) {
+              print(value.toString());
+              print(picker.adapter.text);
+              model.chooseGender(picker.getSelectedValues().first);
+            },
+          ).showModal(context);
+        },
+        child: TextFormField(
+          controller: model.genderController,
+          decoration: InputDecoration(
+            filled: true,
+            enabled: false,
+            fillColor: Colors.white,
+            hintText: 'Choose Gender',
+            hintStyle: TextStyle(
+              color: MainColors.hintTextColor,
+            ),
+            suffixIcon: Icon(
+              Icons.arrow_drop_down,
+              color: Colors.blue,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(
+                color: Colors.grey,
+              ),
+            ),
           ),
         ),
       ),
