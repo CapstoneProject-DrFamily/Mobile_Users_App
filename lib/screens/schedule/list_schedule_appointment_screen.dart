@@ -1011,7 +1011,7 @@ class ListScheduleAppointmentScreen extends StatelessWidget {
                 await _confirmCancelBookingDialog(
                   context,
                   pageModel,
-                  patientModel.schedule.scheduleId,
+                  patientModel.schedule.id,
                   patientModel.schedule.appointmentTime,
                   patientModel.transaction.location,
                   patientModel.transaction.note,

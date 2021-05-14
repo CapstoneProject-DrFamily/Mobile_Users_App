@@ -57,15 +57,15 @@ class ScheduleRepo extends IScheduleRepo {
         DoctorInformationModel doctor =
             DoctorInformationModel.fromJson(data['schedules'][i]['doctor']);
         print(doctor);
-        ProfileModel profile = ProfileModel.fromJson(
-            data['schedules'][i]['doctor']['doctorNavigation']);
+        ProfileModel profile =
+            ProfileModel.fromJson(data['schedules'][i]['doctor']);
         print(profile);
         DoctorSpecialtyModel speciality = DoctorSpecialtyModel.fromJson(
             data['schedules'][i]['doctor']['specialty']);
         print(speciality);
 
         ServiceModel service = ServiceModel.fromJson(
-            data['schedules'][i]['transactions'][0]['service']);
+            data['schedules'][i]['treatments'][0]['service']);
         print(service);
 
         ScheduleModel schedule = ScheduleModel.fromJson(data['schedules'][i]);
@@ -73,7 +73,7 @@ class ScheduleRepo extends IScheduleRepo {
         print(schedule);
 
         TransactionModel transaction =
-            TransactionModel.fromJson(data['schedules'][i]['transactions'][0]);
+            TransactionModel.fromJson(data['schedules'][i]['treatments'][0]);
 
         print(transaction);
         PatientScheduleModel model = PatientScheduleModel(

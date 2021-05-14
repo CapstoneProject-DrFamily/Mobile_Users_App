@@ -1,10 +1,10 @@
 class ScheduleModel {
-  int doctorId, scheduleId;
+  int doctorId, id;
   String appointmentTime, insBy, updBy, updDatetime;
   bool status;
 
   ScheduleModel(
-      {this.scheduleId,
+      {this.id,
       this.doctorId,
       this.appointmentTime,
       this.insBy,
@@ -14,7 +14,7 @@ class ScheduleModel {
 
   factory ScheduleModel.fromJson(Map<String, dynamic> json) {
     return ScheduleModel(
-      scheduleId: json['scheduleId'] as int,
+      id: json['id'] as int,
       doctorId: json['doctorId'] as int,
       appointmentTime: json['appointmentTime'] as String,
       insBy: json['insBy'] as String,
@@ -25,7 +25,7 @@ class ScheduleModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "scheduleId": this.scheduleId,
+        "scheduleId": this.id,
         "doctorId": this.doctorId,
         "appointmentTime": this.appointmentTime,
         "insBy": this.insBy,

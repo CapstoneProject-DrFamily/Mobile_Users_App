@@ -1,3 +1,4 @@
+import 'package:drFamily_app/Helper/common.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
@@ -318,7 +319,7 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
                                 width: 80,
@@ -344,10 +345,31 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child:
-                                          Text(model.listFeedback[index].insBy),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          flex: 3,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(model
+                                                .listFeedback[index].insBy),
+                                          ),
+                                        ),
+                                        Flexible(
+                                          flex: 2,
+                                          child: Text(
+                                            Common.convertDate(model
+                                                .listFeedback[index]
+                                                .insDatetime),
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 12,
+                                                fontStyle: FontStyle.italic),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Container(
                                       child: RatingBar.builder(
@@ -384,6 +406,14 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
                             ],
                           ),
                         ),
+                        index == model.listFeedback.length - 1
+                            ? Container()
+                            : Divider(
+                                indent: 30,
+                                endIndent: 30,
+                                thickness: 0.2,
+                                color: Colors.grey,
+                              )
                       ],
                     ),
                   );

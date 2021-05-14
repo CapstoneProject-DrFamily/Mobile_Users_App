@@ -204,7 +204,7 @@ class DependentProfileViewModel extends BaseModel {
       changeGender(2);
     }
 
-    phoneNumController.text = _profileModel.phone;
+    // phoneNumController.text = _profileModel.phone;
 
     if (_profileModel.image != null) {
       _currentImage = _profileModel.image;
@@ -393,7 +393,7 @@ class DependentProfileViewModel extends BaseModel {
           fullName: fullNameController.text,
           dob: dobController.text,
           gender: selectGender,
-          phone: phoneNumController.text,
+          // phone: phoneNumController.text,
           image: uploadImage,
           email: emailController.text,
           idCard: idCardController.text,

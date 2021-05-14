@@ -20,7 +20,7 @@ class TransactionModel {
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
     return TransactionModel(
-      transactionId: json['transactionId'] as String,
+      transactionId: json['id'] as String,
       doctorId: json['doctorId'] as int,
       patientId: json['patientId'] as int,
       scheduleId: json['scheduleId'] as int,
@@ -37,7 +37,7 @@ class TransactionModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "transactionId": transactionId,
+        "id": transactionId,
         "doctorId": doctorId,
         "patientId": patientId,
         "prescriptionId": prescriptionId,

@@ -128,19 +128,19 @@ class TransactionDetailScreen extends StatelessWidget {
                             SizedBox(
                               height: 10,
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.phone,
-                                  color: Colors.black,
-                                  size: 24.0,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(this.model.profileDoctor.phone),
-                              ],
-                            ),
+                            // Row(
+                            //   children: [
+                            //     Icon(
+                            //       Icons.phone,
+                            //       color: Colors.black,
+                            //       size: 24.0,
+                            //     ),
+                            //     SizedBox(
+                            //       width: 10,
+                            //     ),
+                            //     Text('this.model.profileDoctor.phone'),
+                            //   ],
+                            // ),
                             Row(
                               children: [
                                 Expanded(

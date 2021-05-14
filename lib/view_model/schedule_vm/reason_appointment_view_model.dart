@@ -77,7 +77,7 @@ class ReasonAppointmentViewModel extends BaseModel {
     String appointmentTime;
     schedules.forEach((key, value) {
       for (int i = 0; i < value.length; i++) {
-        if (value[i].scheduleId == selectedValue) {
+        if (value[i].id == selectedValue) {
           appointmentTime = value[i].appointmentTime;
           break;
         }
@@ -93,7 +93,7 @@ class ReasonAppointmentViewModel extends BaseModel {
         appointmentTime: appointmentTime,
         doctorId: doctorScheduleModel.doctorDetail.doctorId,
         updBy: prefs.getString('usPatientName'),
-        scheduleId: selectedValue,
+        id: selectedValue,
         status: true,
         updDatetime: DateTime.now().toString());
 
@@ -112,7 +112,7 @@ class ReasonAppointmentViewModel extends BaseModel {
         return booking;
       } else {
         localNotifyManager.scheduleNotification(
-            scheduleModel.scheduleId,
+            scheduleModel.id,
             DateTime.parse(scheduleModel.appointmentTime),
             "It's almost time for the appointment",
             "You have an appointment with doctor ${doctorScheduleModel.doctorDetail.doctorName} at $timeFormat",

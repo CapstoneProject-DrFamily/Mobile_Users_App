@@ -254,40 +254,40 @@ class CheckOutScreen extends StatelessWidget {
           SizedBox(
             height: 20.0,
           ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                flex: 5,
-                child: Container(
-                  margin: const EdgeInsets.only(
-                    left: 20.0,
-                  ),
-                  child: Text(
-                    "Phone ",
-                    style: TextStyle(
-                      fontFamily: AVENIR,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  margin: const EdgeInsets.only(
-                    right: 20.0,
-                  ),
-                  child: Text(
-                    model.phone,
-                    style: TextStyle(
-                      fontFamily: AVENIR,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   children: <Widget>[
+          //     Expanded(
+          //       flex: 5,
+          //       child: Container(
+          //         margin: const EdgeInsets.only(
+          //           left: 20.0,
+          //         ),
+          //         child: Text(
+          //           "Phone ",
+          //           style: TextStyle(
+          //             fontFamily: AVENIR,
+          //             fontSize: 14,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //     Align(
+          //       alignment: Alignment.topRight,
+          //       child: Container(
+          //         margin: const EdgeInsets.only(
+          //           right: 20.0,
+          //         ),
+          //         child: Text(
+          //           model.phone,
+          //           style: TextStyle(
+          //             fontFamily: AVENIR,
+          //             fontSize: 14,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
           Container(
             margin: const EdgeInsets.fromLTRB(
               25.0,

@@ -56,9 +56,9 @@ class ListScheduleAppointmentViewModel extends BaseModel {
     notifyListeners();
     _fullUserName = fullName;
     _profileId = profileId;
-    _patientId = await profileRepo.getPatientId(_profileId.toString());
+    // _patientId = await profileRepo.getPatientId(_profileId.toString());
 
-    list = await scheduleRepo.getListScheduleByPatientIdUpComing(_patientId);
+    list = await scheduleRepo.getListScheduleByPatientIdUpComing(_profileId);
 
     this.schedules = Map<String, List<PatientScheduleModel>>();
 
@@ -118,7 +118,7 @@ class ListScheduleAppointmentViewModel extends BaseModel {
       'note': note,
       'patientId': patientId,
       'status': 4,
-      'transactionId': transactionID,
+      'id': transactionID,
       'scheduleId': scheduleId,
       'estimatedTime': null,
       'reasonCancel': reasonCancel

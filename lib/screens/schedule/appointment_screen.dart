@@ -149,8 +149,7 @@ class AppointmentScreen extends StatelessWidget {
                                               )),
                                               Radio(
                                                 value: model
-                                                    .schedules[key][index]
-                                                    .scheduleId,
+                                                    .schedules[key][index].id,
                                                 groupValue: model.selectedValue,
                                                 onChanged: (value) {
                                                   model.changeSelectedDay(

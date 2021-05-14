@@ -20,7 +20,7 @@ class DoctorInformationModel {
 
   factory DoctorInformationModel.fromJson(Map<String, dynamic> json) {
     return DoctorInformationModel(
-        doctorId: json['doctorId'] as int,
+        doctorId: json['id'] as int,
         doctorDegree: json['degree'] as String,
         doctorExperience: json['experience'] as String,
         doctorDescription: json['description'] as String,
