@@ -5,7 +5,6 @@ import 'package:drFamily_app/view_model/setting_vm/dependent_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:drFamily_app/widgets/common/fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

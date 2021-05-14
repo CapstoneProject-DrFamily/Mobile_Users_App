@@ -35,80 +35,84 @@ class AddDependentProfilePage extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter),
                       ),
-                      child: Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              _buildTopText(),
-                              _buildDivider(),
-                              _buildAskText(),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 30.0,
-                                  right: 255.0,
-                                ),
-                                child: Text(
-                                  "Full name",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'avenir',
-                                    fontSize: 17,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  _buildTopText(),
+                                  _buildDivider(),
+                                  _buildAskText(),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                      top: 30.0,
+                                      right: 255.0,
+                                    ),
+                                    child: Text(
+                                      "Full name",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'avenir',
+                                        fontSize: 17,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
                                   ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                              _fullNameField(model),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 20.0,
-                                  right: 280.0,
-                                ),
-                                child: Text(
-                                  "Phone",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'avenir',
-                                    fontSize: 17,
+                                  _fullNameField(model),
+                                  // Container(
+                                  //   margin: const EdgeInsets.only(
+                                  //     top: 20.0,
+                                  //     right: 280.0,
+                                  //   ),
+                                  //   child: Text(
+                                  //     "Phone",
+                                  //     style: TextStyle(
+                                  //       color: Colors.white,
+                                  //       fontFamily: 'avenir',
+                                  //       fontSize: 17,
+                                  //     ),
+                                  //     textAlign: TextAlign.left,
+                                  //   ),
+                                  // ),
+                                  // _phoneField(model),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                      top: 20.0,
+                                      right: 170.0,
+                                    ),
+                                    child: Text(
+                                      "Relationship with you",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'avenir',
+                                        fontSize: 17,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
                                   ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                              _phoneField(model),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 20.0,
-                                  right: 170.0,
-                                ),
-                                child: Text(
-                                  "Relationship with you",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'avenir',
-                                    fontSize: 17,
+                                  _buildListRelationship(context, model),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                      top: 20.0,
+                                      right: 170.0,
+                                    ),
+                                    child: Text(
+                                      "Home Location",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'avenir',
+                                        fontSize: 17,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
                                   ),
-                                  textAlign: TextAlign.left,
-                                ),
+                                  _locationField(model, context),
+                                ],
                               ),
-                              _buildListRelationship(context, model),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 20.0,
-                                  right: 170.0,
-                                ),
-                                child: Text(
-                                  "Home Location",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'avenir',
-                                    fontSize: 17,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                              _locationField(model, context),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ),
@@ -268,37 +272,37 @@ class AddDependentProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _phoneField(AddDependentProfileScreenViewModel model) {
-    return Container(
-      margin: const EdgeInsets.only(
-        top: 10.0,
-        left: 30.0,
-        right: 20.0,
-      ),
-      child: TextFormField(
-        controller: model.phoneController,
-        keyboardType: TextInputType.phone,
-        textCapitalization: TextCapitalization.none,
-        maxLength: 10,
-        onChanged: (value) {
-          model.validatePhone(value);
-        },
-        decoration: InputDecoration(
-          errorText: model.phone.error,
-          counterText: '',
-          filled: true,
-          fillColor: Colors.white,
-          hintText: 'Enter phone..',
-          hintStyle: TextStyle(
-            color: MainColors.hintTextColor,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _phoneField(AddDependentProfileScreenViewModel model) {
+  //   return Container(
+  //     margin: const EdgeInsets.only(
+  //       top: 10.0,
+  //       left: 30.0,
+  //       right: 20.0,
+  //     ),
+  //     child: TextFormField(
+  //       controller: model.phoneController,
+  //       keyboardType: TextInputType.phone,
+  //       textCapitalization: TextCapitalization.none,
+  //       maxLength: 10,
+  //       onChanged: (value) {
+  //         model.validatePhone(value);
+  //       },
+  //       decoration: InputDecoration(
+  //         errorText: model.phone.error,
+  //         counterText: '',
+  //         filled: true,
+  //         fillColor: Colors.white,
+  //         hintText: 'Enter phone..',
+  //         hintStyle: TextStyle(
+  //           color: MainColors.hintTextColor,
+  //         ),
+  //         border: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(10.0),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildListRelationship(
       BuildContext context, AddDependentProfileScreenViewModel model) {
