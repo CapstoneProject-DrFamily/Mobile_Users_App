@@ -397,52 +397,11 @@ class DependentProfileViewModel extends BaseModel {
         uploadImage = currentImage;
       }
 
-<<<<<<< HEAD
-      _profileModel = new ProfileModel(
-          profileId: profileID,
-          fullName: fullNameController.text,
-          dob: dobController.text,
-          gender: selectGender,
-          // phone: phoneNumController.text,
-          image: uploadImage,
-          email: emailController.text,
-          idCard: idCardController.text,
-          accountID: accountId);
-
-      String updateBasicInfoJson = jsonEncode(_profileModel.toJson());
-      print(updateBasicInfoJson + "\n");
-
-      check = await _profileRepo.updateBasicInfo(updateBasicInfoJson);
-
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      print("height: " + height);
-      print("weight: " + weight);
-
-      _additionInfoModel = new AdditionInfoModel(
-        patientId: patientID,
-        bloodType: bloodTpeController.text,
-        height: (_heightController.text == "")
-            ? 0
-            : double.parse(_heightController.text),
-        weight: (_weightController.text == "")
-            ? 0
-            : double.parse(_weightController.text),
-        updBy: prefs.getString("usFullName"),
-        updDatetime: DateTime.now().toString(),
-        relationship: relationship,
-        location: location,
-      );
-
-      String updateAdditionInfoJson = jsonEncode(_additionInfoModel.toJson());
-      print("updateAdditionInfoJson: " + updateAdditionInfoJson);
-
-      check = await _profileRepo.updateAdditionInfo(updateAdditionInfoJson);
-=======
       var jsonDependentProfileUpdate = {
         "id": dependentPatientID,
         "fullname": fullNameController.text,
         "birthday": dob,
-        "image": uploadImage,
+        "image": uploadImage,g
         "idCard": idCardController.text,
         "email": emailController.text,
         "gender": selectGender,
@@ -497,7 +456,6 @@ class DependentProfileViewModel extends BaseModel {
       // print("updateAdditionInfoJson: " + updateAdditionInfoJson);
 
       // check = await _profileRepo.updateAdditionInfo(updateAdditionInfoJson);
->>>>>>> 046d725bdb84b34960dcc8e6c9367dc6f8cd1717
     }
     return check;
   }
