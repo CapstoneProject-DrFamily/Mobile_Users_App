@@ -98,19 +98,19 @@ class TransactionRepo extends ITransactionRepo {
         placeName = decodeData["results"][0]["formatted_address"];
       } else {}
 
-      doctorName = transactionJson["doctor"]["doctorNavigation"]["fullName"];
-      doctorImage = transactionJson["doctor"]["doctorNavigation"]["image"];
+      doctorName = transactionJson["doctor"]["fullname"];
+      doctorImage = transactionJson["doctor"]["image"];
       doctorDegree = transactionJson["doctor"]["degree"];
       doctorSpecialty = transactionJson["doctor"]["specialty"]["name"];
-      transactionID = transactionJson["transactionId"];
+      transactionID = transactionJson["id"];
       doctorId = transactionJson["doctorId"];
       patientId = transactionJson["patientId"];
       location = locationTemp;
       estimateTime = transactionJson["estimatedTime"];
       examId = transactionJson["examId"];
       transactionNote = transactionJson["note"];
-      serviceName = transactionJson['service']['serviceName'];
-      servicePrice = transactionJson['service']['servicePrice'];
+      serviceName = transactionJson['service']['name'];
+      servicePrice = transactionJson['service']['price'];
 
       transactionMapModel = TransactionMapModel(
         doctorDegree: doctorDegree,
@@ -198,8 +198,7 @@ class TransactionRepo extends ITransactionRepo {
       Map<String, dynamic> data = jsonDecode(response.body);
       print("data $data");
       TransactionModel transaction = TransactionModel.fromJson(data);
-      ProfileModel profileDoctor =
-          ProfileModel.fromJson(data['doctor']['doctorNavigation']);
+      ProfileModel profileDoctor = ProfileModel.fromJson(data['doctor']);
       String doctorSpeciality = data['doctor']['specialty']['name'];
 
       ServiceModel service = ServiceModel.fromJson(data['service']);

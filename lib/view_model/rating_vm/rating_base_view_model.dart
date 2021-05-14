@@ -67,8 +67,8 @@ class RatingBaseViewModel extends BaseModel {
     FeedbackModel feedback = FeedbackModel(
       feedbackId: model.transactionId,
       ratingPoint: this.rating,
-      doctorId: model.doctorId,
-      patientId: model.patientId,
+      // doctorId: model.doctorId,
+      // patientId: model.patientId,
       note: this.note,
       insBy: name,
       updBy: name,

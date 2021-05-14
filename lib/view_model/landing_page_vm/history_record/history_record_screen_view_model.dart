@@ -67,11 +67,12 @@ class HistoryRecordScreenViewModel extends BaseModel {
       var userName = prefs.getString('usFullName');
       _fullUserName = userName;
       _profileId = prefs.getInt("usProfileID");
+      print("profileId $_profileId");
 
-      _patientId = await profileRepo.getPatientId(_profileId.toString());
+      // _patientId = await profileRepo.getPatientId(_profileId.toString());
 
       _listTransaction = await transactionRepo.getListTransactionHistory(
-          _patientId.toString(), -1);
+          _profileId.toString(), -1);
 
       if (_listTransaction == null) {
         _isNotHave = true;
@@ -93,10 +94,10 @@ class HistoryRecordScreenViewModel extends BaseModel {
     notifyListeners();
     _fullUserName = fullName;
     _profileId = profileId;
-    _patientId = await profileRepo.getPatientId(_profileId.toString());
+    // _patientId = await profileRepo.getPatientId(_profileId.toString());
 
     _listTransaction = await transactionRepo.getListTransactionHistory(
-        _patientId.toString(), -1);
+        _profileId.toString(), -1);
 
     if (_listTransaction == null) {
       _isNotHave = true;

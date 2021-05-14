@@ -19,8 +19,12 @@ class AppointmentViewModel extends BaseModel {
     print('doctorschedulemodel ${model.doctorDetail.doctorId}');
     this.doctorScheduleModel = model;
 
+    print(this.doctorScheduleModel.doctorDetail.toJson());
+    print("selected value : " + selectedValue.toString());
+
     for (int i = 0; i < doctorScheduleModel.schedules.length; i++) {
       ScheduleModel schedule = doctorScheduleModel.schedules[i];
+      print(schedule.toJson());
       convert(schedule);
     }
     // schedules.forEach((key, value) {

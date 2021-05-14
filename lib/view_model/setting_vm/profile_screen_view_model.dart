@@ -200,7 +200,7 @@ class ProfileScreenViewModel extends BaseModel {
       changeGender(2);
     }
 
-    phoneNumController.text = _profileModel.phone;
+    // phoneNumController.text = _profileModel.phone;
     _currentImage = _profileModel.image;
     emailController.text = _profileModel.email;
     idCardController.text = _profileModel.idCard;

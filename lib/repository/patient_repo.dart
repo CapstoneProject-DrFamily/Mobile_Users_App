@@ -62,7 +62,7 @@ class PatientRepo extends IPatientRepo {
     print(response.statusCode);
 
     if (response.statusCode == 200) {
-      String name = json.decode(response.body)['patientNavigation']['fullName'];
+      String name = json.decode(response.body)['fullname'];
       return name;
     } else
       return null;

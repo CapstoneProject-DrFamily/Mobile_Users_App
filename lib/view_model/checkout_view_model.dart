@@ -33,7 +33,7 @@ class CheckOutViewModel extends BaseModel {
       _date = _checkoutModel.date;
       _service = _checkoutModel.service;
       _patientName = _checkoutModel.name;
-      _phone = _checkoutModel.phone;
+      // _phone = _checkoutModel.phone;
       _price = _checkoutModel.price;
       _currency = _convertCurrModel.currency;
       _priceUSD = double.parse(
