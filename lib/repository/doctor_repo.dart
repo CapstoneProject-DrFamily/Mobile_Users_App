@@ -81,8 +81,7 @@ class DoctorRepo extends IDoctorRepo {
       DoctorDetailModel doctorDetailModel =
           DoctorDetailModel.fromJson(data['doctors'][i]);
       print(doctorDetailModel);
-      ProfileModel profile =
-          ProfileModel.fromJson(data['doctors'][i]['doctorNavigation']);
+      ProfileModel profile = ProfileModel.fromJson(data['doctors'][i]);
       print(profile);
       List<ScheduleModel> listSchedule = [];
       for (int k = 0; k < data['doctors'][i]['schedules'].length; k++) {
@@ -94,8 +93,7 @@ class DoctorRepo extends IDoctorRepo {
         listSchedule.add(schedule);
       }
 
-      String notiToken =
-          data['doctors'][i]['doctorNavigation']['account']['notiToken'];
+      String notiToken = data['doctors'][i]['idNavigation']['notiToken'];
 
       print('notitoken $notiToken');
 

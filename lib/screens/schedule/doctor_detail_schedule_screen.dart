@@ -146,8 +146,7 @@ class DoctorDetailScheduleScreen extends StatelessWidget {
                               Expanded(
                                 child: Column(
                                   children: <Widget>[
-                                    (model.doctorDetail.transactionBooked ==
-                                            null)
+                                    (model.doctorDetail.transactionBooked == 0)
                                         ? Text("Not Yet")
                                         : Text(model
                                             .doctorDetail.transactionBooked

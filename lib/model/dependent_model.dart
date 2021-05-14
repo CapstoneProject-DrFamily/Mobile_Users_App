@@ -15,6 +15,6 @@ class DependentModel {
         dependentImage: json['dependentImage'] as String,
         dependentName: json['dependentName'] as String,
         dependentRelationShip: json['dependentRelationShip'] as String,
-        profileID: json['profileID'] as int);
+        profileID: json['patientID'] as int);
   }
 }

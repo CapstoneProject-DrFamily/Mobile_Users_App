@@ -52,7 +52,7 @@ class SpecialtyRepo extends ISpecialtyRepo {
     if (response.statusCode == 200) {
       var list = (json.decode(response.body) as List);
       for (int i = 0; i < list.length; i++) {
-        var specialtyId = list[i]['specialtyId'];
+        var specialtyId = list[i]['id'];
         var name = list[i]['name'];
         var image = list[i]['image'];
         var description = list[i]['description'];

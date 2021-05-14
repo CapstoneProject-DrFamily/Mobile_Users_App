@@ -195,11 +195,14 @@ class ListDoctorPage extends StatelessWidget {
                                                           Column(
                                                             children: [
                                                               Text(
-                                                                model
-                                                                    .nearByDoctorList[
-                                                                        index]
-                                                                    .booked
-                                                                    .toString(),
+                                                                (model.nearByDoctorList[index].booked ==
+                                                                        0)
+                                                                    ? "Not Yet"
+                                                                    : model
+                                                                        .nearByDoctorList[
+                                                                            index]
+                                                                        .booked
+                                                                        .toString(),
                                                                 style: TextStyle(
                                                                     color: Colors
                                                                         .white,
@@ -225,11 +228,14 @@ class ListDoctorPage extends StatelessWidget {
                                                           Column(
                                                             children: [
                                                               Text(
-                                                                model
-                                                                    .nearByDoctorList[
-                                                                        index]
-                                                                    .feedback
-                                                                    .toString(),
+                                                                (model.nearByDoctorList[index].feedback ==
+                                                                        0)
+                                                                    ? "Not Yet"
+                                                                    : model
+                                                                        .nearByDoctorList[
+                                                                            index]
+                                                                        .feedback
+                                                                        .toString(),
                                                                 style: TextStyle(
                                                                     color: Colors
                                                                         .white,
