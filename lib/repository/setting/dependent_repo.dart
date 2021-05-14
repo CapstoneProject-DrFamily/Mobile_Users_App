@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:drFamily_app/model/sign_up/health_record_create_model.dart';
-import 'package:drFamily_app/model/sign_up/patient_create_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:drFamily_app/Helper/api_helper.dart';
 import 'package:drFamily_app/model/dependent_model.dart';
@@ -9,15 +8,13 @@ import 'package:drFamily_app/model/dependent_model.dart';
 abstract class IDependentRepo {
   Future<List<DependentModel>> getListDependent(int accountID);
   Future<bool> deleteDependent(int patientID);
-  Future<bool> createDependentProfile(String createDependentProfileJson);
   Future<bool> createHealthRecord();
-  Future<bool> createPatient(String relationship, String location);
+  Future<bool> createPatient(String createPatientJson);
 }
 
 class DependentRepo extends IDependentRepo {
   HealthRecordModel _healthRecordModel;
-  PatientCreateModel _patientCreateModel;
-  int profileId, healthRecordId;
+  int profileId, patientID, healthRecordId;
   String phone, formatPhone;
 
   @override
@@ -61,30 +58,30 @@ class DependentRepo extends IDependentRepo {
     }
   }
 
-  @override
-  Future<bool> createDependentProfile(String createDependentProfileJson) async {
-    String urlAPI = APIHelper.CREATE_PROFILE_API;
-    Map<String, String> header = {
-      HttpHeaders.contentTypeHeader: "application/json",
-    };
+  // @override
+  // Future<bool> createDependentProfile(String createDependentProfileJson) async {
+  //   String urlAPI = APIHelper.CREATE_PROFILE_API;
+  //   Map<String, String> header = {
+  //     HttpHeaders.contentTypeHeader: "application/json",
+  //   };
 
-    var response = await http.post(urlAPI,
-        headers: header, body: createDependentProfileJson);
-    print("Status code: " + response.statusCode.toString());
-    bool isCreated = true;
+  //   var response = await http.post(urlAPI,
+  //       headers: header, body: createDependentProfileJson);
+  //   print("Status code: " + response.statusCode.toString());
+  //   bool isCreated = true;
 
-    if (response.statusCode == 201) {
-      String jSonData = response.body;
-      var decodeData = jsonDecode(jSonData);
-      profileId = decodeData["profileId"];
+  //   if (response.statusCode == 201) {
+  //     String jSonData = response.body;
+  //     var decodeData = jsonDecode(jSonData);
+  //     profileId = decodeData["profileId"];
 
-      print("ProfileId: " + profileId.toString());
-      return isCreated;
-    } else {
-      isCreated = false;
-      return isCreated;
-    }
-  }
+  //     print("ProfileId: " + profileId.toString());
+  //     return isCreated;
+  //   } else {
+  //     isCreated = false;
+  //     return isCreated;
+  //   }
+  // }
 
   @override
   Future<bool> createHealthRecord() async {
@@ -93,8 +90,11 @@ class DependentRepo extends IDependentRepo {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
-    // _healthRecordModel = new HealthRecordModel(
-    //     healthRecordID: profileId, insBy: null, insDatetime: null);
+    _healthRecordModel = new HealthRecordModel(
+        patientID: patientID,
+        insBy: "Owner",
+        insDatetime: DateTime.now().toString(),
+        disable: 0);
 
     String createHealthRecordJson = jsonEncode(_healthRecordModel.toJson());
     print("CreateHealthRecordJson: " + createHealthRecordJson);
@@ -118,7 +118,7 @@ class DependentRepo extends IDependentRepo {
   }
 
   @override
-  Future<bool> createPatient(String relationship, String location) async {
+  Future<bool> createPatient(String createPatientJson) async {
     // final SharedPreferences prefs = await SharedPreferences.getInstance();
     // int accountID = prefs.getInt("usAccountID");
 
@@ -127,27 +127,28 @@ class DependentRepo extends IDependentRepo {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
-    _patientCreateModel = new PatientCreateModel(
-      patientId: profileId,
-      height: 0,
-      weight: 0,
-      bloodType: null,
-      relationship: relationship,
-      location: location,
-    );
-    String createPatientJson = jsonEncode(_patientCreateModel.toJson());
-    print("CreatePatientJson: " + createPatientJson);
+    // _patientCreateModel = new PatientCreateModel(
+    //   patientId: profileId,
+    //   height: 0,
+    //   weight: 0,
+    //   bloodType: null,
+    //   relationship: relationship,
+    //   location: location,
+    // );
+    // String createPatientJson = jsonEncode(_patientCreateModel.toJson());
+    // print("CreatePatientJson: " + createPatientJson);
 
     var response =
         await http.post(urlAPI, headers: header, body: createPatientJson);
-    print("Status code createPatient: " + response.statusCode.toString());
+    print("Status code createDependent: " + response.statusCode.toString());
 
-    bool isCreated = true;
     if (response.statusCode == 201) {
-      return isCreated;
+      String jSonData = response.body;
+      var decodeData = jsonDecode(jSonData);
+      patientID = decodeData["id"];
+      return true;
     } else {
-      isCreated = false;
-      return isCreated;
+      return false;
     }
   }
 }
