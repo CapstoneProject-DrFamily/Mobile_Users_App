@@ -11,7 +11,7 @@ class DoctorSpecialtyModel {
 
   factory DoctorSpecialtyModel.fromJson(Map<String, dynamic> json) {
     return DoctorSpecialtyModel(
-      specialtyId: json['specialtyId'] as int,
+      specialtyId: json['id'] as int,
       name: json['name'] as String,
       image: json['image'] as String,
       description: json['description'] as String,

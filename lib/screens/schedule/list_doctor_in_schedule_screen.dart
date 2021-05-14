@@ -229,11 +229,10 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                                                   Column(
                                                                     children: [
                                                                       Text(
-                                                                        model
-                                                                            .listResult[index]
-                                                                            .doctorDetail
-                                                                            .transactionBooked
-                                                                            .toString(),
+                                                                        (model.listResult[index].doctorDetail.transactionBooked ==
+                                                                                0)
+                                                                            ? "Not Yet"
+                                                                            : model.listResult[index].doctorDetail.transactionBooked.toString(),
                                                                         style: TextStyle(
                                                                             color:
                                                                                 Colors.white,
@@ -258,11 +257,10 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                                                   Column(
                                                                     children: [
                                                                       Text(
-                                                                        model
-                                                                            .listResult[index]
-                                                                            .doctorDetail
-                                                                            .feedbackCount
-                                                                            .toString(),
+                                                                        (model.listResult[index].doctorDetail.feedbackCount ==
+                                                                                0)
+                                                                            ? "Not Yet"
+                                                                            : model.listResult[index].doctorDetail.feedbackCount.toString(),
                                                                         style: TextStyle(
                                                                             color:
                                                                                 Colors.white,
