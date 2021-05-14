@@ -401,7 +401,7 @@ class DependentProfileViewModel extends BaseModel {
         "id": dependentPatientID,
         "fullname": fullNameController.text,
         "birthday": dob,
-        "image": uploadImage,g
+        "image": uploadImage,
         "idCard": idCardController.text,
         "email": emailController.text,
         "gender": selectGender,
