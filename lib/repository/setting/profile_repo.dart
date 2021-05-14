@@ -9,7 +9,7 @@ abstract class IProfileRepo {
   Future<ProfileModel> getBasicInfo(String profileID);
   Future<AdditionInfoModel> getAdditionInfo(String patientID);
   Future<bool> updateBasicInfo(String updateBasicInfoJson);
-  Future<bool> updateAdditionInfo(String updateAdditionInfoJson);
+  Future<bool> updateDependentInfo(String updateDependentInfoJson);
   Future<int> getPatientId(String profileID);
 }
 
@@ -78,22 +78,20 @@ class ProfileRepo extends IProfileRepo {
   }
 
   @override
-  Future<bool> updateAdditionInfo(String updateAdditionInfoJson) async {
+  Future<bool> updateDependentInfo(String updateDependentInfoJson) async {
     String urlAPI = APIHelper.PATIENT_API;
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
     var response =
-        await http.put(urlAPI, headers: header, body: updateAdditionInfoJson);
-    print("Status additionInfo: " + response.statusCode.toString());
+        await http.put(urlAPI, headers: header, body: updateDependentInfoJson);
+    print("Status updateDependentInfo: " + response.statusCode.toString());
 
-    bool isUpdated = true;
     if (response.statusCode == 200) {
-      return isUpdated;
+      return true;
     } else {
-      isUpdated = false;
-      return isUpdated;
+      return false;
     }
   }
 

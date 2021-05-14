@@ -2,9 +2,12 @@ import 'package:commons/commons.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/setting_vm/add_dependent_profile_screen_view_model.dart';
 import 'package:drFamily_app/themes/colors.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:cool_alert/cool_alert.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddDependentProfilePage extends StatelessWidget {
   @override
@@ -59,23 +62,23 @@ class AddDependentProfilePage extends StatelessWidget {
                                       textAlign: TextAlign.left,
                                     ),
                                   ),
-                                  _fullNameField(model),
-                                  // Container(
-                                  //   margin: const EdgeInsets.only(
-                                  //     top: 20.0,
-                                  //     right: 280.0,
-                                  //   ),
-                                  //   child: Text(
-                                  //     "Phone",
-                                  //     style: TextStyle(
-                                  //       color: Colors.white,
-                                  //       fontFamily: 'avenir',
-                                  //       fontSize: 17,
-                                  //     ),
-                                  //     textAlign: TextAlign.left,
-                                  //   ),
-                                  // ),
-                                  // _phoneField(model),
+                                  _fullNameField(context, model),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                      top: 20.0,
+                                      right: 300.0,
+                                    ),
+                                    child: Text(
+                                      "DOB",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'avenir',
+                                        fontSize: 17,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                  _dobField(context, model),
                                   Container(
                                     margin: const EdgeInsets.only(
                                       top: 20.0,
@@ -95,7 +98,7 @@ class AddDependentProfilePage extends StatelessWidget {
                                   Container(
                                     margin: const EdgeInsets.only(
                                       top: 20.0,
-                                      right: 170.0,
+                                      right: 210.0,
                                     ),
                                     child: Text(
                                       "Home Location",
@@ -108,6 +111,9 @@ class AddDependentProfilePage extends StatelessWidget {
                                     ),
                                   ),
                                   _locationField(model, context),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
                                 ],
                               ),
                             ),
@@ -242,7 +248,8 @@ class AddDependentProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _fullNameField(AddDependentProfileScreenViewModel model) {
+  Widget _fullNameField(
+      BuildContext context, AddDependentProfileScreenViewModel model) {
     return Container(
       margin: const EdgeInsets.only(
         top: 10.0,
@@ -272,37 +279,73 @@ class AddDependentProfilePage extends StatelessWidget {
     );
   }
 
-  // Widget _phoneField(AddDependentProfileScreenViewModel model) {
-  //   return Container(
-  //     margin: const EdgeInsets.only(
-  //       top: 10.0,
-  //       left: 30.0,
-  //       right: 20.0,
-  //     ),
-  //     child: TextFormField(
-  //       controller: model.phoneController,
-  //       keyboardType: TextInputType.phone,
-  //       textCapitalization: TextCapitalization.none,
-  //       maxLength: 10,
-  //       onChanged: (value) {
-  //         model.validatePhone(value);
-  //       },
-  //       decoration: InputDecoration(
-  //         errorText: model.phone.error,
-  //         counterText: '',
-  //         filled: true,
-  //         fillColor: Colors.white,
-  //         hintText: 'Enter phone..',
-  //         hintStyle: TextStyle(
-  //           color: MainColors.hintTextColor,
-  //         ),
-  //         border: OutlineInputBorder(
-  //           borderRadius: BorderRadius.circular(10.0),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _dobField(
+      BuildContext context, AddDependentProfileScreenViewModel model) {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 10.0,
+        left: 30.0,
+        right: 20.0,
+      ),
+      child: GestureDetector(
+        onTap: () {
+          DatePicker.showDatePicker(context,
+              showTitleActions: true,
+              minTime: DateTime(1900, 1, 1),
+              maxTime: DateTime.now(),
+              theme: DatePickerTheme(
+                  cancelStyle: TextStyle(color: Colors.black, fontSize: 16),
+                  itemStyle: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                  doneStyle: TextStyle(color: Colors.black, fontSize: 16)),
+              onChanged: (date) {
+            model.changeDOB(date);
+            print('change $date in time zone ' +
+                date.timeZoneOffset.inHours.toString());
+          }, onConfirm: (date) {
+            model.changeDOB(date);
+            print('confirm $date');
+          }, currentTime: DateTime.now(), locale: LocaleType.en);
+        },
+        child: TextFormField(
+          controller: model.dobController,
+          style: GoogleFonts.varelaRound(
+            fontWeight: FontWeight.normal,
+            fontSize: 16,
+          ),
+          decoration: InputDecoration(
+            hintText: 'Choose Your Birthday',
+            hintStyle: TextStyle(
+              color: MainColors.hintTextColor,
+            ),
+            filled: true,
+            enabled: false,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(
+                color: Colors.grey,
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(
+                color: Colors.grey,
+              ),
+            ),
+            fillColor: Colors.white,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+            suffixIcon: Icon(
+              EvaIcons.calendar,
+              color: Colors.blue,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget _buildListRelationship(
       BuildContext context, AddDependentProfileScreenViewModel model) {

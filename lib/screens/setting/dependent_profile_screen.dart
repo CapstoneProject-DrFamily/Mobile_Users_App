@@ -292,12 +292,12 @@ class DependentProfileScreen extends StatelessWidget {
                                                     width: 10,
                                                   ),
                                                   SizedBox(
-                                                    width: 40,
+                                                    width: 60,
                                                     child: TextFormField(
                                                       controller: model
                                                           .heightController,
                                                       keyboardType:
-                                                          TextInputType.text,
+                                                          TextInputType.number,
                                                       maxLength: 3,
                                                       decoration:
                                                           InputDecoration(
@@ -316,6 +316,9 @@ class DependentProfileScreen extends StatelessWidget {
                                                         ),
                                                       ),
                                                     ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
                                                   ),
                                                   SizedBox(
                                                     width: 40,
@@ -383,7 +386,7 @@ class DependentProfileScreen extends StatelessWidget {
                                                       controller: model
                                                           .weightController,
                                                       keyboardType:
-                                                          TextInputType.text,
+                                                          TextInputType.number,
                                                       maxLength: 3,
                                                       decoration:
                                                           InputDecoration(
@@ -402,6 +405,9 @@ class DependentProfileScreen extends StatelessWidget {
                                                         ),
                                                       ),
                                                     ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
                                                   ),
                                                   SizedBox(
                                                     width: 40,
@@ -499,111 +505,111 @@ class DependentProfileScreen extends StatelessWidget {
     );
   }
 
-  GestureDetector _buildWeightField(
-      DependentProfileViewModel model, BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Picker(
-            adapter: PickerDataAdapter<String>(
-                pickerdata: new JsonDecoder().convert(model.listWeight),
-                isArray: true),
-            hideHeader: false,
-            onConfirm: (Picker picker, List value) {
-              print(value.toString());
-              print(picker.getSelectedValues());
-              model.changeWeight(picker.getSelectedValues());
-            }).showModal(context);
-      },
-      child: TextFormField(
-        controller: model.weightController,
-        // onChanged: (value) => model.changePhoneNum(value),
-        style: GoogleFonts.varelaRound(
-          fontWeight: FontWeight.normal,
-          fontSize: 16,
-        ),
-        decoration: InputDecoration(
-          hintStyle: TextStyle(
-            color: MainColors.hintTextColor,
-          ),
-          hintText: "Weight",
-          filled: true,
-          enabled: false,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(
-              color: Colors.blue,
-            ),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(
-              color: Colors.blue,
-            ),
-          ),
-          fillColor: Colors.white,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-          suffixIcon: Icon(
-            Icons.arrow_drop_down,
-            color: Colors.blue,
-          ),
-        ),
-      ),
-    );
-  }
+  // GestureDetector _buildWeightField(
+  //     DependentProfileViewModel model, BuildContext context) {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       Picker(
+  //           adapter: PickerDataAdapter<String>(
+  //               pickerdata: new JsonDecoder().convert(model.listWeight),
+  //               isArray: true),
+  //           hideHeader: false,
+  //           onConfirm: (Picker picker, List value) {
+  //             print(value.toString());
+  //             print(picker.getSelectedValues());
+  //             model.changeWeight(picker.getSelectedValues());
+  //           }).showModal(context);
+  //     },
+  //     child: TextFormField(
+  //       controller: model.weightController,
+  //       // onChanged: (value) => model.changePhoneNum(value),
+  //       style: GoogleFonts.varelaRound(
+  //         fontWeight: FontWeight.normal,
+  //         fontSize: 16,
+  //       ),
+  //       decoration: InputDecoration(
+  //         hintStyle: TextStyle(
+  //           color: MainColors.hintTextColor,
+  //         ),
+  //         hintText: "Weight",
+  //         filled: true,
+  //         enabled: false,
+  //         focusedBorder: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(6),
+  //           borderSide: BorderSide(
+  //             color: Colors.blue,
+  //           ),
+  //         ),
+  //         disabledBorder: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(6),
+  //           borderSide: BorderSide(
+  //             color: Colors.blue,
+  //           ),
+  //         ),
+  //         fillColor: Colors.white,
+  //         contentPadding:
+  //             const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+  //         suffixIcon: Icon(
+  //           Icons.arrow_drop_down,
+  //           color: Colors.blue,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  GestureDetector _buildHeightField(
-      DependentProfileViewModel model, BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Picker(
-            adapter: PickerDataAdapter<String>(
-                pickerdata: new JsonDecoder().convert(model.listheight),
-                isArray: true),
-            hideHeader: false,
-            onConfirm: (Picker picker, List value) {
-              print(value.toString());
-              print(picker.getSelectedValues());
-              model.changeHeight(picker.getSelectedValues());
-            }).showModal(context);
-      },
-      child: TextFormField(
-        controller: model.heightController,
-        // onChanged: (value) => model.changePhoneNum(value),
-        style: GoogleFonts.varelaRound(
-          fontWeight: FontWeight.normal,
-          fontSize: 16,
-        ),
-        decoration: InputDecoration(
-          hintStyle: TextStyle(
-            color: MainColors.hintTextColor,
-          ),
-          hintText: "Height",
-          filled: true,
-          enabled: false,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(
-              color: Colors.blue,
-            ),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(
-              color: Colors.blue,
-            ),
-          ),
-          fillColor: Colors.white,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-          suffixIcon: Icon(
-            Icons.arrow_drop_down,
-            color: Colors.blue,
-          ),
-        ),
-      ),
-    );
-  }
+  // GestureDetector _buildHeightField(
+  //     DependentProfileViewModel model, BuildContext context) {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       Picker(
+  //           adapter: PickerDataAdapter<String>(
+  //               pickerdata: new JsonDecoder().convert(model.listheight),
+  //               isArray: true),
+  //           hideHeader: false,
+  //           onConfirm: (Picker picker, List value) {
+  //             print(value.toString());
+  //             print(picker.getSelectedValues());
+  //             model.changeHeight(picker.getSelectedValues());
+  //           }).showModal(context);
+  //     },
+  //     child: TextFormField(
+  //       controller: model.heightController,
+  //       // onChanged: (value) => model.changePhoneNum(value),
+  //       style: GoogleFonts.varelaRound(
+  //         fontWeight: FontWeight.normal,
+  //         fontSize: 16,
+  //       ),
+  //       decoration: InputDecoration(
+  //         hintStyle: TextStyle(
+  //           color: MainColors.hintTextColor,
+  //         ),
+  //         hintText: "Height",
+  //         filled: true,
+  //         enabled: false,
+  //         focusedBorder: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(6),
+  //           borderSide: BorderSide(
+  //             color: Colors.blue,
+  //           ),
+  //         ),
+  //         disabledBorder: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(6),
+  //           borderSide: BorderSide(
+  //             color: Colors.blue,
+  //           ),
+  //         ),
+  //         fillColor: Colors.white,
+  //         contentPadding:
+  //             const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+  //         suffixIcon: Icon(
+  //           Icons.arrow_drop_down,
+  //           color: Colors.blue,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Padding _buildBloodTypeField(
       DependentProfileViewModel model, BuildContext context) {
@@ -628,7 +634,7 @@ class DependentProfileScreen extends StatelessWidget {
               }).showModal(context);
         },
         child: TextFormField(
-          controller: model.bloodTpeController,
+          controller: model.bloodTypeController,
           // onChanged: (value) => model.changePhoneNum(value),
           style: GoogleFonts.varelaRound(
             fontWeight: FontWeight.normal,
@@ -825,7 +831,7 @@ class DependentProfileScreen extends StatelessWidget {
             hintStyle: TextStyle(
               color: MainColors.hintTextColor,
             ),
-            hintText: "Choose Your Birthday",
+            hintText: "Choose your dependent birthday",
             filled: true,
             enabled: false,
             focusedBorder: OutlineInputBorder(
