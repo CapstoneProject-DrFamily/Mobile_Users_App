@@ -18,7 +18,7 @@ class DependentProfileViewModel extends BaseModel {
   ProfileModel _profileModel;
   AdditionInfoModel _additionInfoModel;
 
-  int profileID, patientID, recordId, accountId;
+  int dependentPatientID, patientID, recordId, accountId;
   String relationship;
 
   File _image;
@@ -186,11 +186,12 @@ class DependentProfileViewModel extends BaseModel {
   void getDependentProfile() async {
     this._isLoading = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    profileID = prefs.getInt("dependentProfileID");
+    dependentPatientID = prefs.getInt("dependentPatientID");
     accountId = prefs.getInt("usAccountID");
 
     //Get user profile
-    _profileModel = await _profileRepo.getBasicInfo(profileID.toString());
+    _profileModel =
+        await _profileRepo.getBasicInfo(dependentPatientID.toString());
     fullNameController.text = _profileModel.fullName;
 
     DateTime date = DateTime.parse(_profileModel.dob);
@@ -221,13 +222,14 @@ class DependentProfileViewModel extends BaseModel {
 
     _bloodTpeController.text = _additionInfoModel.bloodType;
 
-    int convertHeight = (_additionInfoModel.height == null)
-        ? 0
-        : _additionInfoModel.height.toInt();
-    _heightController.text = convertHeight.toString();
+    // int convertHeight = _additionInfoModel.height.toInt();
+    // _heightController.text = convertHeight.toString();
+    _heightController.text = _additionInfoModel.height.toString() == "null"
+        ? ""
+        : _additionInfoModel.height.toString();
 
-    _weightController.text = (_additionInfoModel.weight == null)
-        ? "0.0"
+    _weightController.text = _additionInfoModel.weight.toString() == "null"
+        ? ""
         : _additionInfoModel.weight.toString();
 
     if (_additionInfoModel.location == null ||
@@ -389,7 +391,7 @@ class DependentProfileViewModel extends BaseModel {
       }
 
       _profileModel = new ProfileModel(
-          profileId: profileID,
+          profileId: dependentPatientID,
           fullName: fullNameController.text,
           dob: dobController.text,
           gender: selectGender,

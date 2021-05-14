@@ -27,6 +27,7 @@ class DependentRepo extends IDependentRepo {
 
     var response = await http.get(urlAPI, headers: header);
     print("Status: " + response.statusCode.toString());
+    print("Body list dependenet: " + response.body);
 
     List<DependentModel> listDependent;
 

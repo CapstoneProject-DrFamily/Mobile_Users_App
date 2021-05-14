@@ -61,12 +61,12 @@ class DependentProfileScreen extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
-                                      _buildTitle('Full Name'),
+                                      _buildTitle('Full name'),
                                       SizedBox(
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -89,7 +89,7 @@ class DependentProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -112,7 +112,7 @@ class DependentProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -135,7 +135,7 @@ class DependentProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -158,7 +158,7 @@ class DependentProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -214,7 +214,7 @@ class DependentProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -237,7 +237,7 @@ class DependentProfileScreen extends StatelessWidget {
                                         width: 2.0,
                                       ),
                                       Text(
-                                        "(*)",
+                                        "*",
                                         style: TextStyle(
                                           color: Colors.red.shade300,
                                           fontSize: 18,
@@ -270,7 +270,7 @@ class DependentProfileScreen extends StatelessWidget {
                                                     width: 2.0,
                                                   ),
                                                   Text(
-                                                    "(*)",
+                                                    "*",
                                                     style: TextStyle(
                                                       color:
                                                           Colors.red.shade300,
@@ -356,7 +356,7 @@ class DependentProfileScreen extends StatelessWidget {
                                                     width: 2.0,
                                                   ),
                                                   Text(
-                                                    "(*)",
+                                                    "*",
                                                     style: TextStyle(
                                                       color:
                                                           Colors.red.shade300,
