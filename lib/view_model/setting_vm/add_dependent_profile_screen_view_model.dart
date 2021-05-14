@@ -19,8 +19,8 @@ class AddDependentProfileScreenViewModel extends BaseModel {
   // controller
   TextEditingController _fullNameController = TextEditingController();
   TextEditingController get fullNameController => _fullNameController;
-  // TextEditingController _phoneController = TextEditingController();
-  // TextEditingController get phoneController => _phoneController;
+  TextEditingController _dobController = TextEditingController();
+  TextEditingController get dobController => _dobController;
   TextEditingController _relationshipController = TextEditingController();
   TextEditingController get relationshipController => _relationshipController;
 
@@ -46,6 +46,7 @@ class AddDependentProfileScreenViewModel extends BaseModel {
 
   String location;
   String errorLocation;
+  String dobadd;
 
   //Constructor
   AddDependentProfileScreenViewModel() {
@@ -62,6 +63,45 @@ class AddDependentProfileScreenViewModel extends BaseModel {
       notifyListeners();
     });
     init();
+  }
+
+  List _months = [
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+    '06',
+    '07',
+    '08',
+    '09',
+    '10',
+    '11',
+    '12'
+  ];
+
+  //function choose DOB
+  void changeDOB(DateTime datetime) {
+    if (datetime.day < 10) {
+      _dobController.text = "0" +
+          datetime.day.toString() +
+          '-' +
+          _months[datetime.month - 1] +
+          '-' +
+          datetime.year.toString();
+    } else {
+      _dobController.text = datetime.day.toString() +
+          '-' +
+          _months[datetime.month - 1] +
+          '-' +
+          datetime.year.toString();
+    }
+    dobadd = datetime.year.toString() +
+        "-" +
+        _months[datetime.month - 1] +
+        "-" +
+        datetime.day.toString();
+    notifyListeners();
   }
 
   void init() async {
@@ -130,7 +170,7 @@ class AddDependentProfileScreenViewModel extends BaseModel {
       print("_isReady " + _isReady.toString());
       _signUpModel = new SignUpModel(
         fullName: _fullNameController.text,
-        dob: null,
+        dob: dobadd,
         gender: null,
         image: null,
         email: null,
