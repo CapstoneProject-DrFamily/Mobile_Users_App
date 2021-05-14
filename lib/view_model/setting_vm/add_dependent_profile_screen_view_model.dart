@@ -23,6 +23,8 @@ class AddDependentProfileScreenViewModel extends BaseModel {
   TextEditingController get dobController => _dobController;
   TextEditingController _relationshipController = TextEditingController();
   TextEditingController get relationshipController => _relationshipController;
+  TextEditingController _genderController = TextEditingController();
+  TextEditingController get genderController => _genderController;
 
   TextEditingController _locationChooseController = TextEditingController();
   TextEditingController get locationChooseController =>
@@ -65,6 +67,12 @@ class AddDependentProfileScreenViewModel extends BaseModel {
     init();
   }
 
+  List<String> _genderList = [
+    'Male',
+    'Female',
+  ];
+  List<String> get genderList => _genderList;
+
   List _months = [
     '01',
     '02',
@@ -101,6 +109,12 @@ class AddDependentProfileScreenViewModel extends BaseModel {
         _months[datetime.month - 1] +
         "-" +
         datetime.day.toString();
+    notifyListeners();
+  }
+
+  //function choose gender
+  void chooseGender(String newValue) {
+    _genderController.text = newValue;
     notifyListeners();
   }
 
@@ -171,7 +185,7 @@ class AddDependentProfileScreenViewModel extends BaseModel {
       _signUpModel = new SignUpModel(
         fullName: _fullNameController.text,
         dob: dobadd,
-        gender: null,
+        gender: _genderController.text,
         image: null,
         email: null,
         idCard: null,
