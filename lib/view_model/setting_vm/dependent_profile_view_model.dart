@@ -221,10 +221,14 @@ class DependentProfileViewModel extends BaseModel {
 
     _bloodTpeController.text = _additionInfoModel.bloodType;
 
-    int convertHeight = _additionInfoModel.height.toInt();
+    int convertHeight = (_additionInfoModel.height == null)
+        ? 0
+        : _additionInfoModel.height.toInt();
     _heightController.text = convertHeight.toString();
 
-    _weightController.text = _additionInfoModel.weight.toString();
+    _weightController.text = (_additionInfoModel.weight == null)
+        ? "0.0"
+        : _additionInfoModel.weight.toString();
 
     if (_additionInfoModel.location == null ||
         _additionInfoModel.location == "") {

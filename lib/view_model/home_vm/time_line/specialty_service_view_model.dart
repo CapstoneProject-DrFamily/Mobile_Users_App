@@ -38,7 +38,6 @@ class SpecialtyServiceViewModel extends BaseModel {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String service = prefs.getString("usTransactionStatus");
-    print(baseTimeLineViewModel);
     print('serviceId: $serviceId');
     print('isDefault: $isServiceDefault');
 

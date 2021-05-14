@@ -25,18 +25,18 @@ class DoctorDetailModel {
 
   factory DoctorDetailModel.fromJson(Map<String, dynamic> json) {
     return DoctorDetailModel(
-      doctorId: json['doctorId'] as int,
+      doctorId: json['id'] as int,
       doctorDegree: json['degree'] as String,
       doctorExperience: json['experience'] as String,
       doctorDescription: json['description'] as String,
       doctorSpecialty: json['specialty']['name'] as String,
-      doctorName: json['doctorNavigation']['fullName'] as String,
+      doctorName: json['fullname'] as String,
       doctorSchool: json['school'] as String,
-      doctorImage: json['doctorNavigation']['image'] as String,
+      doctorImage: json['image'] as String,
       ratingPoint: json['ratingPoint'] as double,
       transactionBooked: json['bookedCount'] as int,
       feedbackCount: json['feedbackCount'] as int,
-      tokenNoti: json['doctorNavigation']['account']['notiToken'] as String,
+      tokenNoti: json['idNavigation']['notiToken'] as String,
     );
   }
 
