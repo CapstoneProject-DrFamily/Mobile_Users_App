@@ -10,8 +10,8 @@ abstract class INotifyRepo {
   Future<void> bookScheduleDoctor(
       String tokenID, String patientName, String time);
 
-        Future<void> cancelSchedule(String usToken,
-      String patientName, String appointmentTime);
+  Future<void> cancelSchedule(
+      String usToken, String patientName, String appointmentTime);
 }
 
 class NotifyRepo extends INotifyRepo {
@@ -66,7 +66,7 @@ class NotifyRepo extends INotifyRepo {
         <String, dynamic>{
           'notification': <String, dynamic>{
             'body': 'Patient have cancel booking',
-            'title': 'YOUr PATIENT HAVE CANCEL BOOKING'
+            'title': 'YOUR PATIENT HAVE CANCEL BOOKING'
           },
           'priority': 'high',
           'data': <String, dynamic>{
@@ -137,9 +137,9 @@ class NotifyRepo extends INotifyRepo {
     );
   }
 
-   @override
-  Future<void> cancelSchedule(String usToken,
-      String patientName, String appointmentTime) async {
+  @override
+  Future<void> cancelSchedule(
+      String usToken, String patientName, String appointmentTime) async {
     await firebaseMessaging.requestNotificationPermissions(
       const IosNotificationSettings(
           sound: true, badge: true, alert: true, provisional: false),
@@ -147,8 +147,7 @@ class NotifyRepo extends INotifyRepo {
     String appointTime = DateFormat("dd-MM-yyyy - HH:mm")
         .format(DateTime.parse(appointmentTime))
         .toString();
-    String body =
-        " $patientName has cancel appointment at $appointTime";
+    String body = " $patientName has cancel appointment at $appointTime";
 
     await http.post(
       'https://fcm.googleapis.com/fcm/send',
