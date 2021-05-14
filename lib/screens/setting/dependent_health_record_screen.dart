@@ -1290,7 +1290,7 @@ class DependentHealthRecordScreen extends StatelessWidget {
                         width: 40,
                         child: TextFormField(
                           controller: model.birthWeightController,
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
                           maxLength: 3,
                           decoration: InputDecoration(
                             counterText: "",
@@ -1326,7 +1326,7 @@ class DependentHealthRecordScreen extends StatelessWidget {
                         width: 40,
                         child: TextFormField(
                           controller: model.birthHeightController,
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
                           maxLength: 3,
                           decoration: InputDecoration(
                             counterText: "",
