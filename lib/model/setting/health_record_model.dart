@@ -108,6 +108,8 @@ class HealthRecordModel {
       contactTime: json['contactTime'] as String,
       toiletType: json['toiletType'] as String,
       otherRisks: json['otherRisks'] as String,
+      insBy: json['insBy'] as String,
+      insDatetime: json['insDatetime'] as String,
     );
   }
 
