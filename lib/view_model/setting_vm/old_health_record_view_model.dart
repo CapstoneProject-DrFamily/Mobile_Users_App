@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class OldHealthRecordViewModel extends BaseModel {
   final IHealthRecordRepo _healthRecordRepo = HealthRecordRepo();
   HealthRecordModel _healthRecordModel;
-  int healthRecordID;
+  int patientID, healthRecordID;
 
   List<HealthRecordModel> _listOldHealthRecord = [];
   List<HealthRecordModel> get listOldHealthRecord => _listOldHealthRecord;
@@ -125,22 +125,18 @@ class OldHealthRecordViewModel extends BaseModel {
   int get choiceActivity => _choiceActivity;
   //----------------------------------------
 
-  OldHealthRecordViewModel() {
-    getListOldPersonalHealthRecord();
-  }
-
-  Future<void> getListOldPersonalHealthRecord() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var patientID = prefs.getInt("usPatientID");
-
+  Future<void> getListOldPersonalHealthRecord(int patientID) async {
     _isLoading = true;
     notifyListeners();
+    if (init) {
+      this.patientID = patientID;
+      _listOldHealthRecord =
+          await _healthRecordRepo.getListOldHealthRecord(patientID, true);
+      this.init = false;
+      notifyListeners();
+    }
 
-    _listOldHealthRecord = await _healthRecordRepo
-        .getListOldHealthRecord(patientID, true)
-        .whenComplete(() {
-      _isLoading = false;
-    });
+    _isLoading = false;
     notifyListeners();
   }
 

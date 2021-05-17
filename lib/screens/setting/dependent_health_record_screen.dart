@@ -2,12 +2,12 @@ import 'package:commons/commons.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:custom_radio_grouped_button/CustomButtons/ButtonTextStyle.dart';
 import 'package:custom_radio_grouped_button/CustomButtons/CustomRadioButton.dart';
+import 'package:drFamily_app/screens/setting/list_old_health_record_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/setting_vm/dependent_health_record_view_model.dart';
 import 'package:drFamily_app/widgets/common/fonts.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DependentHealthRecordScreen extends StatelessWidget {
@@ -41,6 +41,32 @@ class DependentHealthRecordScreen extends StatelessWidget {
                     icon: new Icon(Icons.arrow_back_ios, color: Colors.blue),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
+                  actions: [
+                    PopupMenuButton(
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: Colors.blue,
+                      ),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 1,
+                          child: Text("Old Personal Health Record"),
+                        ),
+                      ],
+                      onSelected: (result) async {
+                        if (result == 1) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ListOldHealthRecordScreen(
+                                patientID: model.dependentPatientID,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
                   bottom: TabBar(
                     unselectedLabelColor: Colors.black,
                     labelColor: Colors.blue[400],
