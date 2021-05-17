@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ListOldHealthRecordScreen extends StatelessWidget {
+  final int patientID;
+  ListOldHealthRecordScreen({Key key, @required this.patientID})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,48 +32,53 @@ class ListOldHealthRecordScreen extends StatelessWidget {
       ),
       body: BaseView<OldHealthRecordViewModel>(
         builder: (context, child, model) {
-          return model.isLoading
-              ? Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.white,
-                  ),
-                )
-              : Container(
-                  child: Column(
-                    children: <Widget>[
-                      Flexible(
-                        child: ListView.builder(
-                            itemCount: model.listOldHealthRecord.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ListTile(
-                                title: Text("Date: " +
-                                    DateFormat('dd-MM-yyyy')
-                                        .format(DateTime.parse(model
-                                            .listOldHealthRecord[index]
-                                            .insDatetime))
-                                        .toString()),
-                                subtitle: Text("Created by: " +
-                                    model.listOldHealthRecord[index].insBy),
-                                trailing: IconButton(
-                                  icon: Icon(Icons.chevron_right),
-                                  onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          OldHealthRecordScreen(
-                                        healthRecordID: model
-                                            .listOldHealthRecord[index]
-                                            .healthRecordID,
+          return FutureBuilder(
+            future: model.getListOldPersonalHealthRecord(patientID),
+            builder: (context, snapshot) {
+              return model.isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.white,
+                      ),
+                    )
+                  : Container(
+                      child: Column(
+                        children: <Widget>[
+                          Flexible(
+                            child: ListView.builder(
+                                itemCount: model.listOldHealthRecord.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ListTile(
+                                    title: Text("Date: " +
+                                        DateFormat('dd-MM-yyyy')
+                                            .format(DateTime.parse(model
+                                                .listOldHealthRecord[index]
+                                                .insDatetime))
+                                            .toString()),
+                                    subtitle: Text("Created by: " +
+                                        model.listOldHealthRecord[index].insBy),
+                                    trailing: IconButton(
+                                      icon: Icon(Icons.chevron_right),
+                                      onPressed: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              OldHealthRecordScreen(
+                                            healthRecordID: model
+                                                .listOldHealthRecord[index]
+                                                .healthRecordID,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              );
-                            }),
+                                  );
+                                }),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
+                    );
+            },
+          );
         },
       ),
     );

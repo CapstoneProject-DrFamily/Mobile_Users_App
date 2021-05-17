@@ -53,12 +53,17 @@ class HealthRecordScreen extends StatelessWidget {
                           child: Text("Old Personal Health Record"),
                         ),
                       ],
-                      onSelected: (result) {
+                      onSelected: (result) async {
                         if (result == 1) {
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          var patientID = prefs.getInt("usPatientID");
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ListOldHealthRecordScreen(),
+                              builder: (context) => ListOldHealthRecordScreen(
+                                patientID: patientID,
+                              ),
                             ),
                           );
                         }
