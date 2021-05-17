@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:commons/commons.dart';
 import 'package:cool_alert/cool_alert.dart';
-import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/model/patient_schedule_model/patient_schedule_model.dart';
 import 'package:drFamily_app/repository/doctor_repo.dart';
 import 'package:drFamily_app/repository/notify_repo.dart';

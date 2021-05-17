@@ -1,178 +1,87 @@
 import 'dart:ui';
-import 'package:commons/commons.dart';
-import 'package:cool_alert/cool_alert.dart';
-import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
-import 'package:drFamily_app/screens/setting/list_old_health_record_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
-import 'package:drFamily_app/view_model/setting_vm/health_record_view_model.dart';
-import 'package:drFamily_app/widgets/common/fonts.dart';
+import 'package:drFamily_app/view_model/setting_vm/old_health_record_view_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HealthRecordScreen extends StatelessWidget {
+class OldHealthRecordScreen extends StatelessWidget {
+  final int healthRecordID;
+  OldHealthRecordScreen({Key key, @required this.healthRecordID})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return BaseView<HealthRecordViewModel>(builder: (context, child, model) {
-      return DefaultTabController(
-        length: 2,
-        child: model.isLoading
-            ? Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.white,
-                  ),
-                ),
-              )
-            : Scaffold(
-                appBar: new AppBar(
-                  backgroundColor: Colors.white,
-                  elevation: 0,
-                  centerTitle: true,
-                  title: Text(
-                    "Personal Health Record",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontFamily: AVENIR,
-                    ),
-                  ),
-                  leading: new IconButton(
-                    icon: new Icon(Icons.arrow_back_ios, color: Colors.blue),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  actions: [
-                    PopupMenuButton(
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: Colors.blue,
-                      ),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          value: 1,
-                          child: Text("Old Personal Health Record"),
+    return BaseView<OldHealthRecordViewModel>(builder: (context, child, model) {
+      return FutureBuilder(
+          future: model.getPersonalHealthRecordByID(healthRecordID),
+          builder: (context, snapshot) {
+            return DefaultTabController(
+              length: 2,
+              child: model.isLoading
+                  ? Scaffold(
+                      body: Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.white,
                         ),
-                      ],
-                      onSelected: (result) {
-                        if (result == 1) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ListOldHealthRecordScreen(),
+                      ),
+                    )
+                  : Scaffold(
+                      appBar: new AppBar(
+                        backgroundColor: Colors.white,
+                        elevation: 0,
+                        centerTitle: true,
+                        title: Text(
+                          "Personal Health Record",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff0d47a1),
+                          ),
+                        ),
+                        leading: new IconButton(
+                          icon: new Icon(Icons.arrow_back_ios,
+                              color: Color(0xff0d47a1)),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                        bottom: TabBar(
+                          unselectedLabelColor: Colors.black,
+                          labelColor: Color(0xff0d47a1),
+                          tabs: [
+                            Tab(
+                              child: Text(
+                                "History & Allergy",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
                             ),
-                          );
-                        }
-                      },
-                    ),
-                  ],
-                  bottom: TabBar(
-                    unselectedLabelColor: Colors.black,
-                    labelColor: Colors.blue[400],
-                    tabs: [
-                      Tab(
-                        child: Text(
-                          "History & Allergy",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: AVENIR,
-                          ),
+                            Tab(
+                              child: Text(
+                                "Exposure",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Tab(
-                        child: Text(
-                          "Exposure",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: AVENIR,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                body: TabBarView(
-                  children: [
-                    _tabView1(context, model),
-                    _tabView2(context, model),
-                  ],
-                ),
-                bottomNavigationBar: GestureDetector(
-                  onTap: () async {
-                    bool isUpdate = await _confirmDialog(context);
-                    if (isUpdate) {
-                      waitDialog(context,
-                          message: "Updating your infomation...");
-                      bool check = await model.updateHealthRecord();
-                      print("Check: " + check.toString());
-
-                      if (check) {
-                        Navigator.pop(context);
-
-                        await CoolAlert.show(
-                            barrierDismissible: false,
-                            context: context,
-                            type: CoolAlertType.success,
-                            text: "Update Personal Health Record Success",
-                            backgroundColor: Colors.lightBlue[200],
-                            onConfirmBtnTap: () {
-                              Navigator.pop(context);
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          HealthRecordScreen()));
-                            });
-                      } else {
-                        Navigator.pop(context);
-
-                        await CoolAlert.show(
-                            barrierDismissible: false,
-                            context: context,
-                            type: CoolAlertType.error,
-                            text: "Update error, please try again!",
-                            backgroundColor: Colors.lightBlue[200],
-                            onConfirmBtnTap: () {
-                              Navigator.pop(context);
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          HealthRecordScreen()));
-                            });
-                      }
-                    }
-                  },
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(
-                      30.0,
-                      15.0,
-                      30.0,
-                      15.0,
-                    ),
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: MediaQuery.of(context).size.height / 14,
-                    decoration: new BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Save",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
+                      body: TabBarView(
+                        children: [
+                          _tabView1(context, model),
+                          _tabView2(context, model),
+                        ],
                       ),
                     ),
-                  ),
-                ),
-              ),
-      );
+            );
+          });
     });
   }
 
   //TabBarView for Tiền sử & Dị ứng
   DefaultTabController _tabView1(
-      BuildContext context, HealthRecordViewModel model) {
+      BuildContext context, OldHealthRecordViewModel model) {
     return DefaultTabController(
       length: 6,
       child: Scaffold(
@@ -187,7 +96,7 @@ class HealthRecordScreen extends StatelessWidget {
             unselectedLabelColor: Colors.black,
             indicator: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
-              color: Colors.blue.shade400,
+              color: Color(0xff0d47a1),
             ),
             tabs: [
               //Tab Tình trạng lúc sinh
@@ -196,7 +105,7 @@ class HealthRecordScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     border: Border.all(
-                      color: Colors.blue.shade400,
+                      color: Color(0xff0d47a1),
                       width: 1,
                     ),
                   ),
@@ -207,7 +116,7 @@ class HealthRecordScreen extends StatelessWidget {
                       child: Text(
                         "Condition at birth",
                         style: TextStyle(
-                          fontFamily: AVENIR,
+                          fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
                       ),
@@ -221,7 +130,7 @@ class HealthRecordScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     border: Border.all(
-                      color: Colors.blue.shade400,
+                      color: Color(0xff0d47a1),
                       width: 1,
                     ),
                   ),
@@ -232,7 +141,7 @@ class HealthRecordScreen extends StatelessWidget {
                       child: Text(
                         "History, Allergy",
                         style: TextStyle(
-                          fontFamily: AVENIR,
+                          fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
                       ),
@@ -246,7 +155,7 @@ class HealthRecordScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     border: Border.all(
-                      color: Colors.blue.shade400,
+                      color: Color(0xff0d47a1),
                       width: 1,
                     ),
                   ),
@@ -257,7 +166,7 @@ class HealthRecordScreen extends StatelessWidget {
                       child: Text(
                         "Disabilities",
                         style: TextStyle(
-                          fontFamily: AVENIR,
+                          fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
                       ),
@@ -271,7 +180,7 @@ class HealthRecordScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     border: Border.all(
-                      color: Colors.blue.shade400,
+                      color: Color(0xff0d47a1),
                       width: 1,
                     ),
                   ),
@@ -282,7 +191,7 @@ class HealthRecordScreen extends StatelessWidget {
                       child: Text(
                         "Surgical biography",
                         style: TextStyle(
-                          fontFamily: AVENIR,
+                          fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
                       ),
@@ -296,7 +205,7 @@ class HealthRecordScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     border: Border.all(
-                      color: Colors.blue.shade400,
+                      color: Color(0xff0d47a1),
                       width: 1,
                     ),
                   ),
@@ -307,7 +216,7 @@ class HealthRecordScreen extends StatelessWidget {
                       child: Text(
                         "Family history",
                         style: TextStyle(
-                          fontFamily: AVENIR,
+                          fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
                       ),
@@ -321,7 +230,7 @@ class HealthRecordScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     border: Border.all(
-                      color: Colors.blue.shade400,
+                      color: Color(0xff0d47a1),
                       width: 1,
                     ),
                   ),
@@ -332,7 +241,7 @@ class HealthRecordScreen extends StatelessWidget {
                       child: Text(
                         "Other",
                         style: TextStyle(
-                          fontFamily: AVENIR,
+                          fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
                       ),
@@ -358,7 +267,7 @@ class HealthRecordScreen extends StatelessWidget {
   }
 
   //TabBarView for Yếu tố tiếp xúc
-  Widget _tabView2(BuildContext context, HealthRecordViewModel model) {
+  Widget _tabView2(BuildContext context, OldHealthRecordViewModel model) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -374,9 +283,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Smoking cigarettes, waterpipe",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -387,67 +295,65 @@ class HealthRecordScreen extends StatelessWidget {
                 SizedBox(
                   width: 15.0,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    model.changeChoiceCigarette(0);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(left: 8),
-                    width: MediaQuery.of(context).size.width / 2,
-                    margin: EdgeInsets.only(
-                      right: 40.0,
-                    ),
-                    child: Row(
-                      children: [
-                        model.choiceCigarette == 0
-                            ? Icon(
-                                EvaIcons.radioButtonOn,
-                                color: Colors.blue,
-                                size: 25,
-                              )
-                            : Icon(
-                                EvaIcons.radioButtonOffOutline,
-                                size: 25,
-                              ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'No',
-                          style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                Container(
+                  padding: EdgeInsets.only(left: 8),
+                  width: MediaQuery.of(context).size.width / 2,
+                  margin: EdgeInsets.only(
+                    right: 40.0,
+                  ),
+                  child: Row(
+                    children: [
+                      model.choiceCigarette == 0
+                          ? Icon(
+                              EvaIcons.radioButtonOn,
+                              color: Colors.blue,
+                              size: 25,
+                            )
+                          : Icon(
+                              EvaIcons.radioButtonOffOutline,
+                              color: Colors.grey,
+                              size: 25,
+                            ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'No',
+                        style: (model.choiceCigarette == 0)
+                            ? GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16)
+                            : GoogleFonts.varelaRound(
+                                color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    model.changeChoiceCigarette(1);
-                  },
-                  child: Container(
-                    child: Row(
-                      children: [
-                        model.choiceCigarette == 1
-                            ? Icon(
-                                EvaIcons.radioButtonOn,
-                                color: Colors.blue,
-                                size: 25,
-                              )
-                            : Icon(
-                                EvaIcons.radioButtonOffOutline,
-                                size: 25,
-                              ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Yes',
-                          style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                Container(
+                  child: Row(
+                    children: [
+                      model.choiceCigarette == 1
+                          ? Icon(
+                              EvaIcons.radioButtonOn,
+                              color: Colors.blue,
+                              size: 25,
+                            )
+                          : Icon(
+                              EvaIcons.radioButtonOffOutline,
+                              color: Colors.grey,
+                              size: 25,
+                            ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Yes',
+                        style: (model.choiceCigarette == 1)
+                            ? GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16)
+                            : GoogleFonts.varelaRound(
+                                color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -461,67 +367,65 @@ class HealthRecordScreen extends StatelessWidget {
                 SizedBox(
                   width: 15.0,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    model.changeChoiceCigarette(2);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 2,
-                    padding: EdgeInsets.only(left: 8),
-                    margin: EdgeInsets.only(
-                      right: 40.0,
-                    ),
-                    child: Row(
-                      children: [
-                        model.choiceCigarette == 2
-                            ? Icon(
-                                EvaIcons.radioButtonOn,
-                                color: Colors.blue,
-                                size: 25,
-                              )
-                            : Icon(
-                                EvaIcons.radioButtonOffOutline,
-                                size: 25,
-                              ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Smoke often',
-                          style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  padding: EdgeInsets.only(left: 8),
+                  margin: EdgeInsets.only(
+                    right: 40.0,
+                  ),
+                  child: Row(
+                    children: [
+                      model.choiceCigarette == 2
+                          ? Icon(
+                              EvaIcons.radioButtonOn,
+                              color: Colors.blue,
+                              size: 25,
+                            )
+                          : Icon(
+                              EvaIcons.radioButtonOffOutline,
+                              color: Colors.grey,
+                              size: 25,
+                            ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Smoke often',
+                        style: (model.choiceCigarette == 2)
+                            ? GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16)
+                            : GoogleFonts.varelaRound(
+                                color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    model.changeChoiceCigarette(3);
-                  },
-                  child: Container(
-                    child: Row(
-                      children: [
-                        model.choiceCigarette == 3
-                            ? Icon(
-                                EvaIcons.radioButtonOn,
-                                color: Colors.blue,
-                                size: 25,
-                              )
-                            : Icon(
-                                EvaIcons.radioButtonOffOutline,
-                                size: 25,
-                              ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Quit',
-                          style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                Container(
+                  child: Row(
+                    children: [
+                      model.choiceCigarette == 3
+                          ? Icon(
+                              EvaIcons.radioButtonOn,
+                              color: Colors.blue,
+                              size: 25,
+                            )
+                          : Icon(
+                              EvaIcons.radioButtonOffOutline,
+                              color: Colors.grey,
+                              size: 25,
+                            ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Quit',
+                        style: (model.choiceCigarette == 3)
+                            ? GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16)
+                            : GoogleFonts.varelaRound(
+                                color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -542,9 +446,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Drink alcohol regularly",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -553,109 +456,106 @@ class HealthRecordScreen extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Column(
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      model.changeChoiceWine(0);
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      padding: EdgeInsets.only(left: 8),
-                      margin: EdgeInsets.only(
-                        left: 14.0,
-                        bottom: 15.0,
-                      ),
-                      child: Row(
-                        children: [
-                          model.choiceWine == 0
-                              ? Icon(
-                                  EvaIcons.radioButtonOn,
-                                  color: Colors.blue,
-                                  size: 25,
-                                )
-                              : Icon(
-                                  EvaIcons.radioButtonOffOutline,
-                                  size: 25,
-                                ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Yes',
-                            style: GoogleFonts.varelaRound(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ],
-                      ),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    padding: EdgeInsets.only(left: 8),
+                    margin: EdgeInsets.only(
+                      left: 14.0,
+                      bottom: 15.0,
+                    ),
+                    child: Row(
+                      children: [
+                        model.choiceWine == 0
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                color: Colors.grey,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Yes',
+                          style: (model.choiceWine == 0)
+                              ? GoogleFonts.varelaRound(
+                                  fontWeight: FontWeight.bold, fontSize: 16)
+                              : GoogleFonts.varelaRound(
+                                  color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      model.changeChoiceWine(1);
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      padding: EdgeInsets.only(left: 8),
-                      margin: EdgeInsets.only(
-                        left: 14.0,
-                        bottom: 15.0,
-                      ),
-                      child: Row(
-                        children: [
-                          model.choiceWine == 1
-                              ? Icon(
-                                  EvaIcons.radioButtonOn,
-                                  color: Colors.blue,
-                                  size: 25,
-                                )
-                              : Icon(
-                                  EvaIcons.radioButtonOffOutline,
-                                  size: 25,
-                                ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'No',
-                            style: GoogleFonts.varelaRound(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ],
-                      ),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    padding: EdgeInsets.only(left: 8),
+                    margin: EdgeInsets.only(
+                      left: 14.0,
+                      bottom: 15.0,
+                    ),
+                    child: Row(
+                      children: [
+                        model.choiceWine == 1
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                color: Colors.grey,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'No',
+                          style: (model.choiceWine == 1)
+                              ? GoogleFonts.varelaRound(
+                                  fontWeight: FontWeight.bold, fontSize: 16)
+                              : GoogleFonts.varelaRound(
+                                  color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      model.changeChoiceWine(2);
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      padding: EdgeInsets.only(left: 8),
-                      margin: EdgeInsets.only(
-                        left: 14.0,
-                        bottom: 15.0,
-                      ),
-                      child: Row(
-                        children: [
-                          model.choiceWine == 2
-                              ? Icon(
-                                  EvaIcons.radioButtonOn,
-                                  color: Colors.blue,
-                                  size: 25,
-                                )
-                              : Icon(
-                                  EvaIcons.radioButtonOffOutline,
-                                  size: 25,
-                                ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Quit',
-                            style: GoogleFonts.varelaRound(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ],
-                      ),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    padding: EdgeInsets.only(left: 8),
+                    margin: EdgeInsets.only(
+                      left: 14.0,
+                      bottom: 15.0,
+                    ),
+                    child: Row(
+                      children: [
+                        model.choiceWine == 2
+                            ? Icon(
+                                EvaIcons.radioButtonOn,
+                                color: Colors.blue,
+                                size: 25,
+                              )
+                            : Icon(
+                                EvaIcons.radioButtonOffOutline,
+                                color: Colors.grey,
+                                size: 25,
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Quit',
+                          style: (model.choiceWine == 2)
+                              ? GoogleFonts.varelaRound(
+                                  fontWeight: FontWeight.bold, fontSize: 16)
+                              : GoogleFonts.varelaRound(
+                                  color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -677,9 +577,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Drug use",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -690,67 +589,65 @@ class HealthRecordScreen extends StatelessWidget {
                 SizedBox(
                   width: 15.0,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    model.changeChoiceDrug(0);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(left: 8),
-                    width: MediaQuery.of(context).size.width / 2,
-                    margin: EdgeInsets.only(
-                      right: 40.0,
-                    ),
-                    child: Row(
-                      children: [
-                        model.choiceDrug == 0
-                            ? Icon(
-                                EvaIcons.radioButtonOn,
-                                color: Colors.blue,
-                                size: 25,
-                              )
-                            : Icon(
-                                EvaIcons.radioButtonOffOutline,
-                                size: 25,
-                              ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'No',
-                          style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                Container(
+                  padding: EdgeInsets.only(left: 8),
+                  width: MediaQuery.of(context).size.width / 2,
+                  margin: EdgeInsets.only(
+                    right: 40.0,
+                  ),
+                  child: Row(
+                    children: [
+                      model.choiceDrug == 0
+                          ? Icon(
+                              EvaIcons.radioButtonOn,
+                              color: Colors.blue,
+                              size: 25,
+                            )
+                          : Icon(
+                              EvaIcons.radioButtonOffOutline,
+                              color: Colors.grey,
+                              size: 25,
+                            ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'No',
+                        style: (model.choiceDrug == 0)
+                            ? GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16)
+                            : GoogleFonts.varelaRound(
+                                color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    model.changeChoiceDrug(1);
-                  },
-                  child: Container(
-                    child: Row(
-                      children: [
-                        model.choiceDrug == 1
-                            ? Icon(
-                                EvaIcons.radioButtonOn,
-                                color: Colors.blue,
-                                size: 25,
-                              )
-                            : Icon(
-                                EvaIcons.radioButtonOffOutline,
-                                size: 25,
-                              ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Yes',
-                          style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                Container(
+                  child: Row(
+                    children: [
+                      model.choiceDrug == 1
+                          ? Icon(
+                              EvaIcons.radioButtonOn,
+                              color: Colors.blue,
+                              size: 25,
+                            )
+                          : Icon(
+                              EvaIcons.radioButtonOffOutline,
+                              color: Colors.grey,
+                              size: 25,
+                            ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Yes',
+                        style: (model.choiceDrug == 1)
+                            ? GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16)
+                            : GoogleFonts.varelaRound(
+                                color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -764,67 +661,65 @@ class HealthRecordScreen extends StatelessWidget {
                 SizedBox(
                   width: 15.0,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    model.changeChoiceDrug(2);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 1.75,
-                    padding: EdgeInsets.only(left: 8),
-                    margin: EdgeInsets.only(
-                      right: 12.0,
-                    ),
-                    child: Row(
-                      children: [
-                        model.choiceDrug == 2
-                            ? Icon(
-                                EvaIcons.radioButtonOn,
-                                color: Colors.blue,
-                                size: 25,
-                              )
-                            : Icon(
-                                EvaIcons.radioButtonOffOutline,
-                                size: 25,
-                              ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Usually use',
-                          style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.75,
+                  padding: EdgeInsets.only(left: 8),
+                  margin: EdgeInsets.only(
+                    right: 12.0,
+                  ),
+                  child: Row(
+                    children: [
+                      model.choiceDrug == 2
+                          ? Icon(
+                              EvaIcons.radioButtonOn,
+                              color: Colors.blue,
+                              size: 25,
+                            )
+                          : Icon(
+                              EvaIcons.radioButtonOffOutline,
+                              color: Colors.grey,
+                              size: 25,
+                            ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Usually use',
+                        style: (model.choiceDrug == 2)
+                            ? GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16)
+                            : GoogleFonts.varelaRound(
+                                color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    model.changeChoiceDrug(3);
-                  },
-                  child: Container(
-                    child: Row(
-                      children: [
-                        model.choiceDrug == 3
-                            ? Icon(
-                                EvaIcons.radioButtonOn,
-                                color: Colors.blue,
-                                size: 25,
-                              )
-                            : Icon(
-                                EvaIcons.radioButtonOffOutline,
-                                size: 25,
-                              ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Quit',
-                          style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                Container(
+                  child: Row(
+                    children: [
+                      model.choiceDrug == 3
+                          ? Icon(
+                              EvaIcons.radioButtonOn,
+                              color: Colors.blue,
+                              size: 25,
+                            )
+                          : Icon(
+                              EvaIcons.radioButtonOffOutline,
+                              color: Colors.grey,
+                              size: 25,
+                            ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Quit',
+                        style: (model.choiceDrug == 3)
+                            ? GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16)
+                            : GoogleFonts.varelaRound(
+                                color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -845,9 +740,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Physical activity",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -858,67 +752,65 @@ class HealthRecordScreen extends StatelessWidget {
                 SizedBox(
                   width: 15.0,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    model.changeChoiceActivity(0);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(left: 8),
-                    width: MediaQuery.of(context).size.width / 2,
-                    margin: EdgeInsets.only(
-                      right: 40.0,
-                    ),
-                    child: Row(
-                      children: [
-                        model.choiceActivity == 0
-                            ? Icon(
-                                EvaIcons.radioButtonOn,
-                                color: Colors.blue,
-                                size: 25,
-                              )
-                            : Icon(
-                                EvaIcons.radioButtonOffOutline,
-                                size: 25,
-                              ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'No',
-                          style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                Container(
+                  padding: EdgeInsets.only(left: 8),
+                  width: MediaQuery.of(context).size.width / 2,
+                  margin: EdgeInsets.only(
+                    right: 40.0,
+                  ),
+                  child: Row(
+                    children: [
+                      model.choiceActivity == 0
+                          ? Icon(
+                              EvaIcons.radioButtonOn,
+                              color: Colors.blue,
+                              size: 25,
+                            )
+                          : Icon(
+                              EvaIcons.radioButtonOffOutline,
+                              color: Colors.grey,
+                              size: 25,
+                            ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'No',
+                        style: (model.choiceActivity == 0)
+                            ? GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16)
+                            : GoogleFonts.varelaRound(
+                                color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    model.changeChoiceActivity(1);
-                  },
-                  child: Container(
-                    child: Row(
-                      children: [
-                        model.choiceActivity == 1
-                            ? Icon(
-                                EvaIcons.radioButtonOn,
-                                color: Colors.blue,
-                                size: 25,
-                              )
-                            : Icon(
-                                EvaIcons.radioButtonOffOutline,
-                                size: 25,
-                              ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Yes',
-                          style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                Container(
+                  child: Row(
+                    children: [
+                      model.choiceActivity == 1
+                          ? Icon(
+                              EvaIcons.radioButtonOn,
+                              color: Colors.blue,
+                              size: 25,
+                            )
+                          : Icon(
+                              EvaIcons.radioButtonOffOutline,
+                              color: Colors.grey,
+                              size: 25,
+                            ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Yes',
+                        style: (model.choiceActivity == 1)
+                            ? GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16)
+                            : GoogleFonts.varelaRound(
+                                color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -932,38 +824,37 @@ class HealthRecordScreen extends StatelessWidget {
                 SizedBox(
                   width: 15.0,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    model.changeChoiceActivity(2);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 2,
-                    padding: EdgeInsets.only(left: 8),
-                    margin: EdgeInsets.only(
-                      right: 12.0,
-                    ),
-                    child: Row(
-                      children: [
-                        model.choiceActivity == 2
-                            ? Icon(
-                                EvaIcons.radioButtonOn,
-                                color: Colors.blue,
-                                size: 25,
-                              )
-                            : Icon(
-                                EvaIcons.radioButtonOffOutline,
-                                size: 25,
-                              ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Regularly',
-                          style: GoogleFonts.varelaRound(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  padding: EdgeInsets.only(left: 8),
+                  margin: EdgeInsets.only(
+                    right: 12.0,
+                  ),
+                  child: Row(
+                    children: [
+                      model.choiceActivity == 2
+                          ? Icon(
+                              EvaIcons.radioButtonOn,
+                              color: Colors.blue,
+                              size: 25,
+                            )
+                          : Icon(
+                              EvaIcons.radioButtonOffOutline,
+                              color: Colors.grey,
+                              size: 25,
+                            ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Regularly',
+                        style: (model.choiceActivity == 2)
+                            ? GoogleFonts.varelaRound(
+                                fontWeight: FontWeight.bold, fontSize: 16)
+                            : GoogleFonts.varelaRound(
+                                color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -983,9 +874,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Occupational exposure factors / Habitat (chemiscals, dust, noise, viruses,..)",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -1028,12 +918,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.exposureElementController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1078,12 +969,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.contactTimeController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1128,12 +1020,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.toiletTypeController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1155,9 +1048,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Other risk",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -1200,12 +1092,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.otherRisksController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1219,7 +1112,7 @@ class HealthRecordScreen extends StatelessWidget {
   }
 
 //TabBarView for Tình trạng lúc sinh
-  Widget _tabView3(BuildContext context, HealthRecordViewModel model) {
+  Widget _tabView3(BuildContext context, OldHealthRecordViewModel model) {
     List<String> buttonOriginalList = [
       "Spontaneous delivery",
       "Abdominal delivery",
@@ -1241,9 +1134,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Condition at birth",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -1251,24 +1143,31 @@ class HealthRecordScreen extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            CustomRadioButton(
-              defaultSelected: model.conditionAtBirth != ""
-                  ? model.conditionAtBirth
-                  : "Spontaneous delivery",
-              horizontal: true,
-              enableShape: true,
-              unSelectedColor: Theme.of(context).canvasColor,
-              buttonLables: buttonOriginalList,
-              buttonValues: buttonOriginalList,
-              buttonTextStyle: ButtonTextStyle(
-                selectedColor: Colors.white,
-                unSelectedColor: Colors.black,
-                textStyle: TextStyle(fontSize: 16),
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.9,
+                minWidth: MediaQuery.of(context).size.width * 0.9,
+                minHeight: 40,
               ),
-              radioButtonValue: (value) {
-                model.changeConditionAtBirth(value);
-              },
-              selectedColor: Theme.of(context).accentColor,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: Color(0xff0d47a1)),
+              ),
+              child: Text(
+                model.conditionAtBirth != ""
+                    ? model.conditionAtBirth
+                    : "Spontaneous delivery",
+                style: GoogleFonts.varelaRound(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
             ),
             Container(
               child: Column(
@@ -1310,19 +1209,18 @@ class HealthRecordScreen extends StatelessWidget {
                         width: 80.0,
                       ),
                       SizedBox(
-                        width: 40,
+                        width: 50,
                         child: TextFormField(
                           controller: model.birthWeightController,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
+                          enabled: false,
                           maxLength: 3,
                           decoration: InputDecoration(
                             counterText: "",
                             contentPadding: new EdgeInsets.symmetric(
                               vertical: 14.2,
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                            ),
+                            disabledBorder: InputBorder.none,
                           ),
                         ),
                       ),
@@ -1346,18 +1244,19 @@ class HealthRecordScreen extends StatelessWidget {
                         width: 100.0,
                       ),
                       SizedBox(
-                        width: 40,
+                        width: 60,
                         child: TextFormField(
                           controller: model.birthHeightController,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                           maxLength: 3,
+                          enabled: false,
                           decoration: InputDecoration(
                             counterText: "",
                             contentPadding: new EdgeInsets.symmetric(
                               vertical: 14.2,
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
+                            disabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide.none,
                             ),
                           ),
                         ),
@@ -1418,12 +1317,13 @@ class HealthRecordScreen extends StatelessWidget {
                             left: 15.0,
                           ),
                           child: TextField(
+                            enabled: false,
                             controller: model.birthDefectsController,
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: EdgeInsets.all(0.01),
                               border: InputBorder.none,
-                              hintText: 'Describe if any',
+                              hintText: 'Nothing',
                             ),
                           ),
                         ),
@@ -1469,11 +1369,12 @@ class HealthRecordScreen extends StatelessWidget {
                           ),
                           child: TextField(
                             controller: model.otherDefectsController,
+                            enabled: false,
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: EdgeInsets.all(0.01),
                               border: InputBorder.none,
-                              hintText: 'Describe if any',
+                              hintText: 'Nothing',
                             ),
                           ),
                         ),
@@ -1490,7 +1391,7 @@ class HealthRecordScreen extends StatelessWidget {
   }
 
 //TabBarView for Tiền sử bệnh tật, dị ứng
-  Widget _tabView4(BuildContext context, HealthRecordViewModel model) {
+  Widget _tabView4(BuildContext context, OldHealthRecordViewModel model) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -1505,9 +1406,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "History, Allergy",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -1524,10 +1424,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Allergy",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -1570,12 +1468,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.medicineAllergyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1621,11 +1520,12 @@ class HealthRecordScreen extends StatelessWidget {
                     ),
                     child: TextField(
                       controller: model.chemicalAllergyController,
+                      enabled: false,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1671,11 +1571,12 @@ class HealthRecordScreen extends StatelessWidget {
                     ),
                     child: TextField(
                       controller: model.foodAllergyController,
+                      enabled: false,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1721,11 +1622,12 @@ class HealthRecordScreen extends StatelessWidget {
                     ),
                     child: TextField(
                       controller: model.otherAllergyController,
+                      enabled: false,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1744,10 +1646,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Pathology",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -1791,11 +1691,12 @@ class HealthRecordScreen extends StatelessWidget {
                     ),
                     child: TextField(
                       controller: model.diseaseController,
+                      enabled: false,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe type of Pathology',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1841,11 +1742,12 @@ class HealthRecordScreen extends StatelessWidget {
                     ),
                     child: TextField(
                       controller: model.cancerController,
+                      enabled: false,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe type of Cancer',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1891,11 +1793,12 @@ class HealthRecordScreen extends StatelessWidget {
                     ),
                     child: TextField(
                       controller: model.tuberculosisController,
+                      enabled: false,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe type of Tuberculosis',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1941,11 +1844,12 @@ class HealthRecordScreen extends StatelessWidget {
                     ),
                     child: TextField(
                       controller: model.otherDiseasesController,
+                      enabled: false,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -1962,7 +1866,7 @@ class HealthRecordScreen extends StatelessWidget {
   }
 
 //TabBarView for khuyết tật
-  Widget _tabView5(BuildContext context, HealthRecordViewModel model) {
+  Widget _tabView5(BuildContext context, OldHealthRecordViewModel model) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -1977,9 +1881,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Disabilities",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -2025,12 +1928,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.hearingController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2075,12 +1979,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.eyesightController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2125,12 +2030,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.handController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2175,12 +2081,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.legController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2225,12 +2132,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.scoliosisController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2275,12 +2183,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.cleftLipController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2325,12 +2234,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.otherDisabilitiesController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2350,7 +2260,7 @@ class HealthRecordScreen extends StatelessWidget {
   }
 
 //TabBarView for Tiền sử phẫu thuật
-  Widget _tabView6(BuildContext context, HealthRecordViewModel model) {
+  Widget _tabView6(BuildContext context, OldHealthRecordViewModel model) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -2365,9 +2275,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Surgical biography",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -2410,12 +2319,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.surgeryHistoryController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2432,7 +2342,7 @@ class HealthRecordScreen extends StatelessWidget {
   }
 
 //TabBarView for Tiền sử gia đình
-  Widget _tabView7(BuildContext context, HealthRecordViewModel model) {
+  Widget _tabView7(BuildContext context, OldHealthRecordViewModel model) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -2447,9 +2357,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Family history",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -2466,10 +2375,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Allergy",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -2512,12 +2419,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.medicineAllergyFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe allergy and relationship',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2562,12 +2470,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.chemicalAllergyFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe allergy and relationship',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2612,12 +2521,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.foodAllergyFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe allergy and relationship',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2662,12 +2572,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.otherAllergyFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe allergy and relationship',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2686,10 +2597,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Pathology",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -2732,12 +2641,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.diseaseFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe pathology, patient, relationship',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2782,12 +2692,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.cancerFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe cancer, patient, relationship',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2832,13 +2743,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.tuberculosisFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText:
-                            'Describe tuberculosis, patient, relationship',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2883,12 +2794,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.otherDiseasesFamilyController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe, patient, relationship',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2905,7 +2817,7 @@ class HealthRecordScreen extends StatelessWidget {
   }
 
 //TabBarView for Vấn đề khác
-  Widget _tabView8(BuildContext context, HealthRecordViewModel model) {
+  Widget _tabView8(BuildContext context, OldHealthRecordViewModel model) {
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -2920,9 +2832,8 @@ class HealthRecordScreen extends StatelessWidget {
                 child: Text(
                   "Other",
                   style: TextStyle(
-                    fontFamily: AVENIR,
                     fontSize: 20,
-                    color: Colors.blue,
+                    color: Color(0xff0d47a1),
                   ),
                 ),
               ),
@@ -2965,12 +2876,13 @@ class HealthRecordScreen extends StatelessWidget {
                       left: 15.0,
                     ),
                     child: TextField(
+                      enabled: false,
                       controller: model.otherController,
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.all(0.01),
                         border: InputBorder.none,
-                        hintText: 'Describe',
+                        hintText: 'Nothing',
                       ),
                     ),
                   ),
@@ -2985,121 +2897,4 @@ class HealthRecordScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-Future _confirmDialog(BuildContext context) {
-  return showDialog(
-    context: context,
-    builder: (bookingContext) {
-      return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(12),
-          ),
-        ),
-        child: Container(
-          height: 345,
-          width: MediaQuery.of(bookingContext).size.width * 0.8,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 25,
-              ),
-              Icon(
-                Icons.info,
-                color: Color(0xff4ee1c7),
-                size: 90,
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Text(
-                "Confirmation?",
-                style: TextStyle(
-                  fontSize: 27,
-                  fontWeight: FontWeight.w800,
-                  fontFamily: 'avenir',
-                  color: Color(0xff0d47a1),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Text(
-                'Are you sure want to change \n your Personal Health Record?',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                  fontFamily: 'avenir',
-                  color: Colors.black,
-                ),
-              ),
-              SizedBox(
-                height: 45,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    onTap: () {
-                      Navigator.of(bookingContext).pop(true);
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 50,
-                      width: MediaQuery.of(bookingContext).size.width * 0.3,
-                      decoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: Colors.blueAccent),
-                      ),
-                      child: Text(
-                        "Yes",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'avenir',
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    onTap: () {
-                      Navigator.of(bookingContext).pop(false);
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 50,
-                      width: MediaQuery.of(bookingContext).size.width * 0.3,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: Colors.blueAccent),
-                      ),
-                      child: Text(
-                        "No",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'avenir',
-                          color: Colors.blueAccent,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      );
-    },
-  );
 }
