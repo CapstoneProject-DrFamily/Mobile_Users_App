@@ -1,3 +1,5 @@
+import 'package:badges/badges.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
 import 'package:drFamily_app/screens/landing_page/lading_page.dart';
 import 'package:drFamily_app/themes/colors.dart';
@@ -94,13 +96,30 @@ class ListDoctorPage extends StatelessWidget {
                                       (BuildContext context, int index) {
                                     return GestureDetector(
                                       onTap: () {
-                                        model.getDetailDoctor(
-                                          model.nearByDoctorList[index].id,
-                                          model.nearByDoctorList[index]
-                                              .notitoken,
-                                          model.nearByDoctorList[index].fbId,
-                                          baseTimeLineViewModel,
-                                        );
+                                        (model.nearByDoctorList[index]
+                                                    .isOnline ==
+                                                false)
+                                            ? CoolAlert.show(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                type: CoolAlertType.error,
+                                                text:
+                                                    "This doctor is currently not online.",
+                                                backgroundColor:
+                                                    Colors.lightBlue[200],
+                                                onConfirmBtnTap: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              )
+                                            : model.getDetailDoctor(
+                                                model
+                                                    .nearByDoctorList[index].id,
+                                                model.nearByDoctorList[index]
+                                                    .notitoken,
+                                                model.nearByDoctorList[index]
+                                                    .fbId,
+                                                baseTimeLineViewModel,
+                                              );
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -129,6 +148,97 @@ class ListDoctorPage extends StatelessWidget {
                                                 ],
                                               ),
                                             ),
+                                            (model.nearByDoctorList[index]
+                                                        .isOnline ==
+                                                    null)
+                                                ? Container()
+                                                : (model.nearByDoctorList[index]
+                                                            .isOnline ==
+                                                        false)
+                                                    ? Positioned(
+                                                        right: 2,
+                                                        top: 2,
+                                                        child: Container(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  vertical: 5,
+                                                                  horizontal:
+                                                                      10),
+                                                          constraints:
+                                                              BoxConstraints(
+                                                            maxWidth: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.7,
+                                                          ),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        30),
+                                                            border: Border.all(
+                                                                color: Colors
+                                                                    .grey),
+                                                            color: Colors.grey,
+                                                          ),
+                                                          child: Text(
+                                                            "Offline",
+                                                            style: GoogleFonts
+                                                                .varelaRound(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                              fontSize: 13,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : Positioned(
+                                                        right: 2,
+                                                        top: 2,
+                                                        child: Container(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  vertical: 5,
+                                                                  horizontal:
+                                                                      10),
+                                                          constraints:
+                                                              BoxConstraints(
+                                                            maxWidth: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.7,
+                                                          ),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        30),
+                                                            border: Border.all(
+                                                                color: Colors
+                                                                    .green),
+                                                            color: Colors.green,
+                                                          ),
+                                                          child: Text(
+                                                            "Online",
+                                                            style: GoogleFonts
+                                                                .varelaRound(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                              fontSize: 13,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
                                             Positioned(
                                               right: 0,
                                               bottom: 0,
@@ -210,7 +320,8 @@ class ListDoctorPage extends StatelessWidget {
                                                                       .nearByDoctorList[
                                                                           index]
                                                                       .ratingPoint
-                                                                      .toString(),
+                                                                      .toStringAsFixed(
+                                                                          1),
                                                                   style: TextStyle(
                                                                       color: Colors
                                                                           .white,
@@ -301,41 +412,54 @@ class ListDoctorPage extends StatelessWidget {
                                                       ],
                                                     ),
                                                   ),
-                                                  Expanded(
-                                                    flex: 1,
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Center(
-                                                          child: Text(
-                                                              model
+                                                  (model.nearByDoctorList[index]
+                                                                  .isOnline !=
+                                                              null &&
+                                                          model
                                                                   .nearByDoctorList[
                                                                       index]
-                                                                  .distance
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize:
-                                                                      14)),
-                                                        ),
-                                                        SizedBox(height: 5),
-                                                        Center(
-                                                          child: Text(
-                                                            "km",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 14),
+                                                                  .isOnline !=
+                                                              true)
+                                                      ? Expanded(
+                                                          child: Container())
+                                                      : Expanded(
+                                                          flex: 1,
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Center(
+                                                                child: Text(
+                                                                    model
+                                                                        .nearByDoctorList[
+                                                                            index]
+                                                                        .distance
+                                                                        .toString(),
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            14)),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              Center(
+                                                                child: Text(
+                                                                  "km",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          14),
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
+                                                        )
                                                 ],
                                               ),
                                             ),
