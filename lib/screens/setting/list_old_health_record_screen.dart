@@ -51,19 +51,9 @@ class ListOldHealthRecordScreen extends StatelessWidget {
                                     itemCount: model.listOldHealthRecord.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      return ListTile(
-                                        title: Text("Date: " +
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(DateTime.parse(model
-                                                    .listOldHealthRecord[index]
-                                                    .insDatetime))
-                                                .toString()),
-                                        subtitle: Text("Created by: " +
-                                            model.listOldHealthRecord[index]
-                                                .insBy),
-                                        trailing: IconButton(
-                                          icon: Icon(Icons.chevron_right),
-                                          onPressed: () => Navigator.push(
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
@@ -73,7 +63,20 @@ class ListOldHealthRecordScreen extends StatelessWidget {
                                                     .healthRecordID,
                                               ),
                                             ),
-                                          ),
+                                          );
+                                        },
+                                        child: ListTile(
+                                          title: Text("Date: " +
+                                              DateFormat('dd-MM-yyyy')
+                                                  .format(DateTime.parse(model
+                                                      .listOldHealthRecord[
+                                                          index]
+                                                      .insDatetime))
+                                                  .toString()),
+                                          subtitle: Text("Created by: " +
+                                              model.listOldHealthRecord[index]
+                                                  .insBy),
+                                          trailing: Icon(Icons.chevron_right),
                                         ),
                                       );
                                     }),

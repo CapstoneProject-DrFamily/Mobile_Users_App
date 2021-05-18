@@ -42,28 +42,17 @@ class DependentHealthRecordScreen extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   actions: [
-                    PopupMenuButton(
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: Colors.blue,
-                      ),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          value: 1,
-                          child: Text("Old Personal Health Record"),
-                        ),
-                      ],
-                      onSelected: (result) async {
-                        if (result == 1) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ListOldHealthRecordScreen(
-                                patientID: model.dependentPatientID,
-                              ),
+                    IconButton(
+                      icon: new Icon(Icons.history, color: Colors.blue),
+                      onPressed: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ListOldHealthRecordScreen(
+                              patientID: model.dependentPatientID,
                             ),
-                          );
-                        }
+                          ),
+                        );
                       },
                     ),
                   ],
