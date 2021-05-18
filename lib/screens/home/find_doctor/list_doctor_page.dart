@@ -23,295 +23,336 @@ class ListDoctorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<ListDoctorScreenViewModel>(
       builder: (context, child, model) {
-        return FutureBuilder(
-          future: model.init(pickUpInfo),
-          builder: (context, snapshot) {
-            return (() {
-              if (model.isLoading || model.loadBack) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.white,
-                  ),
-                );
-              } else if (model.isNotHave) {
-                return _buildNotHaveScreen(context, model);
-              } else
-                return Stack(
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      child: CustomPaint(
-                        painter: PathPainterBottom(),
-                      ),
+        return Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: CustomPaint(
+                painter: PathPainterBottom(),
+              ),
+            ),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    height: 35,
+                    color: Colors.transparent,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: model.listSort.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            model.changeStatus(index);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: (model.status == index)
+                                ? BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: Color(0xff0d47a1),
+                                  )
+                                : BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: Colors.grey.shade100,
+                                  ),
+                            child: Text(
+                              model.listSort[index],
+                              style: (model.status == index)
+                                  ? TextStyle(color: Colors.white)
+                                  : TextStyle(color: Color(0xff0d47a1)),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              child: ListView.builder(
-                                itemCount: model.nearByDoctorList.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      model.getDetailDoctor(
-                                        model.nearByDoctorList[index].id,
-                                        model.nearByDoctorList[index].notitoken,
-                                        model.nearByDoctorList[index].fbId,
-                                        baseTimeLineViewModel,
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            height: 150,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(24),
-                                              gradient: LinearGradient(
-                                                  colors: [
+                  ),
+                  Expanded(
+                    child: FutureBuilder(
+                        future: model.init(pickUpInfo),
+                        builder: (context, snapshot) {
+                          return (() {
+                            if (model.isLoading || model.loadBack) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  backgroundColor: Colors.white,
+                                ),
+                              );
+                            } else if (model.isNotHave) {
+                              return _buildNotHaveScreen(context, model);
+                            } else
+                              return Container(
+                                child: ListView.builder(
+                                  itemCount: model.nearByDoctorList.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        model.getDetailDoctor(
+                                          model.nearByDoctorList[index].id,
+                                          model.nearByDoctorList[index]
+                                              .notitoken,
+                                          model.nearByDoctorList[index].fbId,
+                                          baseTimeLineViewModel,
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              height: 150,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(24),
+                                                gradient: LinearGradient(
+                                                    colors: [
+                                                      Colors.lightBlue
+                                                          .withOpacity(0.2),
+                                                      Colors.lightBlue[100]
+                                                          .withOpacity(0.6)
+                                                    ],
+                                                    begin: Alignment.topLeft,
+                                                    end: Alignment.bottomRight),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                      color:
+                                                          MainColors.blueBegin,
+                                                      blurRadius: 3,
+                                                      offset: Offset(0, 6))
+                                                ],
+                                              ),
+                                            ),
+                                            Positioned(
+                                              right: 0,
+                                              bottom: 0,
+                                              top: 0,
+                                              child: CustomPaint(
+                                                size: Size(70, 100),
+                                                painter: CustomCardShapePainter(
+                                                    24,
                                                     Colors.lightBlue
                                                         .withOpacity(0.2),
                                                     Colors.lightBlue[100]
-                                                        .withOpacity(0.6)
-                                                  ],
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: MainColors.blueBegin,
-                                                    blurRadius: 3,
-                                                    offset: Offset(0, 6))
-                                              ],
+                                                        .withOpacity(0.2)),
+                                              ),
                                             ),
-                                          ),
-                                          Positioned(
-                                            right: 0,
-                                            bottom: 0,
-                                            top: 0,
-                                            child: CustomPaint(
-                                              size: Size(70, 100),
-                                              painter: CustomCardShapePainter(
-                                                  24,
-                                                  Colors.lightBlue
-                                                      .withOpacity(0.2),
-                                                  Colors.lightBlue[100]
-                                                      .withOpacity(0.2)),
-                                            ),
-                                          ),
-                                          Positioned.fill(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: CircleAvatar(
-                                                    backgroundImage:
-                                                        NetworkImage(model
-                                                            .nearByDoctorList[
-                                                                index]
-                                                            .image),
-                                                    radius: 40,
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 4,
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                          model
+                                            Positioned.fill(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: CircleAvatar(
+                                                      backgroundImage:
+                                                          NetworkImage(model
                                                               .nearByDoctorList[
                                                                   index]
-                                                              .name,
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold)),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                          model
-                                                              .nearByDoctorList[
-                                                                  index]
-                                                              .speciality,
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16,
-                                                              fontStyle:
-                                                                  FontStyle
-                                                                      .italic)),
-                                                      SizedBox(
-                                                        height: 15,
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Column(
-                                                            children: [
-                                                              Text(
-                                                                model
-                                                                    .nearByDoctorList[
-                                                                        index]
-                                                                    .ratingPoint
-                                                                    .toString(),
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              Text(
-                                                                "Rating",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            width: 25,
-                                                          ),
-                                                          Column(
-                                                            children: [
-                                                              Text(
-                                                                (model.nearByDoctorList[index].booked ==
-                                                                        0)
-                                                                    ? "Not Yet"
-                                                                    : model
-                                                                        .nearByDoctorList[
-                                                                            index]
-                                                                        .booked
-                                                                        .toString(),
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              Text(
-                                                                "Booked",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            width: 25,
-                                                          ),
-                                                          Column(
-                                                            children: [
-                                                              Text(
-                                                                (model.nearByDoctorList[index].feedback ==
-                                                                        0)
-                                                                    ? "Not Yet"
-                                                                    : model
-                                                                        .nearByDoctorList[
-                                                                            index]
-                                                                        .feedback
-                                                                        .toString(),
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              Text(
-                                                                "FeedBacks",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
+                                                              .image),
+                                                      radius: 40,
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                    ),
                                                   ),
-                                                ),
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Center(
-                                                        child: Text(
+                                                  Expanded(
+                                                    flex: 4,
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
                                                             model
                                                                 .nearByDoctorList[
                                                                     index]
-                                                                .distance
-                                                                .toString(),
+                                                                .name,
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .white,
-                                                                fontSize: 14)),
-                                                      ),
-                                                      SizedBox(height: 5),
-                                                      Center(
-                                                        child: Text(
-                                                          "km",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 14),
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                        SizedBox(
+                                                          height: 5,
                                                         ),
-                                                      ),
-                                                    ],
+                                                        Text(
+                                                            model
+                                                                .nearByDoctorList[
+                                                                    index]
+                                                                .speciality,
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 16,
+                                                                fontStyle:
+                                                                    FontStyle
+                                                                        .italic)),
+                                                        SizedBox(
+                                                          height: 15,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Column(
+                                                              children: [
+                                                                Text(
+                                                                  model
+                                                                      .nearByDoctorList[
+                                                                          index]
+                                                                      .ratingPoint
+                                                                      .toString(),
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 5,
+                                                                ),
+                                                                Text(
+                                                                  "Rating",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(
+                                                              width: 25,
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                Text(
+                                                                  (model.nearByDoctorList[index].booked ==
+                                                                          0)
+                                                                      ? "Not Yet"
+                                                                      : model
+                                                                          .nearByDoctorList[
+                                                                              index]
+                                                                          .booked
+                                                                          .toString(),
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 5,
+                                                                ),
+                                                                Text(
+                                                                  "Booked",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(
+                                                              width: 25,
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                Text(
+                                                                  (model.nearByDoctorList[index].feedback ==
+                                                                          0)
+                                                                      ? "Not Yet"
+                                                                      : model
+                                                                          .nearByDoctorList[
+                                                                              index]
+                                                                          .feedback
+                                                                          .toString(),
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 5,
+                                                                ),
+                                                                Text(
+                                                                  "FeedBacks",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          12),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
-                                                )
-                                              ],
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Center(
+                                                          child: Text(
+                                                              model
+                                                                  .nearByDoctorList[
+                                                                      index]
+                                                                  .distance
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      14)),
+                                                        ),
+                                                        SizedBox(height: 5),
+                                                        Center(
+                                                          child: Text(
+                                                            "km",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 14),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-            }());
-          },
+                                    );
+                                  },
+                                ),
+                              );
+                          }());
+                        }),
+                  ),
+                ],
+              ),
+            ),
+          ],
         );
       },
     );
@@ -321,7 +362,7 @@ class ListDoctorPage extends StatelessWidget {
       BuildContext context, ListDoctorScreenViewModel model) {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.25),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
       child: Column(
         children: [
           SvgPicture.asset(
