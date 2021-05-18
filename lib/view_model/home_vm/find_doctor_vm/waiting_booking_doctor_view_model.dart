@@ -86,7 +86,7 @@ class WaitingBookingDoctorViewModel extends BaseModel {
         } else if (event.snapshot.value == "notbook") {
           HelperMethod.disablUpdateDoctorTransaction();
           Fluttertoast.showToast(
-            msg: "Doctor has Cancel your booking",
+            msg: "Doctor has cancel your booking",
             textColor: Colors.white,
             toastLength: Toast.LENGTH_LONG,
             backgroundColor: Colors.red,

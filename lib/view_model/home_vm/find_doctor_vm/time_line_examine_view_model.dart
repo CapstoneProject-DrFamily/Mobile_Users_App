@@ -355,7 +355,7 @@ class TimeLineExamineViewModel extends BaseModel {
                           height: 25,
                         ),
                         Text(
-                          "Doctor Has Cacel!",
+                          "Doctor has cancel!",
                           style: TextStyle(
                             fontSize: 27,
                             fontWeight: FontWeight.w800,
