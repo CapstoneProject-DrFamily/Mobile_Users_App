@@ -9,6 +9,8 @@ class ListDoctorScheduleViewModel extends BaseModel {
   bool init = true;
   List<DoctorScheduleModel> listResult = [];
   bool loadBack = false;
+  int status = 0;
+  List tab = ['All doctor', 'Old doctor', 'Most booked'];
 
   Future<void> fetchData(int specialityId) async {
     if (init) {
@@ -22,9 +24,20 @@ class ListDoctorScheduleViewModel extends BaseModel {
           isDefault.toString());
       if (isDefault) {
         this.listResult = await _doctorRepo.getDoctorsBySpeciality(-1);
+
+        Comparator<DoctorScheduleModel> timeComparator = (a, b) => a
+            .schedules[0].appointmentTime
+            .compareTo(b.schedules[0].appointmentTime);
+
+        this.listResult.sort(timeComparator);
       } else {
         this.listResult =
             await _doctorRepo.getDoctorsBySpeciality(specialityId);
+
+        Comparator<DoctorScheduleModel> timeComparator = (a, b) => a
+            .schedules[0].appointmentTime
+            .compareTo(b.schedules[0].appointmentTime);
+        this.listResult.sort(timeComparator);
       }
       print(this.listResult.length);
       this.init = false;
@@ -46,5 +59,11 @@ class ListDoctorScheduleViewModel extends BaseModel {
       DoctorScheduleModel doctorScheduleModel) {
     baseTimeLineAppoinmentViewModel.doctorScheduleModel = doctorScheduleModel;
     baseTimeLineAppoinmentViewModel.nextStep();
+  }
+
+  void changeStatus(int index) {
+    this.status = index;
+    this.init = true;
+    notifyListeners();
   }
 }

@@ -23,263 +23,284 @@ class ListDoctorScheduleScreen extends StatelessWidget {
       builder: (context, child, model) {
         return Scaffold(
             backgroundColor: MainColors.white,
-            body: FutureBuilder(
-              future: model.fetchData(specialityId),
-              builder: (context, snapshot) {
-                if (model.init || model.loadBack) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else
-                  return Stack(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        child: CustomPaint(
-                          painter: PathPainterBottom(),
+            body: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  height: 35,
+                  alignment: Alignment.center,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: model.tab.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          model.changeStatus(index);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: (model.status == index)
+                              ? BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Color(0xff0d47a1),
+                                )
+                              : BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.grey.shade100,
+                                ),
+                          child: Text(
+                            model.tab[index],
+                            style: (model.status == index)
+                                ? TextStyle(color: Colors.white)
+                                : TextStyle(color: Color(0xff0d47a1)),
+                          ),
                         ),
-                      ),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            (model.listResult == [])
-                                ? Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'These time slots are in Vietnam timezone (GMT+7:00).',
-                                      style: TextStyle(
-                                        color: Color(0xff0d47a1),
-                                      ),
-                                    ),
-                                  )
-                                : Container(),
-                            Expanded(
-                              child: model.listResult.length == 0
-                                  ? _buildNotHaveScreen(context, model)
-                                  : Container(
-                                      child: ListView.builder(
-                                        itemCount: model.listResult.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              //next page detail doctor
+                      );
+                    },
+                  ),
+                ),
+                Expanded(
+                    child: Container(
+                  child: FutureBuilder(
+                    future: model.fetchData(specialityId),
+                    builder: (context, snapshot) {
+                      if (model.init || model.loadBack) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else
+                        return Stack(
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              child: CustomPaint(
+                                painter: PathPainterBottom(),
+                              ),
+                            ),
+                            Container(
+                              child: Column(
+                                children: <Widget>[
+                                  (model.listResult == [])
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            'These time slots are in Vietnam timezone (GMT+7:00).',
+                                            style: TextStyle(
+                                              color: Color(0xff0d47a1),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(),
+                                  Expanded(
+                                    child: model.listResult.length == 0
+                                        ? _buildNotHaveScreen(context, model)
+                                        : Container(
+                                            child: ListView.builder(
+                                              itemCount:
+                                                  model.listResult.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    //next page detail doctor
 
-                                              model.nextStep(
-                                                  baseTimeLineAppoinmentViewModel,
-                                                  model.listResult[index]);
-                                            },
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(15.0),
-                                              child: Stack(
-                                                children: [
-                                                  Container(
-                                                    height: 180,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              24),
-                                                      gradient: LinearGradient(
-                                                          colors: [
-                                                            Colors.lightBlue
-                                                                .withOpacity(
-                                                                    0.2),
-                                                            Colors
-                                                                .lightBlue[100]
-                                                                .withOpacity(
-                                                                    0.6)
-                                                          ],
-                                                          begin:
-                                                              Alignment.topLeft,
-                                                          end: Alignment
-                                                              .bottomRight),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                            color: MainColors
-                                                                .blueBegin,
-                                                            blurRadius: 3,
-                                                            offset:
-                                                                Offset(0, 6))
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  // Positioned(
-                                                  //   right: 0,
-                                                  //   bottom: 0,
-                                                  //   top: 0,
-                                                  //   child: CustomPaint(
-                                                  //     size: Size(70, 100),
-                                                  //     painter: CustomCardShapePainter(
-                                                  //         24,
-                                                  //         Colors.lightBlue
-                                                  //             .withOpacity(0.2),
-                                                  //         Colors.lightBlue[100]
-                                                  //             .withOpacity(0.2)),
-                                                  //   ),
-                                                  // ),
-                                                  Positioned.fill(
-                                                    child: Row(
+                                                    model.nextStep(
+                                                        baseTimeLineAppoinmentViewModel,
+                                                        model
+                                                            .listResult[index]);
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            15.0),
+                                                    child: Stack(
                                                       children: [
-                                                        Expanded(
-                                                          flex: 2,
-                                                          child: CircleAvatar(
-                                                            backgroundImage: NetworkImage(model
-                                                                        .listResult[
-                                                                            index]
-                                                                        .profile
-                                                                        .image !=
-                                                                    null
-                                                                ? model
-                                                                    .listResult[
-                                                                        index]
-                                                                    .profile
-                                                                    .image
-                                                                : 'https://batdongsankhanhhoa.com.vn/FileStorage/Product/no-image.jpg'),
-                                                            radius: 40,
-                                                            backgroundColor:
-                                                                Colors.white,
+                                                        Container(
+                                                          height: 180,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        24),
+                                                            gradient: LinearGradient(
+                                                                colors: [
+                                                                  Colors
+                                                                      .lightBlue
+                                                                      .withOpacity(
+                                                                          0.2),
+                                                                  Colors
+                                                                      .lightBlue[
+                                                                          100]
+                                                                      .withOpacity(
+                                                                          0.6)
+                                                                ],
+                                                                begin: Alignment
+                                                                    .topLeft,
+                                                                end: Alignment
+                                                                    .bottomRight),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                  color: MainColors
+                                                                      .blueBegin,
+                                                                  blurRadius: 3,
+                                                                  offset:
+                                                                      Offset(
+                                                                          0, 6))
+                                                            ],
                                                           ),
                                                         ),
-                                                        Expanded(
-                                                          flex: 4,
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
+                                                        // Positioned(
+                                                        //   right: 0,
+                                                        //   bottom: 0,
+                                                        //   top: 0,
+                                                        //   child: CustomPaint(
+                                                        //     size: Size(70, 100),
+                                                        //     painter: CustomCardShapePainter(
+                                                        //         24,
+                                                        //         Colors.lightBlue
+                                                        //             .withOpacity(0.2),
+                                                        //         Colors.lightBlue[100]
+                                                        //             .withOpacity(0.2)),
+                                                        //   ),
+                                                        // ),
+                                                        Positioned.fill(
+                                                          child: Row(
                                                             children: [
-                                                              Text(
-                                                                  model
-                                                                      .listResult[
-                                                                          index]
-                                                                      .profile
-                                                                      .fullName,
-                                                                  softWrap:
-                                                                      true,
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          20,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold)),
-                                                              Text(
-                                                                  model
-                                                                      .listResult[
-                                                                          index]
-                                                                      .specialty
-                                                                      .name,
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontStyle:
-                                                                          FontStyle
-                                                                              .italic)),
-                                                              Chip(
-                                                                label: Text(
-                                                                  'Next Available : ' +
-                                                                      Common.convertDate(model
+                                                              Expanded(
+                                                                flex: 2,
+                                                                child:
+                                                                    CircleAvatar(
+                                                                  backgroundImage: NetworkImage(model
+                                                                              .listResult[
+                                                                                  index]
+                                                                              .profile
+                                                                              .image !=
+                                                                          null
+                                                                      ? model
                                                                           .listResult[
                                                                               index]
-                                                                          .schedules[
-                                                                              0]
-                                                                          .appointmentTime),
+                                                                          .profile
+                                                                          .image
+                                                                      : 'https://batdongsankhanhhoa.com.vn/FileStorage/Product/no-image.jpg'),
+                                                                  radius: 40,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .white,
                                                                 ),
                                                               ),
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Column(
-                                                                    children: [
-                                                                      Text(
-                                                                        model.listResult[index].doctorDetail.ratingPoint ==
-                                                                                null
-                                                                            ? "0"
-                                                                            : model.listResult[index].doctorDetail.ratingPoint.toStringAsFixed(1),
+                                                              Expanded(
+                                                                flex: 4,
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                        model
+                                                                            .listResult[
+                                                                                index]
+                                                                            .profile
+                                                                            .fullName,
+                                                                        softWrap:
+                                                                            true,
                                                                         style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize: 12),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Text(
-                                                                        "Rating",
+                                                                            color: Colors
+                                                                                .white,
+                                                                            fontSize:
+                                                                                20,
+                                                                            fontWeight:
+                                                                                FontWeight.bold)),
+                                                                    Text(
+                                                                        model
+                                                                            .listResult[
+                                                                                index]
+                                                                            .specialty
+                                                                            .name,
                                                                         style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize: 12),
+                                                                            color: Colors
+                                                                                .white,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontStyle:
+                                                                                FontStyle.italic)),
+                                                                    Chip(
+                                                                      label:
+                                                                          Text(
+                                                                        'Next Available : ' +
+                                                                            Common.convertDate(model.listResult[index].schedules[0].appointmentTime),
                                                                       ),
-                                                                    ],
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 25,
-                                                                  ),
-                                                                  Column(
-                                                                    children: [
-                                                                      Text(
-                                                                        (model.listResult[index].doctorDetail.transactionBooked ==
-                                                                                0)
-                                                                            ? "Not Yet"
-                                                                            : model.listResult[index].doctorDetail.transactionBooked.toString(),
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize: 12),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Text(
-                                                                        "Booked",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize: 12),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 25,
-                                                                  ),
-                                                                  Column(
-                                                                    children: [
-                                                                      Text(
-                                                                        (model.listResult[index].doctorDetail.feedbackCount ==
-                                                                                0)
-                                                                            ? "Not Yet"
-                                                                            : model.listResult[index].doctorDetail.feedbackCount.toString(),
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize: 12),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Text(
-                                                                        "Feedbacks",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize: 12),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ],
+                                                                    ),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Column(
+                                                                          children: [
+                                                                            Text(
+                                                                              model.listResult[index].doctorDetail.ratingPoint == null ? "0" : model.listResult[index].doctorDetail.ratingPoint.toStringAsFixed(1),
+                                                                              style: TextStyle(color: Colors.white, fontSize: 12),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 5,
+                                                                            ),
+                                                                            Text(
+                                                                              "Rating",
+                                                                              style: TextStyle(color: Colors.white, fontSize: 12),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              25,
+                                                                        ),
+                                                                        Column(
+                                                                          children: [
+                                                                            Text(
+                                                                              (model.listResult[index].doctorDetail.transactionBooked == 0) ? "Not Yet" : model.listResult[index].doctorDetail.transactionBooked.toString(),
+                                                                              style: TextStyle(color: Colors.white, fontSize: 12),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 5,
+                                                                            ),
+                                                                            Text(
+                                                                              "Booked",
+                                                                              style: TextStyle(color: Colors.white, fontSize: 12),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              25,
+                                                                        ),
+                                                                        Column(
+                                                                          children: [
+                                                                            Text(
+                                                                              (model.listResult[index].doctorDetail.feedbackCount == 0) ? "Not Yet" : model.listResult[index].doctorDetail.feedbackCount.toString(),
+                                                                              style: TextStyle(color: Colors.white, fontSize: 12),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 5,
+                                                                            ),
+                                                                            Text(
+                                                                              "Feedbacks",
+                                                                              style: TextStyle(color: Colors.white, fontSize: 12),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ],
                                                           ),
@@ -287,20 +308,20 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                                                       ],
                                                     ),
                                                   ),
-                                                ],
-                                              ),
+                                                );
+                                              },
                                             ),
-                                          );
-                                        },
-                                      ),
-                                    ),
+                                          ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
-                        ),
-                      ),
-                    ],
-                  );
-              },
+                        );
+                    },
+                  ),
+                ))
+              ],
             ));
       },
     );
@@ -357,7 +378,7 @@ class ListDoctorScheduleScreen extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  'Choose another Sepecialty',
+                  'Choose another Specialty',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
