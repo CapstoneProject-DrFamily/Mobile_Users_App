@@ -42,31 +42,20 @@ class HealthRecordScreen extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   actions: [
-                    PopupMenuButton(
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: Colors.blue,
-                      ),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          value: 1,
-                          child: Text("Old Personal Health Record"),
-                        ),
-                      ],
-                      onSelected: (result) async {
-                        if (result == 1) {
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          var patientID = prefs.getInt("usPatientID");
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ListOldHealthRecordScreen(
-                                patientID: patientID,
-                              ),
+                    IconButton(
+                      icon: new Icon(Icons.history, color: Colors.blue),
+                      onPressed: () async {
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        var patientID = prefs.getInt("usPatientID");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ListOldHealthRecordScreen(
+                              patientID: patientID,
                             ),
-                          );
-                        }
+                          ),
+                        );
                       },
                     ),
                   ],
