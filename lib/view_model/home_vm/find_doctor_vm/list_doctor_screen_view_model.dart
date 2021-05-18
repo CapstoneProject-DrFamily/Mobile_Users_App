@@ -26,6 +26,9 @@ class ListDoctorScreenViewModel extends BaseModel {
 
   bool loadBack = false;
 
+  List<String> listSort = ["Distance", "Old Doctor", "More"];
+  int status = 0;
+
   Future<void> init(UserCurrentAddress pickUpInfoRef) async {
     if (isLoading) {
       _nearByDoctorList = [];
@@ -44,8 +47,26 @@ class ListDoctorScreenViewModel extends BaseModel {
   void loadBackList() async {
     loadBack = true;
     notifyListeners();
-    _nearByDoctorList = [];
-    await getListDoctorNearby();
+    switch (status) {
+      case 0:
+        {
+          _nearByDoctorList = [];
+          await getListDoctorNearby();
+        }
+        break;
+      case 1:
+        {
+          _nearByDoctorList = [];
+        }
+        break;
+      case 2:
+        {
+          _nearByDoctorList = [];
+        }
+        break;
+      default:
+    }
+
     loadBack = false;
     notifyListeners();
   }
@@ -149,6 +170,88 @@ class ListDoctorScreenViewModel extends BaseModel {
       _isLoading = false;
     }
     notifyListeners();
+  }
+
+  void changeStatus(int status) async {
+    switch (status) {
+      case 0:
+        {
+          _isNotHave = false;
+
+          loadBack = true;
+          this.status = status;
+          notifyListeners();
+          //API get List;
+          _nearByDoctorList = [];
+          await getListDoctorNearby();
+
+          // _listTransaction = await transactionRepo.getListTransactionHistory(
+          //     _patientId.toString(), -1);
+
+          loadBack = false;
+          //catch null;
+
+          // if (_listTransaction == null) {
+          //   _isNotHave = true;
+          // }
+
+          notifyListeners();
+        }
+
+        break;
+      case 1:
+        {
+          _isNotHave = false;
+
+          loadBack = true;
+          this.status = status;
+          notifyListeners();
+          _nearByDoctorList = [];
+
+          //API get List;
+
+          // _listTransaction = await transactionRepo.getListTransactionHistory(
+          //     _patientId.toString(), 1);
+
+          loadBack = false;
+          //catch null;
+
+          // if (_listTransaction == null) {
+          //   _isNotHave = true;
+          // }
+
+          notifyListeners();
+        }
+
+        break;
+      case 2:
+        {
+          _isNotHave = false;
+
+          loadBack = true;
+          this.status = status;
+          notifyListeners();
+          _nearByDoctorList = [];
+
+          //API get List;
+
+          // _listTransaction = await transactionRepo.getListTransactionHistory(
+          //     _patientId.toString(), 2);
+
+          loadBack = false;
+          //catch null;
+
+          // if (_listTransaction == null) {
+          //   _isNotHave = true;
+          // }
+
+          notifyListeners();
+        }
+
+        break;
+      default:
+        break;
+    }
   }
 
   void getDetailDoctor(int id, String notiToken, String fbId,
