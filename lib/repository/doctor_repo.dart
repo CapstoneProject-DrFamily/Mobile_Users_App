@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:drFamily_app/Helper/api_helper.dart';
 import 'package:drFamily_app/model/doctor_detail_model.dart';
+import 'package:drFamily_app/model/doctor_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/doctor_speciality_model.dart';
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
@@ -14,6 +15,8 @@ abstract class IDoctorRepo {
   Future<int> getDoctorPhoneNum(int doctorId);
   Future<String> getNotiToken(int doctorId);
   Future<List<DoctorScheduleModel>> getDoctorsBySpeciality(int specialityId);
+  Future<List<DoctorModel>> getListOldFindDoctor(
+      int accountId, int specialtyId);
 }
 
 class DoctorRepo extends IDoctorRepo {
@@ -129,6 +132,29 @@ class DoctorRepo extends IDoctorRepo {
       Map<String, dynamic> sc = json.decode(response.body);
       var notiToken = sc['idNavigation']['notiToken'];
       return notiToken;
+    } else
+      return null;
+  }
+
+  @override
+  Future<List<DoctorModel>> getListOldFindDoctor(
+      int accountId, int specialtyId) async {
+    List<DoctorModel> listOldDoctor = [];
+    String urlAPI = APIHelper.DOCTOR_OLD_FIND +
+        '?accountId=$accountId&specialtyId=$specialtyId';
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    var response = await http.get(urlAPI, headers: header);
+    print("status ${response.statusCode}");
+
+    if (response.statusCode == 200) {
+      listOldDoctor = (json.decode(response.body) as List)
+          .map((data) => DoctorModel.fromJson(data))
+          .toList();
+      if (listOldDoctor.isEmpty) listOldDoctor = null;
+      return listOldDoctor;
     } else
       return null;
   }

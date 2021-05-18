@@ -1,6 +1,7 @@
 import 'package:drFamily_app/model/doctor_model.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
 import 'package:drFamily_app/repository/app_config_repo.dart';
+import 'package:drFamily_app/repository/doctor_repo.dart';
 import 'package:drFamily_app/screens/home/doctor_detail_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
@@ -10,10 +11,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ListDoctorScreenViewModel extends BaseModel {
   final IAppConfigRepo _appConfigRepo = AppConfigRepo();
+  final IDoctorRepo _doctorRepo = DoctorRepo();
+
   DatabaseReference _doctorRequest;
 
   List<DoctorModel> _nearByDoctorList = [];
   List<DoctorModel> get nearByDoctorList => _nearByDoctorList;
+
+  List<DoctorModel> _listNearbyDoctorTemp = [];
 
   UserCurrentAddress _pickUpInfo;
   UserCurrentAddress get pickUpInfo => _pickUpInfo;
@@ -26,8 +31,12 @@ class ListDoctorScreenViewModel extends BaseModel {
 
   bool loadBack = false;
 
-  List<String> listSort = ["Distance", "Old Doctor", "More"];
+  List<String> listSort = ["Distance", "Old Doctor", "Doctor Booked"];
   int status = 0;
+
+  int accountId;
+  int specialtyId;
+  bool isDefault;
 
   Future<void> init(UserCurrentAddress pickUpInfoRef) async {
     if (isLoading) {
@@ -39,6 +48,13 @@ class ListDoctorScreenViewModel extends BaseModel {
           _pickUpInfo.latitude.toString() +
           " longtitude: " +
           _pickUpInfo.longtitude.toString());
+
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      accountId = prefs.getInt('usAccountID');
+      specialtyId = prefs.getInt('chooseSpecialtyId');
+      isDefault = prefs.getBool("isServiceDefault");
+
+      print("accountId $accountId $specialtyId $isDefault");
 
       await getListDoctorNearby();
     }
@@ -76,7 +92,6 @@ class ListDoctorScreenViewModel extends BaseModel {
     int distanceBetween = await _appConfigRepo.getDistance();
     print("distance $distanceBetween");
     int serviceID = prefs.getInt("usServiceID");
-    bool isDefault = prefs.getBool("isServiceDefault");
 
     _doctorRequest =
         FirebaseDatabase.instance.reference().child("Doctor Request");
@@ -159,13 +174,59 @@ class ListDoctorScreenViewModel extends BaseModel {
     );
 
     if (_nearByDoctorList.length == 0) {
-      Comparator<DoctorModel> distanceComparator =
-          (a, b) => a.distance.compareTo(b.distance);
-      _nearByDoctorList.sort(distanceComparator);
-
       _isLoading = false;
       _isNotHave = true;
     } else {
+      Comparator<DoctorModel> distanceComparator =
+          (a, b) => a.distance.compareTo(b.distance);
+      _nearByDoctorList.sort(distanceComparator);
+      //list to compare old doctor
+      _listNearbyDoctorTemp = _nearByDoctorList;
+      print('change list ${_listNearbyDoctorTemp.length}');
+      _isNotHave = false;
+      _isLoading = false;
+    }
+    notifyListeners();
+  }
+
+  Future<void> getListOldDoctor(int specialtyID, int accountID) async {
+    List<DoctorModel> listOldDoctorTemp = [];
+    if (isDefault) {
+      listOldDoctorTemp = await _doctorRepo.getListOldFindDoctor(accountId, -1);
+    } else {
+      listOldDoctorTemp =
+          await _doctorRepo.getListOldFindDoctor(accountId, specialtyID);
+    }
+
+    if (listOldDoctorTemp == null) {}
+
+    if (listOldDoctorTemp.length == null) {
+      _nearByDoctorList = [];
+      _isLoading = false;
+      _isNotHave = true;
+    } else {
+      print("list ${_listNearbyDoctorTemp.length}");
+      for (int i = 0; i < listOldDoctorTemp.length; i++) {
+        var value = _listNearbyDoctorTemp.firstWhere(
+            (element) => element.id == listOldDoctorTemp[i].id,
+            orElse: () => null);
+
+        if (value == null) {
+          listOldDoctorTemp[i].isOnline = false;
+        } else {
+          listOldDoctorTemp[i].distance = value.distance;
+          listOldDoctorTemp[i].isOnline = true;
+        }
+      }
+      _nearByDoctorList = listOldDoctorTemp;
+
+      _nearByDoctorList.sort((a, b) {
+        if (b.isOnline) {
+          return 1;
+        }
+        return -1;
+      });
+
       _isNotHave = false;
       _isLoading = false;
     }
@@ -209,6 +270,7 @@ class ListDoctorScreenViewModel extends BaseModel {
           _nearByDoctorList = [];
 
           //API get List;
+          await getListOldDoctor(specialtyId, accountId);
 
           // _listTransaction = await transactionRepo.getListTransactionHistory(
           //     _patientId.toString(), 1);
@@ -231,14 +293,23 @@ class ListDoctorScreenViewModel extends BaseModel {
           loadBack = true;
           this.status = status;
           notifyListeners();
-          _nearByDoctorList = [];
+          _nearByDoctorList = _listNearbyDoctorTemp;
 
           //API get List;
 
           // _listTransaction = await transactionRepo.getListTransactionHistory(
           //     _patientId.toString(), 2);
+          if (_nearByDoctorList.length == 0) {
+            _isNotHave = true;
+          } else {
+            Comparator<DoctorModel> distanceComparator =
+                (a, b) => a.booked.compareTo(b.booked);
+            _nearByDoctorList.sort(distanceComparator);
+            _isNotHave = false;
+          }
 
           loadBack = false;
+
           //catch null;
 
           // if (_listTransaction == null) {
