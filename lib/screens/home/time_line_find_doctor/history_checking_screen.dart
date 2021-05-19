@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/history_checking_screen_view_model.dart';
@@ -37,7 +38,28 @@ class HistoryCheckingScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            print("${model.listTransaction[index].status}");
+                            var item = model.listSpecialty.indexWhere(
+                                (element) =>
+                                    element.listService.indexWhere((element1) =>
+                                        element1.serviceId ==
+                                        model.listTransaction[index]
+                                            .serviceId) !=
+                                    -1);
+                            if (item == -1) {
+                              CoolAlert.show(
+                                barrierDismissible: false,
+                                context: context,
+                                type: CoolAlertType.error,
+                                text: "This service is no longer available.",
+                                backgroundColor: Colors.lightBlue[200],
+                                onConfirmBtnTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                              );
+                            } else {
+                              _confirmDialog(context, model,
+                                  model.listTransaction[index].location);
+                            }
                           },
                           child: Container(
                             padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -72,6 +94,133 @@ class HistoryCheckingScreen extends StatelessWidget {
                 ],
               );
           },
+        );
+      },
+    );
+  }
+
+  Future _confirmDialog(BuildContext context,
+      HistoryCheckingScreenViewModel model, String location) {
+    return showDialog(
+      context: context,
+      builder: (bookingContext) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+          child: Container(
+            width: MediaQuery.of(bookingContext).size.width * 0.8,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 25,
+                ),
+                Icon(
+                  Icons.info,
+                  color: Color(0xff4ee1c7),
+                  size: 90,
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Confirmation?",
+                  style: TextStyle(
+                    fontSize: 27,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'avenir',
+                    color: Color(0xff0d47a1),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Text(
+                    'Do you want to reuse this information?',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'avenir',
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () async {
+                        Navigator.pop(bookingContext);
+                        // Navigator.pop(context);
+                        await model.confirmChoose(this.baseTimeLineViewModel,
+                            this.baseTimeLineAppoinmentViewModel, location);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(bookingContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "Yes",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      onTap: () {
+                        Navigator.pop(bookingContext);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(bookingContext).size.width * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.blueAccent),
+                        ),
+                        child: Text(
+                          "No",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'avenir',
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+              ],
+            ),
+          ),
         );
       },
     );

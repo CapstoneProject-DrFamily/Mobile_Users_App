@@ -550,7 +550,7 @@ class DependentScreen extends StatelessWidget {
                           border: Border.all(color: Colors.blueAccent),
                         ),
                         child: Text(
-                          "Yes",
+                          "No",
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
