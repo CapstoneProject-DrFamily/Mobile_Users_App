@@ -49,7 +49,7 @@ class ListDoctorPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            model.changeStatus(index);
+                            if (!model.loadBack) model.changeStatus(index);
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 15),

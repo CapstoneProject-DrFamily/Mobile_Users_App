@@ -31,7 +31,7 @@ class ListDoctorScreenViewModel extends BaseModel {
 
   bool loadBack = false;
 
-  List<String> listSort = ["Distance", "Old Doctor", "Doctor Booked"];
+  List<String> listSort = ["Doctor Distance", "Old Doctor", "Doctor Booked"];
   int status = 0;
 
   int accountId;

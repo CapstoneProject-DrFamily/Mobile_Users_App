@@ -1,12 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drFamily_app/model/transaction_history_model.dart';
+import 'package:drFamily_app/repository/transaction_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeViewModel extends BaseModel {
+  ITransactionRepo _transactionRepo = TransactionRepo();
   int _patientID;
   int get patientID => _patientID;
 
   String _name = "user";
   String get name => _name;
+
+  List<TransactionHistoryModel> _listDone = [];
+
+  bool isHasCheck = false;
 
   HomeViewModel() {
     init();
@@ -32,6 +40,15 @@ class HomeViewModel extends BaseModel {
     _patientID = patientId;
     prefs.setInt("usPatientID", _patientID);
     prefs.setString("usPatientName", patientName);
+
+    _listDone = await _transactionRepo.getListTransactionHistory(
+        patientId.toString(), 3);
+
+    print("is done");
+
+    if (_listDone.isNotEmpty) {
+      isHasCheck = true;
+    }
 
     notifyListeners();
   }

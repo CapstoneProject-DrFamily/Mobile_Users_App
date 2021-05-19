@@ -343,18 +343,22 @@ class HomeScreen extends StatelessWidget {
                             duration: Duration(milliseconds: 500));
                         await Future.delayed(Duration(milliseconds: 500));
                         //new popup
-                        homeViewModel.choosePatient(
+                        await homeViewModel.choosePatient(
                             model.listDependent[model.patientChoose].patientID,
                             model.listDependent[model.patientChoose]
                                 .dependentName);
-                        homeViewModel.initTransaction(2);
+                        await homeViewModel.initTransaction(2);
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BaseTimeLineScreen(),
-                          ),
-                        );
+                        if (homeViewModel.isHasCheck) {
+                          _buildDialogChooseType(context, homeViewModel);
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BaseTimeLineScreen(),
+                            ),
+                          );
+                        }
                       },
                     ),
                     TextButton(
@@ -576,7 +580,7 @@ class HomeScreen extends StatelessWidget {
                     TextButton(
                       child: Text('Next'),
                       onPressed: () async {
-                        homeViewModel.choosePatient(
+                        await homeViewModel.choosePatient(
                             model.listDependent[model.patientChoose].patientID,
                             model.listDependent[model.patientChoose]
                                 .dependentName);
@@ -626,8 +630,8 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () {
-                    homeViewModel.initTransaction(1);
+                  onTap: () async {
+                    await homeViewModel.initTransaction(1);
 
                     Navigator.push(
                       context,
@@ -676,7 +680,7 @@ class HomeScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 15),
                                 child: Text(
-                                  'Symptoms',
+                                  'History Treatment',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w200,
@@ -703,8 +707,8 @@ class HomeScreen extends StatelessWidget {
                   height: 20,
                 ),
                 InkWell(
-                  onTap: () {
-                    homeViewModel.initTransaction(2);
+                  onTap: () async {
+                    await homeViewModel.initTransaction(2);
 
                     Navigator.push(
                       context,
