@@ -38,7 +38,7 @@ class BaseTimeLineViewModel extends BaseModel {
     ""
   ];
 
-  String sympton = "Choose Symptoms";
+  String sympton = "Choose Treatment";
 
   List<IconData> step = [
     EvaIcons.maximizeOutline,
