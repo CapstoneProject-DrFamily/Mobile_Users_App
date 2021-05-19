@@ -15,6 +15,7 @@ class HomeViewModel extends BaseModel {
   List<TransactionHistoryModel> _listDone = [];
 
   bool isHasCheck = false;
+  bool bookingFunction = false;
 
   HomeViewModel() {
     init();
@@ -60,6 +61,7 @@ class HomeViewModel extends BaseModel {
   }
 
   Future<void> bookingTransaction() async {
+    this.bookingFunction = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("usTransactionStatus", "booking");
   }

@@ -383,7 +383,7 @@ class HomeScreen extends StatelessWidget {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30))),
-            title: Center(child: new Text("Choose person")),
+            title: Center(child: new Text("Choose persons")),
             content: new Container(
               height: 300.0, // Change as per your requirement
               width: 300.0, // Change as per your requirement
@@ -580,17 +580,25 @@ class HomeScreen extends StatelessWidget {
                     TextButton(
                       child: Text('Next'),
                       onPressed: () async {
+                        Navigator.of(dialogContex).pop();
+
                         await homeViewModel.choosePatient(
                             model.listDependent[model.patientChoose].patientID,
                             model.listDependent[model.patientChoose]
                                 .dependentName);
                         //booking screen specialty
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  BaseTimeLineAppoinmentScreen()),
-                        );
+
+                        // cần thêm
+                        if (homeViewModel.isHasCheck) {
+                          _buildDialogChooseType(context, homeViewModel);
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    BaseTimeLineAppoinmentScreen()),
+                          );
+                        }
                       },
                     ),
                     TextButton(
@@ -632,12 +640,23 @@ class HomeScreen extends StatelessWidget {
                 InkWell(
                   onTap: () async {
                     await homeViewModel.initTransaction(1);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => BaseTimeLineScreen()),
-                    );
+                    Navigator.of(context).pop();
+                    if (!homeViewModel.bookingFunction) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BaseTimeLineScreen()),
+                      );
+                    } else {
+                      await homeViewModel.bookingTransaction();
+                      homeViewModel.bookingFunction = false;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                BaseTimeLineAppoinmentScreen()),
+                      );
+                    }
                   },
                   child: Stack(
                     children: [
@@ -709,12 +728,23 @@ class HomeScreen extends StatelessWidget {
                 InkWell(
                   onTap: () async {
                     await homeViewModel.initTransaction(2);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => BaseTimeLineScreen()),
-                    );
+                    Navigator.of(context).pop();
+                    if (!homeViewModel.bookingFunction) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BaseTimeLineScreen()),
+                      );
+                    } else {
+                      await homeViewModel.bookingTransaction();
+                      homeViewModel.bookingFunction = false;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                BaseTimeLineAppoinmentScreen()),
+                      );
+                    }
                   },
                   child: Stack(
                     children: [
