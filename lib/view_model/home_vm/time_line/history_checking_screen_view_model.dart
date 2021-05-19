@@ -61,7 +61,29 @@ class HistoryCheckingScreenViewModel extends BaseModel {
   Future<void> confirmChoose(
       BaseTimeLineViewModel baseTimeLineViewModel,
       BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel,
-      String location) async {
+      String location,
+      TransactionHistoryModel transaction) async {
+    print("serviceId ${transaction.serviceId}");
+
+    var specialtyTemp = listSpecialty.indexWhere((element) =>
+        element.listService.indexWhere(
+            (element1) => element1.serviceId == transaction.serviceId) !=
+        -1);
+
+    SpecialtyServiceModel specialty = listSpecialty[specialtyTemp];
+
+    int indexService = specialty.listService
+        .indexWhere((element) => element.serviceId == transaction.serviceId);
+
+    print(
+        "service ID:${specialty.listService[indexService].serviceId} default:${specialty.listService[indexService].isDefault} speicaltyID:${specialty.specialtyId} Name:${specialty.name}");
+
+    prefs.setInt("usServiceID", specialty.listService[indexService].serviceId);
+    prefs.setString("chooseSpecialty", specialty.name);
+    prefs.setInt("chooseSpecialtyId", specialty.specialtyId);
+    prefs.setBool(
+        "isServiceDefault", specialty.listService[indexService].isDefault);
+
     LatLng latLngPosition = LatLng(
         double.parse(
             location.toString().split(";")[0].split(",")[0].split(":")[1]),
