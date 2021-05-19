@@ -40,7 +40,9 @@ class HistoryCheckingScreen extends StatelessWidget {
                           },
                           child: Container(
                             padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            color: Colors.grey[100],
+                            color: index % 2 == 0
+                                ? Colors.white
+                                : Colors.grey[100],
                             child: CustomListItemTwo(
                               serviceType:
                                   model.listTransaction[index].serviceName,

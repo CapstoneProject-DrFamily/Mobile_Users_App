@@ -2,6 +2,7 @@ import 'package:drFamily_app/model/doctor_schedule_model/doctor_schedule_model.d
 import 'package:drFamily_app/model/doctor_schedule_model/schedule_model.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
 import 'package:drFamily_app/screens/home/find_doctor/map_page.dart';
+import 'package:drFamily_app/screens/home/time_line_find_doctor/history_checking_screen.dart';
 import 'package:drFamily_app/screens/home/time_line_find_doctor/specialty_service_screen.dart';
 import 'package:drFamily_app/screens/schedule/appointment_screen.dart';
 import 'package:drFamily_app/screens/schedule/doctor_detail_schedule_screen.dart';
@@ -11,6 +12,7 @@ import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseTimeLineAppoinmentViewModel extends BaseModel {
   bool init = true;
@@ -49,6 +51,19 @@ class BaseTimeLineAppoinmentViewModel extends BaseModel {
     Icons.sticky_note_2_outlined,
   ];
 
+  int typeFindDoctor;
+
+  BaseTimeLineAppoinmentViewModel() {
+    initBaseTimeLine();
+  }
+
+  void initBaseTimeLine() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    typeFindDoctor = prefs.getInt("typeFindDoctor");
+    print('type $typeFindDoctor');
+    notifyListeners();
+  }
+
   void nextStep() {
     if (oldStep.contains(initStep)) {
     } else {
@@ -72,9 +87,11 @@ class BaseTimeLineAppoinmentViewModel extends BaseModel {
   Widget buildWidget(index, BaseTimeLineAppoinmentViewModel model) {
     switch (index) {
       case 0:
-        return SpecialtyServiceScreen(
-          baseTimeLineAppoinmentViewModel: model,
-        );
+        return (typeFindDoctor == 1)
+            ? HistoryCheckingScreen(baseTimeLineAppoinmentViewModel: model)
+            : SpecialtyServiceScreen(
+                baseTimeLineAppoinmentViewModel: model,
+              );
         break;
       case 1:
         return MapScreen(
