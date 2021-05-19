@@ -214,6 +214,8 @@ class ListDoctorScreenViewModel extends BaseModel {
         if (value == null) {
           listOldDoctorTemp[i].isOnline = false;
         } else {
+          listOldDoctorTemp[i].fbId = value.fbId;
+          listOldDoctorTemp[i].notitoken = value.notitoken;
           listOldDoctorTemp[i].distance = value.distance;
           listOldDoctorTemp[i].isOnline = true;
         }
@@ -327,6 +329,7 @@ class ListDoctorScreenViewModel extends BaseModel {
 
   void getDetailDoctor(int id, String notiToken, String fbId,
       BaseTimeLineViewModel baseTimeLineViewModel) {
+    print("id $id notiToken $notiToken fbId $fbId");
     baseTimeLineViewModel.id = id;
     baseTimeLineViewModel.fbId = fbId;
     baseTimeLineViewModel.notiToken = notiToken;

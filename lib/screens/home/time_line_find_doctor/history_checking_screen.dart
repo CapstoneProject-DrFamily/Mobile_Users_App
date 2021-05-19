@@ -1,4 +1,5 @@
 import 'package:cool_alert/cool_alert.dart';
+import 'package:drFamily_app/model/transaction_history_model.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/history_checking_screen_view_model.dart';
@@ -57,8 +58,11 @@ class HistoryCheckingScreen extends StatelessWidget {
                                 },
                               );
                             } else {
-                              _confirmDialog(context, model,
-                                  model.listTransaction[index].location);
+                              _confirmDialog(
+                                  context,
+                                  model,
+                                  model.listTransaction[index].location,
+                                  model.listTransaction[index]);
                             }
                           },
                           child: Container(
@@ -99,8 +103,11 @@ class HistoryCheckingScreen extends StatelessWidget {
     );
   }
 
-  Future _confirmDialog(BuildContext context,
-      HistoryCheckingScreenViewModel model, String location) {
+  Future _confirmDialog(
+      BuildContext context,
+      HistoryCheckingScreenViewModel model,
+      String location,
+      TransactionHistoryModel transaction) {
     return showDialog(
       context: context,
       builder: (bookingContext) {
@@ -164,8 +171,11 @@ class HistoryCheckingScreen extends StatelessWidget {
                       onTap: () async {
                         Navigator.pop(bookingContext);
                         // Navigator.pop(context);
-                        await model.confirmChoose(this.baseTimeLineViewModel,
-                            this.baseTimeLineAppoinmentViewModel, location);
+                        await model.confirmChoose(
+                            this.baseTimeLineViewModel,
+                            this.baseTimeLineAppoinmentViewModel,
+                            location,
+                            transaction);
                       },
                       child: Container(
                         alignment: Alignment.center,
