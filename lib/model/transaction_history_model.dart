@@ -1,5 +1,10 @@
 class TransactionHistoryModel {
-  final String serviceName, location, transactionID, doctorName, dateTimeStart;
+  final String serviceName,
+      location,
+      transactionID,
+      doctorName,
+      dateTimeStart,
+      conclusion;
   final int status;
   final double servicePrice;
   TransactionHistoryModel(
@@ -9,17 +14,18 @@ class TransactionHistoryModel {
       this.serviceName,
       this.servicePrice,
       this.status,
-      this.transactionID});
+      this.transactionID,
+      this.conclusion});
 
   factory TransactionHistoryModel.fromJson(Map<String, dynamic> json) {
     return TransactionHistoryModel(
-      transactionID: json['id'] as String,
-      dateTimeStart: json['dateStart'] as String,
-      status: json['status'] as int,
-      servicePrice: json['servicePrice'] as double,
-      doctorName: json['doctorName'] as String,
-      serviceName: json['serviceName'] as String,
-      location: json['location'] as String,
-    );
+        transactionID: json['id'] as String,
+        dateTimeStart: json['dateStart'] as String,
+        status: json['status'] as int,
+        servicePrice: json['servicePrice'] as double,
+        doctorName: json['doctorName'] as String,
+        serviceName: json['serviceName'] as String,
+        location: json['location'] as String,
+        conclusion: json['conclusion'] as String);
   }
 }
