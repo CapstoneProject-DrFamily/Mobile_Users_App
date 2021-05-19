@@ -36,7 +36,9 @@ class ListDoctorScheduleScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          model.changeStatus(index);
+                          if (!model.init) {
+                            model.changeStatus(index);
+                          }
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(horizontal: 15),
