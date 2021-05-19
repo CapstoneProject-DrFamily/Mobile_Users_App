@@ -67,4 +67,6 @@ class APIHelper {
   static const String DOCTOR_SPECIALTY =
       '$PREFIX_API/api/v1/Doctors/specialties/';
   static const String DOCTOR_OLD_FIND = '$PREFIX_API/api/v1/Doctors/FindDoctor';
+  static const String DOCTOR_OLD_APPOINTMENT =
+      '$PREFIX_API/api/v1/Doctors/BookAppointment';
 }

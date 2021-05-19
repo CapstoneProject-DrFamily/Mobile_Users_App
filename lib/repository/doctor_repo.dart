@@ -15,6 +15,8 @@ abstract class IDoctorRepo {
   Future<int> getDoctorPhoneNum(int doctorId);
   Future<String> getNotiToken(int doctorId);
   Future<List<DoctorScheduleModel>> getDoctorsBySpeciality(int specialityId);
+  Future<List<DoctorScheduleModel>> getListOldBookAppointment(
+      int accountId, int pageIndex, int pageSize, int searchValue);
   Future<List<DoctorModel>> getListOldFindDoctor(
       int accountId, int specialtyId);
 }
@@ -157,5 +159,58 @@ class DoctorRepo extends IDoctorRepo {
       return listOldDoctor;
     } else
       return null;
+  }
+
+  @override
+  Future<List<DoctorScheduleModel>> getListOldBookAppointment(
+      int accountId, int pageIndex, int pageSize, int searchValue) async {
+    List<DoctorScheduleModel> listDoctor = [];
+    String urlAPI = APIHelper.DOCTOR_OLD_APPOINTMENT +
+        '?accountId=$accountId&PageIndex=$pageIndex&PageSize=$pageSize&SearchValue=$searchValue';
+    Map<String, String> header = {
+      HttpHeaders.contentTypeHeader: "application/json",
+    };
+
+    var response = await http.get(urlAPI, headers: header);
+    print("status ${response.statusCode}");
+    Map<String, dynamic> data = json.decode(response.body);
+
+    for (int i = 0; i < data['doctors'].length; i++) {
+      DoctorSpecialtyModel speciality =
+          DoctorSpecialtyModel.fromJson(data['doctors'][i]['specialty']);
+      print(speciality);
+      DoctorDetailModel doctorDetailModel =
+          DoctorDetailModel.fromJson(data['doctors'][i]);
+      print(doctorDetailModel);
+      ProfileModel profile = ProfileModel.fromJson(data['doctors'][i]);
+      print(profile);
+      List<ScheduleModel> listSchedule = [];
+      for (int k = 0; k < data['doctors'][i]['schedules'].length; k++) {
+        print(data['doctors'][i]['schedules'][k]);
+
+        ScheduleModel schedule =
+            ScheduleModel.fromJson(data['doctors'][i]['schedules'][k]);
+
+        listSchedule.add(schedule);
+      }
+
+      String notiToken = data['doctors'][i]['idNavigation']['notiToken'];
+
+      print('notitoken $notiToken');
+
+      DoctorScheduleModel model = DoctorScheduleModel(
+          doctorDetail: doctorDetailModel,
+          profile: profile,
+          specialty: speciality,
+          schedules: listSchedule,
+          notiToken: notiToken);
+
+      if (listSchedule.isEmpty) {
+      } else {
+        listDoctor.add(model);
+      }
+    }
+
+    return listDoctor;
   }
 }

@@ -21,7 +21,6 @@ class HistoryRecordScreenViewModel extends BaseModel {
   String _fullUserName;
   String get fullUserName => _fullUserName;
   int _profileId;
-  int _patientId;
   // TextEditingController _fullNameUser = TextEditingController();
   // TextEditingController get fullNameUser => _fullNameUser;
 
@@ -112,14 +111,16 @@ class HistoryRecordScreenViewModel extends BaseModel {
     switch (status) {
       case 0:
         {
+          print('test');
           _isNotHave = false;
 
           _loadingList = true;
           _status = status;
           notifyListeners();
           _listTransaction = await transactionRepo.getListTransactionHistory(
-              _patientId.toString(), -1);
+              _profileId.toString(), -1);
 
+          print(_listTransaction);
           _loadingList = false;
           if (_listTransaction == null) {
             _isNotHave = true;
@@ -137,7 +138,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
           _status = status;
           notifyListeners();
           _listTransaction = await transactionRepo.getListTransactionHistory(
-              _patientId.toString(), 1);
+              _profileId.toString(), 1);
           _loadingList = false;
           if (_listTransaction == null) {
             _isNotHave = true;
@@ -154,7 +155,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
           _status = status;
           notifyListeners();
           _listTransaction = await transactionRepo.getListTransactionHistory(
-              _patientId.toString(), 2);
+              _profileId.toString(), 2);
           _loadingList = false;
           if (_listTransaction == null) {
             _isNotHave = true;
@@ -172,7 +173,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
           _status = status;
           notifyListeners();
           _listTransaction = await transactionRepo.getListTransactionHistory(
-              _patientId.toString(), 6);
+              _profileId.toString(), 6);
           _loadingList = false;
 
           if (_listTransaction == null) {
@@ -191,7 +192,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
           _status = status;
           notifyListeners();
           _listTransaction = await transactionRepo.getListTransactionHistory(
-              _patientId.toString(), 5);
+              _profileId.toString(), 5);
           _loadingList = false;
           if (_listTransaction == null) {
             _isNotHave = true;
@@ -209,7 +210,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
           _status = status;
           notifyListeners();
           _listTransaction = await transactionRepo.getListTransactionHistory(
-              _patientId.toString(), 3);
+              _profileId.toString(), 3);
           _loadingList = false;
           if (_listTransaction == null) {
             _isNotHave = true;
@@ -227,7 +228,7 @@ class HistoryRecordScreenViewModel extends BaseModel {
           _status = status;
           notifyListeners();
           _listTransaction = await transactionRepo.getListTransactionHistory(
-              _patientId.toString(), 4);
+              _profileId.toString(), 4);
           _loadingList = false;
           if (_listTransaction == null) {
             _isNotHave = true;

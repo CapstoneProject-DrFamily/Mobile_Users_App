@@ -165,7 +165,7 @@ class TransactionRepo extends ITransactionRepo {
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
-
+    print('patient ID : $patientId');
     List<TransactionHistoryModel> listTransactionHistoryModel;
 
     var response = await http.get(urlAPI, headers: header);

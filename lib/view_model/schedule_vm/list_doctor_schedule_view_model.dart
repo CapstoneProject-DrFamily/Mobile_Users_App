@@ -14,34 +14,76 @@ class ListDoctorScheduleViewModel extends BaseModel {
 
   Future<void> fetchData(int specialityId) async {
     if (init) {
+      listResult = [];
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       print("specialityId $specialityId");
       int patientid = prefs.getInt('usPatientID');
+      int accountId = prefs.getInt('usAccountID');
       var isDefault = prefs.getBool("isServiceDefault");
       print("patientID : " +
           patientid.toString() +
           "isDefaultService" +
           isDefault.toString());
-      if (isDefault) {
-        this.listResult = await _doctorRepo.getDoctorsBySpeciality(-1);
 
-        Comparator<DoctorScheduleModel> timeComparator = (a, b) => a
-            .schedules[0].appointmentTime
-            .compareTo(b.schedules[0].appointmentTime);
+      switch (status) {
+        case 0:
+          if (isDefault) {
+            this.listResult = await _doctorRepo.getDoctorsBySpeciality(-1);
 
-        this.listResult.sort(timeComparator);
-      } else {
-        this.listResult =
-            await _doctorRepo.getDoctorsBySpeciality(specialityId);
+            Comparator<DoctorScheduleModel> timeComparator = (a, b) => a
+                .schedules[0].appointmentTime
+                .compareTo(b.schedules[0].appointmentTime);
 
-        Comparator<DoctorScheduleModel> timeComparator = (a, b) => a
-            .schedules[0].appointmentTime
-            .compareTo(b.schedules[0].appointmentTime);
-        this.listResult.sort(timeComparator);
+            this.listResult.sort(timeComparator);
+          } else {
+            this.listResult =
+                await _doctorRepo.getDoctorsBySpeciality(specialityId);
+
+            Comparator<DoctorScheduleModel> timeComparator = (a, b) => a
+                .schedules[0].appointmentTime
+                .compareTo(b.schedules[0].appointmentTime);
+            this.listResult.sort(timeComparator);
+          }
+
+          break;
+        case 1:
+          print("account ID : $accountId");
+          if (isDefault) {
+            this.listResult = await _doctorRepo.getListOldBookAppointment(
+                accountId, 1, 99, -1);
+          } else {
+            this.listResult = await _doctorRepo.getListOldBookAppointment(
+                accountId, 1, 99, specialityId);
+          }
+          break;
+        case 2:
+          if (isDefault) {
+            this.listResult = await _doctorRepo.getDoctorsBySpeciality(-1);
+
+            Comparator<DoctorScheduleModel> booked = (a, b) => a
+                .doctorDetail.transactionBooked
+                .compareTo(b.doctorDetail.transactionBooked);
+
+            this.listResult.sort(booked);
+            this.listResult = this.listResult.reversed.toList();
+          } else {
+            this.listResult =
+                await _doctorRepo.getDoctorsBySpeciality(specialityId);
+
+            Comparator<DoctorScheduleModel> booked = (a, b) => a
+                .doctorDetail.transactionBooked
+                .compareTo(b.doctorDetail.transactionBooked);
+
+            this.listResult.sort(booked);
+            this.listResult = this.listResult.reversed.toList();
+          }
+          break;
+        default:
       }
       print(this.listResult.length);
-      this.init = false;
+
       notifyListeners();
+      this.init = false;
     }
   }
 
