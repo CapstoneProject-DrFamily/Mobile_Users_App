@@ -2,6 +2,7 @@ import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dar
 import 'package:drFamily_app/screens/home/doctor_detail_screen.dart';
 import 'package:drFamily_app/screens/home/find_doctor/list_doctor_page.dart';
 import 'package:drFamily_app/screens/home/find_doctor/map_page.dart';
+import 'package:drFamily_app/screens/home/time_line_find_doctor/history_checking_screen.dart';
 import 'package:drFamily_app/screens/home/time_line_find_doctor/specialty_service_screen.dart';
 import 'package:drFamily_app/screens/home/time_line_find_doctor/symptoms_screen.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
@@ -83,7 +84,7 @@ class BaseTimeLineViewModel extends BaseModel {
     switch (index) {
       case 0:
         return (typeFindDoctor == 1)
-            ? SymptomsScreen(baseTimeLineViewModel: model)
+            ? HistoryCheckingScreen(baseTimeLineViewModel: model)
             : SpecialtyServiceScreen(baseTimeLineViewModel: model);
         break;
       case 1:
