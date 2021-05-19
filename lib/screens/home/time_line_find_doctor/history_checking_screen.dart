@@ -2,6 +2,7 @@ import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/history_checking_screen_view_model.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line_appoinment/base_time_line_appoiment_view_model.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -57,6 +58,9 @@ class HistoryCheckingScreen extends StatelessWidget {
                               doctorName:
                                   model.listTransaction[index].doctorName,
                               status: model.listTransaction[index].status,
+                              note: model.listTransaction[index].note,
+                              diagnoseList:
+                                  model.listTransaction[index].diagnose,
                             ),
                           ),
                         );
@@ -107,6 +111,9 @@ class _ArticleDescription extends StatelessWidget {
     this.doctorName,
     this.price,
     this.status,
+    this.conclusion,
+    this.note,
+    this.diagnoseList,
   }) : super(key: key);
 
   final String serviceType;
@@ -115,6 +122,9 @@ class _ArticleDescription extends StatelessWidget {
   final String doctorName;
   final String price;
   final int status;
+  final String note;
+  final String conclusion;
+  final List<String> diagnoseList;
 
   @override
   Widget build(BuildContext context) {
@@ -132,27 +142,6 @@ class _ArticleDescription extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
                 color: Color(0xff0d47a1),
-              ),
-            ),
-          ],
-        ),
-        const Padding(padding: EdgeInsets.only(bottom: 2.0)),
-        Row(
-          children: <Widget>[
-            Icon(
-              Icons.access_time,
-              color: Colors.black54,
-              size: 17,
-            ),
-            const Padding(padding: EdgeInsets.only(right: 7.0)),
-            Text(
-              '$dateTimeBook',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.varelaRound(
-                fontWeight: FontWeight.normal,
-                fontSize: 13,
-                color: Colors.black,
               ),
             ),
           ],
@@ -180,9 +169,7 @@ class _ArticleDescription extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
-          height: 5,
-        ),
+        const Padding(padding: EdgeInsets.only(bottom: 5.0)),
         Text(
           'Doctor: $doctorName',
           textAlign: TextAlign.left,
@@ -194,6 +181,64 @@ class _ArticleDescription extends StatelessWidget {
         ),
         SizedBox(
           height: 5,
+        ),
+        Row(
+          children: <Widget>[
+            Icon(
+              Icons.sticky_note_2_outlined,
+              color: Colors.black54,
+              size: 17,
+            ),
+            const Padding(padding: EdgeInsets.only(right: 7.0)),
+            Text(
+              '$note',
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.varelaRound(
+                fontWeight: FontWeight.normal,
+                fontSize: 15,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          children: <Widget>[
+            Icon(
+              EvaIcons.activity,
+              color: Colors.black54,
+              size: 17,
+            ),
+            const Padding(padding: EdgeInsets.only(right: 7.0)),
+            Expanded(
+              child: Wrap(
+                direction: Axis.horizontal,
+                children: [
+                  for (var item in diagnoseList)
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10, left: 5, right: 5),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      // constraints: BoxConstraints(
+                      //   maxWidth:
+                      //       MediaQuery.of(context).size.width * 0.7,
+                      // ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Color(0xff0d47a1),
+                      ),
+                      child: Text(
+                        item.trim(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
         ),
         Container(
           alignment: Alignment.centerRight,
@@ -219,6 +264,9 @@ class CustomListItemTwo extends StatelessWidget {
     this.doctorName,
     this.price,
     this.status,
+    this.note,
+    this.conclusion,
+    this.diagnoseList,
   }) : super(key: key);
 
   final String serviceType;
@@ -227,6 +275,9 @@ class CustomListItemTwo extends StatelessWidget {
   final String doctorName;
   final String price;
   final int status;
+  final String note;
+  final String conclusion;
+  final List<String> diagnoseList;
 
   @override
   Widget build(BuildContext context) {
@@ -247,6 +298,9 @@ class CustomListItemTwo extends StatelessWidget {
                   price: price,
                   doctorName: doctorName,
                   status: status,
+                  note: note,
+                  conclusion: conclusion,
+                  diagnoseList: diagnoseList,
                 ),
               ),
             )
