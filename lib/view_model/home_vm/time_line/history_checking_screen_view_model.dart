@@ -99,6 +99,7 @@ class HistoryCheckingScreenViewModel extends BaseModel {
 
     if (service == "booking") {
       baseTimeLineAppoinmentViewModel.nextStep();
+      baseTimeLineAppoinmentViewModel.nextStep();
     } else {
       baseTimeLineViewModel.pickUpInfo = _pickUpInfo;
 

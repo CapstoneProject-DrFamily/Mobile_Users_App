@@ -23,85 +23,98 @@ class ReasonAppointmentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<ReasonAppointmentViewModel>(
-        builder: (context, child, model) {
-      return Scaffold(
-        body: SingleChildScrollView(
-          child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          right: 20,
+      builder: (context, child, model) {
+        return FutureBuilder(
+          future: model.init(),
+          builder: (context, snapshot) {
+            if (model.initReason) {
+              return Center(child: CircularProgressIndicator());
+            } else
+              return Scaffold(
+                body: SingleChildScrollView(
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(new FocusNode());
+                    },
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 20,
+                                  right: 20,
+                                ),
+                                child: Text(
+                                  'Note for Doctor',
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    color: Color(0xff0d47a1),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                        child: Text(
-                          'Note for Doctor',
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: Color(0xff0d47a1),
-                          ),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 20, right: 20, left: 20),
+                                child: Text(
+                                  'Please describe your symptoms, questions, or condition so our care providers may provide you with the appropriate care.',
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(top: 20, right: 20, left: 20),
-                        child: Text(
-                          'Please describe your symptoms, questions, or condition so our care providers may provide you with the appropriate care.',
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 20, right: 20, left: 20),
-                          child: Form(
-                            key: _formKey,
-                            child: TextFormField(
-                              maxLines: 5,
-                              maxLength: 50,
-                              onChanged: (value) {
-                                model.note = value;
-                              },
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter note for doctor';
-                                }
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 20, right: 20, left: 20),
+                                  child: Form(
+                                    key: _formKey,
+                                    child: TextFormField(
+                                      initialValue: (model.note != null)
+                                          ? model.note
+                                          : "",
+                                      maxLines: 5,
+                                      maxLength: 50,
+                                      onChanged: (value) {
+                                        model.note = value;
+                                      },
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter note for doctor';
+                                        }
 
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                  hintText: 'Enter your describe here',
-                                  counterText: "",
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12))),
-                            ),
-                          )),
-                    )
-                  ],
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                          hintText: 'Enter your describe here',
+                                          counterText: "",
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12))),
+                                    ),
+                                  )),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ),
-        bottomNavigationBar: _buildContinueButtom(model, context),
-      );
-    });
+                bottomNavigationBar: _buildContinueButtom(model, context),
+              );
+          },
+        );
+      },
+    );
   }
 
   GestureDetector _buildContinueButtom(

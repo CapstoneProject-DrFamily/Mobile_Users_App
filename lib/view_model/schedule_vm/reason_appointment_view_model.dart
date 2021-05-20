@@ -20,6 +20,19 @@ class ReasonAppointmentViewModel extends BaseModel {
   final ITransactionRepo _transactionRepo = TransactionRepo();
   final IScheduleRepo _scheduleRepo = ScheduleRepo();
   bool isLoading = false;
+  SharedPreferences prefs;
+
+  bool initReason = true;
+
+  Future<void> init() async {
+    if (initReason) {
+      prefs = await SharedPreferences.getInstance();
+      String noteHistory = prefs.getString("noteHistory");
+      if (noteHistory != null) note = noteHistory;
+      print("note $note");
+      initReason = false;
+    }
+  }
 
   Future<bool> bookingDoctor(
       int selectedValue,
