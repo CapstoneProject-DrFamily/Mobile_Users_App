@@ -63,6 +63,9 @@ class HistoryCheckingScreenViewModel extends BaseModel {
       BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel,
       String location,
       TransactionHistoryModel transaction) async {
+    var noteHistory = prefs.getString("noteHistory");
+    print("note $noteHistory");
+
     print("serviceId ${transaction.serviceId}");
 
     var specialtyTemp = listSpecialty.indexWhere((element) =>
@@ -83,6 +86,7 @@ class HistoryCheckingScreenViewModel extends BaseModel {
     prefs.setInt("chooseSpecialtyId", specialty.specialtyId);
     prefs.setBool(
         "isServiceDefault", specialty.listService[indexService].isDefault);
+    prefs.setString("noteHistory", transaction.note);
 
     LatLng latLngPosition = LatLng(
         double.parse(

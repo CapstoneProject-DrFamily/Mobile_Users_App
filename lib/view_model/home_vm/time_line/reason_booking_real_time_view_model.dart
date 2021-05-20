@@ -21,6 +21,20 @@ class ReasonBookingRealTimeViewModel extends BaseModel {
   bool isLoading = false;
   DatabaseReference _doctorRequest;
 
+  SharedPreferences prefs;
+
+  bool initReason = true;
+
+  Future<void> init() async {
+    if (initReason) {
+      prefs = await SharedPreferences.getInstance();
+      String noteHistory = prefs.getString("noteHistory");
+      if (noteHistory != null) note = noteHistory;
+      print("note $note");
+      initReason = false;
+    }
+  }
+
   Future<void> bookingDoctor(
       int id, String token, String fbId, BuildContext context) async {
     bool isOnline = false;
@@ -82,6 +96,7 @@ class ReasonBookingRealTimeViewModel extends BaseModel {
           ),
         ),
       );
+      prefs.remove("noteHistory");
 
       await _notifyRepo.bookDoctor(token);
     }

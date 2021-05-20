@@ -3,6 +3,7 @@ import 'package:drFamily_app/screens/share/base_view.dart';
 import 'package:drFamily_app/view_model/home_vm/time_line/base_time_line_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseTimeLineScreen extends StatelessWidget {
   @override
@@ -116,7 +117,12 @@ class BaseTimeLineScreen extends StatelessWidget {
                       customBorder: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      onTap: () {
+                      onTap: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+
+                        prefs.remove("noteHistory");
+
                         Navigator.pop(bookingContext);
                         Navigator.pop(context);
                       },
