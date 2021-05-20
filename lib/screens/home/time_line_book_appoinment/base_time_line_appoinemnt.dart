@@ -16,7 +16,11 @@ class BaseTimeLineAppoinmentScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             elevation: 0,
             title: Text(
-              model.appStepText[model.initStep],
+              (model.initStep == 0)
+                  ? (model.typeFindDoctor == 1)
+                      ? model.sympton
+                      : model.appStepText[model.initStep]
+                  : model.appStepText[model.initStep],
               style: TextStyle(
                 color: Color(0xff0d47a1),
               ),
