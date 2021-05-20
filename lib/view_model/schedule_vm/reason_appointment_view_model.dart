@@ -124,6 +124,7 @@ class ReasonAppointmentViewModel extends BaseModel {
       if (transactionID == null) {
         return booking;
       } else {
+        prefs.remove("noteHistory");
         localNotifyManager.scheduleNotification(
             scheduleModel.id,
             DateTime.parse(scheduleModel.appointmentTime),

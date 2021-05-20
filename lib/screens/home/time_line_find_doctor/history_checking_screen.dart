@@ -165,29 +165,39 @@ class HistoryCheckingScreen extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 0,
-                          groupValue: model.option,
-                          onChanged: (value) {
-                            setState(() => model.option = value);
-                          },
-                        ),
-                        Text('Default location'),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        setState(() => model.option = 0);
+                      },
+                      child: Row(
+                        children: [
+                          Radio(
+                            value: 0,
+                            groupValue: model.option,
+                            onChanged: (value) {
+                              setState(() => model.option = value);
+                            },
+                          ),
+                          Text('Default location'),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 1,
-                          groupValue: model.option,
-                          onChanged: (value) {
-                            setState(() => model.option = value);
-                          },
-                        ),
-                        Text('Choose another location'),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        setState(() => model.option = 1);
+                      },
+                      child: Row(
+                        children: [
+                          Radio(
+                            value: 1,
+                            groupValue: model.option,
+                            onChanged: (value) {
+                              setState(() => model.option = value);
+                            },
+                          ),
+                          Text('Choose another location'),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 45,
