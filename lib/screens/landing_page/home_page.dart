@@ -383,7 +383,7 @@ class HomeScreen extends StatelessWidget {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30))),
-            title: Center(child: new Text("Choose persons")),
+            title: Center(child: new Text("Choose person")),
             content: new Container(
               height: 300.0, // Change as per your requirement
               width: 300.0, // Change as per your requirement

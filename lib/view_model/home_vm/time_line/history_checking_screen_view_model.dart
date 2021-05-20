@@ -14,6 +14,7 @@ class HistoryCheckingScreenViewModel extends BaseModel {
   ITransactionRepo _transactionRepo = TransactionRepo();
   final IMapScreenRepo _mapRepo = MapScreenRepo();
   final ISpecialtyRepo _specialtyRepo = SpecialtyRepo();
+  int option = 0;
 
   UserCurrentAddress _pickUpInfo = UserCurrentAddress();
 
@@ -59,10 +60,12 @@ class HistoryCheckingScreenViewModel extends BaseModel {
   }
 
   Future<void> confirmChoose(
-      BaseTimeLineViewModel baseTimeLineViewModel,
-      BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel,
-      String location,
-      TransactionHistoryModel transaction) async {
+    BaseTimeLineViewModel baseTimeLineViewModel,
+    BaseTimeLineAppoinmentViewModel baseTimeLineAppoinmentViewModel,
+    String location,
+    TransactionHistoryModel transaction,
+    HistoryCheckingScreenViewModel checkModel,
+  ) async {
     var noteHistory = prefs.getString("noteHistory");
     print("note $noteHistory");
 
@@ -98,13 +101,32 @@ class HistoryCheckingScreenViewModel extends BaseModel {
     _pickUpInfo = await _mapRepo.searchCoordinateAddress(latLngPosition);
 
     if (service == "booking") {
-      baseTimeLineAppoinmentViewModel.nextStep();
-      baseTimeLineAppoinmentViewModel.nextStep();
+      // default location
+      if (checkModel.option == 0) {
+        baseTimeLineAppoinmentViewModel.nextStep();
+        baseTimeLineAppoinmentViewModel.nextStep();
+      }
+      // another location
+      else {
+        baseTimeLineAppoinmentViewModel.nextStep();
+      }
     } else {
       baseTimeLineViewModel.pickUpInfo = _pickUpInfo;
 
-      baseTimeLineViewModel.nextStep();
-      baseTimeLineViewModel.nextStep();
+      // default location
+      if (checkModel.option == 0) {
+        baseTimeLineViewModel.nextStep();
+        baseTimeLineViewModel.nextStep();
+      }
+      // another location
+      else {
+        baseTimeLineViewModel.nextStep();
+      }
     }
+  }
+
+  void changeOption(value) {
+    this.option = value;
+    notifyListeners();
   }
 }

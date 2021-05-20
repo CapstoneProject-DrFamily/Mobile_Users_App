@@ -115,6 +115,14 @@ class Common {
     return temp[1];
   }
 
+  static String getLocationShort(String data, int length) {
+    if (data.length < length) {
+      return data;
+    } else {
+      return data.substring(0, length) + "...";
+    }
+  }
+
   static String convertPrice(double price) {
     return NumberFormat.currency(locale: 'vi').format(price);
   }
