@@ -132,113 +132,132 @@ class ListDoctorPage extends StatelessWidget {
                                                     BorderRadius.circular(24),
                                                 gradient: LinearGradient(
                                                     colors: [
-                                                      Colors.lightBlue
-                                                          .withOpacity(0.2),
-                                                      Colors.lightBlue[100]
-                                                          .withOpacity(0.6)
+                                                      model
+                                                                  .nearByDoctorList[
+                                                                      index]
+                                                                  .isOnline ==
+                                                              false
+                                                          ? Colors.grey
+                                                          : Colors.lightBlue
+                                                              .withOpacity(0.2),
+                                                      model
+                                                                  .nearByDoctorList[
+                                                                      index]
+                                                                  .isOnline ==
+                                                              false
+                                                          ? Colors.grey
+                                                          : Colors
+                                                              .lightBlue[100]
+                                                              .withOpacity(0.6)
                                                     ],
                                                     begin: Alignment.topLeft,
                                                     end: Alignment.bottomRight),
                                                 boxShadow: [
                                                   BoxShadow(
-                                                      color:
-                                                          MainColors.blueBegin,
+                                                      color: model
+                                                                  .nearByDoctorList[
+                                                                      index]
+                                                                  .isOnline ==
+                                                              false
+                                                          ? Colors.transparent
+                                                          : MainColors
+                                                              .blueBegin,
                                                       blurRadius: 3,
                                                       offset: Offset(0, 6))
                                                 ],
                                               ),
                                             ),
-                                            (model.nearByDoctorList[index]
-                                                        .isOnline ==
-                                                    null)
-                                                ? Container()
-                                                : (model.nearByDoctorList[index]
-                                                            .isOnline ==
-                                                        false)
-                                                    ? Positioned(
-                                                        right: 2,
-                                                        top: 2,
-                                                        child: Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  vertical: 5,
-                                                                  horizontal:
-                                                                      10),
-                                                          constraints:
-                                                              BoxConstraints(
-                                                            maxWidth: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.7,
-                                                          ),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30),
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .grey),
-                                                            color: Colors.grey,
-                                                          ),
-                                                          child: Text(
-                                                            "Offline",
-                                                            style: GoogleFonts
-                                                                .varelaRound(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                              fontSize: 13,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : Positioned(
-                                                        right: 2,
-                                                        top: 2,
-                                                        child: Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  vertical: 5,
-                                                                  horizontal:
-                                                                      10),
-                                                          constraints:
-                                                              BoxConstraints(
-                                                            maxWidth: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.7,
-                                                          ),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30),
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .green),
-                                                            color: Colors.green,
-                                                          ),
-                                                          child: Text(
-                                                            "Online",
-                                                            style: GoogleFonts
-                                                                .varelaRound(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                              fontSize: 13,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
+                                            // (model.nearByDoctorList[index]
+                                            //             .isOnline ==
+                                            //         null)
+                                            //     ? Container()
+                                            //     : (model.nearByDoctorList[index]
+                                            //                 .isOnline ==
+                                            //             false)
+                                            //         ? Positioned(
+                                            //             right: 2,
+                                            //             top: 2,
+                                            //             child: Container(
+                                            //               padding: EdgeInsets
+                                            //                   .symmetric(
+                                            //                       vertical: 5,
+                                            //                       horizontal:
+                                            //                           10),
+                                            //               constraints:
+                                            //                   BoxConstraints(
+                                            //                 maxWidth: MediaQuery.of(
+                                            //                             context)
+                                            //                         .size
+                                            //                         .width *
+                                            //                     0.7,
+                                            //               ),
+                                            //               decoration:
+                                            //                   BoxDecoration(
+                                            //                 borderRadius:
+                                            //                     BorderRadius
+                                            //                         .circular(
+                                            //                             30),
+                                            //                 border: Border.all(
+                                            //                     color: Colors
+                                            //                         .grey),
+                                            //                 color: Colors.grey,
+                                            //               ),
+                                            //               child: Text(
+                                            //                 "Offline",
+                                            //                 style: GoogleFonts
+                                            //                     .varelaRound(
+                                            //                   fontWeight:
+                                            //                       FontWeight
+                                            //                           .normal,
+                                            //                   fontSize: 13,
+                                            //                   color:
+                                            //                       Colors.white,
+                                            //                 ),
+                                            //               ),
+                                            //             ),
+                                            //           )
+                                            //         : Positioned(
+                                            //             right: 2,
+                                            //             top: 2,
+                                            //             child: Container(
+                                            //               padding: EdgeInsets
+                                            //                   .symmetric(
+                                            //                       vertical: 5,
+                                            //                       horizontal:
+                                            //                           10),
+                                            //               constraints:
+                                            //                   BoxConstraints(
+                                            //                 maxWidth: MediaQuery.of(
+                                            //                             context)
+                                            //                         .size
+                                            //                         .width *
+                                            //                     0.7,
+                                            //               ),
+                                            //               decoration:
+                                            //                   BoxDecoration(
+                                            //                 borderRadius:
+                                            //                     BorderRadius
+                                            //                         .circular(
+                                            //                             30),
+                                            //                 border: Border.all(
+                                            //                     color: Colors
+                                            //                         .green),
+                                            //                 color: Colors.green,
+                                            //               ),
+                                            //               child: Text(
+                                            //                 "Online",
+                                            //                 style: GoogleFonts
+                                            //                     .varelaRound(
+                                            //                   fontWeight:
+                                            //                       FontWeight
+                                            //                           .normal,
+                                            //                   fontSize: 13,
+                                            //                   color:
+                                            //                       Colors.white,
+                                            //                 ),
+                                            //               ),
+                                            //             ),
+                                            //           ),
                                             Positioned(
                                               right: 0,
                                               bottom: 0,
@@ -247,10 +266,24 @@ class ListDoctorPage extends StatelessWidget {
                                                 size: Size(70, 100),
                                                 painter: CustomCardShapePainter(
                                                     24,
-                                                    Colors.lightBlue
-                                                        .withOpacity(0.2),
-                                                    Colors.lightBlue[100]
-                                                        .withOpacity(0.2)),
+                                                    model
+                                                                .nearByDoctorList[
+                                                                    index]
+                                                                .isOnline ==
+                                                            false
+                                                        ? Colors.grey
+                                                            .withOpacity(0.2)
+                                                        : Colors.lightBlue
+                                                            .withOpacity(0.2),
+                                                    model
+                                                                .nearByDoctorList[
+                                                                    index]
+                                                                .isOnline ==
+                                                            false
+                                                        ? Colors.grey
+                                                            .withOpacity(0.2)
+                                                        : Colors.lightBlue[100]
+                                                            .withOpacity(0.2)),
                                               ),
                                             ),
                                             Positioned.fill(

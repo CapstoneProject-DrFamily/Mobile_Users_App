@@ -90,6 +90,8 @@ class HistoryCheckingScreenViewModel extends BaseModel {
     prefs.setBool(
         "isServiceDefault", specialty.listService[indexService].isDefault);
     prefs.setString("noteHistory", transaction.note);
+    prefs.setInt("chooseDoctorId", transaction.doctorId);
+
     String service = prefs.getString("usTransactionStatus");
 
     if (service == "booking") {

@@ -92,7 +92,8 @@ class HomeScreen extends StatelessWidget {
                     GestureDetector(
                       child: _buildDoctorFunction(
                           context, 'Find Doctor', FIND_DOCTOR, 150, 190),
-                      onTap: () {
+                      onTap: () async {
+                        model.bookingFunction = false;
                         _buildDialogListDependent(context, model);
                       },
                     ),

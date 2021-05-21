@@ -20,6 +20,10 @@ class ListDoctorScheduleViewModel extends BaseModel {
       int patientid = prefs.getInt('usPatientID');
       int accountId = prefs.getInt('usAccountID');
       var isDefault = prefs.getBool("isServiceDefault");
+      int doctorDefaultId = prefs.getInt("chooseDoctorId");
+
+      print("accountId $accountId $isDefault $doctorDefaultId");
+
       print("patientID : " +
           patientid.toString() +
           "isDefaultService" +
@@ -51,9 +55,11 @@ class ListDoctorScheduleViewModel extends BaseModel {
           if (isDefault) {
             this.listResult = await _doctorRepo.getListOldBookAppointment(
                 accountId, 1, 99, -1);
+            sortHistoryFirst(doctorDefaultId);
           } else {
             this.listResult = await _doctorRepo.getListOldBookAppointment(
                 accountId, 1, 99, specialityId);
+            sortHistoryFirst(doctorDefaultId);
           }
           break;
         case 2:
@@ -84,6 +90,16 @@ class ListDoctorScheduleViewModel extends BaseModel {
 
       notifyListeners();
       this.init = false;
+    }
+  }
+
+  void sortHistoryFirst(int doctorDefaultId) {
+    if (doctorDefaultId != null) {
+      DoctorScheduleModel doctormodel = this.listResult.firstWhere(
+          (element) => element.doctorDetail.doctorId == doctorDefaultId);
+      this.listResult.removeWhere(
+          (element) => element.doctorDetail.doctorId == doctorDefaultId);
+      this.listResult.insert(0, doctormodel);
     }
   }
 
