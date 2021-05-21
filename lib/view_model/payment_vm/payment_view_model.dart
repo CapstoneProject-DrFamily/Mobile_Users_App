@@ -133,8 +133,9 @@ class PaymentViewModel extends BaseModel {
 
   void excute(BuildContext context, NavigationRequest request) async {
     if (request.url.contains(returnURL)) {
+      print('request url: ${request.url}');
       final uri = Uri.parse(request.url);
-      print(uri);
+      print('uri: $uri');
       final payerID = uri.queryParameters['PayerID'];
       if (payerID != null) {
         await paypalServicesRepo
