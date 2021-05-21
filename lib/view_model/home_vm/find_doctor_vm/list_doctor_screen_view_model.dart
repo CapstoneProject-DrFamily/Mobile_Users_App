@@ -37,6 +37,7 @@ class ListDoctorScreenViewModel extends BaseModel {
   int accountId;
   int specialtyId;
   bool isDefault;
+  int doctorDefaultId;
 
   Future<void> init(UserCurrentAddress pickUpInfoRef) async {
     if (isLoading) {
@@ -54,7 +55,9 @@ class ListDoctorScreenViewModel extends BaseModel {
       specialtyId = prefs.getInt('chooseSpecialtyId');
       isDefault = prefs.getBool("isServiceDefault");
 
-      print("accountId $accountId $specialtyId $isDefault");
+      doctorDefaultId = prefs.getInt("chooseDoctorId");
+
+      print("accountId $accountId $specialtyId $isDefault $doctorDefaultId");
 
       await getListDoctorNearby();
     }
@@ -180,6 +183,7 @@ class ListDoctorScreenViewModel extends BaseModel {
       Comparator<DoctorModel> distanceComparator =
           (a, b) => a.distance.compareTo(b.distance);
       _nearByDoctorList.sort(distanceComparator);
+
       //list to compare old doctor
       _listNearbyDoctorTemp = _nearByDoctorList;
       print('change list ${_listNearbyDoctorTemp.length}');
@@ -228,6 +232,14 @@ class ListDoctorScreenViewModel extends BaseModel {
         }
         return -1;
       });
+
+      if (doctorDefaultId != null) {
+        DoctorModel doctormodel = _nearByDoctorList
+            .firstWhere((element) => element.id == doctorDefaultId);
+        _nearByDoctorList
+            .removeWhere((element) => element.id == doctorDefaultId);
+        _nearByDoctorList.insert(0, doctormodel);
+      }
 
       _isNotHave = false;
       _isLoading = false;
