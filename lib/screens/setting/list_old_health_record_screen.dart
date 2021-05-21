@@ -1,5 +1,6 @@
 import 'package:drFamily_app/screens/setting/old_health_record_screen.dart';
 import 'package:drFamily_app/screens/share/base_view.dart';
+import 'package:drFamily_app/view_model/setting_vm/list_old_health_record_view_model.dart';
 import 'package:drFamily_app/view_model/setting_vm/old_health_record_view_model.dart';
 import 'package:drFamily_app/widgets/common/app_image.dart';
 import 'package:drFamily_app/widgets/common/fonts.dart';
@@ -31,7 +32,7 @@ class ListOldHealthRecordScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: BaseView<OldHealthRecordViewModel>(
+      body: BaseView<ListOldHealthRecordViewModel>(
         builder: (context, child, model) {
           return FutureBuilder(
             future: model.getListOldPersonalHealthRecord(patientID),

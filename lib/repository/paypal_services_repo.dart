@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:drFamily_app/Helper/api_helper.dart';
 import 'package:drFamily_app/model/convert_curr_model.dart';
 import 'package:http/http.dart' as http;
@@ -37,6 +36,7 @@ class PaypalServicesRepo extends IPaypalServicesRepo {
 
       if (response.statusCode == 200) {
         final body = convert.jsonDecode(response.body);
+        print('body getAccessToken $body');
         print("getAccessToken: " + body["access_token"]);
         return body["access_token"];
       }
@@ -62,6 +62,7 @@ class PaypalServicesRepo extends IPaypalServicesRepo {
       print("Status2: " + status.toString());
 
       final body = convert.jsonDecode(response.body);
+      print('body createPaypalPayment: $body');
       if (response.statusCode == 201) {
         // print("createPaypalPayment: " + body["message"]);
         if (body["links"] != null && body["links"].length > 0) {

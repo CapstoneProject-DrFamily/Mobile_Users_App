@@ -2,7 +2,6 @@ import 'package:drFamily_app/model/setting/health_record_model.dart';
 import 'package:drFamily_app/repository/setting/health_record_repo.dart';
 import 'package:drFamily_app/screens/share/base_model.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OldHealthRecordViewModel extends BaseModel {
   final IHealthRecordRepo _healthRecordRepo = HealthRecordRepo();
@@ -13,7 +12,7 @@ class OldHealthRecordViewModel extends BaseModel {
   List<HealthRecordModel> get listOldHealthRecord => _listOldHealthRecord;
 
   bool init = true;
-  bool _isLoading = false;
+  bool _isLoading = true;
   bool get isLoading => _isLoading;
 
   //Tab History & Allergy
@@ -125,24 +124,7 @@ class OldHealthRecordViewModel extends BaseModel {
   int get choiceActivity => _choiceActivity;
   //----------------------------------------
 
-  Future<void> getListOldPersonalHealthRecord(int patientID) async {
-    _isLoading = true;
-    notifyListeners();
-    if (init) {
-      this.patientID = patientID;
-      _listOldHealthRecord =
-          await _healthRecordRepo.getListOldHealthRecord(patientID, true);
-      this.init = false;
-      notifyListeners();
-    }
-
-    _isLoading = false;
-    notifyListeners();
-  }
-
   Future<void> getPersonalHealthRecordByID(int healthRecordID) async {
-    _isLoading = true;
-    notifyListeners();
     if (init) {
       this.healthRecordID = healthRecordID;
 
@@ -236,11 +218,9 @@ class OldHealthRecordViewModel extends BaseModel {
       _toiletTypeController.text = _healthRecordModel.toiletType;
       _otherRisksController.text = _healthRecordModel.otherRisks;
       this.init = false;
+      _isLoading = false;
       notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();
   }
 
   void changeConditionAtBirth(String newChoice) {
