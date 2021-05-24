@@ -202,9 +202,7 @@ class ListDoctorScreenViewModel extends BaseModel {
           await _doctorRepo.getListOldFindDoctor(accountId, specialtyID);
     }
 
-    if (listOldDoctorTemp == null) {}
-
-    if (listOldDoctorTemp.length == null) {
+    if (listOldDoctorTemp == null) {
       _nearByDoctorList = [];
       _isLoading = false;
       _isNotHave = true;
