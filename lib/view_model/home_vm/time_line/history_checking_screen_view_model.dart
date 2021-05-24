@@ -92,6 +92,15 @@ class HistoryCheckingScreenViewModel extends BaseModel {
     prefs.setString("noteHistory", transaction.note);
     prefs.setInt("chooseDoctorId", transaction.doctorId);
 
+    LatLng latLngPosition = LatLng(
+        double.parse(
+            location.toString().split(";")[0].split(",")[0].split(":")[1]),
+        double.parse(
+            location.toString().split(";")[0].split(",")[1].split(":")[1]));
+
+    _pickUpInfo = await _mapRepo.searchCoordinateAddress(latLngPosition);
+    baseTimeLineViewModel.pickUpInfo = _pickUpInfo;
+
     String service = prefs.getString("usTransactionStatus");
 
     if (service == "booking") {
@@ -105,15 +114,6 @@ class HistoryCheckingScreenViewModel extends BaseModel {
         baseTimeLineAppoinmentViewModel.nextStep();
       }
     } else {
-      LatLng latLngPosition = LatLng(
-          double.parse(
-              location.toString().split(";")[0].split(",")[0].split(":")[1]),
-          double.parse(
-              location.toString().split(";")[0].split(",")[1].split(":")[1]));
-
-      _pickUpInfo = await _mapRepo.searchCoordinateAddress(latLngPosition);
-      baseTimeLineViewModel.pickUpInfo = _pickUpInfo;
-
       // default location
       if (checkModel.option == 0) {
         baseTimeLineViewModel.nextStep();
