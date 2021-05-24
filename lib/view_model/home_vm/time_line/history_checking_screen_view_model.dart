@@ -107,6 +107,7 @@ class HistoryCheckingScreenViewModel extends BaseModel {
       if (checkModel.option == 0) {
         baseTimeLineAppoinmentViewModel.nextStep();
         baseTimeLineAppoinmentViewModel.nextStep();
+        baseTimeLineAppoinmentViewModel.specialty = specialty.specialtyId;
       }
       // another location
       else {
