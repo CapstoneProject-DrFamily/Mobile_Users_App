@@ -99,7 +99,6 @@ class HistoryCheckingScreenViewModel extends BaseModel {
             location.toString().split(";")[0].split(",")[1].split(":")[1]));
 
     _pickUpInfo = await _mapRepo.searchCoordinateAddress(latLngPosition);
-    baseTimeLineViewModel.pickUpInfo = _pickUpInfo;
 
     String service = prefs.getString("usTransactionStatus");
 
@@ -114,6 +113,7 @@ class HistoryCheckingScreenViewModel extends BaseModel {
         baseTimeLineAppoinmentViewModel.nextStep();
       }
     } else {
+      baseTimeLineViewModel.pickUpInfo = _pickUpInfo;
       // default location
       if (checkModel.option == 0) {
         baseTimeLineViewModel.nextStep();
