@@ -41,6 +41,7 @@ class ListDoctorScreenViewModel extends BaseModel {
 
   Future<void> init(UserCurrentAddress pickUpInfoRef) async {
     if (isLoading) {
+      loadBack = true;
       _nearByDoctorList = [];
       this._pickUpInfo = pickUpInfoRef;
       print(_pickUpInfo.placeID);
@@ -60,6 +61,7 @@ class ListDoctorScreenViewModel extends BaseModel {
       print("accountId $accountId $specialtyId $isDefault $doctorDefaultId");
 
       await getListDoctorNearby();
+      loadBack = false;
     }
   }
 
@@ -317,6 +319,7 @@ class ListDoctorScreenViewModel extends BaseModel {
             Comparator<DoctorModel> distanceComparator =
                 (a, b) => a.booked.compareTo(b.booked);
             _nearByDoctorList.sort(distanceComparator);
+            _nearByDoctorList = nearByDoctorList.reversed.toList();
             _isNotHave = false;
           }
 
