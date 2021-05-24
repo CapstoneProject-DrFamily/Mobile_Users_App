@@ -178,7 +178,7 @@ class HistoryCheckingScreen extends StatelessWidget {
                               setState(() => model.option = value);
                             },
                           ),
-                          Text('Default location'),
+                          Text("Treatment's location"),
                         ],
                       ),
                     ),
