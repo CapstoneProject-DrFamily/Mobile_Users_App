@@ -47,7 +47,7 @@ class HomeViewModel extends BaseModel {
 
     print("is done");
 
-    if (_listDone.isNotEmpty) {
+    if (_listDone != null) {
       isHasCheck = true;
     }
 
