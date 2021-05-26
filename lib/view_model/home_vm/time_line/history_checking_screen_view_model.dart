@@ -67,7 +67,7 @@ class HistoryCheckingScreenViewModel extends BaseModel {
     HistoryCheckingScreenViewModel checkModel,
   ) async {
     var noteHistory = prefs.getString("noteHistory");
-    print("note $noteHistory");
+    print("location $location");
 
     print("serviceId ${transaction.serviceId}");
 
@@ -101,6 +101,9 @@ class HistoryCheckingScreenViewModel extends BaseModel {
     _pickUpInfo = await _mapRepo.searchCoordinateAddress(latLngPosition);
 
     String service = prefs.getString("usTransactionStatus");
+    String locationDone =
+        'latitude: ${_pickUpInfo.latitude}, longitude: ${_pickUpInfo.longtitude}; placeName: ${_pickUpInfo.placeName}';
+    prefs.setString("usLocation", locationDone);
 
     if (service == "booking") {
       // default location
