@@ -13,3 +13,5 @@ StreamSubscription<Event> transactionMapStreamSubscription;
 StreamSubscription<Event> updateDoctorTransactionChecking;
 
 StreamSubscription<Event> updateDoctorTransactionSample;
+
+String GoogleKey = "AIzaSyDGDKvCvpBi_SqMNbs0XO5SHV9e2XctW1Y";

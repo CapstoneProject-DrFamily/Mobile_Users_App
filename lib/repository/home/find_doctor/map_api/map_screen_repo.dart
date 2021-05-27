@@ -1,3 +1,4 @@
+import 'package:drFamily_app/global_variable.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/place_predictions.dart';
 import 'package:drFamily_app/model/home/find_doctor/map/user_current_address.dart';
 import 'package:drFamily_app/repository/home/find_doctor/map_api/map_screen_assistant_repo.dart';
@@ -17,7 +18,7 @@ class MapScreenRepo implements IMapScreenRepo {
     String placeAddress = "";
     UserCurrentAddress userPickUpAddress = new UserCurrentAddress();
     String url =
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=AIzaSyCwNfWK4DEyGG34TkZBtPp4c5Cpf2JnuR8';
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$GoogleKey';
 
     var response = await _map.getRequest(url);
     if (response != 'failed') {
@@ -35,7 +36,7 @@ class MapScreenRepo implements IMapScreenRepo {
   @override
   Future<List<PlacePredictions>> searchAddress(String searchValue) async {
     String autoCompleteUrl =
-        "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchValue}&key=AIzaSyCwNfWK4DEyGG34TkZBtPp4c5Cpf2JnuR8&sessiontoken=1234567890&components=country:vn";
+        "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchValue}&key=$GoogleKey&sessiontoken=1234567890&components=country:vn";
     var response = await _map.getRequest(autoCompleteUrl);
     List<PlacePredictions> listPrediction;
 
@@ -53,7 +54,7 @@ class MapScreenRepo implements IMapScreenRepo {
   @override
   Future<UserCurrentAddress> getPlaceAddressDetails(String placeId) async {
     String placeDetailsUrl =
-        "https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=AIzaSyCwNfWK4DEyGG34TkZBtPp4c5Cpf2JnuR8";
+        "https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=$GoogleKey";
     var response = await _map.getRequest(placeDetailsUrl);
 
     UserCurrentAddress userPickUpAddress = new UserCurrentAddress();

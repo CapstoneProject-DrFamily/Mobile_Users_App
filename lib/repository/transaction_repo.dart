@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:drFamily_app/Helper/api_helper.dart';
+import 'package:drFamily_app/global_variable.dart';
 import 'package:drFamily_app/model/feedback_model.dart';
 import 'package:drFamily_app/model/setting/profile_model.dart';
 import 'package:drFamily_app/model/transaction/examination_form_model.dart';
@@ -90,7 +91,7 @@ class TransactionRepo extends ITransactionRepo {
       latitude = locationTemp.split(',')[0].split(':')[1];
 
       String url =
-          'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyCwNfWK4DEyGG34TkZBtPp4c5Cpf2JnuR8';
+          'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$GoogleKey';
       http.Response responseMap = await http.get(url);
       if (responseMap.statusCode == 200) {
         String jSonData = responseMap.body;
