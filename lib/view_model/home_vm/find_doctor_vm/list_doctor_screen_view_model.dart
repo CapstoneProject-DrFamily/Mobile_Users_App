@@ -68,6 +68,7 @@ class ListDoctorScreenViewModel extends BaseModel {
   void loadBackList() async {
     loadBack = true;
     notifyListeners();
+
     switch (status) {
       case 0:
         {
@@ -78,11 +79,24 @@ class ListDoctorScreenViewModel extends BaseModel {
       case 1:
         {
           _nearByDoctorList = [];
+          await getListDoctorNearby();
+          await getListOldDoctor(specialtyId, accountId);
+          
         }
         break;
       case 2:
         {
           _nearByDoctorList = [];
+          await getListDoctorNearby();
+           if (_nearByDoctorList.length == 0) {
+            _isNotHave = true;
+          } else {
+            Comparator<DoctorModel> distanceComparator =
+                (a, b) => a.booked.compareTo(b.booked);
+            _nearByDoctorList.sort(distanceComparator);
+            _nearByDoctorList = nearByDoctorList.reversed.toList();
+            _isNotHave = false;
+          }
         }
         break;
       default:
