@@ -36,6 +36,7 @@ class HomeViewModel extends BaseModel {
   }
 
   Future<void> choosePatient(int patientId, String patientName) async {
+    isHasCheck = false;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     print(patientId);
     _patientID = patientId;

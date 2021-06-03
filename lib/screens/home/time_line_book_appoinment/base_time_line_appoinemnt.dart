@@ -120,6 +120,7 @@ class BaseTimeLineAppoinmentScreen extends StatelessWidget {
                             await SharedPreferences.getInstance();
 
                         prefs.remove("noteHistory");
+                        prefs.remove("typeFindDoctor");
 
                         Navigator.pop(bookingContext);
                         Navigator.pop(context);
