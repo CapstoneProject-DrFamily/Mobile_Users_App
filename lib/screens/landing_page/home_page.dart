@@ -348,7 +348,7 @@ class HomeScreen extends StatelessWidget {
                             model.listDependent[model.patientChoose].patientID,
                             model.listDependent[model.patientChoose]
                                 .dependentName);
-                        // await homeViewModel.initTransaction(2);
+                        await homeViewModel.initTransaction(2);
 
                         if (homeViewModel.isHasCheck) {
                           _buildDialogChooseType(context, homeViewModel);
