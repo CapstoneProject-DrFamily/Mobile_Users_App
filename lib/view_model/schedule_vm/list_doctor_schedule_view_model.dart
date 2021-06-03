@@ -94,7 +94,7 @@ class ListDoctorScheduleViewModel extends BaseModel {
   }
 
   void sortHistoryFirst(int doctorDefaultId) {
-    if (doctorDefaultId != null) {
+    if (doctorDefaultId != null && this.listResult.length > 1) {
       DoctorScheduleModel doctormodel = this.listResult.firstWhere(
           (element) => element.doctorDetail.doctorId == doctorDefaultId);
       this.listResult.removeWhere(
